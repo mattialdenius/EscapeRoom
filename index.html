@@ -2,9 +2,12 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.2 (Prototyp)
+  Version 0.2.1 (Prototyp)
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.2.1 (11.11.2026)
+    - Zuordnen (Drag & Drop): zufällige Verteilung, pro Feld 0 bis 4 richtige Wörter
+      (statt immer 2 + 2); handgeschriebene Zuordnungsaufgaben entsprechend angepasst
   v0.2 (10.11.2026)
     - Zwillingsaufgabe: Nach dem 1. Fehler kommt eine NEUE Aufgabe zur gleichen Regel
       (kein Abschreiben, kein Ausschlussverfahren mehr)
@@ -30,7 +33,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.2</title>
+<title>Grammatik-Escape-Room Englisch – v0.2.1</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -399,7 +402,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.2.1</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -475,7 +478,7 @@ const NIVEAUS = {
 // Arbeitsanweisungen für die Rätselformen (Englisch + kleine deutsche Hilfe darunter)
 const ANWEISUNGEN = {
   quiz:     { en: "Choose the right answer.",                         de: "Wähle die richtige Antwort." },
-  zuordnen: { en: "Drag each word into the right box.",               de: "Ziehe jedes Wort in das richtige Feld. (Oder: antippen, dann Feld antippen.)" },
+  zuordnen: { en: "Drag each word into the right box.",               de: "Ziehe jedes Wort in das richtige Feld (antippen und Feld antippen geht auch). Ein Feld kann auch leer bleiben!" },
   luecke:   { en: "Fill in the gaps.",                                de: "Fülle die Lücken." },
   satzbau:  { en: "Put the words in the right order.",                de: "Tippe die Wörter in der richtigen Reihenfolge an." },
   fehler:   { en: "Find the mistake. Tap the wrong word and correct it.", de: "Tippe das falsche Wort an und schreibe es richtig." },
@@ -706,7 +709,7 @@ const AUFGABEN = [
   { thema: "5-G8", niveau: "gruen", form: "quiz", frage: "Emma ___ a cat.", optionen: ["have", "has"], loesung: "has",
     erklaerung: "Emma = she. Bei he/she/it wird have zu has. Beispiel: My brother has a bike." },
   { thema: "5-G8", niveau: "gruen", form: "zuordnen", kategorien: ["watch TV", "watches TV"],
-    woerter: [{ text: "I", ziel: "watch TV" }, { text: "Sam", ziel: "watches TV" }, { text: "my friends", ziel: "watch TV" }, { text: "she", ziel: "watches TV" }],
+    woerter: [{ text: "I", ziel: "watch TV" }, { text: "Sam", ziel: "watches TV" }, { text: "my friends", ziel: "watch TV" }, { text: "they", ziel: "watch TV" }],
     erklaerung: "He, she, it und Namen → Verb mit -s: Emma reads comics. I, you, we, they → ohne -s: We read comics." },
   { thema: "5-G8", niveau: "gelb", form: "luecke", frage: "Lily ___ (read) comics in bed.", loesung: ["reads"],
     erklaerung: "Lily = she, also Verb + s. Beispiel: Tom plays football." },
@@ -735,7 +738,7 @@ const AUFGABEN = [
   { thema: "5-G9", niveau: "gruen", form: "quiz", frage: "I ___ play tennis.", optionen: ["don't", "doesn't", "am not"], loesung: "don't",
     erklaerung: "Bei I (und you, we, they) verneinst du mit don't. Beispiel: We don't like milk." },
   { thema: "5-G9", niveau: "gruen", form: "zuordnen", kategorien: ["don't", "doesn't"],
-    woerter: [{ text: "we", ziel: "don't" }, { text: "my mum", ziel: "doesn't" }, { text: "you", ziel: "don't" }, { text: "Tom", ziel: "doesn't" }],
+    woerter: [{ text: "we", ziel: "don't" }, { text: "my mum", ziel: "doesn't" }, { text: "my brother", ziel: "doesn't" }, { text: "Tom", ziel: "doesn't" }],
     erklaerung: "I, you, we, they → don't: We don't swim. He, she, it und Namen → doesn't: Lily doesn't swim." },
   { thema: "5-G9", niveau: "gelb", form: "luecke", frage: "My cat ___ (not / like) milk.", loesung: ["doesn't like", "does not like"],
     erklaerung: "My cat = it → doesn't + Verb ohne -s. Beispiel: My dog doesn't eat apples." },
@@ -760,7 +763,7 @@ const AUFGABEN = [
   { thema: "5-G10", niveau: "gruen", form: "quiz", frage: "___ you play football?", optionen: ["Do", "Does", "Are"], loesung: "Do",
     erklaerung: "Fragen mit you (I, we, they) beginnen mit Do. Beispiel: Do they like apples?" },
   { thema: "5-G10", niveau: "gruen", form: "zuordnen", kategorien: ["Do …?", "Does …?"],
-    woerter: [{ text: "you", ziel: "Do …?" }, { text: "Emma", ziel: "Does …?" }, { text: "they", ziel: "Do …?" }, { text: "your dad", ziel: "Does …?" }],
+    woerter: [{ text: "you", ziel: "Do …?" }, { text: "my friends", ziel: "Do …?" }, { text: "we", ziel: "Do …?" }, { text: "your parents", ziel: "Do …?" }],
     erklaerung: "I, you, we, they → Do: Do they swim? He, she, it und Namen → Does: Does Sam swim?" },
   { thema: "5-G10", niveau: "gelb", form: "luecke", frage: "___ Tom ___ (have) a dog?", loesung: [["Does"], ["have"]],
     erklaerung: "Tom = he → Does + Person + Grundform (ohne -s). Beispiel: Does Lily like cats?" },
@@ -896,7 +899,11 @@ function generiere(themaId, niveau, form){
   const beispielFuer = p => satzFuer(anders(personen.filter(q => q.er === p.er), p), anders(bk.verben, V));
 
   if(form === "zuordnen"){
-    const er = mischen(personen.filter(p => p.er)).slice(0, 2), nicht = mischen(personen.filter(p => !p.er)).slice(0, 2);
+    // zufällige Verteilung: 0 bis 4 Wörter gehören in das erste Feld, der Rest in das zweite
+    const erListe = mischen(personen.filter(p => p.er)), nichtListe = mischen(personen.filter(p => !p.er));
+    let anzahlEr = Math.floor(Math.random() * 5);
+    anzahlEr = Math.min(anzahlEr, erListe.length); if(4 - anzahlEr > nichtListe.length) anzahlEr = 4 - nichtListe.length;
+    const er = erListe.slice(0, anzahlEr), nicht = nichtListe.slice(0, 4 - anzahlEr);
     let kat;
     if(g.art === "aussage") kat = [V.grund + rest, V.s + rest];
     if(g.art === "verneinung") kat = ["don't " + V.grund, "doesn't " + V.grund];
