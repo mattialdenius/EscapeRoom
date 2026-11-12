@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.5.1 (Prototyp)
+  Version 0.5.2 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.5.2 (12.11.2026)
+    - Fehlerkorrektur: Dasselbe Hauptwort (z. B. wolves) kommt nicht mehr direkt hintereinander,
+      sondern frühestens nach 4 anderen Aufgaben wieder (gilt auch für die Zwillingsaufgabe)
   v0.5.1 (12.11.2026)
     - Fehlerkorrektur Wörterhilfe: Die Zeile unter Antwortknöpfen und Kärtchen zeigt nur noch
       die Grundform (wolf = Wolf), nicht mehr die Mehrzahl – sie verriet beim Plural die Lösung
@@ -63,7 +66,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.5.1</title>
+<title>Grammatik-Escape-Room Englisch – v0.5.2</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -436,7 +439,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.5.1</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.5.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -462,7 +465,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.5.1";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.5.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -476,7 +479,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.5.1"></script>
+<script src="daten/allgemein.js?v=0.5.2"></script>
 
 <script>
 /* #####################################################################
@@ -648,6 +651,11 @@ function ladeKlasse(k){
 }
 
 /* ===================== GENERATOR (Satzbaukasten) ===================== */
+// „Kern“ = das Hauptwort einer Aufgabe (z. B. wolf). Damit kommt dasselbe Wort nicht direkt hintereinander dran.
+let aktuellerKern = null;
+const kern = k => { aktuellerKern = String(k).trim(); };
+let letzteKerne = [];                 // die zuletzt gezogenen Kerne (wird bei jedem Missionsstart geleert)
+const KERN_ABSTAND = 4;               // so viele Aufgaben lang darf dasselbe Hauptwort nicht wiederkommen
 // Jede „art“ baut aus den Wortlisten eines Baukastens eine Aufgabe in der gewünschten Form.
 // Gibt eine Art für eine Form nichts zurück (null), nimmt das Spiel automatisch eine andere Form.
 function erklaere(vorlage, werte){ return String(vorlage || "").replace(/\{(\w+)\}/g, (m, k) => werte[k] != null ? werte[k] : m); }
@@ -666,6 +674,7 @@ function mitTausch(satz, p){
 function simplePresent(art, bk, form, E){
   let personen = bk.personen; if(art === "frage") personen = personen.filter(p => p.text !== "I");   // „Do I …?“ klingt seltsam
   const P = wuerfle(personen), V = wuerfle(bk.verben);
+  kern(V.grund + " " + V.rest);
   const rest = V.rest ? " " + V.rest : "";
   const z = (V.zeit.length && Math.random() < 0.5) ? " " + wuerfle(V.zeit) : "";
   const aussage = p => gross(p.text) + " " + (p.er ? V.s : V.grund) + rest;
@@ -779,6 +788,7 @@ const ARTEN = {
   // ---------- am / is / are ----------
   tobe(bk, form, E){
     const P = waehleSubjekt(bk), C = wuerfle(ergFuer(bk, P));
+    kern(C.text);
     const bsp = p => { const l = gleicheSorte(bk, p); const q = l.length ? wuerfle(l) : p; return beSatz(q, anders(ergFuer(bk, q), C)); };
     const erkl = p => erklaere(E[p.be], { BEISPIEL: bsp(p) });
     if(form === "quiz") return { frage: gross(P.text) + " ___ " + C.text + ".", optionen: mischen(["am", "is", "are"]), loesung: P.be, erklaerung: erkl(P) };
@@ -806,6 +816,7 @@ const ARTEN = {
     const ok = p => p.text !== "I" && p.text !== "we";
     const ps = alleSubjekte(bk, ok).alle;
     const P = waehleSubjekt(bk, ok), C = wuerfle(ergFuer(bk, P)), Be = gross(P.be);
+    kern(C.text);
     const frage = (p, c) => gross(p.be) + " " + p.text + " " + c.text + "?";
     const bsp = p => { const l = gleicheSorte(bk, p, ok); const q = l.length ? wuerfle(l) : p; return frage(q, anders(ergFuer(bk, q), C)); };
     const erkl = p => erklaere(E.frage, { BEISPIEL: bsp(p) });
@@ -827,6 +838,7 @@ const ARTEN = {
   // ---------- Verneinung von to be ----------
   tobeneg(bk, form, E){
     const P = waehleSubjekt(bk), C = wuerfle(ergFuer(bk, P));
+    kern(C.text);
     const bsp = p => { const l = gleicheSorte(bk, p); const q = l.length ? wuerfle(l) : p; return negSaetze(q, anders(ergFuer(bk, q), C))[0]; };
     const erkl = p => erklaere(E[p.be], { BEISPIEL: bsp(p) });
     if(form === "quiz") return { frage: gross(P.text) + " ___ " + C.text + ".", optionen: mischen(["am not", "isn't", "aren't"]), loesung: NEG[P.be], erklaerung: erkl(P) };
@@ -849,6 +861,7 @@ const ARTEN = {
     if(form === "fehler" && !O.plural && !name(O)) O = wuerfle(bk.besitzer.filter(name));   // „my sisters room“ wäre doppeldeutig
     const maennlich = /\b(dad|uncle|brothers?|Tom|Sam|Ben|Ali)\b/.test(O.text);
     const D = wuerfle(bk.dinge.filter(d => !maennlich || !/^(dress|skirt)$/.test(d)));
+    kern(D);
     const bsp = o => { const q = anders(bk.besitzer.filter(x => !!x.plural === !!o.plural), o);
       const m = /\b(dad|uncle|brothers?|Tom|Sam|Ben|Ali)\b/.test(q.text);
       return "This is " + poss(q) + " " + anders(bk.dinge.filter(d => !m || !/^(dress|skirt)$/.test(d)), D) + "."; };
@@ -880,6 +893,7 @@ const ARTEN = {
     const sonder = bk.nomen.filter(n => n.regel !== "s");
     const N = (Math.random() < 0.5 && sonder.length) ? wuerfle(sonder) : wuerfle(bk.nomen);
     const zahl = wuerfle(["two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"]);
+    kern(N.sg);
     const FALSCH = { s: n => [/e$/.test(n.sg) ? n.sg : n.sg + "es"], es: n => [/s$/.test(n.sg) ? n.sg : n.sg + "s"], ies: n => [n.sg + "s", n.sg + "es"], ys: n => [n.sg.slice(0, -1) + "ies", n.sg + "es"],
                      ves: n => [n.sg + "s", n.sg + "es"], os: n => [n.sg + "es"], oes: n => [n.sg + "s"] };
     // Satzrahmen: {Z} = Zahl, ### = Plural
@@ -904,6 +918,7 @@ const ARTEN = {
   // ---------- a / an ----------
   aan(bk, form, E){
     const W = wuerfle(bk.artikelwoerter), anderer = W.art === "a" ? "an" : "a";
+    kern(W.text);
     const q = anders(bk.artikelwoerter.filter(x => x.art === W.art), W);
     const erkl = erklaere(E[W.art], { BEISPIEL: q.art + " " + q.text });
     const rahmen = wuerfle(["This is ___ {W}.", "I have ___ {W}.", "I can see ___ {W}.", "Here is ___ {W}.", "Look! There's ___ {W}!", "Is this ___ {W}?"]);
@@ -924,6 +939,7 @@ const ARTEN = {
     let B = form === "umformen" ? wuerfle(beides.length ? beides : befehle) : wuerfle(neg ? verbote : befehle);
     if(form === "satzbau" && !neg && (B.grund + " " + B.rest).split(" ").length < 3){ neg = true; B = wuerfle(verbote); }   // Satzbau braucht mindestens 3 Wörter
     const r = B.rest ? " " + B.rest : "", G = gross(B.grund);
+    kern(B.grund + " " + B.rest);
     const q = anders(neg ? verbote : befehle, B), qr = q.rest ? " " + q.rest : "";
     const erkl = neg ? erklaere(E.negativ, { BEISPIEL: "Don't " + q.grund + qr + "!" }) : erklaere(E.positiv, { BEISPIEL: gross(q.grund) + qr + ", please." });
     const name = wuerfle(bk.namen || ["Tom"]), vorne = Math.random() < 0.6;   // vorne = Befehl am Satzanfang
@@ -958,9 +974,10 @@ function mitExtras(name){
 function generiere(themaId, niveau, form){
   const g = GENERATOREN[themaId]; if(!g || !ARTEN[g.art]) return null;
   const bk = mitExtras(g.baukasten);
+  aktuellerKern = null;
   const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
   if(!t) return null;
-  return Object.assign(t, { thema: themaId, niveau, form, generiert: true });
+  return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
 }
 
 /* ===================== WÖRTERHILFE (antippbare Wörter) ===================== */
@@ -1021,7 +1038,12 @@ function zieheAufgabe(themen, niveau, form, benutzt){
     if(genThemen.length){
       for(let i = 0; i < 40; i++){
         const a = generiere(wuerfle(genThemen), niveau, v.form || wuerfle(formen));
-        if(a && (!v.neu || !benutzt.has(schluessel(a)))){ benutzt.add(schluessel(a)); return a; }
+        const kernFrei = !a || !a.kern || !letzteKerne.includes(a.kern) || i >= 30;   // nach 30 Versuchen Kern-Regel lockern
+        if(a && kernFrei && (!v.neu || !benutzt.has(schluessel(a)))){
+          benutzt.add(schluessel(a));
+          if(a.kern){ letzteKerne.push(a.kern); if(letzteKerne.length > KERN_ABSTAND) letzteKerne.shift(); }
+          return a;
+        }
       }
     }
     if(hand.length){ benutzt.add(schluessel(hand[0])); return hand[0]; }
@@ -1182,7 +1204,7 @@ function starteMission(){
     raumThemen = [0,1,2,3].map(i => [alle[i % alle.length]]);
   }
   S = {
-    benutzt: new Set(), code: [0,1,2,3].map(() => Math.floor(Math.random() * 10)),
+    benutzt: (letzteKerne = [], new Set()), code: [0,1,2,3].map(() => Math.floor(Math.random() * 10)),
     raeume: welt().raeume.map((r, i) => ({ ...r, nr: i, themen: raumThemen[i], form: raumFormen[i], liste: [], index: 0, richtig: 0,
       versuch: 1, geschafft: false, ziffer: null, kandidaten: null })),
     stats: {}, neu: -1, aktuell: 0, kontrolle: null, torVersuche: EINSTELLUNGEN.torVersuche
