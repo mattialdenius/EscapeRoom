@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.5 (Prototyp)
+  Version 0.5.1 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.5.1 (12.11.2026)
+    - Fehlerkorrektur Wörterhilfe: Die Zeile unter Antwortknöpfen und Kärtchen zeigt nur noch
+      die Grundform (wolf = Wolf), nicht mehr die Mehrzahl – sie verriet beim Plural die Lösung
   v0.5 (11.11.2026)
     - Aufteilung: Technik (index.html) und Inhalte (Ordner „daten“) getrennt;
       jede Klasse hat eine eigene Datei, die erst bei der Klassenwahl geladen wird
@@ -60,7 +63,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.5</title>
+<title>Grammatik-Escape-Room Englisch – v0.5.1</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -433,7 +436,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.5</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.5.1</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -459,7 +462,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.5";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.5.1";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -473,7 +476,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.5"></script>
+<script src="daten/allgemein.js?v=0.5.1"></script>
 
 <script>
 /* #####################################################################
@@ -963,10 +966,11 @@ function generiere(themaId, niveau, form){
 /* ===================== WÖRTERHILFE (antippbare Wörter) ===================== */
 const HILFE = new Map();
 // wird nach dem Laden jeder Klassendatei aufgerufen
+const GRUNDFORM = new Map();   // Mehrzahl → Einzahl (z. B. wolves → wolf), damit die Wörterzeile keine Pluralform verrät
 function hilfeErgaenzen(K){
   (K.woerterhilfe || []).forEach(w => HILFE.set(String(w.en).toLowerCase(), w.de));
   Object.values(K.baukasten || {}).forEach(b => (b.nomen || []).concat(b.nomenExtra || []).forEach(n => {
-    const de = HILFE.get(n.sg.toLowerCase()); if(de && !HILFE.has(n.pl.toLowerCase())) HILFE.set(n.pl.toLowerCase(), de + " (Mehrzahl)"); }));
+    const de = HILFE.get(n.sg.toLowerCase()); if(de && !HILFE.has(n.pl.toLowerCase())){ HILFE.set(n.pl.toLowerCase(), de + " (Mehrzahl)"); GRUNDFORM.set(n.pl.toLowerCase(), n.sg.toLowerCase()); } }));
 }
 const hilfeFuer = w => EINSTELLUNGEN.woerterhilfeAktiv === false ? undefined : HILFE.get(w.toLowerCase());
 // Text mit gepunktet unterstrichenen Wörtern (Antippen zeigt die deutsche Bedeutung)
@@ -986,10 +990,14 @@ function textMitHilfe(text){
   return frag;
 }
 document.addEventListener("click", () => document.querySelectorAll(".vok.offen").forEach(x => x.classList.remove("offen")));
-// Für Wörter auf Knöpfen und Kärtchen (dort ist Antippen schon belegt): kleine Zeile mit Bedeutungen
+// Für Wörter auf Knöpfen und Kärtchen (dort ist Antippen schon belegt): kleine Zeile mit Bedeutungen.
+// Es steht immer nur die Grundform da (wolf = Wolf), nie die Mehrzahl – sonst würde die Zeile die Lösung verraten.
 function hilfeZeile(woerter){
   const gefunden = new Map();
-  woerter.join(" ").replace(/[A-Za-z][A-Za-z-]*/g, w => { const de = hilfeFuer(w); if(de) gefunden.set(w.toLowerCase(), de); return w; });
+  woerter.join(" ").replace(/[A-Za-z][A-Za-z-]*/g, w => {
+    if(!hilfeFuer(w)) return w;
+    const basis = GRUNDFORM.get(w.toLowerCase()) || w.toLowerCase(), de = hilfeFuer(basis);
+    if(de) gefunden.set(basis, de); return w; });
   if(!gefunden.size) return document.createDocumentFragment();
   return el("p", "woerterzeile", "📖 " + [...gefunden].map(([en, de]) => en + " = " + de).join(" · "));
 }
