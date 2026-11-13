@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.5.3 (Prototyp)
+  Version 0.5.4 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,10 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.5.4 (13.11.2026)  – nur Testbereich
+    - Neu: Schnittstelle „EscapeAPI“ für eine spätere Zoo-Karte (Entdecker-Modus).
+      Ohne Karte ändert sich am Spiel nichts. Karte wird nur geladen mit ?karte=1 in der Adresse
+      oder mit entdeckerModus: true in daten/allgemein.js (Datei welt/karte.js).
   v0.5.3 (12.11.2026)
     - Fehlerkorrektur Satzbau und Umformen: Namenspaare dürfen in beliebiger Reihenfolge stehen
       („Do Emma and Tom like …?“ wird genauso angenommen wie „Do Tom and Emma like …?“)
@@ -69,7 +73,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.5.3</title>
+<title>Grammatik-Escape-Room Englisch – v0.5.4</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -382,6 +386,7 @@
       <button id="btnTor">Öffnen</button>
       <p id="codeMeldung" role="status"></p>
     </div>
+    <button id="btnZurKarte" class="zweit" hidden>🗺️ Zurück zur Karte</button>
   </section>
 
   <!-- ===== EIN RAUM: Aufgaben nacheinander ===== -->
@@ -442,7 +447,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.5.3</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.5.4</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -468,7 +473,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.5.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.5.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -482,7 +487,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.5.3"></script>
+<script src="daten/allgemein.js?v=0.5.4"></script>
 
 <script>
 /* #####################################################################
@@ -1082,12 +1087,14 @@ function zufallSatz(liste){ if(!liste || !liste.length) return ""; let i; do { i
 function figurSagt(text){ if(!text) return; const b = $("sprechblase"); b.textContent = text; b.classList.remove("neu"); void b.offsetWidth; b.classList.add("neu"); }
 const sage = schluessel => figurSagt(zufallSatz(welt().saetze[schluessel]));
 
-function zeige(id){
+function zeige(id, optionen){
+  const vorher = aktiverBildschirm; aktiverBildschirm = id;
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("aktiv"));
   $(id).classList.add("aktiv");
   $("kopf").hidden = ["setup", "finale", "gescheitert"].includes(id);
   $("btnBeenden").hidden = id === "zusatz";   // im Zusatzraum gibt es kein Zurück
   window.scrollTo(0, 0);
+  karteMelden(id, vorher, optionen || {});   // nur wirksam, wenn eine Karte angemeldet ist (sonst passiert nichts)
 }
 
 /* ===================== 7-SEGMENT-ANZEIGE ===================== */
@@ -1264,6 +1271,7 @@ function baueUebersicht(){
     mon.appendChild(d);
   });
   mon.setAttribute("aria-label", "Gefundene Ziffern: " + S.raeume.map((r, i) => r.ziffer != null ? r.ziffer : r.kandidaten ? "eine von " + r.kandidaten.join(", ") : "offen").join("; "));
+  if(S.neu >= 0){ const rn = S.raeume[S.neu]; melde("ziffer", { raum: rn.nr, ziffer: rn.ziffer, kandidaten: rn.kandidaten ? rn.kandidaten.slice() : null }); }
   S.neu = -1;
   torStatus();
   if(S.raeume.every(r => r.geschafft)) sage("torBereit");
@@ -1685,6 +1693,79 @@ function starteKonfetti(){
     teile.forEach(t => { t.y += t.v; t.x += t.d; if(t.y > c.height){ t.y = -10; t.x = Math.random() * c.width; } x.fillStyle = t.f; x.fillRect(t.x, t.y, t.g, t.g * .6); });
     requestAnimationFrame(frame);
   })();
+}
+
+/* =====================================================================
+   SCHNITTSTELLE „EscapeAPI“ (für eine spätere Zoo-Karte / Entdecker-Modus)
+   ---------------------------------------------------------------------
+   Ohne angemeldete Karte bleibt das Spiel genau wie bisher.
+   Eine Karte (Datei welt/karte.js) meldet sich mit EscapeAPI.karteAnmelden({ zeigen, verbergen }) an.
+   Dann gilt: Wo sonst die Übersicht erscheint, zeigt sich stattdessen die Karte.
+   Die Karte liest nur den Spielstand und ruft Räume auf – sie kann keine Lösungen sehen.
+   Es wird nichts gespeichert oder übertragen.
+   ===================================================================== */
+let aktiverBildschirm = "setup", KARTE = null;
+const horcher = {};
+function melde(name, daten){ (horcher[name] || []).forEach(f => { try { f(daten); } catch(e){ console.error("EscapeAPI-Horcher", name, e); } }); }
+function karteMelden(id, vorher, optionen){
+  melde("bildschirm", { id, vorher });
+  if(id === "uebersicht" && vorher !== "uebersicht") melde("zurueck", { von: vorher });
+  if(!KARTE) return;
+  $("btnZurKarte").hidden = false;
+  try {
+    if(id === "uebersicht" && !optionen.ohneKarte){ $("uebersicht").classList.remove("aktiv"); KARTE.zeigen(EscapeAPI.status()); }
+    else KARTE.verbergen();
+  } catch(e){ console.error("Karte", e); KARTE = null; $("btnZurKarte").hidden = true; zeige(id); }   // Karte defekt → klassische Übersicht
+}
+function raumZustand(r, i){
+  if(r.geschafft) return r.kandidaten ? "unsicher" : "geschafft";
+  if(!raumOffen(i)) return "gesperrt";
+  return r.richtig > 0 ? "begonnen" : "offen";
+}
+const EscapeAPI = {
+  version: APP_VERSION,
+  // Läuft gerade eine Mission (zwischen „Los geht's“ und Ende)?
+  aktiv: () => !!S && !["setup", "intro", "finale", "gescheitert"].includes(aktiverBildschirm),
+  bildschirm: () => aktiverBildschirm,
+  // Feste Angaben der Welt (Namen, Emojis) – ohne Lösungen
+  welt: () => { const w = welt(); if(!w) return null;
+    return { klasse: wahl.klasse, name: w.name, emoji: w.emoji, figur: w.figur, ausgang: { ...w.ausgang }, zusatzraum: { name: w.zusatzraum.name, emoji: w.zusatzraum.emoji },
+             raeume: w.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji })), karte: w.karte || null }; },
+  // Aktueller Spielstand (wird bei jedem Aufruf neu erstellt, Änderungen daran wirken nicht aufs Spiel)
+  status: () => {
+    if(!S) return null;
+    return {
+      raeume: S.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji, thema: r.themen.map(id => themaVon(id).titel).join(" · "),
+        zustand: raumZustand(r, i), richtig: r.richtig, von: EINSTELLUNGEN.aufgabenProRaum,
+        ziffer: r.ziffer, kandidaten: r.kandidaten ? r.kandidaten.slice() : null })),
+      torBereit: S.raeume.every(r => r.geschafft), torVersuche: S.torVersuche,
+      zeit: { mitLimit: wahl.zeit === "mit", restSekunden: wahl.zeit === "mit" ? rest : null, pausiert: pausiert },
+      niveau: wahl.niveau
+    };
+  },
+  // Raum betreten (wie Antippen in der Übersicht). Gibt false zurück, wenn der Raum gesperrt oder schon geschafft ist.
+  oeffneRaum: i => { if(!EscapeAPI.aktiv() || !S.raeume[i] || !raumOffen(i) || S.raeume[i].geschafft) return false; oeffneRaum(i); return true; },
+  // Klassische Übersicht mit Zahlenschloss zeigen (z. B. wenn man auf der Karte das Zootor antippt)
+  zeigeTor: () => { if(!EscapeAPI.aktiv()) return false; baueUebersicht(); zeige("uebersicht", { ohneKarte: true }); $("raeder").scrollIntoView({ block: "center" }); return true; },
+  // Regel (Hilfekarte) eines Raums, z. B. für die Zoowärterin. Kein Lösungsbezug.
+  regel: i => { if(!S || !S.raeume[i]) return ""; return S.raeume[i].themen.map(id => themaVon(id).regel).filter(Boolean).join(" "); },
+  // Ein zufälliges Wort aus der Wörterhilfe der Klasse, z. B. für Tiere am Wegrand: { en, de }
+  zufallsWort: () => { const K = KLASSENDATEN[wahl.klasse], l = (K && K.woerterhilfe) || []; const w = l.length ? wuerfle(l) : null; return w ? { en: w.en, de: w.de } : null; },
+  // Sprechblase der Begleitfigur (Polly) – entweder eigener Text oder ein Satz aus welt.saetze (z. B. "zeitWarnung")
+  sage: text => { if(welt() && welt().saetze[text]) sage(text); else figurSagt(String(text || "")); },
+  // Ereignisse: "bildschirm" {id, vorher}, "zurueck" {von}, "ziffer" {raum, ziffer, kandidaten}
+  on: (name, f) => { (horcher[name] = horcher[name] || []).push(f); },
+  // Karte anmelden: { zeigen(status), verbergen() }
+  karteAnmelden: k => { if(!k || typeof k.zeigen !== "function" || typeof k.verbergen !== "function") return false; KARTE = k;
+    if(aktiverBildschirm === "uebersicht") zeige("uebersicht"); return true; }
+};
+Object.freeze(EscapeAPI); window.EscapeAPI = EscapeAPI;
+$("btnZurKarte").onclick = () => zeige("uebersicht");
+// Karte nur laden, wenn ausdrücklich gewünscht (Adresse …?karte=1 oder entdeckerModus: true in daten/allgemein.js)
+if(/[?&]karte=1\b/.test(location.search) || EINSTELLUNGEN.entdeckerModus === true){
+  const sk = document.createElement("script"); sk.src = "welt/karte.js?v=" + APP_VERSION;
+  sk.onerror = () => console.warn("welt/karte.js nicht gefunden – es bleibt bei der klassischen Übersicht.");
+  document.body.appendChild(sk);
 }
 
 /* ===================== START ===================== */
