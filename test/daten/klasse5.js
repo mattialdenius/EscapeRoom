@@ -80,7 +80,7 @@ K5.welt = {
     //   art: "waerterin"  = zeigt beim Antippen die Regelkarte des nächsten Geheges
     //   art: "waechter"   = dreht langsam seine „runde“ (Liste von Punkten [x, y]) und warnt, wenn die Zeit knapp wird
     //   art: "tier"       = zeigt beim Antippen ein Wort aus der Wörterhilfe („emoji“ = Bild, „name“ = für Vorleseprogramme).
-    //                       Das Wort wandert in den Wörter-Rucksack. „trick“ = was das Tier dabei macht:
+    //                       „trick“ = was das Tier dabei macht:
     //                       "drehen" (wackelt mit dem Kopf), "rollen" (rollt einmal herum) oder "huepfen".
     figuren: [
       { art: "polly" },
@@ -89,10 +89,6 @@ K5.welt = {
       { art: "tier", emoji: "🦉", name: "Eule", trick: "drehen", x: 540,  y: 715 },
       { art: "tier", emoji: "🦔", name: "Igel", trick: "rollen", x: 1080, y: 880 }
     ],
-
-    // Wörter-Rucksack: So viele Wörter kann man bei den Tieren sammeln (0 = kein Rucksack).
-    // Der Rucksack ist nur Sammelspaß. Er zählt nicht für den Code und wird nicht gespeichert.
-    rucksack: { ziel: 10 },
 
     // Orte, an denen Polly einmal pro Mission etwas sagt, wenn die Spielfigur in die Nähe kommt.
     // radius = wie nah man sein muss. Neue Zeile kopieren, Zahlen und Text ändern.
@@ -121,10 +117,7 @@ K5.welt = {
       loeweSchnarcht:  ["Chrrr … chrrr …", "Chrrr … *blinzel* … chrrr", "Grrr-mpf … zzz"],     // nacheinander, wenn man den Löwen antippt
       pollyGeschafft:  ["Kraaah! Die erste Ziffer!", "Halbzeit! Zwei Ziffern!", "Nur noch ein Gehege!", "Alle vier! Auf zum Zootor!"],   // nach dem 1., 2., 3., 4. Gehege
       pollyWarten:     ["Kommt, weiter geht's: {name}!", "Wo bleibt ihr? Ich fliege schon mal vor!"],   // wenn 20 Sekunden nichts passiert
-      pollyZurueck:    ["Nicht aufgeben! Gleich noch einmal.", "Kurze Pause? Dann wieder rein!"],         // wenn man ein Gehege verlässt, ohne es zu schaffen
-      rucksackTitel:   "Mein Wörter-Rucksack",
-      rucksackLeer:    "Noch leer. Tippt die Tiere am Weg an: Sie verraten euch englische Wörter!",
-      rucksackVoll:    "Kraaah! Der Wörter-Rucksack ist voll. Ihr seid echte Wort-Sammler!"
+      pollyZurueck:    ["Nicht aufgeben! Gleich noch einmal.", "Kurze Pause? Dann wieder rein!"]          // wenn man ein Gehege verlässt, ohne es zu schaffen
     }
   }
 };
