@@ -43,6 +43,89 @@ K5.welt = {
     torFalsch:        ["Das Tor bleibt zu. Schaut auf die Lämpchen: Grün stimmt, Rot noch nicht!"],
     zwilling:         ["Hier ist eine ähnliche Aufgabe. Ihr schafft das!"],
     torBereit:        ["Alle Gehege sind geschafft! Stellt den Code am Zootor ein."]
+  },
+
+  // -------------------------------------------------------------------
+  // ZOO-KARTE (Entdecker-Modus)  ·  gehört zur Datei welt/karte.js
+  // Die Karte ersetzt die Übersicht mit den Kacheln. Die Kinder tippen
+  // auf die Karte und die Spielfigur läuft hin.
+  //
+  // So lest ihr die Zahlen:
+  //   x = wie weit nach rechts (0 = ganz links, 1600 = ganz rechts)
+  //   y = wie weit nach unten  (0 = ganz oben,  1000 = ganz unten)
+  // Größere Zahl bei x: weiter rechts. Größere Zahl bei y: weiter unten.
+  // Bitte kleine Schritte (z. B. 50) ändern und danach im Browser ansehen.
+  // Häuser brauchen Platz: etwa 300 breit und 200 hoch. Der Punkt x/y
+  // liegt in der Mitte des Hauses, die Tür ist unten in der Mitte.
+  // -------------------------------------------------------------------
+  karte: {
+    groesse: { b: 1600, h: 1000 },          // Größe der ganzen Karte. Klein lassen: kurze Wege!
+    start:   { x: 800, y: 860 },            // hier steht die Spielfigur am Anfang (vor dem Zootor)
+
+    // Die vier Gehege. Reihenfolge = Reihenfolge der Räume oben (Affenhaus zuerst).
+    // „schild“ ist der Text auf dem Schild über dem Haus.
+    gehege: [
+      { x: 300,  y: 300, schild: "Affenhaus" },
+      { x: 1300, y: 300, schild: "Pinguinbecken" },
+      { x: 300,  y: 700, schild: "Reptilienhaus" },
+      { x: 1300, y: 700, schild: "Elefantenhaus" }
+    ],
+
+    raubtierhaus: { x: 800, y: 200, schild: "Raubtierhaus" },   // nur Kulisse mit schlafendem Löwen
+    tor:          { x: 800, y: 950 },                           // das Zootor unten in der Mauer
+    brunnen:      { x: 800, y: 600 },                           // Brunnen in der Mitte (Schmuck)
+
+    // Figuren auf der Karte: höchstens 5. Keine hält auf, Antippen ist freiwillig.
+    //   art: "polly"      = fliegt der Spielfigur hinterher (braucht keinen Ort)
+    //   art: "waerterin"  = zeigt beim Antippen die Regelkarte des nächsten Geheges
+    //   art: "waechter"   = dreht langsam seine „runde“ (Liste von Punkten [x, y]) und warnt, wenn die Zeit knapp wird
+    //   art: "tier"       = zeigt beim Antippen ein Wort aus der Wörterhilfe („emoji“ = Bild, „name“ = für Vorleseprogramme).
+    //                       Das Wort wandert in den Wörter-Rucksack. „trick“ = was das Tier dabei macht:
+    //                       "drehen" (wackelt mit dem Kopf), "rollen" (rollt einmal herum) oder "huepfen".
+    figuren: [
+      { art: "polly" },
+      { art: "waerterin", name: "Zoowärterin",  x: 690,  y: 500 },
+      { art: "waechter",  name: "Nachtwächter", runde: [[900, 480], [1120, 480], [1120, 700], [900, 700]] },
+      { art: "tier", emoji: "🦉", name: "Eule", trick: "drehen", x: 540,  y: 715 },
+      { art: "tier", emoji: "🦔", name: "Igel", trick: "rollen", x: 1080, y: 880 }
+    ],
+
+    // Wörter-Rucksack: So viele Wörter kann man bei den Tieren sammeln (0 = kein Rucksack).
+    // Der Rucksack ist nur Sammelspaß. Er zählt nicht für den Code und wird nicht gespeichert.
+    rucksack: { ziel: 10 },
+
+    // Orte, an denen Polly einmal pro Mission etwas sagt, wenn die Spielfigur in die Nähe kommt.
+    // radius = wie nah man sein muss. Neue Zeile kopieren, Zahlen und Text ändern.
+    orte: [
+      { x: 800, y: 600, radius: 150, text: "Schaut mal, der Mond schwimmt im Brunnen!" },
+      { x: 800, y: 300, radius: 130, text: "Psst, ganz leise am Raubtierhaus!" },
+      { x: 150, y: 520, radius: 120, text: "Huch, ist das dunkel hier hinten!" }
+    ],
+
+    // Texte der Karte. {name} wird automatisch durch den Namen des Geheges ersetzt.
+    texte: {
+      gesperrt:        "Dieses Gehege ist noch zu. Schafft zuerst das Gehege mit dem Pfeil!",
+      schonGeschafft:  "Hier habt ihr die Ziffer schon gefunden. Weiter geht's!",
+      torZu:           "Erst alle vier Gehege schaffen!",
+      loewe:           "Psst! Der Löwe schläft. Er wacht erst auf, wenn ihr ein Gehege geschafft habt.",
+      jubel:           "Kraaah! Eine neue Ziffer!",
+      tipp:            "Als Nächstes: {name}! Folgt dem gelben Pfeil.",
+      tippTor:         "Alle Ziffern gefunden! Lauft zum Zootor.",
+      regelTitel:      "Regel für: {name}",
+      keineRegel:      "Für dieses Gehege gibt es keine Regelkarte.",
+      waerterinFertig: "Alles geschafft! Jetzt schnell zum Zootor.",
+      waechter:        "Beeilt euch!",
+
+      // Steht hier eine Liste [ "…", "…" ], wird jedes Mal ein Satz ausgewählt.
+      waechterRuf:     ["Wer ist da?", "Halt! … Ach, ihr seid es.", "Nanu? Schon so spät!"],   // wenn sein Licht die Spielfigur trifft
+      loeweSchnarcht:  ["Chrrr … chrrr …", "Chrrr … *blinzel* … chrrr", "Grrr-mpf … zzz"],     // nacheinander, wenn man den Löwen antippt
+      pollyGeschafft:  ["Kraaah! Die erste Ziffer!", "Halbzeit! Zwei Ziffern!", "Nur noch ein Gehege!", "Alle vier! Auf zum Zootor!"],   // nach dem 1., 2., 3., 4. Gehege
+      pollyWarten:     ["Kommt, weiter geht's: {name}!", "Wo bleibt ihr? Ich fliege schon mal vor!"],   // wenn 20 Sekunden nichts passiert
+      pollyZurueck:    ["Nicht aufgeben! Gleich noch einmal.", "Kurze Pause? Dann wieder rein!"],         // wenn man ein Gehege verlässt, ohne es zu schaffen
+      rucksackTitel:   "Mein Wörter-Rucksack",
+      rucksackLeer:    "Noch leer. Tippt die Tiere am Weg an: Sie verraten euch englische Wörter!",
+      rucksackVoll:    "Kraaah! Der Wörter-Rucksack ist voll. Ihr seid echte Wort-Sammler!"
+    }
   }
 };
 
