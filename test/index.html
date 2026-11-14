@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.6.3 (Prototyp)
+  Version 0.6.4 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,12 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.6.4 (14.11.2026)  – nur Testbereich
+    - Neu: Minispiele als Belohnung. Nach einer richtigen Bonusfrage im Zusatzraum erscheint „🎁 Minispiel?“.
+      Drei Spiele (Datei spiele/minispiele.js): Fütterungszeit, Taschenlampen-Suche, Robben-Jonglage.
+      30-Sekunden-Uhr im Eck, Ziel pro Spiel, Erfolgsmeldung. Zählt nicht für den Code; der Haupt-Timer bleibt pausiert.
+      Inhalte (Tiere, Futter, lustige Sprüche, Ziele) in daten/klasse5.js unter K5.minispiele;
+      Schalter minispieleAktiv und minispielSekunden in daten/allgemein.js.
   v0.6.3 (14.11.2026)  – nur Testbereich
     - Klasse 5, Unit 4–6: mehr Abwechslung. Neue Satzrahmen (Pronomen), Tiere, Situationen (must/needn't),
       Verben, Orte und Dinge; dazu „…Extra“-Listen mit erschließbaren Wörtern (guitar, camera, dolphin …) und Wörterhilfe.
@@ -91,7 +97,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.6.3</title>
+<title>Grammatik-Escape-Room Englisch – v0.6.4</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -121,6 +127,13 @@
   button,input{font:inherit}
   button,.anzeige,.chip{touch-action:manipulation}
   .screen{display:none}
+  .ms-feld{position:relative}
+  .ms-hud{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;pointer-events:none;z-index:6}
+  .ms-uhr,.ms-punkte{font:bold 1.2rem/1 ui-monospace,Menlo,Consolas,monospace;background:#000;color:#ffd23f;border:2px solid #ffd23f;border-radius:12px;padding:.35rem .55rem;white-space:nowrap}
+  .ms-punkte{color:#fff;border-color:#fff}
+  .ms-uhr.knapp{background:#ffd23f;color:#000;border-color:#000}
+  .ms-meldung{font-weight:bold;min-height:1.5em;margin:.2rem 0 .5rem}
+  .ms-ergebnis{text-align:center;font-size:1.25rem;margin-top:.8rem}
   .screen.aktiv{display:block}
   .karte{background:var(--karte);border:4px solid #000;border-radius:18px;padding:1.3rem;margin-bottom:1rem;box-shadow:0 8px 0 rgba(0,0,0,.45)}
   .nacht{background:linear-gradient(#13285e,#0b1736);color:#fff}
@@ -444,7 +457,20 @@
     <p id="zrFrage" class="zr-frage"></p>
     <div id="zrOptionen" class="zr-optionen" role="group" aria-labelledby="zrFrage"></div>
     <p id="zrMeldung"></p>
-    <button id="btnZusatzZurueck" class="gruen" hidden>Zur Übersicht</button>
+    <div class="knopfreihe"><button id="btnMinispiel" class="zweit" hidden>🎁 Minispiel?</button><button id="btnZusatzZurueck" class="gruen" hidden>Zur Übersicht</button></div>
+  </section>
+
+  <!-- ===== MINISPIEL (Belohnung nach dem Zusatzraum, höchstens 30 Sekunden) ===== -->
+  <section id="minispiel" class="screen karte" aria-labelledby="msTitel">
+    <h2 id="msTitel"></h2>
+    <p id="msAnleitung"></p>
+    <p id="msMeldung" class="ms-meldung" role="status"></p>
+    <div id="msFeld" class="ms-feld" hidden>
+      <div id="msBuehne" class="ms-buehne"></div>
+      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
+    </div>
+    <div id="msStart" class="knopfreihe"><button id="btnMsLos" class="gruen">▶ Los!</button><button id="btnMsNein" class="zweit">Lieber nicht</button></div>
+    <div id="msErgebnis" class="ms-ergebnis" hidden><p id="msErgebnisText" role="status"></p><button id="btnMsWeiter" class="gruen">Weiter</button></div>
   </section>
 
   <!-- ===== FINALE ===== -->
@@ -465,7 +491,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.6.3</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.6.4</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -491,7 +517,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.6.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.6.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -505,7 +531,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.6.3"></script>
+<script src="daten/allgemein.js?v=0.6.4"></script>
 
 <script>
 /* #####################################################################
@@ -559,7 +585,7 @@ const ART_BRAUCHT = {
 // wenn man die Klasse im Startmenü einstellt. Danach landen ihre Inhalte in diesen Sammelbehältern:
 const WELTEN = {}, THEMEN = [], BAUKASTEN = {}, WOERTERHILFE = [], GENERATOREN = {}, AUFGABEN = [], ZUSATZFRAGEN = [];
 const KLASSENDATEN = {};   // Klasse → Inhalt ihrer Datei
-const ABSCHNITTE = ["welt", "themen", "baukasten", "woerterhilfe", "generatoren", "aufgaben", "zusatzfragen"];
+const ABSCHNITTE = ["welt", "themen", "baukasten", "woerterhilfe", "generatoren", "aufgaben", "zusatzfragen", "minispiele"];
 // Steht ganz oben in jeder Klassendatei:  const K5 = neueKlasse(5);
 function neueKlasse(k){ return KLASSENDATEN[k] = { klasse: k }; }
 
@@ -1471,7 +1497,7 @@ function zeige(id, optionen){
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("aktiv"));
   $(id).classList.add("aktiv");
   $("kopf").hidden = ["setup", "finale", "gescheitert"].includes(id);
-  $("btnBeenden").hidden = id === "zusatz";   // im Zusatzraum gibt es kein Zurück
+  $("btnBeenden").hidden = id === "zusatz" || id === "minispiel";   // im Zusatzraum und im Minispiel gibt es kein Zurück
   window.scrollTo(0, 0);
   karteMelden(id, vorher, optionen || {});   // nur wirksam, wenn eine Karte angemeldet ist (sonst passiert nichts)
 }
@@ -1965,7 +1991,7 @@ let dialogPause = false;
 function dialogZu(){ $("dialog").hidden = true; if(dialogPause) countdownWeiter(); dialogPause = false; $("btnBeenden").focus(); }
 $("btnBeenden").onclick = () => { dialogPause = !!zaehler; countdownPause(); $("dialog").hidden = false; $("btnDialogNein").focus(); };
 $("btnDialogNein").onclick = dialogZu;
-$("btnDialogJa").onclick = () => { $("dialog").hidden = true; dialogPause = false; zusatzAbbrechen(); countdownStop(); stopKonfetti(); schritt = 0; setupZeigen(); zeige("setup"); };
+$("btnDialogJa").onclick = () => { $("dialog").hidden = true; dialogPause = false; zusatzAbbrechen(); minispielSchliessen(); countdownStop(); stopKonfetti(); schritt = 0; setupZeigen(); zeige("setup"); };
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("dialog").hidden) dialogZu(); });
 
 /* ===================== COUNTDOWN ===================== */
@@ -1999,7 +2025,7 @@ function zusatzBetreten(){
   countdownPause(); zusatzAbbrechen();
   zr = { laeuft: true, raf: 0, timeout: 0, weg: 0, ende: performance.now() + sek * 1000, frage: f, sek };
   $("zusatzTitel").textContent = w.zusatzraum.emoji + " " + w.zusatzraum.name; $("zrText").textContent = w.zusatzraum.text;
-  $("zrFrage").replaceChildren(textMitHilfe(f.frage)); $("zrMeldung").textContent = ""; $("btnZusatzZurueck").hidden = true; $("zusatz").classList.remove("knapp", "fliegt");
+  $("zrFrage").replaceChildren(textMitHilfe(f.frage)); $("zrMeldung").textContent = ""; $("btnZusatzZurueck").hidden = true; $("btnMinispiel").hidden = true; $("zusatz").classList.remove("knapp", "fliegt");
   const box = $("zrOptionen"); box.innerHTML = "";
   mischen(f.optionen).forEach(o => { const b = el("button", "", o); b.type = "button"; b.dataset.wert = o;
     b.onclick = () => { if(!zr.laeuft) return;
@@ -2032,7 +2058,7 @@ function zusatzEnde(erfolg, grund){
   if(erfolg){
     r.ziffer = S.code[r.nr];
     $("zrMeldung").textContent = "✅ Geschafft! Die Ziffer lautet: " + r.ziffer;
-    $("btnZusatzZurueck").hidden = false; $("btnZusatzZurueck").focus();
+    $("btnZusatzZurueck").hidden = false; $("btnMinispiel").hidden = !minispielVerfuegbar(); $("btnZusatzZurueck").focus();
     sage("zusatzGeschafft"); ton("jingle"); ansage("Geschafft! Die Ziffer lautet " + r.ziffer + ".");
   } else {
     const richtig = S.code[r.nr], pool = mischen([0,1,2,3,4,5,6,7,8,9].filter(z => z !== richtig));
@@ -2046,6 +2072,66 @@ function zusatzVerlassen(){ clearTimeout(zr.weg); $("zusatz").classList.remove("
 function zusatzAbbrechen(){ zr.laeuft = false; cancelAnimationFrame(zr.raf); clearTimeout(zr.timeout); clearTimeout(zr.weg); geigerStop(); $("zusatz").classList.remove("fliegt", "knapp"); }
 $("btnZusatz").onclick = zusatzBetreten;
 $("btnZusatzZurueck").onclick = zusatzVerlassen;
+
+/* ===================== MINISPIELE (Belohnung nach dem Zusatzraum) =====================
+   Die Spiele stehen in spiele/minispiele.js, Texte/Ziele/Tiere in daten/klasseX.js (KX.minispiele).
+   Hier: Knopf, Uhr (minispielSekunden), Punkte, Erfolgsmeldung. Der Haupt-Timer bleibt pausiert,
+   bis man zur Übersicht zurückkehrt. Es zählt nicht für den Code und es wird nichts gespeichert. */
+let ms = null, msLetztes = null;
+const minispielDaten = () => { const K = KLASSENDATEN[wahl.klasse]; return K && K.minispiele; };
+const minispielNamen = () => { const d = minispielDaten(); return d && d.spiele && window.MINISPIELE ? Object.keys(d.spiele).filter(n => typeof window.MINISPIELE[n] === "function") : []; };
+function minispielVerfuegbar(){ return EINSTELLUNGEN.minispieleAktiv !== false && minispielNamen().length > 0; }
+function minispielOeffnen(){
+  const namen = minispielNamen(); if(!namen.length) return;
+  const name = wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
+  const sp = minispielDaten().spiele[name], sek = Math.max(5, Math.round(EINSTELLUNGEN.minispielSekunden) || 30);
+  ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null };
+  $("msTitel").textContent = sp.titel || "Minispiel"; $("msAnleitung").textContent = (sp.anleitung || "") + " Ziel: " + ms.ziel + " in " + sek + " Sekunden.";
+  $("msUhr").textContent = "⏱ " + sek; $("msUhr").classList.remove("knapp");
+  $("msPunkte").textContent = "🎯 0 / " + ms.ziel; $("msMeldung").textContent = "";
+  $("msBuehne").replaceChildren(); $("msFeld").hidden = true; $("msStart").hidden = false; $("msErgebnis").hidden = true; $("msErgebnisText").textContent = "";
+  zeige("minispiel"); $("btnMsLos").focus();
+}
+function minispielLos(){
+  if(!ms || ms.laeuft || ms.ende) return;
+  $("msStart").hidden = true; $("msFeld").hidden = false; ms.laeuft = true;
+  $("msFeld").scrollIntoView({ block: "end", behavior: reduziert() ? "auto" : "smooth" });   // Spielfläche ganz ins Bild (wichtig am Handy)
+  const ctx = { daten: minispielDaten(), ziel: ms.ziel, reduziert: reduziert(), ton, laeuft: () => !!ms && ms.laeuft,
+    sage: t => { $("msMeldung").textContent = t; },
+    punkt: () => { if(!ms || !ms.laeuft) return; ms.punkte++;
+      $("msPunkte").textContent = "🎯 " + Math.min(ms.punkte, ms.ziel) + " / " + ms.ziel;
+      if(ms.punkte >= ms.ziel){ ms.laeuft = false; setTimeout(() => minispielEnde(true), 500); } } };
+  try { ms.stopp = window.MINISPIELE[ms.name]($("msBuehne"), ctx); }
+  catch(e){ console.error("Minispiel", e); minispielEnde(false); return; }
+  ms.uhr = setInterval(() => {
+    if(!ms || ms.ende) return; ms.rest--;
+    $("msUhr").textContent = "⏱ " + Math.max(0, ms.rest); $("msUhr").classList.toggle("knapp", ms.rest <= 5);
+    if(ms.rest <= 0) minispielEnde(ms.punkte >= ms.ziel);
+  }, 1000);
+}
+function minispielEnde(erfolg){
+  if(!ms || ms.ende) return; ms.ende = true; ms.laeuft = false; clearInterval(ms.uhr);
+  try { if(typeof ms.stopp === "function") ms.stopp(); } catch(e){}
+  const text = erfolg ? "⭐ Geschafft! " + (ms.sp.erfolg || "")
+                      : "⏱ Zeit um! " + ms.punkte + " von " + ms.ziel + (ms.punkte >= ms.ziel - 2 ? " – ganz knapp!" : ".") + " Beim nächsten Raubtierhaus klappt's bestimmt!";
+  $("msErgebnisText").textContent = text; $("msErgebnis").hidden = false; $("btnMsWeiter").focus();
+  if(erfolg){ ton("jingle"); starteKonfetti(); }
+  ansage(text);
+}
+function minispielSchliessen(){
+  if(ms){ const war = ms; ms = null; war.laeuft = false; clearInterval(war.uhr); if(!war.ende){ try { if(typeof war.stopp === "function") war.stopp(); } catch(e){} } }
+  stopKonfetti(); $("msBuehne").replaceChildren();
+}
+$("btnMinispiel").onclick = minispielOeffnen;
+$("btnMsLos").onclick = minispielLos;
+$("btnMsNein").onclick = () => { minispielSchliessen(); zusatzVerlassen(); };
+$("btnMsWeiter").onclick = () => { minispielSchliessen(); zusatzVerlassen(); };
+// Spiele-Datei laden (nur wenn eingeschaltet). Fehlt sie, erscheint der Knopf einfach nicht.
+if(EINSTELLUNGEN.minispieleAktiv !== false){
+  const sm = document.createElement("script"); sm.src = "spiele/minispiele.js?v=" + APP_VERSION;
+  sm.onerror = () => console.warn("spiele/minispiele.js nicht gefunden – keine Minispiele.");
+  document.body.appendChild(sm);
+}
 
 /* ===================== TON (Web Audio, keine Dateien, startet AUS) ===================== */
 let tonAn = false, ctx = null;

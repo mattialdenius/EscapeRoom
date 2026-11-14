@@ -1179,3 +1179,105 @@ K5.zusatzfragen = [
   { thema: "5-G17", frage: "Which word is wrong?  „Tom didn't saw the shark.“", optionen: ["Tom", "didn't", "saw", "shark"], loesung: "saw" },
   { thema: "5-G17", frage: "Which word fits?  „We ___ hear the doorbell last night.“", optionen: ["didn't", "don't", "weren't"], loesung: "didn't" }
 ];
+
+// =====================================================================
+// 8) MINISPIELE (Belohnung nach einem geschafften Raubtierhaus)
+//    Nach einer richtigen Bonusfrage erscheint der Knopf „🎁 Minispiel?“.
+//    Die Kinder entscheiden selbst. Das Spiel dauert höchstens 30 Sekunden
+//    (Einstellung minispielSekunden in daten/allgemein.js) und zählt NICHT für den Code.
+//    titel / anleitung / erfolg = Texte; ziel = so viele Punkte braucht man für den Erfolg.
+//    Neue Tiere oder neues Futter: einfach eine Zeile kopieren und ändern.
+// =====================================================================
+K5.minispiele = {
+  spiele: {
+    fuettern: {
+      titel: "🍽️ Fütterungszeit",
+      anleitung: "Die Tiere haben Hunger! Zieht das Futter zum richtigen Tier – oder tippt das Tier an.",
+      ziel: 6,
+      erfolg: "Alle satt und zufrieden! Die Zoowärterin ist beeindruckt."
+    },
+    taschenlampe: {
+      titel: "🔦 Taschenlampen-Suche",
+      anleitung: "Im Dunkeln verstecken sich Tiere. Fahrt mit dem Finger herum und leuchtet sie an!",
+      ziel: 5,
+      erfolg: "Alle gefunden! Ihr habt Augen wie eine Eule."
+    },
+    seeloewe: {
+      titel: "🦭 Robben-Jonglage",
+      anleitung: "Haltet den Ball in der Luft! Schiebt die Robbe mit dem Finger unter den Ball.",
+      ziel: 10,
+      erfolg: "Applaus! Die Robbe klatscht mit den Flossen. 👏"
+    }
+  },
+
+  // ---------- Fütterungszeit ----------
+  // tiere: id, emoji, en (englisch), de (deutsch), witz = was das Tier bei falschem Futter macht ({futter} = Name des Futters)
+  tiere: [
+    { id: "affe",     emoji: "🐒", en: "monkey",      de: "Affe",         witz: "Der Affe hält sich die Nase zu: „{futter}? Wo ist meine Banane?!“" },
+    { id: "pinguin",  emoji: "🐧", en: "penguin",     de: "Pinguin",      witz: "Der Pinguin watschelt beleidigt weg: „{futter}? Ich will Fisch!“" },
+    { id: "loewe",    emoji: "🦁", en: "lion",        de: "Löwe",         witz: "Der Löwe gähnt riesig: „{futter}? Ich bin doch kein Kaninchen!“" },
+    { id: "tiger",    emoji: "🐯", en: "tiger",       de: "Tiger",        witz: "Der Tiger faucht: „{futter}? Wo ist das Steak?!“" },
+    { id: "panda",    emoji: "🐼", en: "panda",       de: "Panda",        witz: "Der Panda kaut einfach weiter: „{futter}? Bambus oder gar nichts!“" },
+    { id: "koala",    emoji: "🐨", en: "koala",       de: "Koala",        witz: "Der Koala schläft einfach wieder ein. 💤 {futter} sind ihm zu anstrengend." },
+    { id: "eichhorn", emoji: "🐿️", en: "squirrel",    de: "Eichhörnchen", witz: "Das Eichhörnchen vergräbt die {futter} … und vergisst sofort, wo." },
+    { id: "hase",     emoji: "🐇", en: "rabbit",      de: "Kaninchen",    witz: "Das Kaninchen rümpft die Nase: „{futter}? Habt ihr keine Karotten?“" },
+    { id: "maus",     emoji: "🐭", en: "mouse",       de: "Maus",         witz: "Die Maus piepst empört: „{futter}? Wo ist der Käse?!“" },
+    { id: "hund",     emoji: "🐶", en: "dog",         de: "Hund",         witz: "Der Hund schaut euch mit großen Augen an … und versteckt die {futter} unterm Sofa." },
+    { id: "baer",     emoji: "🐻", en: "bear",        de: "Bär",          witz: "Der Bär brummt: „{futter}? Ohne Honig läuft hier gar nichts.“" },
+    { id: "frosch",   emoji: "🐸", en: "frog",        de: "Frosch",       witz: "Der Frosch schießt die Zunge raus … und spuckt die {futter} wieder aus. Quaaak!" },
+    { id: "huhn",     emoji: "🐔", en: "chicken",     de: "Huhn",         witz: "Das Huhn gackert: „{futter}? Dafür lege ich euch bestimmt kein Ei!“" },
+    { id: "giraffe",  emoji: "🦒", en: "giraffe",     de: "Giraffe",      witz: "Die Giraffe schaut von ganz oben herab: „{futter}? Da unten? Viel zu weit weg!“" },
+    { id: "elefant",  emoji: "🐘", en: "elephant",    de: "Elefant",      witz: "Der Elefant spritzt euch mit dem Rüssel nass. 💦 Das war wohl ein Nein." },
+    { id: "krokodil", emoji: "🐊", en: "crocodile",   de: "Krokodil",     witz: "Das Krokodil lächelt breit … zu breit. Lieber schnell etwas anderes geben!" },
+    { id: "robbe",    emoji: "🦭", en: "seal",        de: "Robbe",        witz: "Die Robbe klatscht mit den Flossen: Applaus für den Versuch – aber {futter}? Nein!" },
+    { id: "pferd",    emoji: "🐴", en: "horse",       de: "Pferd",        witz: "Das Pferd schnaubt und dreht euch den Po zu." },
+    { id: "papagei",  emoji: "🦜", en: "parrot",      de: "Papagei",      witz: "Der Papagei krächzt: „{futter}! {futter}! Igitt! Igitt!“" },
+    { id: "raupe",    emoji: "🐛", en: "caterpillar", de: "Raupe",        witz: "Die Raupe ist so beleidigt, dass sie sich in einen Kokon einwickelt." },
+    { id: "biene",    emoji: "🐝", en: "bee",         de: "Biene",        witz: "Die Biene summt: „{futter}? Da ist doch gar kein Nektar drin!“" },
+    { id: "igel",     emoji: "🦔", en: "hedgehog",    de: "Igel",         witz: "Der Igel rollt sich zu einer stacheligen Kugel ein. Gespräch beendet." },
+    { id: "hai",      emoji: "🦈", en: "shark",       de: "Hai",          witz: "Der Hai schwimmt eine Runde und schaut euch an: „Echt jetzt? {futter}?“" },
+    { id: "kuh",      emoji: "🐄", en: "cow",         de: "Kuh",          witz: "Die Kuh muht so laut, dass Polly fast vom Ast fällt: „Muuuh-nein!“" }
+  ],
+  // futter: haupt = Tiere, die eindeutig passen (eins davon ist die richtige Lösung)
+  //         auch  = Tiere, die das auch fressen würden – sie werden NIE als falsche Auswahl gezeigt (sonst wäre es unfair)
+  futter: [
+    { emoji: "🍌", en: "bananas",         de: "Bananen",            haupt: ["affe"],              auch: ["elefant", "papagei", "pferd", "baer"] },
+    { emoji: "🐟", en: "fish",            de: "Fisch",              haupt: ["pinguin", "robbe"],  auch: ["baer", "krokodil", "hai", "tiger"] },
+    { emoji: "🍖", en: "meat",            de: "Fleisch",            haupt: ["loewe", "tiger"],    auch: ["krokodil", "hund", "hai", "baer"] },
+    { emoji: "🎋", en: "bamboo",          de: "Bambus",             haupt: ["panda"],             auch: [] },
+    { emoji: "🌿", en: "eucalyptus",      de: "Eukalyptus",         haupt: ["koala"],             auch: [] },
+    { emoji: "🌰", en: "nuts",            de: "Nüsse",              haupt: ["eichhorn"],          auch: ["affe", "papagei", "maus", "baer"] },
+    { emoji: "🥕", en: "carrots",         de: "Karotten",           haupt: ["hase"],              auch: ["pferd", "elefant", "affe", "kuh", "maus", "baer", "papagei"] },
+    { emoji: "🧀", en: "cheese",          de: "Käse",               haupt: ["maus"],              auch: ["hund", "baer"] },
+    { emoji: "🦴", en: "a bone",          de: "Knochen",            haupt: ["hund"],              auch: ["loewe", "tiger", "krokodil", "hai", "baer"] },
+    { emoji: "🍯", en: "honey",           de: "Honig",              haupt: ["baer"],              auch: ["biene", "affe"] },
+    { emoji: "🪰", en: "flies",           de: "Fliegen",            haupt: ["frosch"],            auch: ["igel", "huhn"] },
+    { emoji: "🌽", en: "corn",            de: "Mais",               haupt: ["huhn"],              auch: ["kuh", "pferd", "maus", "eichhorn", "papagei", "baer", "affe", "elefant", "hase"] },
+    { emoji: "🍃", en: "leaves",          de: "Blätter",            haupt: ["giraffe"],           auch: ["raupe", "koala", "elefant", "affe", "panda", "hase", "kuh", "pferd"] },
+    { emoji: "🌾", en: "hay",             de: "Heu",                haupt: ["kuh", "pferd"],      auch: ["hase", "elefant", "giraffe"] },
+    { emoji: "🌻", en: "sunflower seeds", de: "Sonnenblumenkerne",  haupt: ["papagei"],           auch: ["eichhorn", "maus", "huhn", "hase"] },
+    { emoji: "🌸", en: "flowers",         de: "Blumen",             haupt: ["biene"],             auch: ["kuh", "raupe", "hase", "pferd"] },
+    { emoji: "🪲", en: "beetles",         de: "Käfer",              haupt: ["igel"],              auch: ["frosch", "huhn", "maus", "affe"] },
+    { emoji: "🍎", en: "apples",          de: "Äpfel",              haupt: ["pferd"],             auch: ["elefant", "affe", "baer", "kuh", "hase", "eichhorn", "maus", "papagei", "giraffe"] },
+    { emoji: "🌱", en: "grass",           de: "Gras",               haupt: ["kuh"],               auch: ["pferd", "hase", "elefant", "giraffe", "panda"] },
+    { emoji: "🍉", en: "watermelon",      de: "Wassermelone",       haupt: ["elefant"],           auch: ["affe", "papagei", "pferd", "baer", "hase", "kuh", "huhn", "giraffe"] },
+    { emoji: "🦐", en: "shrimps",         de: "Krabben",            haupt: ["robbe"],             auch: ["pinguin", "hai", "krokodil", "baer", "huhn"] }
+  ],
+  lob: ["😋 Yum!", "😋 Lecker!", "😋 Mmmh!", "😋 Danke!", "😋 Perfekt!"],
+
+  // ---------- Taschenlampen-Suche ----------
+  nachtTiere: [
+    { emoji: "🦉", en: "owl",      de: "Eule" },        { emoji: "🦇", en: "bat",      de: "Fledermaus" },
+    { emoji: "🦊", en: "fox",      de: "Fuchs" },       { emoji: "🦔", en: "hedgehog", de: "Igel" },
+    { emoji: "🦝", en: "raccoon",  de: "Waschbär" },    { emoji: "🐸", en: "frog",     de: "Frosch" },
+    { emoji: "🐌", en: "snail",    de: "Schnecke" },    { emoji: "🐿️", en: "squirrel", de: "Eichhörnchen" },
+    { emoji: "🐍", en: "snake",    de: "Schlange" },    { emoji: "🐢", en: "tortoise", de: "Schildkröte" },
+    { emoji: "🐭", en: "mouse",    de: "Maus" },        { emoji: "🦎", en: "lizard",   de: "Eidechse" },
+    { emoji: "🐈", en: "cat",      de: "Katze" },       { emoji: "🦡", en: "badger",   de: "Dachs" }
+  ],
+  kulisse: ["🌳", "🌲", "🪨", "🌿", "🌳", "🪵", "🌲", "🍄", "🌾", "🌳"],
+
+  // ---------- Robben-Jonglage ----------
+  robbe: "🦭", ball: "🏐",
+  platsch: ["Platsch! Nochmal!", "Ups! Neuer Ball!", "Daneben – weiter geht's!"]
+};
