@@ -473,7 +473,17 @@ K5.baukasten = {
       { text: "my sister and I", sub: "we", obj: "us",  poss: "our",   person: true },
       { text: "my parents",   sub: "they", obj: "them", poss: "their", person: true },
       { text: "my friends",   sub: "they", obj: "them", poss: "their", person: true },
-      { text: "Tom and Emma", sub: "they", obj: "them", poss: "their", person: true }
+      { text: "Tom and Emma", sub: "they", obj: "them", poss: "their", person: true },
+      { text: "Sam",          sub: "he",   obj: "him",  poss: "his",   person: true },
+      { text: "Mia",          sub: "she",  obj: "her",  poss: "her",   person: true },
+      { text: "my grandfather", sub: "he", obj: "him",  poss: "his",   person: true },
+      { text: "my grandmother", sub: "she", obj: "her", poss: "her",   person: true },
+      { text: "the pig",      sub: "it",   obj: "it",   poss: "its" }
+    ],
+    // erschließbare Wörter (nur wenn internationalismenAktiv)
+    bezugExtra: [
+      { text: "the hamster",  sub: "it",   obj: "it",   poss: "its" },
+      { text: "the pony",     sub: "it",   obj: "it",   poss: "its" }
     ],
     objRahmen: [
       { text: "{X} {BE} in the garden. Please take a photo of ___.", fuer: ["he", "she", "it", "we", "they"] },
@@ -481,17 +491,31 @@ K5.baukasten = {
       { text: "Where {BE} {x}? I can't find ___.",                   fuer: ["he", "she", "it", "they"] },
       { text: "I like {x}. I often play with ___.",                  fuer: ["he", "she", "it", "they"] },
       { text: "I can't find my pen. Can you help ___?",              fuer: ["I"] },
-      { text: "Hi {NAME}! This card is for ___.",                    fuer: ["you"] }
+      { text: "Hi {NAME}! This card is for ___.",                    fuer: ["you"] },
+      { text: "{X} {BE} in the kitchen. Can you give this cake to ___?", fuer: ["he", "she", "we", "they"], nurPerson: true },
+      { text: "{X} {BE} at the door. Please open the door for ___.",  fuer: ["he", "she", "it", "we", "they"] },
+      { text: "Where {BE} {x}? I want to talk to ___.",               fuer: ["he", "she", "they"], nurPerson: true },
+      { text: "{X} {BE} very nice. I often sit next to ___ at school.", fuer: ["he", "she", "they"], nurPerson: true },
+      { text: "Mum, please give the ball to ___! I want to play.",    fuer: ["I"] },
+      { text: "{NAME}, I have a present for ___!",                    fuer: ["you"] },
+      { text: "{NAME}, can I sit next to ___?",                       fuer: ["you"] }
     ],
     possRahmen: [
       { text: "{X} {HAT} a {D}. ___ {D} is {F}.",       fuer: ["I", "you", "he", "she", "it", "we", "they"] },
-      { text: "{X} {BE} at home. ___ {FAM} is there too.", fuer: ["I", "you", "he", "she", "we", "they"], nurPerson: true }
+      { text: "{X} {BE} at home. ___ {FAM} is there too.", fuer: ["I", "you", "he", "she", "we", "they"], nurPerson: true },
+      { text: "{X} {BE} in ___ room.",                  fuer: ["I", "you", "he", "she", "we", "they"], nurPerson: true },
+      { text: "{X} {HAT} a new {D}. ___ new {D} is {F}.", fuer: ["I", "you", "he", "she", "it", "we", "they"] },
+      { text: "{X} {BE} with ___ {FAM}.",               fuer: ["I", "you", "he", "she", "we", "they"], nurPerson: true },
+      { text: "{X} {BE} in ___ bed.",                   fuer: ["it"] }
     ],
     // für „Use him, her, it or them“: {x} wird durch das Bezugswort ersetzt
-    objNomen: ["I like {x}.", "Please take a photo of {x}.", "This present is for {x}.", "Can you help {x}?", "I often play with {x}."],
-    dinge:     ["bike", "bag", "cap", "T-shirt", "computer", "pencil case", "dog", "cat", "bed", "ruler"],
+    objNomen: ["I like {x}.", "Please take a photo of {x}.", "This present is for {x}.", "Can you help {x}?", "I often play with {x}.",
+               "Look at {x}!", "Please give the ball to {x}.", "I want to sit next to {x}.", "Please open the door for {x}."],
+    dinge:     ["bike", "bag", "cap", "T-shirt", "computer", "pencil case", "bed", "ruler", "scarf", "hat"],
+    dingeExtra: ["guitar", "camera", "jacket"],
     tierDinge: ["ball", "bed"],
-    gemeinsameDinge: ["dog", "cat", "computer", "garden"],   // für we / they (gehört allen zusammen)
+    gemeinsameDinge: ["computer", "bike"],   // für we / they (gehört allen zusammen)
+    gemeinsameDingeExtra: ["sofa", "camera"],
     farben:    ["red", "blue", "green", "yellow", "black", "white", "brown", "pink", "purple", "grey"],
     familie:   ["mum", "dad", "sister", "brother", "aunt", "uncle", "cousin", "grandmother", "grandfather"],
     namen:     ["Sam", "Mia", "Ben", "Lily"],
@@ -512,9 +536,16 @@ K5.baukasten = {
       { grund: "make",   s: "makes",   rest: "a cake" },       { grund: "ride",  s: "rides",   rest: "a bike" },
       { grund: "sing",   s: "sings",   rest: "songs" },        { grund: "have",  s: "has",     rest: "breakfast" },
       { grund: "take",   s: "takes",   rest: "the dog for a walk" }, { grund: "forget", s: "forgets", rest: "birthdays" },
-      { grund: "go",     s: "goes",    rest: "to the cinema" }
+      { grund: "go",     s: "goes",    rest: "to the cinema" },
+      { grund: "play",   s: "plays",   rest: "computer games" }, { grund: "go",    s: "goes",    rest: "shopping" },
+      { grund: "have",   s: "has",     rest: "lunch at school" }, { grund: "read", s: "reads",   rest: "stories" },
+      { grund: "give",   s: "gives",   rest: "presents" },       { grund: "walk",  s: "walks",   rest: "to school" }
     ],
-    wsBe: ["at home", "busy", "ready", "at school", "in the garden", "scared", "nice", "funny"],
+    wsVerbenExtra: [
+      { grund: "play",   s: "plays",   rest: "the guitar" },     { grund: "eat",   s: "eats",    rest: "spaghetti" },
+      { grund: "drink",  s: "drinks",  rest: "cola" },           { grund: "watch", s: "watches", rest: "videos" }
+    ],
+    wsBe: ["at home", "busy", "ready", "at school", "in the garden", "scared", "nice", "funny", "at the zoo", "in the kitchen"],
     adverbien: ["always", "often", "sometimes", "never"],
     erklaerungen: {
       pronomen: {
@@ -573,7 +604,24 @@ K5.baukasten = {
       { grund: "tell",   s: "tells",    past: "told",     rest: "a funny story", unreg: true, falsch: ["telled"] },
       { grund: "get",    s: "gets",     past: "got",      rest: "lost", unreg: true },
       { grund: "forget", s: "forgets",  past: "forgot",   rest: "{POSS} bag", unreg: true, einzeln: true },
-      { grund: "send",   s: "sends",    past: "sent",     rest: "a postcard", unreg: true, falsch: ["sended"] }
+      { grund: "send",   s: "sends",    past: "sent",     rest: "a postcard", unreg: true, falsch: ["sended"] },
+      { grund: "send",   s: "sends",    past: "sent",     rest: "a photo", unreg: true, falsch: ["sended"] },
+      { grund: "go",     s: "goes",     past: "went",     rest: "to a party", unreg: true, falsch: ["goed"], zeit: ["last Saturday", "last week", "last night"] },
+      { grund: "have",   s: "has",      past: "had",      rest: "lunch at school", unreg: true, falsch: ["haved"], nurKind: true, zeit: ["yesterday", "last week"] },
+      { grund: "see",    s: "sees",     past: "saw",      rest: "a lion", unreg: true },
+      { grund: "tell",   s: "tells",    past: "told",     rest: "a joke", unreg: true, falsch: ["telled"] },
+      { grund: "play",   s: "plays",    past: "played",   rest: "computer games" },
+      { grund: "go",     s: "goes",     past: "went",     rest: "to the museum", unreg: true, falsch: ["goed"] },
+      { grund: "walk",   s: "walks",    past: "walked",   rest: "to the station" }
+    ],
+    // erschließbare Wörter (nur wenn internationalismenAktiv)
+    verbenPastExtra: [
+      { grund: "play",   s: "plays",    past: "played",   rest: "the guitar" },
+      { grund: "watch",  s: "watches",  past: "watched",  rest: "a video" },
+      { grund: "listen", s: "listens",  past: "listened", rest: "to the radio" },
+      { grund: "buy",    s: "buys",     past: "bought",   rest: "a camera", unreg: true, falsch: ["buyed"] },
+      { grund: "see",    s: "sees",     past: "saw",      rest: "a kangaroo", unreg: true },
+      { grund: "have",   s: "has",      past: "had",      rest: "spaghetti", unreg: true, falsch: ["haved"] }
     ],
     zeitenPast: ["yesterday", "last week", "last Saturday", "last month", "last night"],
     erklaerungen: {
@@ -633,6 +681,14 @@ K5.baukasten = {
       { grund: "get",    s: "gets",     past: "got",      rest: "lost", unreg: true },
       { grund: "forget", s: "forgets",  past: "forgot",   rest: "{POSS} bag", unreg: true, einzeln: true },
       { grund: "send",   s: "sends",    past: "sent",     rest: "a postcard", unreg: true, falsch: ["sended"] },
+      { grund: "send",   s: "sends",    past: "sent",     rest: "a photo", unreg: true, falsch: ["sended"] },
+      { grund: "go",     s: "goes",     past: "went",     rest: "to a party", unreg: true, falsch: ["goed"], zeit: ["last Saturday", "last week", "last night"] },
+      { grund: "have",   s: "has",      past: "had",      rest: "lunch at school", unreg: true, falsch: ["haved"], nurKind: true, zeit: ["yesterday", "last week"] },
+      { grund: "see",    s: "sees",     past: "saw",      rest: "a lion", unreg: true },
+      { grund: "tell",   s: "tells",    past: "told",     rest: "a joke", unreg: true, falsch: ["telled"] },
+      { grund: "play",   s: "plays",    past: "played",   rest: "computer games" },
+      { grund: "go",     s: "goes",     past: "went",     rest: "to the museum", unreg: true, falsch: ["goed"] },
+      { grund: "walk",   s: "walks",    past: "walked",   rest: "to the station" },
       { grund: "meet",   s: "meets",    past: "met",      rest: "{POSS} friends", unreg: true, falsch: ["meeted"], einzeln: true },
       { grund: "come",   s: "comes",    past: "came",     rest: "to the party", unreg: true, falsch: ["comed"], zeit: ["yesterday", "last Saturday", "last night"] },
       { grund: "feed",   s: "feeds",    past: "fed",      rest: "the chickens", unreg: true, falsch: ["feeded"] },
@@ -648,6 +704,18 @@ K5.baukasten = {
       { grund: "stop",   s: "stops",    past: "stopped",  rest: "the tractor", falsch: ["stoped"] },
       { grund: "answer", s: "answers",  past: "answered", rest: "the question" }
     ],
+    // erschließbare Wörter (nur wenn internationalismenAktiv)
+    verbenPastExtra: [
+      { grund: "play",   s: "plays",    past: "played",   rest: "the guitar" },
+      { grund: "watch",  s: "watches",  past: "watched",  rest: "a video" },
+      { grund: "listen", s: "listens",  past: "listened", rest: "to the radio" },
+      { grund: "buy",    s: "buys",     past: "bought",   rest: "a camera", unreg: true, falsch: ["buyed"] },
+      { grund: "see",    s: "sees",     past: "saw",      rest: "a kangaroo", unreg: true },
+      { grund: "have",   s: "has",      past: "had",      rest: "spaghetti", unreg: true, falsch: ["haved"] },
+      { grund: "eat",    s: "eats",     past: "ate",      rest: "a banana", unreg: true, falsch: ["eated"] },
+      { grund: "feed",   s: "feeds",    past: "fed",      rest: "the zebras", unreg: true, falsch: ["feeded"] },
+      { grund: "wear",   s: "wears",    past: "wore",     rest: "a jacket", unreg: true, falsch: ["weared"] }
+    ],
     zeitenPast: ["yesterday", "last week", "last Saturday", "last month", "last night"],
 
     // can / can't: Tiere (wer = wer, rest = was, modal = richtige Antwort)
@@ -658,10 +726,22 @@ K5.baukasten = {
       { wer: "parrots",   rest: "talk",       modal: "can" },   { wer: "elephants", rest: "fly", modal: "can't" },
       { wer: "horses",    rest: "run",        modal: "can" },   { wer: "cats",     rest: "read", modal: "can't" },
       { wer: "dogs",      rest: "talk",       modal: "can't" }, { wer: "giraffes", rest: "eat leaves", modal: "can" },
-      { wer: "lions",     rest: "fly",        modal: "can't" }, { wer: "sheep",    rest: "fly",  modal: "can't" }
+      { wer: "lions",     rest: "fly",        modal: "can't" }, { wer: "sheep",    rest: "fly",  modal: "can't" },
+      { wer: "parrots",   rest: "fly",        modal: "can" },   { wer: "cats",     rest: "run",  modal: "can" },
+      { wer: "horses",    rest: "fly",        modal: "can't" }, { wer: "fish",     rest: "talk", modal: "can't" },
+      { wer: "monkeys",   rest: "read",       modal: "can't" }, { wer: "pigs",     rest: "fly",  modal: "can't" },
+      { wer: "chickens",  rest: "talk",       modal: "can't" }, { wer: "penguins", rest: "walk", modal: "can" },
+      { wer: "lions",     rest: "run",        modal: "can" },   { wer: "snakes",   rest: "sing", modal: "can't" }
+    ],
+    tierFaehigkeitenExtra: [
+      { wer: "dolphins",  rest: "swim",       modal: "can" },   { wer: "crocodiles", rest: "swim", modal: "can" },
+      { wer: "zebras",    rest: "fly",        modal: "can't" }, { wer: "kangaroos",  rest: "read", modal: "can't" },
+      { wer: "gorillas",  rest: "talk",       modal: "can't" }, { wer: "tigers",     rest: "run",  modal: "can" },
+      { wer: "hamsters",  rest: "fly",        modal: "can't" }, { wer: "pandas",     rest: "fly",  modal: "can't" }
     ],
     // can → can't (für „Make the sentence negative“)
-    personFaehigkeiten: ["swim", "play tennis", "ride a horse", "ride a bike", "dance", "sing", "play the drums", "play chess", "play basketball"],
+    personFaehigkeiten: ["swim", "play tennis", "ride a horse", "ride a bike", "dance", "sing", "play the drums", "play chess", "play basketball", "play football"],
+    personFaehigkeitenExtra: ["play the guitar", "ride a pony"],
     // must / needn't: vor = Situation, rest = was man (nicht) tun muss; nurKind: true = nur für Kinder (Schule …)
     situationen: [
       { vor: "It's Saturday.",          rest: "go to school",       modal: "needn't", nurKind: true },
@@ -676,7 +756,17 @@ K5.baukasten = {
       { vor: "The dog is friendly.",    rest: "be scared",          modal: "needn't" },
       { vor: "The dog is hungry.",      rest: "feed the dog",       modal: "must" },
       { vor: "Be careful on the horse!", rest: "wear a helmet",     modal: "must" },
-      { vor: "It's eight o'clock.",     rest: "go to school now",   modal: "must", nurKind: true }
+      { vor: "It's eight o'clock.",     rest: "go to school now",   modal: "must", nurKind: true },
+      { vor: "The room is a mess.",     rest: "clean the room",     modal: "must" },
+      { vor: "The cat is hungry.",      rest: "feed the cat",       modal: "must" },
+      { vor: "The horses are hungry.",  rest: "feed the horses",    modal: "must" },
+      { vor: "The bike is dirty.",      rest: "clean the bike",     modal: "must" },
+      { vor: "The bike is clean.",      rest: "clean the bike",     modal: "needn't" },
+      { vor: "We have lots of eggs.",   rest: "buy eggs",           modal: "needn't" },
+      { vor: "Dinner is ready.",        rest: "come to the kitchen now", modal: "must" },
+      { vor: "It's sunny.",             rest: "take a torch",       modal: "needn't" },
+      { vor: "It's hot.",               rest: "wear a coat",        modal: "needn't" },
+      { vor: "The snake is friendly.",  rest: "be scared",          modal: "needn't" }
     ],
 
     // was / were: Dinge mit Vorsatz (vor) und passenden Ergänzungen (erg)
@@ -688,10 +778,19 @@ K5.baukasten = {
       { text: "the animals", be: "are", vor: "We went to the zoo yesterday.",      erg: ["funny", "hungry"] },
       { text: "the people",  be: "are", vor: "We went to a farm last week.",       erg: ["friendly", "nice"] },
       { text: "the chips",   be: "are", vor: "We had fish and chips yesterday.",   erg: ["great", "cold"] },
-      { text: "the trip",    be: "is",  vor: "We went on a school trip last month.", erg: ["great", "exciting", "fun"] }
+      { text: "the trip",    be: "is",  vor: "We went on a school trip last month.", erg: ["great", "exciting", "fun"] },
+      { text: "the party",   be: "is",  vor: "We went to a party last Saturday.", erg: ["great", "fun", "boring"] },
+      { text: "the beach",   be: "is",  vor: "We went to the seaside last week.",  erg: ["beautiful"] },
+      { text: "the market",  be: "is",  vor: "We went to town yesterday.",         erg: ["busy"] },
+      { text: "the horses",  be: "are", vor: "We went to a farm last week.",       erg: ["hungry", "friendly"] }
+    ],
+    dingSubjekteExtra: [
+      { text: "the pizza",   be: "is",  vor: "We had pizza last night.",           erg: ["great", "cold"] },
+      { text: "the zebras",  be: "are", vor: "We went to the zoo yesterday.",      erg: ["funny"] }
     ],
     ergaenzungen: ["at home", "at school", "at the seaside", "at the zoo", "in the park", "at the cinema", "at the party",
-                   "tired", "hungry", "sick", "happy", "busy"],
+                   "tired", "hungry", "sick", "happy", "busy", "at the museum", "in the garden", "in the kitchen", "on the farm",
+                   "at the market", "in town", "at the station"],
     erklaerungen: {
       pastaussage: {
         reg:      "In der Vergangenheit bekommt ein regelmäßiges Verb -ed (bei -e nur -d; plan → planned). Die Form ist bei allen Personen gleich. Beispiel: {BEISPIEL}",
@@ -728,6 +827,8 @@ K5.baukasten = {
 // =====================================================================
 K5.woerterhilfe = [
   { en: "fly", de: "fliegen" }, { en: "swim", de: "schwimmen" },
+  { en: "guitar", de: "Gitarre" }, { en: "camera", de: "Kamera" }, { en: "jacket", de: "Jacke" }, { en: "spaghetti", de: "Spaghetti" },
+  { en: "dolphin", de: "Delfin" }, { en: "crocodile", de: "Krokodil" }, { en: "gorilla", de: "Gorilla" }, { en: "gorillas", de: "Gorillas" }, { en: "dolphins", de: "Delfine" }, { en: "panda", de: "Panda" },
   { en: "ball", de: "Ball" }, { en: "hand", de: "Hand" }, { en: "film", de: "Film" }, { en: "hamster", de: "Hamster" },
   { en: "elephant", de: "Elefant" }, { en: "tiger", de: "Tiger" }, { en: "zebra", de: "Zebra" }, { en: "giraffe", de: "Giraffe" },
   { en: "kangaroo", de: "Känguru" }, { en: "hotel", de: "Hotel" }, { en: "sofa", de: "Sofa" }, { en: "taxi", de: "Taxi" },
