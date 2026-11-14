@@ -1,9 +1,9 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.1 (passt zu App-Version 0.6.4, Testbereich)
+   Version:  minispiele 0.2 (passt zu App-Version 0.6.5, Testbereich)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
-             seeloewe (Robben-Jonglage)
+             seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel)
    Daten:    Texte, Ziele, Tiere und Futter stehen in daten/klasseX.js unter
              KX.minispiele. Hier steht nur die Spieltechnik.
    Rahmen:   index.html startet ein Spiel, zeigt die 30-Sekunden-Uhr, zählt
@@ -14,6 +14,8 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.2 (14.11.2026)  Taschenlampe schwerer (kleineres Licht, 6 Tiere, teils hinter
+                       Büschen, Licht ½ Sekunde draufhalten). Neu: Obstkorb, Affen-Schaukel.
      0.1 (14.11.2026)  Erste Fassung mit drei Spielen.
    ===================================================================== */
 (function(){
@@ -75,6 +77,27 @@ if(!document.getElementById("minispielStil")){
   .ms-ro-meldung{position:absolute;left:50%;top:30%;transform:translateX(-50%);background:#fff;color:#000;border:3px solid #000;border-radius:12px;
     padding:.3rem .7rem;font-weight:bold;display:none;z-index:4}
   .ms-ro-meldung.an{display:block}
+  .ms-ta-tier.spur::after{content:"";position:absolute;left:50%;top:.6em;width:2.2em;height:2.2em;transform:translate(-50%,-50%);border:3px dashed #ffd23f;border-radius:50%}
+  .ms-ta-versteck{z-index:1;font-size:2.6rem}
+  .ms-ta-versteck.weg{opacity:.35}
+  /* Obstkorb */
+  .ms-ok-boden{position:absolute;left:0;right:0;bottom:0;height:16px;background:#2e6b3a;border-top:3px solid #000}
+  .ms-ok-korb{position:absolute;left:0;top:0;font-size:3.6rem;line-height:1;pointer-events:none;will-change:transform}
+  .ms-ok-korb.gesperrt{opacity:.55}
+  .ms-ok-korb.wackelt{filter:grayscale(1)}
+  .ms-ok-ding{position:absolute;left:0;top:0;font-size:2.4rem;line-height:1;pointer-events:none;will-change:transform}
+  .ms-ok-ding.muell{filter:grayscale(.6)}
+  /* Affen-Schaukel */
+  .ms-sc-welt{position:absolute;inset:0;will-change:transform}
+  .ms-sc-liane{position:absolute;width:6px;margin-left:-3px;background:#3d7a35;border:2px solid #000;border-radius:3px;transform-origin:50% 0}
+  .ms-sc-liane::before{content:"";position:absolute;left:50%;top:-14px;width:34px;height:14px;margin-left:-17px;background:#2a5a25;border:2px solid #000;border-radius:8px}
+  .ms-sc-liane span{position:absolute;left:-10px;top:40%;font-size:1.2rem}
+  .ms-sc-liane.naechste{background:#ffd23f}
+  .ms-sc-affe{position:absolute;left:0;top:0;font-size:2.8rem;line-height:1;pointer-events:none;will-change:transform}
+  .ms-sc-ring{position:absolute;left:50%;top:50%;width:3.6rem;height:3.6rem;transform:translate(-50%,-50%);border:4px solid #fff;outline:3px solid #000;border-radius:50%;display:none}
+  .ms-sc-ring.an{display:block}
+  .ms-sc-netz{position:absolute;left:0;right:0;bottom:0;height:26px;border-top:3px solid #000;
+    background:repeating-linear-gradient(45deg,#c9b38a 0 3px,transparent 3px 12px),repeating-linear-gradient(-45deg,#c9b38a 0 3px,transparent 3px 12px),#3b2a14}
   `;
   document.head.appendChild(st);
 }
@@ -155,48 +178,58 @@ function fuettern(buehne, ctx){
 }
 
 // =====================================================================
-// 2) TASCHENLAMPEN-SUCHE – im Dunkeln Tiere anleuchten
+// 2) TASCHENLAMPEN-SUCHE – im Dunkeln Tiere anleuchten (Licht kurz draufhalten)
 // =====================================================================
 function taschenlampe(buehne, ctx){
-  const D = ctx.daten, ziel = ctx.ziel;
+  const D = ctx.daten, ziel = ctx.ziel, HALTEN = 0.5;   // so lange (Sekunden) muss das Licht auf dem Tier bleiben
   const dunkel = el("div", "ms-ta-dunkel"); buehne.appendChild(dunkel);
   buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Dunkler Zoo. Mit dem Finger oder den Pfeiltasten leuchten.");
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
-  // Kulisse (Bäume, Steine) und versteckte Tiere: zufällige Plätze mit Abstand zueinander
   const plaetze = [];
   const frei = (x, y, d) => plaetze.every(p => Math.hypot(p.x - x, p.y - y) > d);
-  function platz(d){ for(let i = 0; i < 200; i++){ const x = 0.1 + Math.random() * 0.8, y = 0.2 + Math.random() * 0.68; if(frei(x, y, d)){ plaetze.push({ x, y }); return { x, y }; } } const p = { x: Math.random() * .8 + .1, y: Math.random() * .7 + .15 }; plaetze.push(p); return p; }
-  const tiere = mischen(D.nachtTiere || []).slice(0, ziel).map(t => {
+  function platz(d){ for(let i = 0; i < 200; i++){ const x = 0.1 + Math.random() * 0.8, y = 0.2 + Math.random() * 0.68; if(frei(x, y, d)){ plaetze.push({ x, y }); return { x, y }; } } const p = { x: Math.random() * .8 + .1, y: Math.random() * .68 + .2 }; plaetze.push(p); return p; }
+  const kulisse = D.kulisse || ["🌳"];
+  const tiere = mischen(D.nachtTiere || []).slice(0, ziel).map((t, i) => {
     const p = platz(0.2), d = el("div", "ms-ta-tier"); d.append(document.createTextNode(t.emoji), el("span", "schild", "✓ " + t.en + " = " + t.de));
     if(p.x < 0.3) d.classList.add("links"); else if(p.x > 0.7) d.classList.add("rechts");   // Namensschild am Rand nach innen rücken
-    d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; buehne.appendChild(d); return { t, p, d, gefunden: false };
+    d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; buehne.insertBefore(d, dunkel);
+    if(i % 2 === 0){   // jedes zweite Tier steckt halb hinter einem Busch
+      const v = el("div", "ms-ta-ding ms-ta-versteck", wuerfle(["🌿", "🌳", "🪨", "🌾"]));
+      v.style.left = (p.x * 100 + (Math.random() < .5 ? -2.5 : 2.5)) + "%"; v.style.top = (p.y * 100 + 3) + "%"; buehne.insertBefore(v, dunkel);
+      return { t, p, d, v, zeit: 0, gefunden: false };
+    }
+    return { t, p, d, zeit: 0, gefunden: false };
   });
-  (D.kulisse || []).forEach(k => { const p = platz(0.1), d = el("div", "ms-ta-ding", k); d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; d.style.opacity = .9; buehne.insertBefore(d, dunkel); });
-  let lx = W() / 2, ly = H() / 2;
-  const radius = () => Math.max(55, Math.min(W(), H()) * 0.17);
-  function zeichne(){
+  kulisse.forEach(k => { const p = platz(0.1), d = el("div", "ms-ta-ding", k); d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; buehne.insertBefore(d, buehne.firstChild); });
+  let lx = W() / 2, ly = H() / 2, raf = 0, t0 = 0;
+  const radius = () => Math.max(48, Math.min(W(), H()) * 0.115);
+  function schritt(t){
+    const dt = Math.min(0.05, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
     const r = radius();
-    dunkel.style.background = "radial-gradient(circle at " + lx + "px " + ly + "px, rgba(255,240,180,.10) 0, rgba(255,240,180,.06) " + (r * 0.75) + "px, rgba(3,6,18,.985) " + r + "px)";
+    dunkel.style.background = "radial-gradient(circle at " + lx + "px " + ly + "px, rgba(255,240,180,.10) 0, rgba(255,240,180,.06) " + (r * 0.7) + "px, rgba(3,6,18,.99) " + r + "px)";
     tiere.forEach(o => {
       if(o.gefunden) return;
-      const x = o.p.x * W(), y = o.p.y * H();
-      if(Math.hypot(x - lx, y - ly) < r * 0.6){
-        o.gefunden = true; o.d.classList.add("gefunden"); ctx.ton("richtig");
-        ctx.sage("🔦 Gefunden: " + o.t.en + " = " + o.t.de); ctx.punkt();
+      const imLicht = Math.hypot(o.p.x * W() - lx, o.p.y * H() - ly) < r * 0.6;
+      o.zeit = imLicht ? o.zeit + dt : Math.max(0, o.zeit - dt * 2);
+      o.d.classList.toggle("spur", imLicht);
+      if(o.zeit >= HALTEN){
+        o.gefunden = true; o.d.classList.remove("spur"); o.d.classList.add("gefunden"); if(o.v) o.v.classList.add("weg");
+        ctx.ton("richtig"); ctx.sage("🔦 Gefunden: " + o.t.en + " = " + o.t.de); ctx.punkt();
       }
     });
+    raf = requestAnimationFrame(schritt);
   }
-  const setze = e => { const r = buehne.getBoundingClientRect(); lx = clamp(e.clientX - r.left, 0, r.width); ly = clamp(e.clientY - r.top, 0, r.height); zeichne(); };
+  const setze = e => { const r = buehne.getBoundingClientRect(); lx = clamp(e.clientX - r.left, 0, r.width); ly = clamp(e.clientY - r.top, 0, r.height); };
   const unten = e => { if(!ctx.laeuft()) return; e.preventDefault(); try { buehne.setPointerCapture(e.pointerId); } catch(err){} setze(e); };
   const bewegt = e => { if(!ctx.laeuft()) return; if(e.pointerType === "mouse" || e.buttons || e.pressure > 0) setze(e); };
   const taste = e => {
-    const s = 26, m = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s] }[e.key];
-    if(!m || !ctx.laeuft()) return; e.preventDefault(); lx = clamp(lx + m[0], 0, W()); ly = clamp(ly + m[1], 0, H()); zeichne();
+    const s = 22, m = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s] }[e.key];
+    if(!m || !ctx.laeuft()) return; e.preventDefault(); lx = clamp(lx + m[0], 0, W()); ly = clamp(ly + m[1], 0, H());
   };
   buehne.addEventListener("pointerdown", unten); buehne.addEventListener("pointermove", bewegt); buehne.addEventListener("keydown", taste);
-  const groesse = () => zeichne(); window.addEventListener("resize", groesse);
-  zeichne(); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
-  return () => { buehne.removeEventListener("pointerdown", unten); buehne.removeEventListener("pointermove", bewegt); buehne.removeEventListener("keydown", taste); window.removeEventListener("resize", groesse); buehne.removeAttribute("tabindex"); };
+  raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); buehne.removeEventListener("pointerdown", unten); buehne.removeEventListener("pointermove", bewegt); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
 }
 
 // =====================================================================
@@ -243,5 +276,124 @@ function seeloewe(buehne, ctx){
   return () => { cancelAnimationFrame(raf); buehne.removeEventListener("pointerdown", unten); buehne.removeEventListener("pointermove", bewegt); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
 }
 
-window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe });
+
+// =====================================================================
+// 4) OBSTKORB – Korb mit dem Finger schieben, Obst fangen, Müll ausweichen
+// =====================================================================
+function obstkorb(buehne, ctx){
+  const D = ctx.daten, obst = D.obst || [{ emoji: "🍎", en: "apple", de: "Apfel" }], muell = D.muell || ["🪨"];
+  const korb = el("div", "ms-ok-korb", "🧺"), meldung = el("div", "ms-ro-meldung"), boden = el("div", "ms-ok-boden");
+  buehne.append(boden, korb, meldung);
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Obstkorb. Korb mit dem Finger oder den Pfeiltasten bewegen.");
+  const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
+  const KB = 46;                                   // halbe Korbbreite (Fangzone)
+  const korbY = () => H() - 74;                    // Höhe des Korbrands
+  let kx = W() / 2, zielX = kx, dinge = [], raf = 0, t0 = 0, neu = 0.3, gesperrt = 0, gefangen = 0, mtimer = null;
+  const tempo = () => (ctx.reduziert ? 120 : 165) + gefangen * (ctx.reduziert ? 4 : 7);   // fällt langsam schneller
+  function zeige(text){ meldung.textContent = text; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function neuesDing(){
+    const istObst = Math.random() < 0.72, o = istObst ? wuerfle(obst) : null;
+    const d = el("div", "ms-ok-ding", istObst ? o.emoji : wuerfle(muell));
+    if(!istObst) d.classList.add("muell");
+    buehne.insertBefore(d, meldung);
+    dinge.push({ d, o, x: 24 + Math.random() * (W() - 48), y: -30, v: tempo() * (0.85 + Math.random() * 0.3) });
+  }
+  function schritt(t){
+    const dt = Math.min(0.033, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    kx += (zielX - kx) * Math.min(1, dt * 16); kx = clamp(kx, KB, W() - KB);
+    if(gesperrt > 0) gesperrt -= dt;
+    neu -= dt; if(neu <= 0){ neuesDing(); neu = (ctx.reduziert ? 1.0 : 0.75) * (0.8 + Math.random() * 0.4); }
+    for(let i = dinge.length - 1; i >= 0; i--){
+      const g = dinge[i]; g.y += g.v * dt;
+      if(g.y >= korbY() - 10 && g.y <= korbY() + 22 && Math.abs(g.x - kx) < KB && gesperrt <= 0){
+        g.d.remove(); dinge.splice(i, 1);
+        if(g.o){ gefangen++; ctx.ton("richtig"); zeige("✓ " + g.o.emoji + " " + g.o.en + " = " + g.o.de); ctx.punkt(); }
+        else { ctx.ton("falsch"); zeige("✗ " + wuerfle(D.autsch || ["Autsch!"])); gesperrt = 0.7; korb.classList.add("wackelt"); setTimeout(() => korb.classList.remove("wackelt"), 700); }
+        continue;
+      }
+      if(g.y > H() + 30){ g.d.remove(); dinge.splice(i, 1); continue; }
+      g.d.style.transform = "translate(" + (g.x - 20) + "px," + (g.y - 20) + "px)";
+    }
+    korb.style.transform = "translate(" + (kx - 32) + "px," + (korbY() - 18) + "px)";
+    korb.classList.toggle("gesperrt", gesperrt > 0);
+    raf = requestAnimationFrame(schritt);
+  }
+  const setze = e => { const r = buehne.getBoundingClientRect(); zielX = clamp(e.clientX - r.left, 0, r.width); };
+  const unten = e => { if(!ctx.laeuft()) return; e.preventDefault(); try { buehne.setPointerCapture(e.pointerId); } catch(err){} setze(e); };
+  const bewegt = e => { if(ctx.laeuft()) setze(e); };
+  const taste = e => { const m = { ArrowLeft: -45, ArrowRight: 45 }[e.key]; if(!m || !ctx.laeuft()) return; e.preventDefault(); zielX = clamp(zielX + m, 0, W()); };
+  buehne.addEventListener("pointerdown", unten); buehne.addEventListener("pointermove", bewegt); buehne.addEventListener("keydown", taste);
+  raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("pointerdown", unten); buehne.removeEventListener("pointermove", bewegt); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
+}
+
+// =====================================================================
+// 5) AFFEN-SCHAUKEL – im richtigen Moment tippen, dann springt der Affe zur nächsten Liane
+//    Der richtige Moment ist großzügig (Ring ⭕ um den Affen), damit es auch mit
+//    leicht verzögertem Touch klappt. Daneben = Netz, ohne Strafe.
+// =====================================================================
+function schaukel(buehne, ctx){
+  const D = ctx.daten;
+  const welt = el("div", "ms-sc-welt"), affe = el("div", "ms-sc-affe", D.affe || "🐒"), ring = el("div", "ms-sc-ring"), netz = el("div", "ms-sc-netz"), meldung = el("div", "ms-ro-meldung");
+  buehne.append(welt, netz, meldung); welt.append(affe); affe.appendChild(ring);
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Affen-Schaukel. Tippen oder Leertaste, wenn der Ring erscheint.");
+  const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
+  const ABSTAND = () => Math.min(W() * 0.55, 260), L = () => Math.min(H() * 0.48, 230), OBEN = 54;
+  const A = 0.62, PERIODE = ctx.reduziert ? 2.3 : 1.7, w = 2 * Math.PI / PERIODE;
+  let lianen = [], nr = 0, phase = -Math.PI / 2, zustand = "schwingt", flug = null, kamera = 0, kamZiel = 0, raf = 0, t0 = 0, mtimer = null;
+  function liane(i){ const d = el("div", "ms-sc-liane"); d.innerHTML = "<span>🍃</span>"; welt.insertBefore(d, affe); lianen[i] = d; return d; }
+  for(let i = 0; i < 3; i++) liane(i);
+  const anker = i => ({ x: W() * 0.28 + i * ABSTAND(), y: OBEN });
+  const winkel = () => A * Math.sin(phase), drehung = () => A * w * Math.cos(phase);
+  const ende = (i, th) => { const a = anker(i); return { x: a.x + Math.sin(th) * L(), y: a.y + Math.cos(th) * L() }; };
+  const imFenster = () => { const th = winkel(), v = drehung(); return (v > 0 && th > 0.12) || (v <= 0 && th > A * 0.7); };   // Vorwärtsschwung bis kurz nach dem höchsten Punkt
+  function zeige(text){ meldung.textContent = text; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 1000); }
+  function springen(){
+    if(!ctx.laeuft() || zustand !== "schwingt") return;
+    const start = ende(nr, winkel());
+    if(imFenster()){
+      if(!lianen[nr + 2]) liane(nr + 2);
+      const ziel = { x: anker(nr + 1).x + Math.sin(-0.35) * L(), y: OBEN + Math.cos(-0.35) * L() };
+      flug = { art: "sprung", t: 0, dauer: 0.5, start, ziel }; zustand = "fliegt";
+    } else {
+      flug = { art: "fall", t: 0, dauer: 0.6, start, ziel: { x: start.x + drehung() * 40, y: H() - 34 } }; zustand = "fliegt";
+      ctx.ton("falsch"); zeige("🕸️ " + wuerfle(D.netz || ["Ins Netz! Nochmal!"]));
+    }
+  }
+  function schritt(t){
+    const dt = Math.min(0.033, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    let pos;
+    if(zustand === "schwingt"){ phase += w * dt; pos = ende(nr, winkel()); }
+    else {
+      flug.t += dt; const u = Math.min(1, flug.t / flug.dauer);
+      if(flug.art === "sprung"){
+        pos = { x: flug.start.x + (flug.ziel.x - flug.start.x) * u, y: flug.start.y + (flug.ziel.y - flug.start.y) * u - Math.sin(u * Math.PI) * 70 };
+        if(u >= 1){ nr++; phase = Math.asin(-0.35 / A); zustand = "schwingt"; kamZiel = nr * ABSTAND(); ctx.ton("richtig"); ctx.punkt(); }
+      } else {
+        pos = { x: flug.start.x + (flug.ziel.x - flug.start.x) * u, y: flug.start.y + (flug.ziel.y - flug.start.y) * u * u };
+        if(flug.t >= flug.dauer + 0.5){ phase = -Math.PI / 2; zustand = "schwingt"; }
+      }
+    }
+    kamera += (kamZiel - kamera) * Math.min(1, dt * 6);
+    welt.style.transform = "translateX(" + (-kamera) + "px)";
+    // Lianen zeichnen: die aktuelle schwingt mit dem Affen, die anderen hängen still
+    lianen.forEach((d, i) => {
+      if(!d) return; const a = anker(i), th = (i === nr && zustand === "schwingt") ? winkel() : 0;
+      d.style.left = a.x + "px"; d.style.top = a.y + "px"; d.style.height = L() + "px"; d.style.transform = "rotate(" + (-th) + "rad)";
+      d.classList.toggle("naechste", i === nr + 1);
+    });
+    affe.style.transform = "translate(" + (pos.x - 26) + "px," + (pos.y - 20) + "px)";
+    ring.classList.toggle("an", zustand === "schwingt" && imFenster());
+    raf = requestAnimationFrame(schritt);
+  }
+  const tipp = e => { if(!ctx.laeuft()) return; e.preventDefault(); springen(); };
+  const taste = e => { if(e.key === " " || e.key === "Enter"){ e.preventDefault(); springen(); } };
+  buehne.addEventListener("pointerdown", tipp); buehne.addEventListener("keydown", taste);
+  raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("pointerdown", tipp); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
+}
+
+window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel });
 })();

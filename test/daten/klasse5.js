@@ -1198,8 +1198,8 @@ K5.minispiele = {
     },
     taschenlampe: {
       titel: "🔦 Taschenlampen-Suche",
-      anleitung: "Im Dunkeln verstecken sich Tiere. Fahrt mit dem Finger herum und leuchtet sie an!",
-      ziel: 5,
+      anleitung: "Im Dunkeln verstecken sich Tiere – manche hinter Büschen. Fahrt mit dem Finger herum und haltet das Licht kurz auf ein Tier!",
+      ziel: 6,
       erfolg: "Alle gefunden! Ihr habt Augen wie eine Eule."
     },
     seeloewe: {
@@ -1207,6 +1207,18 @@ K5.minispiele = {
       anleitung: "Haltet den Ball in der Luft! Schiebt die Robbe mit dem Finger unter den Ball.",
       ziel: 10,
       erfolg: "Applaus! Die Robbe klatscht mit den Flossen. 👏"
+    },
+    obstkorb: {
+      titel: "🧺 Obstkorb",
+      anleitung: "Obst fällt vom Baum! Schiebt den Korb mit dem Finger und fangt es auf. Vorsicht vor Steinen und alten Stiefeln!",
+      ziel: 12,
+      erfolg: "Der Korb ist voll! Die Affen sagen danke."
+    },
+    schaukel: {
+      titel: "🐒 Affen-Schaukel",
+      anleitung: "Der Affe schwingt an der Liane. Tippt, sobald der Ring ⭕ um ihn erscheint – dann springt er zur nächsten Liane!",
+      ziel: 6,
+      erfolg: "Was für ein Sprung-Profi! Die Affenbande nimmt euch auf."
     }
   },
 
@@ -1279,5 +1291,22 @@ K5.minispiele = {
 
   // ---------- Robben-Jonglage ----------
   robbe: "🦭", ball: "🏐",
-  platsch: ["Platsch! Nochmal!", "Ups! Neuer Ball!", "Daneben – weiter geht's!"]
+  platsch: ["Platsch! Nochmal!", "Ups! Neuer Ball!", "Daneben – weiter geht's!"],
+
+  // ---------- Obstkorb ----------
+  obst: [
+    { emoji: "🍎", en: "apple",      de: "Apfel" },       { emoji: "🍌", en: "banana",    de: "Banane" },
+    { emoji: "🍐", en: "pear",       de: "Birne" },       { emoji: "🍊", en: "orange",    de: "Orange" },
+    { emoji: "🍓", en: "strawberry", de: "Erdbeere" },    { emoji: "🍇", en: "grapes",    de: "Weintrauben" },
+    { emoji: "🍒", en: "cherries",   de: "Kirschen" },    { emoji: "🍑", en: "peach",     de: "Pfirsich" },
+    { emoji: "🍍", en: "pineapple",  de: "Ananas" },      { emoji: "🥝", en: "kiwi",      de: "Kiwi" },
+    { emoji: "🍋", en: "lemon",      de: "Zitrone" },     { emoji: "🍉", en: "watermelon", de: "Wassermelone" },
+    { emoji: "🥭", en: "mango",      de: "Mango" },       { emoji: "🫐", en: "blueberries", de: "Heidelbeeren" }
+  ],
+  muell: ["🪨", "🥾", "🧦", "🥫"],          // nicht fangen!
+  autsch: ["Autsch! Ein Stein!", "Igitt, ein alter Stiefel!", "Wer wirft denn Socken vom Baum?!", "Eine Dose? Das ist kein Obst!"],
+
+  // ---------- Affen-Schaukel ----------
+  affe: "🐒",
+  netz: ["Ins Netz! Nochmal!", "Hoppla! Gleich nochmal!", "Fast! Wartet auf den Ring ⭕."]
 };
