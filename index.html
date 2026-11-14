@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.6.6 (Prototyp)
+  Version 0.6.7 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.6.7 (14.11.2026)
+    - Die Zoo-Karte ist jetzt die Hauptversion (entdeckerModus: true in daten/allgemein.js).
+      Backup ohne Karte (klassische Übersicht mit Kacheln): Adresse mit ?karte=0.
   v0.6.6 (14.11.2026)  – nur Testbereich
     - Minispiele 0.3: neu Pollys Nachtflug (8 Sterne) und Pinguin-Rutsche (8 Fische) mit beweglichem Hintergrund.
     - Korrektur: „▶ Los!“ und „Lieber nicht“ verschwinden jetzt beim Spielstart (waren seit 0.6.4 sichtbar geblieben).
@@ -102,7 +105,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.6.6</title>
+<title>Grammatik-Escape-Room Englisch – v0.6.7</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -497,7 +500,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.6.6</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.6.7</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -523,7 +526,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.6.6";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.6.7";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -537,7 +540,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.6.6"></script>
+<script src="daten/allgemein.js?v=0.6.7"></script>
 
 <script>
 /* #####################################################################
@@ -2254,8 +2257,10 @@ const EscapeAPI = {
 };
 Object.freeze(EscapeAPI); window.EscapeAPI = EscapeAPI;
 $("btnZurKarte").onclick = () => zeige("uebersicht");
-// Karte nur laden, wenn ausdrücklich gewünscht (Adresse …?karte=1 oder entdeckerModus: true in daten/allgemein.js)
-if(/[?&]karte=1\b/.test(location.search) || EINSTELLUNGEN.entdeckerModus === true){
+// Karte laden: mit entdeckerModus: true in daten/allgemein.js (Standard) oder mit …?karte=1 in der Adresse.
+// …?karte=0 in der Adresse schaltet die Karte immer ab (Backup: klassische Übersicht mit Kacheln).
+const karteAus = /[?&]karte=0\b/.test(location.search);
+if(!karteAus && (/[?&]karte=1\b/.test(location.search) || EINSTELLUNGEN.entdeckerModus === true)){
   const sk = document.createElement("script"); sk.src = "welt/karte.js?v=" + APP_VERSION;
   sk.onerror = () => console.warn("welt/karte.js nicht gefunden – es bleibt bei der klassischen Übersicht.");
   document.body.appendChild(sk);
