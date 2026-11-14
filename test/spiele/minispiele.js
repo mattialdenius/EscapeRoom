@@ -1,9 +1,11 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.2 (passt zu App-Version 0.6.5, Testbereich)
+   Version:  minispiele 0.3 (passt zu App-Version 0.6.6, Testbereich)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
-             seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel)
+             seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
+             nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
+             gemeinsamen Baustein „laufband“ (beweglicher Hintergrund)
    Daten:    Texte, Ziele, Tiere und Futter stehen in daten/klasseX.js unter
              KX.minispiele. Hier steht nur die Spieltechnik.
    Rahmen:   index.html startet ein Spiel, zeigt die 30-Sekunden-Uhr, zählt
@@ -14,6 +16,7 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.3 (14.11.2026)  Neu: Pollys Nachtflug und Pinguin-Rutsche mit beweglichem Hintergrund.
      0.2 (14.11.2026)  Taschenlampe schwerer (kleineres Licht, 6 Tiere, teils hinter
                        Büschen, Licht ½ Sekunde draufhalten). Neu: Obstkorb, Affen-Schaukel.
      0.1 (14.11.2026)  Erste Fassung mit drei Spielen.
@@ -77,6 +80,22 @@ if(!document.getElementById("minispielStil")){
   .ms-ro-meldung{position:absolute;left:50%;top:30%;transform:translateX(-50%);background:#fff;color:#000;border:3px solid #000;border-radius:12px;
     padding:.3rem .7rem;font-weight:bold;display:none;z-index:4}
   .ms-ro-meldung.an{display:block}
+  /* Laufband, Nachtflug, Rutsche */
+  .ms-lb-teil{position:absolute;left:0;top:0;line-height:1;pointer-events:none;will-change:transform}
+  .ms-lb-teil.hell{color:#fff;opacity:.75}
+  .ms-lb-teil.fern{opacity:.28;filter:grayscale(.6)}   /* Hintergrund klar blasser als Hindernisse */
+  .ms-nf-polly,.ms-ru-pingu{position:absolute;left:0;top:0;line-height:1;pointer-events:none;will-change:transform;z-index:3}
+  .ms-nf-polly{font-size:2.7rem}
+  .ms-ru-pingu{font-size:3rem}
+  .ms-nf-polly.geschuetzt,.ms-ru-pingu.geschuetzt{opacity:.5}
+  .ms-nf-baum{position:absolute;left:0;top:0;width:54px;box-sizing:border-box;background:#5a3a1c;border:3px solid #000;border-radius:6px;will-change:transform}
+  .ms-nf-baum .krone{position:absolute;left:50%;transform:translateX(-50%);font-size:3rem;line-height:1}
+  .ms-nf-baum.oben .krone{bottom:-1.4rem}
+  .ms-nf-baum.unten .krone{top:-1.6rem}
+  .ms-nf-stern{position:absolute;left:0;top:0;font-size:2rem;line-height:1;pointer-events:none;will-change:transform;z-index:2}
+  .ms-ru-boden{position:absolute;left:0;right:0;bottom:0;height:56px;border-top:3px solid #000;
+    background:repeating-linear-gradient(90deg,#e6f6ff 0 40px,#c3e6fb 40px 80px)}
+  .ms-ru-ding{position:absolute;left:0;top:0;font-size:2.3rem;line-height:1;pointer-events:none;will-change:transform;z-index:2}
   .ms-ta-tier.spur::after{content:"";position:absolute;left:50%;top:.6em;width:2.2em;height:2.2em;transform:translate(-50%,-50%);border:3px dashed #ffd23f;border-radius:50%}
   .ms-ta-versteck{z-index:1;font-size:2.6rem}
   .ms-ta-versteck.weg{opacity:.35}
@@ -395,5 +414,155 @@ function schaukel(buehne, ctx){
   return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("pointerdown", tipp); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
 }
 
-window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel });
+// =====================================================================
+// GEMEINSAMER BAUSTEIN: Laufband – Hintergrund, der nach links wandert (Nachtflug, Rutsche)
+//   ebenen: [{ zeichen: [...], anzahl, y: [von, bis] (Anteil der Höhe), faktor (Tempo-Anteil), groesse, klasse }]
+//   ruhig = true (Bewegung reduzieren): der Hintergrund bleibt stehen
+// =====================================================================
+function laufband(buehne, ebenen, ruhig){
+  const W = () => buehne.clientWidth, H = () => buehne.clientHeight, teile = [];
+  ebenen.forEach(eb => { for(let i = 0; i < eb.anzahl; i++){
+    const d = el("div", "ms-lb-teil " + (eb.klasse || ""), wuerfle(eb.zeichen)); d.style.fontSize = eb.groesse || "1rem";
+    buehne.insertBefore(d, buehne.firstChild);
+    teile.push({ d, eb, x: Math.random() * (W() + 60), y: eb.y[0] + Math.random() * (eb.y[1] - eb.y[0]) });
+  } });
+  const setze = t => { t.d.style.transform = "translate(" + t.x + "px," + (t.y * H()) + "px)"; };
+  teile.forEach(setze);
+  return { schritt(dt, tempo){ if(ruhig) return; teile.forEach(t => {
+    t.x -= tempo * t.eb.faktor * dt;
+    if(t.x < -70){ t.x = W() + Math.random() * 60; t.y = t.eb.y[0] + Math.random() * (t.eb.y[1] - t.eb.y[0]); t.d.textContent = wuerfle(t.eb.zeichen); }
+    setze(t); }); } };
+}
+const rechteckTrifft = (cx, cy, r, x1, y1, x2, y2) => { const nx = clamp(cx, x1, x2), ny = clamp(cy, y1, y2); return Math.hypot(cx - nx, cy - ny) < r; };
+
+// =====================================================================
+// 6) POLLYS NACHTFLUG – tippen = flattern; zwischen Bäumen hindurch, Sterne sammeln.
+//    Anstoßen beendet nichts: Polly taumelt kurz und ist 1 Sekunde „unverwundbar“.
+// =====================================================================
+function nachtflug(buehne, ctx){
+  const D = ctx.daten, F = D.flug || {};
+  const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
+  const band = laufband(buehne, [{ zeichen: F.himmel || ["✨"], anzahl: 14, y: [0.06, 0.92], faktor: 0.25, groesse: "1.1rem", klasse: "hell" }], ctx.reduziert);
+  const polly = el("div", "ms-nf-polly", F.figur || "🦜"), meldung = el("div", "ms-ro-meldung");
+  buehne.append(polly, meldung);
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Pollys Nachtflug. Tippen oder Leertaste zum Flattern.");
+  const tempo = () => clamp(W() * 0.42, 120, 220) * (ctx.reduziert ? 0.7 : 1);   // Tempo passt zur Breite → im Hochformat gleich viel Vorlauf
+  const g = ctx.reduziert ? 520 : 680, FLAP = ctx.reduziert ? -240 : -270, RP = 18, BB = 54;
+  let px = W() * 0.25, py = H() * 0.45, vy = 0, schutz = 0, baeume = [], sterne = [], raf = 0, t0 = 0, erster = 1.0, mtimer = null;
+  function zeige(text){ meldung.textContent = text; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function stern(x, y){ const d = el("div", "ms-nf-stern", F.stern || "⭐"); buehne.insertBefore(d, polly); sterne.push({ d, x, y }); }
+  function neuerBaum(){
+    const luecke = clamp(H() * 0.42, 150, 230), mitte = luecke / 2 + 40 + Math.random() * (H() - luecke - 90);
+    const oben = el("div", "ms-nf-baum oben"), unten = el("div", "ms-nf-baum unten");
+    oben.append(el("span", "krone", F.krone || "🌳")); unten.append(el("span", "krone", F.krone || "🌳"));
+    buehne.insertBefore(oben, polly); buehne.insertBefore(unten, polly);
+    const b = { x: W() + 10, mitte, luecke, oben, unten }; baeume.push(b);
+    stern(b.x + BB / 2, mitte);
+    if(Math.random() < 0.5) stern(b.x + BB / 2 + tempo() * 0.95, 60 + Math.random() * (H() - 140));   // Bonusstern zwischen den Bäumen
+  }
+  function flattern(){ if(!ctx.laeuft()) return; vy = FLAP; polly.classList.add("flap"); setTimeout(() => polly.classList.remove("flap"), 120); }
+  function schritt(t){
+    const dt = Math.min(0.033, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    const v = tempo(); band.schritt(dt, v);
+    vy += g * dt; py += vy * dt;
+    if(py < RP){ py = RP; vy = 0; }
+    if(py > H() - RP - 6){ py = H() - RP - 6; vy = FLAP * 0.7; }   // Boden federt sanft zurück
+    if(schutz > 0) schutz -= dt;
+    erster -= dt;
+    const abstand = clamp(v * 1.9, 200, 420);
+    if(erster <= 0 && (!baeume.length || baeume[baeume.length - 1].x < W() - abstand)) neuerBaum();
+    for(let i = baeume.length - 1; i >= 0; i--){
+      const b = baeume[i]; b.x -= v * dt;
+      const obenEnde = b.mitte - b.luecke / 2, untenAnfang = b.mitte + b.luecke / 2;
+      b.oben.style.transform = "translate(" + b.x + "px,0)"; b.oben.style.height = obenEnde + "px";
+      b.unten.style.transform = "translate(" + b.x + "px," + untenAnfang + "px)"; b.unten.style.height = (H() - untenAnfang) + "px";
+      if(schutz <= 0 && (rechteckTrifft(px, py, RP - 3, b.x, 0, b.x + BB, obenEnde) || rechteckTrifft(px, py, RP - 3, b.x, untenAnfang, b.x + BB, H()))){
+        schutz = 1.0; vy = 60; ctx.ton("falsch"); zeige("🪶 " + wuerfle(D.flugAutsch || ["Autsch!"]));
+      }
+      if(b.x < -BB - 10){ b.oben.remove(); b.unten.remove(); baeume.splice(i, 1); }
+    }
+    for(let i = sterne.length - 1; i >= 0; i--){
+      const s = sterne[i]; s.x -= v * dt;
+      if(Math.hypot(s.x - px, s.y - py) < 30){ s.d.remove(); sterne.splice(i, 1); ctx.ton("richtig"); ctx.punkt(); continue; }
+      if(s.x < -40){ s.d.remove(); sterne.splice(i, 1); continue; }
+      s.d.style.transform = "translate(" + (s.x - 16) + "px," + (s.y - 16) + "px)";
+    }
+    polly.style.transform = "translate(" + (px - 22) + "px," + (py - 22) + "px) rotate(" + clamp(vy / 12, -25, 35) + "deg)";
+    polly.classList.toggle("geschuetzt", schutz > 0);
+    raf = requestAnimationFrame(schritt);
+  }
+  const tipp = e => { if(!ctx.laeuft()) return; e.preventDefault(); flattern(); };
+  const taste = e => { if(e.key === " " || e.key === "Enter" || e.key === "ArrowUp"){ e.preventDefault(); flattern(); } };
+  buehne.addEventListener("pointerdown", tipp); buehne.addEventListener("keydown", taste);
+  raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("pointerdown", tipp); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
+}
+
+// =====================================================================
+// 7) PINGUIN-RUTSCHE – tippen = springen; über Hindernisse, Fische schnappen.
+//    Ein Tipp kurz vor der Landung wird gemerkt (springt sofort wieder ab).
+//    Anstoßen: kurz langsamer, 1 Sekunde Schutz, keine Strafe.
+// =====================================================================
+function rutsche(buehne, ctx){
+  const D = ctx.daten, R = D.rutsche || {};
+  const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
+  const band = laufband(buehne, [
+    { zeichen: (R.hintergrund || ["🏔️"]).filter(z => z !== "❄️" && z !== "☁️"), anzahl: 4, y: [0.70, 0.72], faktor: 0.15, groesse: "4.5rem", klasse: "fern" },
+    { zeichen: ["☁️"], anzahl: 3, y: [0.08, 0.3], faktor: 0.25, groesse: "2.6rem", klasse: "fern" },
+    { zeichen: ["❄️", "·", "❄️"], anzahl: 10, y: [0.05, 0.6], faktor: 0.45, groesse: "1rem", klasse: "hell" }], ctx.reduziert);
+  const boden = el("div", "ms-ru-boden"), pingu = el("div", "ms-ru-pingu", R.figur || "🐧"), meldung = el("div", "ms-ro-meldung");
+  buehne.append(boden, pingu, meldung);
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Pinguin-Rutsche. Tippen oder Leertaste zum Springen.");
+  const BH = 56, bodenY = () => H() - BH;                       // Oberkante des Eises
+  const g = ctx.reduziert ? 1150 : 1500, sprungH = () => clamp(H() * 0.3, 105, 150);
+  const grundTempo = () => clamp(W() * 0.45, 140, 240) * (ctx.reduziert ? 0.7 : 1);
+  let px = W() * 0.22, py = 0, vy = 0, amBoden = true, vorgemerkt = 0, schutz = 0, bremse = 0, dinge = [], raf = 0, t0 = 0, naechstes = 0.9, bodenVersatz = 0, mtimer = null;
+  function zeige(text){ meldung.textContent = text; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function ding(art, hoch){
+    const d = el("div", "ms-ru-ding " + art, art === "fisch" ? (R.fisch || "🐟") : wuerfle(R.hindernisse || ["🧊"]));
+    buehne.insertBefore(d, pingu); dinge.push({ d, art, x: W() + 30, h: hoch || 0 });   // h = Höhe über dem Eis
+  }
+  function neuesDing(){
+    if(Math.random() < 0.6){ ding("hindernis"); if(Math.random() < 0.5) ding("fisch", sprungH() * 0.85); }   // oft schwebt ein Fisch über dem Hindernis
+    else ding("fisch", Math.random() < 0.4 ? 0 : sprungH() * (0.5 + Math.random() * 0.4));
+  }
+  function springen(){
+    if(!ctx.laeuft()) return;
+    if(amBoden){ vy = -Math.sqrt(2 * g * sprungH()); amBoden = false; pingu.classList.add("sprung"); }
+    else vorgemerkt = 0.15;                                      // kurz vor der Landung gedrückt → gleich wieder springen
+  }
+  function schritt(t){
+    const dt = Math.min(0.033, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    if(bremse > 0) bremse -= dt; if(schutz > 0) schutz -= dt; if(vorgemerkt > 0) vorgemerkt -= dt;
+    const v = grundTempo() * (bremse > 0 ? 0.5 : 1);
+    band.schritt(dt, v);
+    if(!ctx.reduziert){ bodenVersatz = (bodenVersatz + v * dt) % 80; boden.style.backgroundPosition = (-bodenVersatz) + "px 0"; }
+    if(!amBoden){ vy += g * dt; py += vy * dt; if(py >= 0){ py = 0; vy = 0; amBoden = true; pingu.classList.remove("sprung"); if(vorgemerkt > 0){ vorgemerkt = 0; springen(); } } }
+    naechstes -= dt; if(naechstes <= 0){ neuesDing(); naechstes = (ctx.reduziert ? 1.35 : 1.05) * (0.8 + Math.random() * 0.5); }
+    const fy = bodenY() + py;                                    // Füße des Pinguins
+    for(let i = dinge.length - 1; i >= 0; i--){
+      const o = dinge[i]; o.x -= v * dt;
+      const oy = bodenY() - o.h;                                 // Unterkante des Dings
+      if(o.art === "fisch"){
+        if(Math.hypot(o.x - px, (oy - 16) - (fy - 24)) < 36){ o.d.remove(); dinge.splice(i, 1); ctx.ton("richtig"); ctx.punkt(); continue; }
+      } else if(schutz <= 0 && Math.abs(o.x - px) < 28 && fy > oy - 30){
+        schutz = 1.0; bremse = 0.8; ctx.ton("falsch"); zeige("💥 " + wuerfle(D.rutscheAutsch || ["Rumms!"]));
+      }
+      if(o.x < -50){ o.d.remove(); dinge.splice(i, 1); continue; }
+      o.d.style.transform = "translate(" + (o.x - 18) + "px," + (oy - 36) + "px)";
+    }
+    pingu.style.transform = "translate(" + (px - 24) + "px," + (fy - 50) + "px) rotate(" + (amBoden ? -8 : clamp(vy / 25, -20, 20)) + "deg)";
+    pingu.classList.toggle("geschuetzt", schutz > 0);
+    raf = requestAnimationFrame(schritt);
+  }
+  const tipp = e => { if(!ctx.laeuft()) return; e.preventDefault(); springen(); };
+  const taste = e => { if(e.key === " " || e.key === "Enter" || e.key === "ArrowUp"){ e.preventDefault(); springen(); } };
+  buehne.addEventListener("pointerdown", tipp); buehne.addEventListener("keydown", taste);
+  raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("pointerdown", tipp); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
+}
+
+window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel, nachtflug, rutsche });
 })();

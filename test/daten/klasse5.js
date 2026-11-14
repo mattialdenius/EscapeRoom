@@ -1219,6 +1219,18 @@ K5.minispiele = {
       anleitung: "Der Affe schwingt an der Liane. Tippt, sobald der Ring ⭕ um ihn erscheint – dann springt er zur nächsten Liane!",
       ziel: 6,
       erfolg: "Was für ein Sprung-Profi! Die Affenbande nimmt euch auf."
+    },
+    nachtflug: {
+      titel: "🦜 Pollys Nachtflug",
+      anleitung: "Tippt, damit Polly flattert! Fliegt zwischen den Bäumen hindurch und sammelt Sterne ⭐. Anstoßen ist nicht schlimm – Polly taumelt nur kurz.",
+      ziel: 8,
+      erfolg: "Polly hat den halben Himmel eingesammelt – 8 Sterne!"
+    },
+    rutsche: {
+      titel: "🐧 Pinguin-Rutsche",
+      anleitung: "Tippt, damit der Pinguin springt! Hüpft über Eisblöcke und Schneemänner und schnappt euch die Fische 🐟.",
+      ziel: 8,
+      erfolg: "Satt und glücklich! Der Pinguin macht vor Freude einen Bauchplatscher."
     }
   },
 
@@ -1308,5 +1320,13 @@ K5.minispiele = {
 
   // ---------- Affen-Schaukel ----------
   affe: "🐒",
-  netz: ["Ins Netz! Nochmal!", "Hoppla! Gleich nochmal!", "Fast! Wartet auf den Ring ⭕."]
+  netz: ["Ins Netz! Nochmal!", "Hoppla! Gleich nochmal!", "Fast! Wartet auf den Ring ⭕."],
+
+  // ---------- Pollys Nachtflug ----------
+  flug: { figur: "🦜", stern: "⭐", krone: "🌳", himmel: ["✨", "·", "✨", "🌙", "·", "✨"] },
+  flugAutsch: ["Autsch! Ein Ast!", "Huch! Weiterflattern!", "Kraaah! Fast!", "Federn zerzaust – weiter!"],
+
+  // ---------- Pinguin-Rutsche ----------
+  rutsche: { figur: "🐧", fisch: "🐟", hindernisse: ["🧊", "⛄", "🪨"], hintergrund: ["🏔️", "❄️", "🏔️", "☁️"] },
+  rutscheAutsch: ["Rumms! Weiterrutschen!", "Bauchlandung! Weiter!", "Autsch, kalt!", "Hoppla – Kopf hoch!"]
 };
