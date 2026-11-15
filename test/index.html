@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.6.7 (Prototyp)
+  Version 0.6.8 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,11 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.6.8 (15.11.2026)  – nur Testbereich
+    - Welten für Klasse 6–10 fertig beschrieben (Geschichte, Räume, Figur, Zusatzraum, Ausgang, Sätze) in daten/klasse6–10.js.
+    - Vorschau einer Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=6 … ?welt=10 (nur zum Testen).
+    - Jede Welt kann ein eigenes Figurenbild mitbringen (welt.figurSvg); ohne Angabe bleibt Polly.
+    - Text nach einem Minispiel ohne „Raubtierhaus“ (passt in jede Welt).
   v0.6.7 (14.11.2026)
     - Die Zoo-Karte ist jetzt die Hauptversion (entdeckerModus: true in daten/allgemein.js).
       Backup ohne Karte (klassische Übersicht mit Kacheln): Adresse mit ?karte=0.
@@ -105,7 +110,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.6.7</title>
+<title>Grammatik-Escape-Room Englisch – v0.6.8</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -136,6 +141,7 @@
   button,.anzeige,.chip{touch-action:manipulation}
   .screen{display:none}
   .ms-feld{position:relative}
+  .vorschau-hinweis{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:50;background:#ffd23f;color:#000;border:2px solid #000;border-radius:10px;padding:.2rem .6rem;font-size:.85rem;font-weight:bold;pointer-events:none}
   .ms-hud{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;pointer-events:none;z-index:6}
   .ms-uhr,.ms-punkte{font:bold 1.2rem/1 ui-monospace,Menlo,Consolas,monospace;background:#000;color:#ffd23f;border:2px solid #ffd23f;border-radius:12px;padding:.35rem .55rem;white-space:nowrap}
   .ms-punkte{color:#fff;border-color:#fff}
@@ -375,7 +381,7 @@
   <!-- ===== KOPFLEISTE: Begleitfigur, Countdown, Ton ===== -->
   <header class="kopf" id="kopf" hidden>
     <figure class="figur">
-      <svg viewBox="0 0 120 130" aria-hidden="true">
+      <svg id="figurBild" viewBox="0 0 120 130" aria-hidden="true">
         <path d="M46 22L40 4L54 16L60 0L66 16L80 6L72 24Z" fill="#ff9f1c" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
         <path d="M34 72Q18 100 40 124Q50 98 48 74Z" fill="#2b59c3" stroke="#000" stroke-width="3"/>
         <ellipse cx="62" cy="86" rx="28" ry="36" fill="#3ddc97" stroke="#000" stroke-width="3"/>
@@ -500,7 +506,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.6.7</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.6.8</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -526,7 +532,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.6.7";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.6.8";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -540,7 +546,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.6.7"></script>
+<script src="daten/allgemein.js?v=0.6.8"></script>
 
 <script>
 /* #####################################################################
@@ -1491,11 +1497,22 @@ function zieheZusatzfrage(themen, benutzt){
 /* ===================== SPIELZUSTAND ===================== */
 const wahl = { klasse: 5, art: null, auswahl: null, niveau: null, zeit: null };   // Auswahl im Startmenü
 let S = null;   // laufende Mission (wird beim Neustart komplett neu angelegt – nichts wird gespeichert)
-const welt = () => WELTEN[wahl.klasse];
+// Vorschau einer anderen Welt (nur zum Testen): …?welt=6 zeigt die Welt der Klasse 6 mit den Aufgaben der gewählten Klasse
+const VORSCHAU_WELT = (() => { const m = location.search.match(/[?&]welt=(\d+)/); return m && KLASSEN_DATEIEN && KLASSEN_DATEIEN[m[1]] ? +m[1] : null; })();
+const welt = () => (VORSCHAU_WELT && WELTEN[VORSCHAU_WELT] && WELTEN[VORSCHAU_WELT].raeume) ? WELTEN[VORSCHAU_WELT] : WELTEN[wahl.klasse];
 const KLASSEN = Object.keys(typeof KLASSEN_DATEIEN === "object" ? KLASSEN_DATEIEN : {}).map(Number).sort((a, b) => a - b);   // aus daten/allgemein.js
 const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => t.klasse === k && hatInhalt(t.id));
 
 /* ----- Figur ----- */
+// Bild der Begleitfigur: eine Welt kann in welt.figurSvg ein eigenes SVG mitbringen
+// (Inhalt eines <svg viewBox="0 0 120 130">, also nur die Formen). Ohne Angabe bleibt Polly.
+let figurStandard = null;
+function figurBildSetzen(){
+  const svg = $("figurBild"); if(!svg) return;
+  if(figurStandard === null) figurStandard = svg.innerHTML;
+  const w = welt(), eigen = w && typeof w.figurSvg === "string" && w.figurSvg.trim();
+  svg.innerHTML = eigen ? w.figurSvg : figurStandard;
+}
 const letzte = new Map();
 function zufallSatz(liste){ if(!liste || !liste.length) return ""; let i; do { i = Math.floor(Math.random() * liste.length); } while(liste.length > 1 && i === letzte.get(liste)); letzte.set(liste, i); return liste[i]; }
 function figurSagt(text){ if(!text) return; const b = $("sprechblase"); b.textContent = text; b.classList.remove("neu"); void b.offsetWidth; b.classList.add("neu"); }
@@ -1661,6 +1678,7 @@ function starteMission(){
   S.raeume.forEach(r => { for(let i = 0; i < EINSTELLUNGEN.aufgabenProRaum; i++){ const a = zieheFuerRaum(r); if(a) r.liste.push(a); } });
   // Kopf + Intro
   $("figurName").textContent = welt().figur;
+  figurBildSetzen();
   $("introEmoji").textContent = welt().emoji; $("introTitel").textContent = welt().name; $("introText").textContent = welt().intro;
   const info = $("introInfo"); info.innerHTML = "";
   const was = wahl.art === "thema" ? themaVon(wahl.auswahl).titel : wahl.art === "unit" ? "Unit " + wahl.auswahl : "Wiederholung bis Unit " + wahl.auswahl;
@@ -2087,7 +2105,7 @@ $("btnZusatzZurueck").onclick = zusatzVerlassen;
    Hier: Knopf, Uhr (minispielSekunden), Punkte, Erfolgsmeldung. Der Haupt-Timer bleibt pausiert,
    bis man zur Übersicht zurückkehrt. Es zählt nicht für den Code und es wird nichts gespeichert. */
 let ms = null, msLetztes = null;
-const minispielDaten = () => { const K = KLASSENDATEN[wahl.klasse]; return K && K.minispiele; };
+const minispielDaten = () => { const V = VORSCHAU_WELT && KLASSENDATEN[VORSCHAU_WELT]; if(V && V.minispiele) return V.minispiele; const K = KLASSENDATEN[wahl.klasse]; return K && K.minispiele; };
 const minispielNamen = () => { const d = minispielDaten(); return d && d.spiele && window.MINISPIELE ? Object.keys(d.spiele).filter(n => typeof window.MINISPIELE[n] === "function") : []; };
 function minispielVerfuegbar(){ return EINSTELLUNGEN.minispieleAktiv !== false && minispielNamen().length > 0; }
 function minispielOeffnen(){
@@ -2122,7 +2140,7 @@ function minispielEnde(erfolg){
   if(!ms || ms.ende) return; ms.ende = true; ms.laeuft = false; clearInterval(ms.uhr);
   try { if(typeof ms.stopp === "function") ms.stopp(); } catch(e){}
   const text = erfolg ? "⭐ Geschafft! " + (ms.sp.erfolg || "")
-                      : "⏱ Zeit um! " + ms.punkte + " von " + ms.ziel + (ms.punkte >= ms.ziel - 2 ? " – ganz knapp!" : ".") + " Beim nächsten Raubtierhaus klappt's bestimmt!";
+                      : "⏱ Zeit um! " + ms.punkte + " von " + ms.ziel + (ms.punkte >= ms.ziel - 2 ? " – ganz knapp!" : ".") + " Beim nächsten Mal klappt's bestimmt!";
   $("msErgebnisText").textContent = text; $("msErgebnis").hidden = false; $("btnMsWeiter").focus();
   if(erfolg){ ton("jingle"); starteKonfetti(); }
   ansage(text);
@@ -2135,6 +2153,13 @@ $("btnMinispiel").onclick = minispielOeffnen;
 $("btnMsLos").onclick = minispielLos;
 $("btnMsNein").onclick = () => { minispielSchliessen(); zusatzVerlassen(); };
 $("btnMsWeiter").onclick = () => { minispielSchliessen(); zusatzVerlassen(); };
+// Vorschau-Welt laden (…?welt=N) und deutlich kennzeichnen
+if(VORSCHAU_WELT){
+  ladeKlasse(VORSCHAU_WELT);
+  const hinweis = document.createElement("div"); hinweis.className = "vorschau-hinweis";
+  hinweis.textContent = "👁️ Vorschau: Welt der Klasse " + VORSCHAU_WELT + " (Aufgaben der gewählten Klasse)";
+  document.body.appendChild(hinweis);
+}
 // Spiele-Datei laden (nur wenn eingeschaltet). Fehlt sie, erscheint der Knopf einfach nicht.
 if(EINSTELLUNGEN.minispieleAktiv !== false){
   const sm = document.createElement("script"); sm.src = "spiele/minispiele.js?v=" + APP_VERSION;
