@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.6.8 (Prototyp)
+  Version 0.6.9 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,13 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.6.9 (15.11.2026)  – nur Testbereich
+    - Welten 6–10 von Fable eingebaut: Karten-Motor (karte 0.4) mit Stil-Dateien welt/stil-*.js, Kartendaten,
+      Figurenbilder und Minispiele pro Welt; neue Minispiele codeknacker und lasergitter (minispiele 0.4).
+    - Sprache pro Welt (welt.sprache: "de" oder "en"): Knöpfe und Texte rund um Minispiel, Zusatzraum und Karte
+      erscheinen in Klasse 8–10 auf Englisch.
+    - EscapeAPI.tonAn(), EscapeAPI.welt().sprache, Ereignis "zeitWarnung".
+    - Testhilfen: ?spiel=<name> startet ein bestimmtes Minispiel; das Vorschau-Schild verschwindet nach 6 Sekunden.
   v0.6.8 (15.11.2026)  – nur Testbereich
     - Welten für Klasse 6–10 fertig beschrieben (Geschichte, Räume, Figur, Zusatzraum, Ausgang, Sätze) in daten/klasse6–10.js.
     - Vorschau einer Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=6 … ?welt=10 (nur zum Testen).
@@ -110,7 +117,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.6.8</title>
+<title>Grammatik-Escape-Room Englisch – v0.6.9</title>
 <style>
   /* ===== GRUNDFARBEN (Welt „Zoo bei Nacht“) ===== */
   :root{
@@ -506,7 +513,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer>Grammar Escape Room Englisch · <b>Version 0.6.8</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer>Grammar Escape Room Englisch · <b>Version 0.6.9</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -532,7 +539,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.6.8";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.6.9";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -546,7 +553,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.6.8"></script>
+<script src="daten/allgemein.js?v=0.6.9"></script>
 
 <script>
 /* #####################################################################
@@ -1503,6 +1510,23 @@ const welt = () => (VORSCHAU_WELT && WELTEN[VORSCHAU_WELT] && WELTEN[VORSCHAU_WE
 const KLASSEN = Object.keys(typeof KLASSEN_DATEIEN === "object" ? KLASSEN_DATEIEN : {}).map(Number).sort((a, b) => a - b);   // aus daten/allgemein.js
 const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => t.klasse === k && hatInhalt(t.id));
 
+/* ----- Texte der Bedienung je nach Sprache der Welt (welt.sprache: "de" oder "en") ----- */
+const UI_TEXTE = {
+  de: { minispiel: "🎁 Minispiel?", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
+        los: "▶ Los!", nein: "Lieber nicht", weiter: "Weiter", ziel: "Ziel: {z} in {s} Sekunden.", geschafft: "⭐ Geschafft! ",
+        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!" },
+  en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
+        los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
+        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!" }
+};
+const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
+const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
+function uiTexteSetzen(){
+  const setze = (id, k) => { const e = $(id); if(e) e.textContent = ui(k); };
+  setze("btnMinispiel", "minispiel"); setze("btnZusatzZurueck", "zurUebersicht"); setze("btnGeschafftWeiter", "zurUebersicht");
+  setze("btnRaumZurueck", "raumZurueck"); setze("btnZurKarte", "zurKarte"); setze("btnMsLos", "los"); setze("btnMsNein", "nein"); setze("btnMsWeiter", "weiter");
+}
+
 /* ----- Figur ----- */
 // Bild der Begleitfigur: eine Welt kann in welt.figurSvg ein eigenes SVG mitbringen
 // (Inhalt eines <svg viewBox="0 0 120 130">, also nur die Formen). Ohne Angabe bleibt Polly.
@@ -1678,7 +1702,7 @@ function starteMission(){
   S.raeume.forEach(r => { for(let i = 0; i < EINSTELLUNGEN.aufgabenProRaum; i++){ const a = zieheFuerRaum(r); if(a) r.liste.push(a); } });
   // Kopf + Intro
   $("figurName").textContent = welt().figur;
-  figurBildSetzen();
+  figurBildSetzen(); uiTexteSetzen();
   $("introEmoji").textContent = welt().emoji; $("introTitel").textContent = welt().name; $("introText").textContent = welt().intro;
   const info = $("introInfo"); info.innerHTML = "";
   const was = wahl.art === "thema" ? themaVon(wahl.auswahl).titel : wahl.art === "unit" ? "Unit " + wahl.auswahl : "Wiederholung bis Unit " + wahl.auswahl;
@@ -2031,7 +2055,7 @@ function countdownLaufen(sek){
   rest = sek; $("countdown").hidden = false; $("kopf").classList.add("mit-zeit"); zeitZeigen(); clearInterval(zaehler);
   zaehler = setInterval(() => {
     rest--; zeitZeigen();
-    if(rest === 120){ sage("zeitWarnung"); ansage("Noch zwei Minuten."); }
+    if(rest === 120){ sage("zeitWarnung"); ansage("Noch zwei Minuten."); melde("zeitWarnung", { restSekunden: rest }); }
     if(rest === 60) ansage("Noch eine Minute.");
     if(rest <= 0){ countdownStop(); missionGescheitert(); }
   }, 1000);
@@ -2110,10 +2134,11 @@ const minispielNamen = () => { const d = minispielDaten(); return d && d.spiele 
 function minispielVerfuegbar(){ return EINSTELLUNGEN.minispieleAktiv !== false && minispielNamen().length > 0; }
 function minispielOeffnen(){
   const namen = minispielNamen(); if(!namen.length) return;
-  const name = wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
+  const gewuenscht = (location.search.match(/[?&]spiel=(\w+)/) || [])[1];   // Testhilfe: …?spiel=codeknacker
+  const name = gewuenscht && namen.includes(gewuenscht) ? gewuenscht : wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
   const sp = minispielDaten().spiele[name], sek = Math.max(5, Math.round(EINSTELLUNGEN.minispielSekunden) || 30);
   ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null };
-  $("msTitel").textContent = sp.titel || "Minispiel"; $("msAnleitung").textContent = (sp.anleitung || "") + " Ziel: " + ms.ziel + " in " + sek + " Sekunden.";
+  $("msTitel").textContent = sp.titel || "Minispiel"; $("msAnleitung").textContent = (sp.anleitung || "") + " " + ui("ziel", { z: ms.ziel, s: sek });
   $("msUhr").textContent = "⏱ " + sek; $("msUhr").classList.remove("knapp");
   $("msPunkte").textContent = "🎯 0 / " + ms.ziel; $("msMeldung").textContent = "";
   $("msBuehne").replaceChildren(); $("msFeld").hidden = true; $("msStart").hidden = false; $("msErgebnis").hidden = true; $("msErgebnisText").textContent = "";
@@ -2139,8 +2164,8 @@ function minispielLos(){
 function minispielEnde(erfolg){
   if(!ms || ms.ende) return; ms.ende = true; ms.laeuft = false; clearInterval(ms.uhr);
   try { if(typeof ms.stopp === "function") ms.stopp(); } catch(e){}
-  const text = erfolg ? "⭐ Geschafft! " + (ms.sp.erfolg || "")
-                      : "⏱ Zeit um! " + ms.punkte + " von " + ms.ziel + (ms.punkte >= ms.ziel - 2 ? " – ganz knapp!" : ".") + " Beim nächsten Mal klappt's bestimmt!";
+  const text = erfolg ? ui("geschafft") + (ms.sp.erfolg || "")
+                      : ui("zeitUm", { p: ms.punkte, z: ms.ziel }) + (ms.punkte >= ms.ziel - 2 ? ui("knapp") : ".") + ui("naechstesMal");
   $("msErgebnisText").textContent = text; $("msErgebnis").hidden = false; $("btnMsWeiter").focus();
   if(erfolg){ ton("jingle"); starteKonfetti(); }
   ansage(text);
@@ -2159,6 +2184,7 @@ if(VORSCHAU_WELT){
   const hinweis = document.createElement("div"); hinweis.className = "vorschau-hinweis";
   hinweis.textContent = "👁️ Vorschau: Welt der Klasse " + VORSCHAU_WELT + " (Aufgaben der gewählten Klasse)";
   document.body.appendChild(hinweis);
+  setTimeout(() => hinweis.remove(), 6000);   // verdeckt sonst am Handy Knöpfe und Fußzeile
 }
 // Spiele-Datei laden (nur wenn eingeschaltet). Fehlt sie, erscheint der Knopf einfach nicht.
 if(EINSTELLUNGEN.minispieleAktiv !== false){
@@ -2246,9 +2272,10 @@ const EscapeAPI = {
   // Läuft gerade eine Mission (zwischen „Los geht's“ und Ende)?
   aktiv: () => !!S && !["setup", "intro", "finale", "gescheitert"].includes(aktiverBildschirm),
   bildschirm: () => aktiverBildschirm,
+  tonAn: () => !!tonAn,
   // Feste Angaben der Welt (Namen, Emojis) – ohne Lösungen
   welt: () => { const w = welt(); if(!w) return null;
-    return { klasse: wahl.klasse, name: w.name, emoji: w.emoji, figur: w.figur, ausgang: { ...w.ausgang }, zusatzraum: { name: w.zusatzraum.name, emoji: w.zusatzraum.emoji },
+    return { klasse: wahl.klasse, sprache: sprache(), name: w.name, emoji: w.emoji, figur: w.figur, ausgang: { ...w.ausgang }, zusatzraum: { name: w.zusatzraum.name, emoji: w.zusatzraum.emoji },
              raeume: w.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji })), karte: w.karte || null }; },
   // Aktueller Spielstand (wird bei jedem Aufruf neu erstellt, Änderungen daran wirken nicht aufs Spiel)
   status: () => {
@@ -2274,7 +2301,7 @@ const EscapeAPI = {
   zufallsWort: () => { const K = KLASSENDATEN[wahl.klasse], l = (K && K.woerterhilfe) || []; const w = l.length ? wuerfle(l) : null; return w ? { en: w.en, de: w.de } : null; },
   // Sprechblase der Begleitfigur (Polly) – entweder eigener Text oder ein Satz aus welt.saetze (z. B. "zeitWarnung")
   sage: text => { if(welt() && welt().saetze[text]) sage(text); else figurSagt(String(text || "")); },
-  // Ereignisse: "bildschirm" {id, vorher}, "zurueck" {von}, "ziffer" {raum, ziffer, kandidaten}
+  // Ereignisse: "bildschirm" {id, vorher}, "zurueck" {von}, "ziffer" {raum, ziffer, kandidaten}, "zeitWarnung" {restSekunden}
   on: (name, f) => { (horcher[name] = horcher[name] || []).push(f); },
   // Karte anmelden: { zeigen(status), verbergen() }
   karteAnmelden: k => { if(!k || typeof k.zeigen !== "function" || typeof k.verbergen !== "function") return false; KARTE = k;
