@@ -261,3 +261,14 @@ Object.assign(K8.minispiele, {
   netz: ["Into the bins! Try again.", "Oops! Again.", "Wait for the ring ⭕."]
 });
 
+// ---------- Losing (from version 0.7.2): three hearts, traps in the torch game ----------
+Object.assign(K8.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Three mistakes. The case stays open.", "Game over, detective. Three mistakes."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🚨", text: "Alarm! You set off the alarm." },
+    { emoji: "🐕", text: "Woof! The guard dog!" },
+    { emoji: "🕷️", text: "A spider! Eek!" }
+  ]
+});

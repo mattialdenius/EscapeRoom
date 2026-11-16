@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.5 (passt zu App-Version 0.7.1)
+   Version:  minispiele 0.6 (passt zu App-Version 0.7.2)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,9 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.6 (16.11.2026)  Man kann scheitern: drei Herzen, jeder Fehler kostet eines (ctx.fehler).
+                       Code knacken: höchstens 6 Versuche (versuche). Taschenlampe: Fallen im
+                       Dunkeln (fallen), die man nicht zu lange anleuchten darf.
      0.5 (16.11.2026)  Mehr Spiele pro Welt: Jede Welt kann Aussehen und Texte anpassen –
                        Seil statt Liane (seil, seilDeko, netzZeichen), Texte beim Füttern auf
                        Englisch (Welten mit sprache "en"), Code-Knacker-Hinweise auf Deutsch (namen).
@@ -105,6 +108,8 @@ if(!document.getElementById("minispielStil")){
   .ms-ru-ding{position:absolute;left:0;top:0;font-size:2.3rem;line-height:1;pointer-events:none;will-change:transform;z-index:2}
   .ms-ta-tier.spur::after{content:"";position:absolute;left:50%;top:.6em;width:2.2em;height:2.2em;transform:translate(-50%,-50%);border:3px dashed #ffd23f;border-radius:50%}
   .ms-ta-versteck{z-index:1;font-size:2.6rem}
+  .ms-ta-falle.ausgeloest{z-index:3;animation:ms-falle .9s ease-out forwards}
+  @keyframes ms-falle{0%{transform:translate(-50%,-50%) scale(1)}40%{transform:translate(-50%,-50%) scale(1.8)}100%{transform:translate(-50%,-50%) scale(1.8);opacity:0}}
   .ms-ta-versteck.weg{opacity:.35}
   /* Obstkorb */
   .ms-ok-boden{position:absolute;left:0;right:0;bottom:0;height:16px;background:#2e6b3a;border-top:3px solid #000}
@@ -174,7 +179,7 @@ function fuettern(buehne, ctx){
       ctx.ton("richtig"); ctx.punkt();
       timer = setTimeout(() => { if(ctx.laeuft()) neueRunde(); }, ctx.reduziert ? 450 : 650);
     } else {
-      knopf.classList.add("nein"); knopf.disabled = true;
+      knopf.classList.add("nein"); knopf.disabled = true; if(ctx.fehler) ctx.fehler(); 
       blase.textContent = "✗ " + fuelle(t.witz || (EN ? "“{futter}? No, thanks!”" : "„{futter}? Nein danke!“"), { futter: name(F) }); blase.classList.add("an");
       ctx.ton("falsch");
     }
@@ -228,6 +233,12 @@ function taschenlampe(buehne, ctx){
     }
     return { t, p, d, zeit: 0, gefunden: false };
   });
+  // Fallen: nicht zu lange anleuchten, sonst kostet es ein Herz (Daten: fallen [{ emoji, text }])
+  const fallen = mischen(D.fallen || [{ emoji: "🕷️", text: "Iiih, eine Spinne!" }]).concat(mischen(D.fallen || [])).slice(0, 3).map(f => {
+    const p = platz(0.2), d = el("div", "ms-ta-tier ms-ta-falle", f.emoji);
+    d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; buehne.insertBefore(d, dunkel);
+    return { f, p, d, zeit: 0, weg: false };
+  });
   kulisse.forEach(k => { const p = platz(0.1), d = el("div", "ms-ta-ding", k); d.style.left = p.x * 100 + "%"; d.style.top = p.y * 100 + "%"; buehne.insertBefore(d, buehne.firstChild); });
   let lx = W() / 2, ly = H() / 2, raf = 0, t0 = 0;
   const radius = () => Math.max(48, Math.min(W(), H()) * 0.115);
@@ -243,7 +254,16 @@ function taschenlampe(buehne, ctx){
       o.d.classList.toggle("spur", imLicht);
       if(o.zeit >= HALTEN){
         o.gefunden = true; o.d.classList.remove("spur"); o.d.classList.add("gefunden"); if(o.v) o.v.classList.add("weg");
-        ctx.ton("richtig"); ctx.sage("🔦 Gefunden: " + o.t.en + " = " + o.t.de); ctx.punkt();
+        ctx.ton("richtig"); ctx.sage("🔦 " + o.t.en + " = " + o.t.de); ctx.punkt();
+      }
+    });
+    fallen.forEach(o => {
+      if(o.weg) return;
+      const imLicht = Math.hypot(o.p.x * W() - lx, o.p.y * H() - ly) < r * 0.6;
+      o.zeit = imLicht ? o.zeit + dt : Math.max(0, o.zeit - dt * 2);
+      if(o.zeit >= HALTEN + 0.15){
+        o.weg = true; o.d.classList.add("ausgeloest"); setTimeout(() => o.d.remove(), 900);
+        ctx.ton("falsch"); ctx.sage("💥 " + o.f.text); if(ctx.fehler) ctx.fehler();
       }
     });
     raf = requestAnimationFrame(schritt);
@@ -274,7 +294,9 @@ function seeloewe(buehne, ctx){
   const RB = 22, RW = 70;                         // Ball-Radius, halbe Robbenbreite (Trefferzone)
   let rx = W() / 2, bx, by, vx, vy, pause = 0, raf = 0, t0 = 0, zielX = rx;
   const nase = () => H() - 14 - 62;               // Höhe der Robbennase
-  function neuerBall(){ bx = clamp(rx + (Math.random() - .5) * 80, RB, W() - RB); by = 70; vx = (Math.random() - .5) * 60; vy = 0; }
+  // Neuer Ball irgendwo oben, nicht direkt über der Figur – man muss sich bewegen
+  function neuerBall(){ let x = rx; for(let i = 0; i < 20 && Math.abs(x - rx) < 90; i++) x = RB + Math.random() * (W() - 2 * RB);
+    bx = x; by = 70; vx = (Math.random() - .5) * 140; vy = 0; }
   neuerBall();
   function schritt(t){
     const dt = Math.min(0.033, (t - (t0 || t)) / 1000); t0 = t;
@@ -287,10 +309,10 @@ function seeloewe(buehne, ctx){
       if(bx < RB){ bx = RB; vx = Math.abs(vx); } if(bx > W() - RB){ bx = W() - RB; vx = -Math.abs(vx); }
       if(vy > 0 && by + RB >= nase() && by + RB <= nase() + 30 && Math.abs(bx - rx) < RW){
         by = nase() - RB; const h = H() * 0.62; vy = -Math.sqrt(2 * g * h);
-        vx = clamp((bx - rx) * 4 + (Math.random() - .5) * 70, -260, 260);
+        vx = clamp((bx - rx) * 4 + (Math.random() < .5 ? -1 : 1) * (60 + Math.random() * 90), -260, 260);   // immer etwas zur Seite
         ctx.ton("richtig"); ctx.punkt();
       }
-      if(by - RB > H()){ meldung.textContent = "💦 " + wuerfle(D.platsch || ["Platsch!"]); meldung.classList.add("an"); pause = ctx.reduziert ? 1 : 0.7; ctx.ton("falsch"); }
+      if(by - RB > H()){ meldung.textContent = "💦 " + wuerfle(D.platsch || ["Platsch!"]); meldung.classList.add("an"); pause = ctx.reduziert ? 1 : 0.7; ctx.ton("falsch"); if(ctx.fehler) ctx.fehler(); }
     }
     ball.style.transform = "translate(" + (bx - RB) + "px," + (by - RB) + "px)";
     robbe.style.transform = "translate(" + (rx - 36) + "px," + (H() - 14 - 70) + "px)";
@@ -338,7 +360,7 @@ function obstkorb(buehne, ctx){
       if(g.y >= korbY() - 10 && g.y <= korbY() + 22 && Math.abs(g.x - kx) < KB && gesperrt <= 0){
         g.d.remove(); dinge.splice(i, 1);
         if(g.o){ gefangen++; ctx.ton("richtig"); zeige("✓ " + g.o.emoji + " " + g.o.en + " = " + g.o.de); ctx.punkt(); }
-        else { ctx.ton("falsch"); zeige("✗ " + wuerfle(D.autsch || ["Autsch!"])); gesperrt = 0.7; korb.classList.add("wackelt"); setTimeout(() => korb.classList.remove("wackelt"), 700); }
+        else { ctx.ton("falsch"); if(ctx.fehler) ctx.fehler(); zeige("✗ " + wuerfle(D.autsch || ["Autsch!"])); gesperrt = 0.7; korb.classList.add("wackelt"); setTimeout(() => korb.classList.remove("wackelt"), 700); }
         continue;
       }
       if(g.y > H() + 30){ g.d.remove(); dinge.splice(i, 1); continue; }
@@ -388,7 +410,7 @@ function schaukel(buehne, ctx){
       flug = { art: "sprung", t: 0, dauer: 0.5, start, ziel }; zustand = "fliegt";
     } else {
       flug = { art: "fall", t: 0, dauer: 0.6, start, ziel: { x: start.x + drehung() * 40, y: H() - 34 } }; zustand = "fliegt";
-      ctx.ton("falsch"); zeige((D.netzZeichen || "🕸️") + " " + wuerfle(D.netz || ["Ins Netz! Nochmal!"]));
+      ctx.ton("falsch"); if(ctx.fehler) ctx.fehler(); zeige((D.netzZeichen || "🕸️") + " " + wuerfle(D.netz || ["Ins Netz! Nochmal!"]));
     }
   }
   function schritt(t){
@@ -489,7 +511,7 @@ function nachtflug(buehne, ctx){
       b.oben.style.transform = "translate(" + b.x + "px,0)"; b.oben.style.height = obenEnde + "px";
       b.unten.style.transform = "translate(" + b.x + "px," + untenAnfang + "px)"; b.unten.style.height = (H() - untenAnfang) + "px";
       if(schutz <= 0 && (rechteckTrifft(px, py, RP - 3, b.x, 0, b.x + BB, obenEnde) || rechteckTrifft(px, py, RP - 3, b.x, untenAnfang, b.x + BB, H()))){
-        schutz = 1.0; vy = 60; ctx.ton("falsch"); zeige("🪶 " + wuerfle(D.flugAutsch || ["Autsch!"]));
+        schutz = 1.0; vy = 60; ctx.ton("falsch"); if(ctx.fehler) ctx.fehler();  zeige("🪶 " + wuerfle(D.flugAutsch || ["Autsch!"]));
       }
       if(b.x < -BB - 10){ b.oben.remove(); b.unten.remove(); baeume.splice(i, 1); }
     }
@@ -534,8 +556,11 @@ function rutsche(buehne, ctx){
     const d = el("div", "ms-ru-ding " + art, art === "fisch" ? (R.fisch || "🐟") : wuerfle(R.hindernisse || ["🧊"]));
     buehne.insertBefore(d, pingu); dinge.push({ d, art, x: W() + 30, h: hoch || 0 });   // h = Höhe über dem Eis
   }
+  // Zwei Hindernisse nie so dicht, dass man nach einem Sprung direkt auf dem nächsten landet (fair mit drei Herzen)
+  let seitHindernis = 9;
+  const flugzeit = () => 2 * Math.sqrt(2 * sprungH() / g);
   function neuesDing(){
-    if(Math.random() < 0.6){ ding("hindernis"); if(Math.random() < 0.5) ding("fisch", sprungH() * 0.85); }   // oft schwebt ein Fisch über dem Hindernis
+    if(Math.random() < 0.6 && seitHindernis > flugzeit() + 0.45){ seitHindernis = 0; ding("hindernis"); if(Math.random() < 0.5) ding("fisch", sprungH() * 0.85); }   // oft schwebt ein Fisch über dem Hindernis
     else ding("fisch", Math.random() < 0.4 ? 0 : sprungH() * (0.5 + Math.random() * 0.4));
   }
   function springen(){
@@ -551,6 +576,7 @@ function rutsche(buehne, ctx){
     band.schritt(dt, v);
     if(!ctx.reduziert){ bodenVersatz = (bodenVersatz + v * dt) % 80; boden.style.backgroundPosition = (-bodenVersatz) + "px 0"; }
     if(!amBoden){ vy += g * dt; py += vy * dt; if(py >= 0){ py = 0; vy = 0; amBoden = true; pingu.classList.remove("sprung"); if(vorgemerkt > 0){ vorgemerkt = 0; springen(); } } }
+    seitHindernis += dt;
     naechstes -= dt; if(naechstes <= 0){ neuesDing(); naechstes = (ctx.reduziert ? 1.35 : 1.05) * (0.8 + Math.random() * 0.5); }
     const fy = bodenY() + py;                                    // Füße des Pinguins
     for(let i = dinge.length - 1; i >= 0; i--){
@@ -559,7 +585,7 @@ function rutsche(buehne, ctx){
       if(o.art === "fisch"){
         if(Math.hypot(o.x - px, (oy - 16) - (fy - 24)) < 36){ o.d.remove(); dinge.splice(i, 1); ctx.ton("richtig"); ctx.punkt(); continue; }
       } else if(schutz <= 0 && Math.abs(o.x - px) < 28 && fy > oy - 30){
-        schutz = 1.0; bremse = 0.8; ctx.ton("falsch"); zeige("💥 " + wuerfle(D.rutscheAutsch || ["Rumms!"]));
+        schutz = 1.0; bremse = 0.8; ctx.ton("falsch"); if(ctx.fehler) ctx.fehler();  zeige("💥 " + wuerfle(D.rutscheAutsch || ["Rumms!"]));
       }
       if(o.x < -50){ o.d.remove(); dinge.splice(i, 1); continue; }
       o.d.style.transform = "translate(" + (o.x - 18) + "px," + (oy - 36) + "px)";
@@ -592,7 +618,9 @@ function codeknacker(buehne, ctx){
   verlauf.setAttribute("role", "log"); meldung.setAttribute("role", "status");
   wrap.append(legende, verlauf, reihe, meldung, tasten); buehne.appendChild(wrap);
   const NAME = D.namen || { "●": "right place", "◐": "wrong place", "○": "not in the code" };
-  let timer = null, gesperrt = false;
+  let timer = null, gesperrt = false, versuche = 0;
+  const MAXV = Math.max(1, Math.round(D.versuche) || 6);   // so viele Versuche hat man
+  if(ctx.herzenAus) ctx.herzenAus();                        // hier zählen Versuche statt Herzen
   function zeichneReihe(){
     reihe.replaceChildren();
     for(let i = 0; i < n; i++){ const f = el("span", "ms-ck-feld" + (fest[i] ? " fest" : ""), fest[i] ? String(code[i]) : eingabe[i] == null ? "_" : String(eingabe[i])); if(fest[i]) f.setAttribute("aria-label", "position " + (i + 1) + ": " + code[i] + ", cracked"); reihe.appendChild(f); }
@@ -614,7 +642,7 @@ function codeknacker(buehne, ctx){
     if(eingabe.every((v, i) => fest[i] || v != null)) pruefe();
   }
   function pruefe(){
-    gesperrt = true;
+    gesperrt = true; versuche++;
     const versuch = eingabe.map((v, i) => fest[i] ? code[i] : v), zeile = el("div", "ms-ck-zeile"); let neu = 0;
     versuch.forEach((v, i) => {
       const s = v === code[i] ? "●" : code.includes(v) ? "◐" : "○";
@@ -626,7 +654,9 @@ function codeknacker(buehne, ctx){
     for(let i = 0; i < n; i++) eingabe[i] = null;
     zeichneReihe(); zeichneTasten();
     const alle = fest.every(Boolean);
-    meldung.textContent = alle ? (D.fertig || "Code cracked.") : neu ? "● +" + neu : "…";
+    const rest = MAXV - versuche;
+    meldung.textContent = alle ? (D.fertig || "Code cracked.") : (neu ? "● +" + neu + " · " : "") + (D.versuchText || "Tries left: {n}").replace("{n}", rest);
+    if(!alle && rest <= 0 && ctx.verloren){ ctx.ton("falsch"); ctx.verloren(); return; }
     ctx.ton(neu ? "richtig" : "falsch");
     for(let k = 0; k < neu; k++) ctx.punkt();
     timer = setTimeout(() => { gesperrt = false; }, 250);
@@ -664,7 +694,7 @@ function lasergitter(buehne, ctx){
   }
   function los(){
     if(!ctx.laeuft() || sperre > 0 || laeuftDurch > 0) return;
-    if(an){ sperre = 0.6; ctx.ton("falsch"); zeige("⚡ " + wuerfle(D.autsch || ["Zap! Wait for OFF."])); if(!ctx.reduziert){ figur.classList.add("zuckt"); setTimeout(() => figur.classList.remove("zuckt"), 500); } return; }
+    if(an){ sperre = 0.6; ctx.ton("falsch"); if(ctx.fehler) ctx.fehler();  zeige("⚡ " + wuerfle(D.autsch || ["Zap! Wait for OFF."])); if(!ctx.reduziert){ figur.classList.add("zuckt"); setTimeout(() => figur.classList.remove("zuckt"), 500); } return; }
     figur.classList.add("drueben"); laeuftDurch = ctx.reduziert ? 0.25 : 0.4; ctx.ton("richtig"); ctx.punkt();
   }
   const tipp = e => { e.preventDefault(); los(); };

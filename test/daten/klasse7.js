@@ -263,10 +263,21 @@ Object.assign(K7.minispiele, {
   lob: ["✅ Richtig!", "✅ Passt!", "✅ Genau!", "✅ Super!"],
 
   // ---------- Tresor des Kurators (Technik: codeknacker) ----------
-  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!",
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!", versuchText: "Noch {n} Versuche",
                  namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } },
 
   // ---------- Lichtschranke im Tresorraum (Technik: lasergitter) ----------
   lasergitter: { figur: "🧒", ziel: "🚪", an: "AN", aus: "AUS", hinweis: "Tippt, wenn AUS dasteht.", autsch: ["Piep! Wartet auf AUS.", "Zu früh!", "Geduld …"] }
 });
 
+// ---------- Scheitern (ab Version 0.7.2): drei Herzen, Fallen bei der Taschenlampe ----------
+Object.assign(K7.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Drei Fehler – der Kurator schüttelt den Kopf.", "Alarm im Museum! Das Spiel ist vorbei."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🚨", text: "Alarm! Die Alarmanlage!" },
+    { emoji: "👻", text: "Buh! Das Museumsgespenst!" },
+    { emoji: "🕷️", text: "Iiih, eine Spinne!" }
+  ]
+});

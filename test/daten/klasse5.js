@@ -1343,7 +1343,18 @@ Object.assign(K5.minispiele.spiele, {
 });
 Object.assign(K5.minispiele, {
   // ---------- Futterlager-Code (Technik: codeknacker) ----------
-  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!",
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!", versuchText: "Noch {n} Versuche",
                  namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } }
 });
 
+// ---------- Scheitern (ab Version 0.7.2): drei Herzen, Fallen bei der Taschenlampe ----------
+Object.assign(K5.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Oh nein, drei Fehler! Die Tiere lachen sich schlapp.", "Drei Fehler – die Zoowärterin pfeift ab!"],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🦨", text: "Puh, ein Stinktier!" },
+    { emoji: "🐝", text: "Bssss! Ein Wespennest!" },
+    { emoji: "🕷️", text: "Iiih, eine Spinne!" }
+  ]
+});

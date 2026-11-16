@@ -254,3 +254,14 @@ Object.assign(K9.minispiele, {
   platsch: ["Dropped! Again.", "New ball!", "Missed – keep going!"]
 });
 
+// ---------- Losing (from version 0.7.2): three hearts, traps in the torch game ----------
+Object.assign(K9.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Mission failed, agent. Three mistakes.", "Game over. Back to training."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🚨", text: "Alarm! Security is coming." },
+    { emoji: "🪤", text: "Snap! A trap!" },
+    { emoji: "🕷️", text: "A spider! Eek!" }
+  ]
+});

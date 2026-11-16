@@ -590,7 +590,18 @@ Object.assign(K6.minispiele, {
   platsch: ["Platsch! Nochmal!", "Ups! Neuer Ball!", "Daneben – weiter geht's!"],
 
   // ---------- Die Schatztruhe (Technik: codeknacker) ----------
-  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!",
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!", versuchText: "Noch {n} Versuche",
                  namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } }
 });
 
+// ---------- Scheitern (ab Version 0.7.2): drei Herzen, Fallen bei der Taschenlampe ----------
+Object.assign(K6.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Arrr! Über Bord! Drei Fehler.", "Drei Fehler – ab zum Deckschrubben!"],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "💣", text: "Bumm! Eine Bombe!" },
+    { emoji: "🦂", text: "Autsch, ein Skorpion!" },
+    { emoji: "🕷️", text: "Iiih, eine Spinne!" }
+  ]
+});

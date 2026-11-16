@@ -248,3 +248,14 @@ Object.assign(K10.minispiele, {
   lob: ["✅ Delivered!", "✅ Thanks!", "✅ Perfect!", "✅ Great!"]
 });
 
+// ---------- Losing (from version 0.7.2): three hearts, traps in the torch game ----------
+Object.assign(K10.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Houston, we have a problem. Three mistakes.", "Game over. Mission control sighs."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "👾", text: "An alien! Run!" },
+    { emoji: "⚡", text: "Zap! A broken cable." },
+    { emoji: "🕷️", text: "A space spider?!" }
+  ]
+});

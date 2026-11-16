@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.7.1 (Prototyp)
+  Version 0.7.2 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.2 (16.11.2026)  – nur Testbereich
+    - Minispiele: drei Herzen ❤️❤️❤️, jeder Fehler kostet eines, beim dritten ist das Spiel vorbei (eigene Meldung je Welt).
+      Code knacken: höchstens 6 Versuche. Taschenlampe: Fallen im Dunkeln. minispiele 0.6.
   v0.7.1 (16.11.2026)  – nur Testbereich
     - Acht Minispiele in jeder Welt (Klasse 5–10). Neue Varianten nur über die Daten der Klassen; minispiele 0.5.
   v0.7.0 (16.11.2026)  – nur Testbereich
@@ -125,7 +128,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.1</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.2</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -164,6 +167,9 @@
   .logo-fuss{width:18px;height:18px;vertical-align:-4px;margin-right:.2rem}
   .logo-finale{display:block;margin:1rem auto 0;width:40px;height:40px;opacity:.85}
   .vorschau-hinweis{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:50;background:#ffd23f;color:#000;border:2px solid #000;border-radius:10px;padding:.2rem .6rem;font-size:.85rem;font-weight:bold;pointer-events:none}
+  .ms-herzen{font-size:1.15rem;letter-spacing:.1rem;align-self:center;filter:drop-shadow(0 1px 0 #000)}
+  .ms-herzen.weg{visibility:hidden}
+  .ms-herzen .leer{opacity:.45}
   .ms-hud{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;pointer-events:none;z-index:6}
   .ms-uhr,.ms-punkte{font:bold 1.2rem/1 ui-monospace,Menlo,Consolas,monospace;background:#000;color:#ffd23f;border:2px solid #ffd23f;border-radius:12px;padding:.35rem .55rem;white-space:nowrap}
   .ms-punkte{color:#fff;border-color:#fff}
@@ -505,7 +511,7 @@
     <p id="msMeldung" class="ms-meldung" role="status"></p>
     <div id="msFeld" class="ms-feld" hidden>
       <div id="msBuehne" class="ms-buehne"></div>
-      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
+      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msHerzen" class="ms-herzen" role="status"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
     </div>
     <div id="msStart" class="knopfreihe"><button id="btnMsLos" class="gruen">▶ Los!</button><button id="btnMsNein" class="zweit">Lieber nicht</button></div>
     <div id="msErgebnis" class="ms-ergebnis" hidden><p id="msErgebnisText" role="status"></p><button id="btnMsWeiter" class="gruen">Weiter</button></div>
@@ -530,7 +536,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.1</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -556,7 +562,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.1";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -570,7 +576,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.1"></script>
+<script src="daten/allgemein.js?v=0.7.2"></script>
 
 <script>
 /* #####################################################################
@@ -1769,10 +1775,10 @@ const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => 
 const UI_TEXTE = {
   de: { minispiel: "🎁 Minispiel?", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
         los: "▶ Los!", nein: "Lieber nicht", weiter: "Weiter", ziel: "Ziel: {z} in {s} Sekunden.", geschafft: "⭐ Geschafft! ",
-        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!" },
+        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!", gameOver: "Game over! Drei Fehler – das Spiel ist vorbei.", gesperrt: "Keine Versuche mehr – das Schloss ist gesperrt." },
   en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
-        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!" }
+        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked." }
 };
 const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
 const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
@@ -2392,19 +2398,31 @@ function minispielOeffnen(){
   const gewuenscht = (location.search.match(/[?&]spiel=(\w+)/) || [])[1];   // Testhilfe: …?spiel=codeknacker
   const name = gewuenscht && namen.includes(gewuenscht) ? gewuenscht : wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
   const sp = minispielDaten().spiele[name], sek = Math.max(5, Math.round(EINSTELLUNGEN.minispielSekunden) || 30);
-  ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null };
+  ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null, herzen: MS_HERZEN, grund: null };
+  herzenZeigen(); $("msHerzen").classList.remove("weg");
   $("msTitel").textContent = sp.titel || "Minispiel"; $("msAnleitung").textContent = (sp.anleitung || "") + " " + ui("ziel", { z: ms.ziel, s: sek });
   $("msUhr").textContent = "⏱ " + sek; $("msUhr").classList.remove("knapp");
   $("msPunkte").textContent = "🎯 0 / " + ms.ziel; $("msMeldung").textContent = "";
   $("msBuehne").replaceChildren(); $("msFeld").hidden = true; $("msStart").hidden = false; $("msErgebnis").hidden = true; $("msErgebnisText").textContent = "";
   zeige("minispiel"); $("btnMsLos").focus();
 }
+// Drei Herzen: jeder Fehler im Minispiel kostet eines, beim letzten ist das Spiel vorbei
+const MS_HERZEN = 3;
+function herzenZeigen(){
+  const h = $("msHerzen"); if(!h || !ms) return;
+  h.innerHTML = Array.from({ length: MS_HERZEN }, (_, i) => i < ms.herzen ? "❤️" : '<span class="leer">🤍</span>').join("");
+  h.setAttribute("aria-label", (sprache() === "en" ? "Lives: " : "Leben: ") + ms.herzen + " / " + MS_HERZEN);
+}
+function minispielVerloren(grund){ if(!ms || ms.ende) return; ms.laeuft = false; ms.grund = grund || "herzen"; setTimeout(() => minispielEnde(false), 700); }
 function minispielLos(){
   if(!ms || ms.laeuft || ms.ende) return;
   $("msStart").hidden = true; $("msFeld").hidden = false; ms.laeuft = true;
   $("msFeld").scrollIntoView({ block: "end", behavior: reduziert() ? "auto" : "smooth" });   // Spielfläche ganz ins Bild (wichtig am Handy)
   const ctx = { daten: minispielDaten(), ziel: ms.ziel, reduziert: reduziert(), ton, laeuft: () => !!ms && ms.laeuft,
     titel: String(ms.sp.titel || "").replace(/^\S+\s/, ""), sprache: sprache(),
+    fehler: () => { if(!ms || !ms.laeuft) return; ms.herzen = Math.max(0, ms.herzen - 1); herzenZeigen(); if(ms.herzen <= 0) minispielVerloren(); },
+    verloren: () => minispielVerloren("versuche"),   // Code knacken: alle Versuche verbraucht
+    herzenAus: () => { $("msHerzen").classList.add("weg"); },
     sage: t => { $("msMeldung").textContent = t; },
     punkt: () => { if(!ms || !ms.laeuft) return; ms.punkte++;
       $("msPunkte").textContent = "🎯 " + Math.min(ms.punkte, ms.ziel) + " / " + ms.ziel;
@@ -2420,8 +2438,11 @@ function minispielLos(){
 function minispielEnde(erfolg){
   if(!ms || ms.ende) return; ms.ende = true; ms.laeuft = false; clearInterval(ms.uhr);
   try { if(typeof ms.stopp === "function") ms.stopp(); } catch(e){}
+  const D = minispielDaten() || {};
   const text = erfolg ? ui("geschafft") + (ms.sp.erfolg || "")
-                      : ui("zeitUm", { p: ms.punkte, z: ms.ziel }) + (ms.punkte >= ms.ziel - 2 ? ui("knapp") : ".") + ui("naechstesMal");
+             : ms.grund === "versuche" ? "🔒 " + ui("gesperrt") + ui("naechstesMal")
+             : ms.grund === "herzen" ? "💔 " + (D.gameOver && D.gameOver.length ? wuerfle(D.gameOver) : ui("gameOver")) + ui("naechstesMal")
+             : ui("zeitUm", { p: ms.punkte, z: ms.ziel }) + (ms.punkte >= ms.ziel - 2 ? ui("knapp") : ".") + ui("naechstesMal");
   $("msErgebnisText").textContent = text; $("msErgebnis").hidden = false; $("btnMsWeiter").focus();
   if(erfolg){ ton("jingle"); starteKonfetti(); }
   ansage(text);
