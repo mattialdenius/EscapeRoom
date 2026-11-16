@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.7.3 (Prototyp)
+  Version 0.7.4 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,10 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.4 (16.11.2026)  – nur Testbereich
+    - Klasse 6 komplett: Unit 5 und 6 (G14–G19) mit neuen Aufgabenarten progressiv, progressivfrage, ifsatz,
+      goingto, goingtofrage, willgoing (will ↔ going to).
+    - Minispiele: dasselbe Spiel frühestens wieder nach 4 Durchgängen (Einstellung minispielAbstand in allgemein.js).
   v0.7.3 (16.11.2026)  – nur Testbereich
     - Klasse 6, Unit 3 und 4 spielbar (G7–G13): neue Aufgabenarten komparativ, superlativ, someany, mengen,
       praesensaussneg, praesensfrage (mit Kurzantworten), will (spontane Entscheidungen).
@@ -131,7 +135,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.3</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.4</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -539,7 +543,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.3</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.4</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -565,7 +569,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -579,7 +583,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.3"></script>
+<script src="daten/allgemein.js?v=0.7.4"></script>
 
 <script>
 /* #####################################################################
@@ -1865,6 +1869,232 @@ Object.assign(ART_BRAUCHT, {
   someany: ["someRahmen", "nomenU", "nomenC"], mengen: ["mengenRahmen", "nomenU", "nomenC"],
   will: ["entscheidungen"], praesensaussneg: ["personen", "verben"], praesensfrage: ["personen", "verben"]
 });
+
+/* ---------- Klasse 6, Unit 5–6: Verlaufsform, if-Sätze, going to, will ---------- */
+// he/she/it-Form eines Verbs: miss → misses, try → tries, have → has
+const sForm = v => v === "have" ? "has" : v === "be" ? "is" : /(s|sh|ch|x|o)$/.test(v) ? v + "es" : /[^aeiou]y$/.test(v) ? v.slice(0, -1) + "ies" : v + "s";
+const BE_KURZ = { I: "I'm", you: "you're", he: "he's", she: "she's", it: "it's", we: "we're", they: "they're" };
+const beVon = sub => sub === "I" ? "am" : ["he", "she", "it"].includes(sub) ? "is" : "are";   // nur für Pronomen
+const beNeg = be => be === "am" ? "'m not" : be === "is" ? "isn't" : "aren't";
+// alle richtigen Schreibweisen eines Satzes mit am/is/are (Tom is … / he's … / he is not …)
+function beVarianten(satz){
+  const l = [satz];
+  Object.keys(BE_KURZ).forEach(k => {
+    const lang = new RegExp("^" + k + " (am|is|are) ", "i");
+    if(lang.test(satz)) l.push(gross(BE_KURZ[k]) + " " + satz.replace(lang, ""));
+    const neg = new RegExp("^" + k + " (isn't|aren't) ", "i");
+    if(neg.test(satz)) l.push(gross(BE_KURZ[k]) + " not " + satz.replace(neg, ""));
+  });
+  if(/^I'm not /.test(satz)) l.push(satz.replace(/^I'm not /, "I am not "));
+  return einzig(l);
+}
+const mitPossR = (r, p) => (r || "").replace(/\{POSS\}/g, p.poss || "their");
+// Satz mit am/is/are: Person + be + Mitte + Rest (+ Zeit)
+const beSatz2 = (p, mitte, rest, neg) => gross(p.text) + " " + (neg ? (p.text === "I" ? "'m not" : beNeg(p.be)) : p.be) + " " + mitte + (rest ? " " + rest : "");
+const ichFix = s => s.replace(/^I 'm not/, "I'm not");
+
+function beZeit(art, bk, form, E){
+  // art: "prog" (Verlaufsform, Verb + -ing) oder "going" (going to + Grundform)
+  // modus: "aussage", "neg" oder "frage"
+  return function(modus){
+    const prog = art === "prog", alleP = modus === "frage" ? bk.personen.filter(p => p.text !== "I" && p.text !== "we") : bk.personen;
+    const liste = prog ? bk.verbenIng : bk.plaene;
+    const V = wuerfle(liste), P = wuerfle(alleP.filter(p => !V.nurKind || p.kind));
+    kern(V.e + " " + V.rest);
+    const zeit = V.zeit && V.zeit.length ? " " + wuerfle(V.zeit) : "";
+    const mitte = v => prog ? v.ing : "going to " + v.e;
+    const rest = (v, p) => mitPossR(v.rest, p);
+    const aussage = (p, v, neg, z) => ichFix(beSatz2(p, mitte(v), rest(v, p), neg)) + (z || "") + ".";
+    const frageS = (p, v, z, aux) => (aux || gross(p.be)) + " " + p.text + " " + mitte(v) + (rest(v, p) ? " " + rest(v, p) : "") + (z || "") + "?";
+    const bspQ = () => { const v = anders(liste, V), q = anders(alleP, P); return modus === "frage" ? frageS(q, v) : aussage(q, v, modus === "neg"); };
+    let erklKey = modus === "frage" ? "frage" : modus === "neg" ? "neg" : (prog ? (V.typ || "normal") : "pos");
+    const erkl = erklaere(E[erklKey], { BEISPIEL: bspOhne(bspQ, modus === "frage" ? frageS(P, V) : aussage(P, V, modus === "neg")) });
+    const falschBe = p => p.be === "is" ? "are" : "is";
+    if(form === "zuordnen"){
+      if(Math.random() < 0.5 || !prog){
+        const K = modus === "frage" ? ["Is …?", "Are …?"] : ["am", "is", "are"];
+        const kand = mischen(alleP.slice()), woerter = [];
+        K.forEach(k => { const p = kand.find(x => (modus === "frage" ? x.be === k.split(" ")[0].toLowerCase() : x.be === k) && !woerter.some(w => w.text === x.text)); if(p) woerter.push({ text: p.text, ziel: k }); });
+        kand.filter(x => !woerter.some(w => w.text === x.text)).slice(0, 5 - woerter.length).forEach(x => woerter.push({ text: x.text, ziel: modus === "frage" ? (x.be === "is" ? "Is …?" : "Are …?") : x.be }));
+        return { kategorien: K, woerter: mischen(woerter), erklaerung: E.zuordnen };
+      }
+      const K = ["+ -ing", "e weg + -ing", "doppelt + -ing"], typK = { normal: K[0], e: K[1], dopp: K[2] };
+      const verben = mischen(einzigNach(bk.verbenIng, "e")).slice(0, 5);
+      return { kategorien: K, woerter: verben.map(v => ({ text: v.e, ziel: typK[v.typ || "normal"] })), erklaerung: E.zuordnenIng };
+    }
+    if(modus === "aussage"){
+      const richtig = aussage(P, V, false, zeit);
+      if(form === "quiz"){
+        if(prog && V.typ && Math.random() < 0.5){
+          const f = V.typ === "e" ? V.e + "ing" : V.e + "ing";
+          return { frage: ichFix(gross(P.text) + " " + P.be + " ___") + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", optionen: mischen(einzig([V.ing, f, V.e])), loesung: V.ing, erklaerung: erkl };
+        }
+        if(!prog && Math.random() < 0.5)
+          return { frage: gross(P.text) + " " + P.be + " going ___" + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", optionen: mischen(["to " + V.e, "to " + V.s, V.e]), loesung: "to " + V.e, erklaerung: erkl };
+        return { frage: gross(P.text) + " ___ " + mitte(V) + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", optionen: mischen(["am", "is", "are"]), loesung: P.be, erklaerung: erkl };
+      }
+      if(form === "luecke") return { frage: gross(P.text) + " ___ (" + V.e + ")" + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", loesung: [P.be + " " + mitte(V)], erklaerung: erkl };
+      if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+      if(form === "fehler"){
+        if(prog && V.typ && Math.random() < 0.6){ const f = V.e.replace(/e$/, "e") + "ing"; if(f !== V.ing) return { satz: aussage(P, Object.assign({}, V, { ing: f }), false, zeit), fehlerwort: f, loesung: [V.ing], erklaerung: erkl }; }
+        if(!prog && Math.random() < 0.5) return { satz: gross(P.text) + " " + P.be + " going to " + V.s + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", fehlerwort: V.s, loesung: [V.e], erklaerung: erkl };
+        if(P.text === "I") return ARTEN[prog ? "progressiv" : "goingto"](bk, form, E);
+        const f = falschBe(P);
+        return { satz: gross(P.text) + " " + f + " " + mitte(V) + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", fehlerwort: f, loesung: [P.be], erklaerung: erkl };
+      }
+      if(form === "umformen"){
+        if(Math.random() < 0.5){
+          const z = zeit || (prog ? " now" : "");
+          return { frage: (prog ? "Use the present progressive:  " : "Use „going to“:  ") + gross(P.text) + " / " + V.e + (rest(V, P) ? " / " + rest(V, P) : "") + (z ? " /" + z : ""),
+                   loesung: beVarianten(aussage(P, V, false, z)), erklaerung: erkl };
+        }
+        return { frage: "Make it negative:  " + richtig, loesung: beVarianten(aussage(P, V, true, zeit)),
+                 erklaerung: erklaere(E.neg, { BEISPIEL: bspOhne(() => aussage(anders(alleP, P), anders(liste, V), true), aussage(P, V, true)) }) };
+      }
+    }
+    if(modus === "neg"){
+      const richtig = aussage(P, V, true, zeit);
+      const neg = P.text === "I" ? "'m not" : beNeg(P.be);
+      if(form === "quiz"){
+        const opt = P.text === "I" ? ["am not", "isn't", "don't"] : [neg, neg === "isn't" ? "aren't" : "isn't", P.er ? "doesn't" : "don't"];
+        return { frage: gross(P.text) + " ___ " + mitte(V) + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", optionen: mischen(opt), loesung: opt[0], erklaerung: erkl };
+      }
+      if(form === "luecke"){
+        const l = P.text === "I" ? ["am not " + mitte(V), "'m not " + mitte(V)] : [neg + " " + mitte(V), P.be + " not " + mitte(V)];
+        return { frage: gross(P.text) + " ___ (not / " + V.e + ")" + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", loesung: l, erklaerung: erkl };
+      }
+      if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+      if(form === "fehler"){
+        if(P.text === "I") return ARTEN[prog ? "progressivfrage" : "goingto"](bk, form, E);
+        const f = P.er ? "doesn't" : "don't";
+        return { satz: gross(P.text) + " " + f + " " + mitte(V) + (rest(V, P) ? " " + rest(V, P) : "") + zeit + ".", fehlerwort: f, loesung: [neg, P.be + " not"], erklaerung: erkl };
+      }
+      if(form === "umformen") return { frage: "Make it negative:  " + aussage(P, V, false, zeit), loesung: beVarianten(richtig), erklaerung: erkl };
+    }
+    // Frage
+    const richtig = frageS(P, V, zeit);
+    if(form === "quiz"){
+      if(Math.random() < 0.4) return { frage: frageS(P, V, zeit, "___"), optionen: mischen(["Is", "Are", P.er ? "Does" : "Do"]), loesung: gross(P.be), erklaerung: erkl };
+      const ja = Math.random() < 0.5, kurz = P.pron + " " + (ja ? P.be : beNeg(P.be));
+      const q = P.text === "you" ? (ja ? "I am" : "I'm not") : kurz;
+      const f1 = P.text === "you" ? (ja ? "I do" : "I don't") : P.pron + " " + (ja ? (P.er ? "does" : "do") : (P.er ? "doesn't" : "don't"));
+      const f2 = P.text === "you" ? (ja ? "I is" : "I isn't") : P.pron + " " + (ja ? (P.be === "is" ? "are" : "is") : (P.be === "is" ? "aren't" : "isn't"));
+      const bsp = (() => { const v = anders(liste, V), qq = anders(alleP.filter(x => x.text !== "you"), P); return frageS(qq, v) + " – " + (ja ? "Yes, " : "No, ") + qq.pron + " " + (ja ? qq.be : beNeg(qq.be)) + "."; })();
+      return { frage: richtig + " – " + (ja ? "Yes" : "No") + ", …", optionen: mischen([q, f1, f2]), loesung: q, erklaerung: erklaere(ja ? E.kurzJa : E.kurzNein, { BEISPIEL: bsp }) };
+    }
+    if(form === "luecke"){
+      if(Math.random() < 0.5) return { frage: "___ " + P.text + " ___ (" + V.e + ")" + (rest(V, P) ? " " + rest(V, P) : "") + zeit + "?", loesung: [[gross(P.be)], [mitte(V)]], erklaerung: erkl };
+      const ja = Math.random() < 0.5;
+      const prs = P.text === "you" ? [["I", "am"], ["we", "are"]] : [[P.pron, P.be]];
+      const l = prs.flatMap(([x, b]) => ja ? [x + " " + b] : (b === "am" ? ["I'm not", "I am not"] : [x + " " + beNeg(b), x + " " + b + " not", BE_KURZ[x] + " not"]));
+      const v = anders(liste, V), qq = anders(alleP.filter(x => x.text !== "you"), P);
+      return { frage: richtig + "  – " + (ja ? "Yes" : "No") + ", ___.", loesung: l.concat(l.map(x => (ja ? "yes, " : "no, ") + x)),
+               erklaerung: erklaere(ja ? E.kurzJa : E.kurzNein, { BEISPIEL: frageS(qq, v) + " – " + (ja ? "Yes, " : "No, ") + qq.pron + " " + (ja ? qq.be : beNeg(qq.be)) + "." }) };
+    }
+    if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+    if(form === "fehler"){
+      if(prog && Math.random() < 0.5) return { satz: frageS(P, Object.assign({}, V, { ing: V.e }), zeit), fehlerwort: V.e.split(" ")[0], loesung: [V.ing], erklaerung: erkl };
+      const f = P.be === "is" ? "Are" : "Is";
+      return { satz: frageS(P, V, zeit, f), fehlerwort: f, loesung: [gross(P.be)], erklaerung: erkl };
+    }
+    if(form === "umformen") return { frage: "Ask a question:  " + aussage(P, V, false, zeit), loesung: [richtig], erklaerung: erkl };
+    return null;
+  };
+}
+
+// ---------- if-Sätze Typ I ----------
+function ifSatz(bk, form, E){
+  const R = wuerfle(bk.ifSaetze);
+  kern(R.w);
+  const wenn = R.w.replace(/[{}]/g, ""), verbIf = R.w.match(/\{([^}]+)\}/)[1];
+  const kurz = R.s2 === "I" ? "I'll" : R.s2 + "'ll", haupt = (k, neg) => (neg ? R.s2 + (k ? " won't " : " will not ") : (k ? kurz : R.s2 + " will") + " ") + R.e + (R.r2 ? " " + R.r2 : "");
+  const vorn = (k = true) => "If " + wenn + ", " + haupt(k, R.neg) + ".";
+  // Steht ein Name im if-Satz („If Tom finds …, he'll …“), wandert er hinten nach vorn: „Tom will … if he finds …“
+  const hinten = (k = !R.wer) => R.wer
+    ? R.wer + (R.neg ? (k ? " won't " : " will not ") : (k ? "'ll " : " will ")) + R.e + (R.r2 ? " " + R.r2 : "") + " if " + R.s2 + wenn.slice(R.wer.length) + "."
+    : gross(haupt(k, R.neg)) + " if " + wenn + ".";
+  const alle = einzig([vorn(true), vorn(false), hinten(true), hinten(false)]);
+  const andere = () => { const r = anders(bk.ifSaetze, R); const w = r.w.replace(/[{}]/g, ""), k = r.s2 === "I" ? "I'll" : r.s2 + "'ll";
+    return "If " + w + ", " + (r.neg ? r.s2 + " won't " : k + " ") + r.e + (r.r2 ? " " + r.r2 : "") + "."; };
+  const erklIf = erklaere(E.wenn, { BEISPIEL: bspOhne(andere, vorn()) }), erklHaupt = erklaere(E.haupt, { BEISPIEL: bspOhne(andere, vorn()) });
+  const mitLuecke = (x) => R.w.replace(/\{[^}]+\}/, x);
+  if(form === "quiz"){
+    if(Math.random() < 0.5)
+      return { frage: "If " + mitLuecke("___") + ", " + haupt(true, R.neg) + ".", optionen: mischen(einzig([verbIf, "will " + R.grund, R.wf])), loesung: verbIf, erklaerung: erklIf };
+    const opt = R.neg ? [R.s2 + " won't " + R.e, R.s2 + " won't " + sForm(R.e), R.s2 + " not " + R.e] : [kurz + " " + R.e, R.s2 + " will " + sForm(R.e), R.s2 + " " + R.ing];
+    return { frage: "If " + wenn + ", ___" + (R.r2 ? " " + R.r2 : "") + ".", optionen: mischen(opt), loesung: opt[0], erklaerung: erklHaupt };
+  }
+  if(form === "luecke"){
+    const hEnde = (R.neg ? "won't " : "will ") + R.e;
+    return { frage: "If " + mitLuecke("___ (" + R.grund + ")") + ", " + R.s2 + " ___ (" + (R.neg ? "not / " : "") + R.e + ")" + (R.r2 ? " " + R.r2 : "") + ".",
+             loesung: [[verbIf], R.neg ? ["won't " + R.e, "will not " + R.e] : ["will " + R.e, "'ll " + R.e]], erklaerung: erklIf };
+  }
+  if(form === "satzbau") return { loesung: Math.random() < 0.5 ? [vorn(), hinten()] : [hinten(), vorn()], erklaerung: erklaere(E.komma, { BEISPIEL: bspOhne(andere, vorn()) }) };
+  if(form === "fehler"){
+    if(Math.random() < 0.5) return { satz: "If " + mitLuecke(R.wf) + ", " + haupt(true, R.neg) + ".", fehlerwort: R.wf, loesung: [verbIf], erklaerung: erklIf };
+    const fs = sForm(R.e);
+    return { satz: "If " + wenn + ", " + (R.neg ? R.s2 + " won't " : kurz + " ") + fs + (R.r2 ? " " + R.r2 : "") + ".", fehlerwort: fs, loesung: [R.e], erklaerung: erklHaupt };
+  }
+  if(form === "umformen"){
+    const w = wenn.replace(/^\w/, c => c.toUpperCase()) + ".";
+    return { frage: "Make one sentence with „if“:  " + w + " → " + gross(R.s2) + (R.neg ? " / not / " : " / ") + R.e + (R.r2 ? " " + R.r2 : ""), loesung: alle, erklaerung: erklIf };
+  }
+  if(form === "zuordnen"){
+    const mach = ok => () => { const r = wuerfle(bk.ifSaetze), w = r.w.replace(/[{}]/g, ""), k = r.s2 === "I" ? "I'll" : r.s2 + "'ll";
+      const h = (r.neg ? r.s2 + " won't " : k + " ") + r.e + (r.r2 ? " " + r.r2 : "");
+      if(ok) return Math.random() < 0.5 || r.wer ? "If " + w + ", " + h + "." : gross(h) + " if " + w + ".";
+      return wuerfle([() => "If " + r.w.replace(/\{[^}]+\}/, r.wf) + ", " + h + ".",
+                      () => "If " + r.w.replace(/\{[^}]+\}/, "will " + r.grund) + ", " + h + "."])(); };
+    return richtigFalsch(mach(true), mach(false), E.zuordnen);
+  }
+  return null;
+}
+
+// ---------- will (Hoffnung, Vermutung, Vorhersage) – und Unterschied zu going to ----------
+function willGoing(bk, form, E){
+  const plan = (form === "quiz" && Math.random() < 0.4);
+  if(form === "zuordnen"){
+    const K = ["will", "going to"];
+    const w = mehrere(bk.willSaetze, 2 + Math.floor(Math.random() * 2)).map(r => ({ text: r.pre + " " + r.sub + " …", ziel: K[0] }));
+    const g = mehrere(bk.planSaetze, 4 - w.length).map(r => ({ text: r.pre + " …", ziel: K[1] }));
+    const ws = einzigNach(w.concat(g), "text");
+    return { kategorien: K, woerter: mischen(ws), erklaerung: E.zuordnen };
+  }
+  if(plan){
+    const R = wuerfle(bk.planSaetze), be = beVon(R.sub);
+    kern(R.pre);
+    const s = gross(R.sub) + " ___ " + R.e + " " + R.r + ".";
+    const bsp = bspOhne(() => { const r = anders(bk.planSaetze, R); return r.pre + " " + gross(r.sub) + " " + beVon(r.sub) + " going to " + r.e + " " + r.r + "."; }, R.pre);
+    return { frage: R.pre + " " + s, optionen: mischen([be + " going to", "will", be]), loesung: be + " going to", erklaerung: erklaere(E.going, { BEISPIEL: bsp }) };
+  }
+  const R = wuerfle(bk.willSaetze);
+  kern(R.pre + R.sub + R.e);
+  const satz = (x, r = R) => r.pre + " " + r.sub + " " + x + (r.r ? " " + r.r : "") + ".";
+  const richtig = satz("will " + R.e), kurzV = satz("'ll " + R.e).replace(" 'll", "'ll");
+  const bsp = bspOhne(() => { const r = anders(bk.willSaetze, R); return satz("will " + r.e, r); }, richtig);
+  const erkl = erklaere(E.will, { BEISPIEL: bsp });
+  const fs = sForm(R.e);
+  if(form === "quiz") return { frage: satz("___ " + R.e), optionen: mischen(["will", R.sub === "I" ? "am" : "is", "to"]), loesung: "will", erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + R.e + ")"), loesung: ["will " + R.e, "'ll " + R.e], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz("will " + fs), fehlerwort: fs, loesung: [R.e], erklaerung: erkl };
+  if(form === "umformen") return { frage: "Use „will“:  " + R.pre + " / " + R.sub + " / " + R.e + (R.r ? " " + R.r : ""), loesung: einzig([richtig, kurzV]), erklaerung: erkl };
+  return null;
+}
+
+Object.assign(ARTEN, {
+  progressiv(bk, form, E){ return beZeit("prog", bk, form, E)("aussage"); },
+  progressivfrage(bk, form, E){ return beZeit("prog", bk, form, E)(form === "umformen" ? wuerfle(["neg", "frage"]) : wuerfle(["neg", "frage", "frage"])); },
+  goingto(bk, form, E){ return beZeit("going", bk, form, E)(Math.random() < 0.5 ? "aussage" : "neg"); },
+  goingtofrage(bk, form, E){ return beZeit("going", bk, form, E)("frage"); },
+  ifsatz: ifSatz,
+  willgoing: willGoing
+});
+Object.assign(ART_BRAUCHT, {
+  progressiv: ["personen", "verbenIng"], progressivfrage: ["personen", "verbenIng"],
+  goingto: ["personen", "plaene"], goingtofrage: ["personen", "plaene"],
+  ifsatz: ["ifSaetze"], willgoing: ["willSaetze", "planSaetze"]
+});
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};
 function mitExtras(name){
@@ -2592,14 +2822,18 @@ $("btnZusatzZurueck").onclick = zusatzVerlassen;
    Die Spiele stehen in spiele/minispiele.js, Texte/Ziele/Tiere in daten/klasseX.js (KX.minispiele).
    Hier: Knopf, Uhr (minispielSekunden), Punkte, Erfolgsmeldung. Der Haupt-Timer bleibt pausiert,
    bis man zur Übersicht zurückkehrt. Es zählt nicht für den Code und es wird nichts gespeichert. */
-let ms = null, msLetztes = null;
+let ms = null, msZuletzt = [];   // zuletzt gespielte Minispiele (nur im Arbeitsspeicher, wird nicht gespeichert)
 const minispielDaten = () => { const V = VORSCHAU_WELT && KLASSENDATEN[VORSCHAU_WELT]; if(V && V.minispiele) return V.minispiele; const K = KLASSENDATEN[wahl.klasse]; return K && K.minispiele; };
 const minispielNamen = () => { const d = minispielDaten(); return d && d.spiele && window.MINISPIELE ? Object.keys(d.spiele).filter(n => typeof window.MINISPIELE[n] === "function") : []; };
 function minispielVerfuegbar(){ return EINSTELLUNGEN.minispieleAktiv !== false && minispielNamen().length > 0; }
 function minispielOeffnen(){
   const namen = minispielNamen(); if(!namen.length) return;
   const gewuenscht = (location.search.match(/[?&]spiel=(\w+)/) || [])[1];   // Testhilfe: …?spiel=codeknacker
-  const name = gewuenscht && namen.includes(gewuenscht) ? gewuenscht : wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
+  // Dasselbe Spiel frühestens wieder nach „minispielAbstand“ Durchgängen (Einstellung in daten/allgemein.js)
+  const abstand = Math.max(1, Math.round(EINSTELLUNGEN.minispielAbstand) || 4), sperre = msZuletzt.slice(-(Math.min(abstand, namen.length) - 1) || namen.length);
+  const frei = namen.filter(n => !sperre.includes(n));
+  const name = gewuenscht && namen.includes(gewuenscht) ? gewuenscht : wuerfle(frei.length ? frei : namen);
+  msZuletzt = msZuletzt.concat(name).slice(-10);
   const sp = minispielDaten().spiele[name], sek = Math.max(5, Math.round(EINSTELLUNGEN.minispielSekunden) || 30);
   ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null, herzen: MS_HERZEN, grund: null };
   herzenZeigen(); $("msHerzen").classList.remove("weg");

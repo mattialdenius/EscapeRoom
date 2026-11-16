@@ -1,7 +1,7 @@
 /* =====================================================================
    KLASSE 6  ·  Red Line 2  ·  alle Inhalte für Klasse 6
    ---------------------------------------------------------------------
-   STAND 16.11.2026: Unit 1–4 (Themen G1–G13) haben Aufgaben. Unit 5–6 folgen.
+   STAND 16.11.2026: Alle Units 1–6 (Themen G1–G19) haben Aufgaben.
    Themen ohne Aufgaben erscheinen im Startmenü nicht.
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -133,12 +133,12 @@ K6.themen = [
   { id: "6-G11", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Aussagen, Verneinung", regel: "Das simple present beschreibt Zustände (I like curry) und Dinge, die regelmäßig passieren (Tom usually has toast for breakfast). he/she/it: Verb + -s (watches, tries, has). Verneinung: don’t/doesn’t + Grundform." },
   { id: "6-G12", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Fragen, Kurzantworten", regel: "Do/Does + Person + Grundform? → Does Emma like curry? Kurzantworten: Yes, she does. / No, she doesn’t. Mit Fragewort: What do you usually have for breakfast?" },
   { id: "6-G13", klasse: 6, unit: 4, titel: "Die Zukunft mit will (spontane Entscheidungen)", regel: "Spontane Entscheidung (gerade eben entschieden): will + Grundform → „I’m thirsty.“ – „I’ll get some juice.“ Verneinung: won’t (= will not) → I won’t eat it." },
-  { id: "6-G14", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Aussagen", regel: "" },
-  { id: "6-G15", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Verneinung, Fragen, Kurzantworten", regel: "" },
-  { id: "6-G16", klasse: 6, unit: 6, titel: "Bedingungssätze Typ I", regel: "" },
-  { id: "6-G17", klasse: 6, unit: 6, titel: "Die Zukunft mit going to: Aussagen, Verneinung", regel: "" },
-  { id: "6-G18", klasse: 6, unit: 6, titel: "Die Zukunft mit going to: Fragen, Kurzantworten", regel: "" },
-  { id: "6-G19", klasse: 6, unit: 6, titel: "Die Zukunft mit will (Wünsche, Hoffnungen, Vorhersagen)", regel: "" }
+  { id: "6-G14", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Aussagen", regel: "Verlaufsform (present progressive): am/is/are + Verb mit -ing. Sie zeigt, was gerade jetzt passiert (now, at the moment, Look!, Listen!) → Tom is playing chess now. Schreibung: ride → riding (e fällt weg), swim → swimming (verdoppeln)." },
+  { id: "6-G15", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Verneinung, Fragen, Kurzantworten", regel: "Verneinung: I’m not / isn’t / aren’t + -ing → Emma isn’t sleeping. Fragen: Am/Is/Are + Person + -ing? → Are you watching a video? Kurzantworten: Yes, I am. / No, she isn’t." },
+  { id: "6-G16", klasse: 6, unit: 6, titel: "Bedingungssätze Typ I", regel: "if + simple present, Hauptsatz: will + Grundform → If it rains, we’ll stay at home. Im if-Satz steht nie will. Steht der if-Satz hinten, fällt das Komma weg → We’ll stay at home if it rains." },
+  { id: "6-G17", klasse: 6, unit: 6, titel: "Die Zukunft mit going to: Aussagen, Verneinung", regel: "Pläne und Absichten: am/is/are + going to + Grundform → I’m going to visit my grandma. Verneinung: I’m not / isn’t / aren’t going to … → Tom isn’t going to sell his bike." },
+  { id: "6-G18", klasse: 6, unit: 6, titel: "Die Zukunft mit going to: Fragen, Kurzantworten", regel: "Am/Is/Are + Person + going to + Grundform? → Is Lily going to make jewellery? Kurzantworten: Yes, she is. / No, she isn’t." },
+  { id: "6-G19", klasse: 6, unit: 6, titel: "Die Zukunft mit will (Wünsche, Hoffnungen, Vorhersagen)", regel: "will + Grundform für Hoffnungen, Vermutungen und Vorhersagen (I hope, I think, maybe, I’m sure) → I hope it will be sunny. Ist etwas schon fest geplant oder vorbereitet, nimmst du going to → We’ve bought the tickets. We’re going to see the play." }
 ];
 
 // =====================================================================
@@ -803,6 +803,267 @@ K6.zusatzfragen.push(
   { thema: "6-G13", frage: "„I'm hungry.“ – „I … make you a sandwich.“", optionen: ["'ll", "am", "to"], loesung: "'ll" },
   { thema: "6-G13", frage: "Which sentence is correct?", optionen: ["I'll have the pancakes.", "I'll has the pancakes.", "I'll to have the pancakes."], loesung: "I'll have the pancakes." },
   { thema: "6-G13", frage: "„This film is boring.“ – „I … watch it.“", optionen: ["won't", "willn't", "don't will"], loesung: "won't" }
+);
+
+// =====================================================================
+// 3c) SATZBAUKASTEN Unit 5 und 6
+// =====================================================================
+const K6_PERSONEN_BE = [
+  { text: "I",          be: "am",  er: false, pron: "I",    poss: "my",    kind: true }, { text: "you",        be: "are", er: false, pron: "you",  poss: "your",  kind: true },
+  { text: "we",         be: "are", er: false, pron: "we",   poss: "our",   kind: true }, { text: "they",       be: "are", er: false, pron: "they", poss: "their", kind: true },
+  { text: "my friends", be: "are", er: false, pron: "they", poss: "their", kind: true }, { text: "Tom and Emma", be: "are", er: false, pron: "they", poss: "their", kind: true },
+  { text: "my parents", be: "are", er: false, pron: "they", poss: "their" },
+  { text: "he",         be: "is",  er: true,  pron: "he",   poss: "his",   kind: true }, { text: "she",        be: "is",  er: true,  pron: "she",  poss: "her",   kind: true },
+  { text: "Tom",        be: "is",  er: true,  pron: "he",   poss: "his",   kind: true }, { text: "Emma",       be: "is",  er: true,  pron: "she",  poss: "her",   kind: true },
+  { text: "Ben",        be: "is",  er: true,  pron: "he",   poss: "his",   kind: true }, { text: "Lily",       be: "is",  er: true,  pron: "she",  poss: "her",   kind: true },
+  { text: "my brother", be: "is",  er: true,  pron: "he",   poss: "his",   kind: true }, { text: "my sister",  be: "is",  er: true,  pron: "she",  poss: "her",   kind: true },
+  { text: "my dad",     be: "is",  er: true,  pron: "he",   poss: "his" },               { text: "my mum",     be: "is",  er: true,  pron: "she",  poss: "her" }
+];
+Object.assign(K6.baukasten, {
+  // ---------- Klasse 6, Unit 5 ----------
+  "6-U5": {
+    personen: K6_PERSONEN_BE,
+    // Verlaufsform (G14, G15). typ: (leer) = + -ing, e = e fällt weg, dopp = Konsonant verdoppeln
+    verbenIng: [
+      { e: "play",     ing: "playing",     rest: "computer games",              zeit: ["now", "at the moment"] },
+      { e: "chat",     ing: "chatting",    rest: "online with {POSS} friends",   zeit: ["now", "at the moment"], typ: "dopp" },
+      { e: "surf",     ing: "surfing",     rest: "the internet",                 zeit: ["now", "at the moment"] },
+      { e: "download", ing: "downloading", rest: "a video",                      zeit: ["now", "at the moment"] },
+      { e: "upload",   ing: "uploading",   rest: "a photo",                      zeit: ["now", "at the moment"] },
+      { e: "ride",     ing: "riding",      rest: "{POSS} bike",                  zeit: ["now", "at the moment"], typ: "e" },
+      { e: "repair",   ing: "repairing",   rest: "{POSS} bike",                  zeit: ["now", "at the moment"] },
+      { e: "paint",    ing: "painting",    rest: "the wall",                     zeit: ["now", "at the moment"] },
+      { e: "plant",    ing: "planting",    rest: "flowers in the garden",        zeit: ["now", "at the moment"] },
+      { e: "play",     ing: "playing",     rest: "chess",                        zeit: ["now", "at the moment"] },
+      { e: "swim",     ing: "swimming",    rest: "in the lake",                  zeit: ["now", "at the moment"], typ: "dopp" },
+      { e: "wave",     ing: "waving",      rest: "at us",                        zeit: ["now"], typ: "e" },
+      { e: "take",     ing: "taking",      rest: "a break",                      zeit: ["now", "at the moment"], typ: "e" },
+      { e: "have",     ing: "having",      rest: "a haircut",                    zeit: ["now", "at the moment"], typ: "e" },
+      { e: "write",    ing: "writing",     rest: "a text",                       zeit: ["now", "at the moment"], typ: "e" },
+      { e: "get",      ing: "getting",     rest: "dressed",                      zeit: ["now"], typ: "dopp" },
+      { e: "sit",      ing: "sitting",     rest: "in the garden",                zeit: ["now", "at the moment"], typ: "dopp" },
+      { e: "run",      ing: "running",     rest: "to the bus stop",              zeit: ["now"], typ: "dopp" },
+      { e: "make",     ing: "making",      rest: "a video",                      zeit: ["now", "at the moment"], typ: "e" },
+      { e: "talk",     ing: "talking",     rest: "to a neighbour",               zeit: ["now", "at the moment"] },
+      { e: "wait",     ing: "waiting",     rest: "for the bus",                  zeit: ["now", "at the moment"] },
+      { e: "hang",     ing: "hanging",     rest: "around in the park",           zeit: ["now", "at the moment"], nurKind: true }
+    ],
+    erklaerungen: {
+      progressiv: {
+        normal: "Verlaufsform: am/is/are + Verb mit -ing. Sie zeigt, was gerade jetzt passiert (now, at the moment). Beispiel: {BEISPIEL}",
+        e:      "Endet das Verb auf ein stummes -e, fällt das e weg: ride → riding, make → making. Beispiel: {BEISPIEL}",
+        dopp:   "Kurzer Vokal + ein Konsonant am Ende: Der Konsonant wird verdoppelt: swim → swimming, sit → sitting. Beispiel: {BEISPIEL}",
+        neg:    "Verneinung: I'm not / isn't / aren't + Verb mit -ing. Beispiel: {BEISPIEL}",
+        frage:  "Fragen: Am/Is/Are + Person + Verb mit -ing? Beispiel: {BEISPIEL}",
+        zuordnen: "I → am. He, she, it und eine Person (Tom, my mum) → is. You, we, they und mehrere Personen → are.",
+        zuordnenIng: "Meist einfach + -ing (play → playing). Stummes -e fällt weg (ride → riding). Kurzer Vokal + ein Konsonant: verdoppeln (swim → swimming)."
+      },
+      progressivfrage: {
+        neg:      "Verneinung: I'm not / isn't / aren't + Verb mit -ing (nicht don't!). Beispiel: {BEISPIEL}",
+        frage:    "Fragen: Is/Are + Person + Verb mit -ing? (nicht Do/Does!) Beispiel: {BEISPIEL}",
+        kurzJa:   "Kurzantwort mit Ja: Yes, + Person + am/is/are. Beispiel: {BEISPIEL}",
+        kurzNein: "Kurzantwort mit Nein: No, + Person + 'm not/isn't/aren't. Beispiel: {BEISPIEL}",
+        zuordnen: "He, she, it und eine Person → Is …? You, they und mehrere Personen → Are …?",
+        zuordnenIng: "Meist einfach + -ing (play → playing). Stummes -e fällt weg (ride → riding). Kurzer Vokal + ein Konsonant: verdoppeln (swim → swimming)."
+      }
+    }
+  },
+
+  // ---------- Klasse 6, Unit 6 ----------
+  "6-U6": {
+    personen: K6_PERSONEN_BE,
+    // going to (G17, G18): Pläne. s = falsche -s-Form
+    plaene: [
+      { e: "visit",   s: "visits",   rest: "{POSS} grandparents",       zeit: ["next weekend", "on Sunday"] },
+      { e: "sleep",   s: "sleeps",   rest: "in a tent",                 zeit: ["next week", "at the weekend"] },
+      { e: "play",    s: "plays",    rest: "table tennis",              zeit: ["tomorrow", "after school"] },
+      { e: "sell",    s: "sells",    rest: "{POSS} old bike",           zeit: ["next week"] },
+      { e: "explore", s: "explores", rest: "the island",                zeit: ["in the summer holidays"] },
+      { e: "make",    s: "makes",    rest: "jewellery",                 zeit: ["at the weekend"] },
+      { e: "look",    s: "looks",    rest: "after the dog",             zeit: ["tomorrow"] },
+      { e: "pack",    s: "packs",    rest: "up {POSS} things",          zeit: ["tonight"] },
+      { e: "say",     s: "says",     rest: "goodbye to {POSS} friends", zeit: ["on Friday"] },
+      { e: "change",  s: "changes",  rest: "school",                    zeit: ["next year"], nurKind: true },
+      { e: "watch",   s: "watches",  rest: "a film",                    zeit: ["tonight"] },
+      { e: "have",    s: "has",      rest: "a party",                   zeit: ["on Saturday"] },
+      { e: "travel",  s: "travels",  rest: "to Scotland",               zeit: ["in the summer holidays"] },
+      { e: "learn",   s: "learns",   rest: "to ski",                    zeit: ["next winter"] },
+      { e: "buy",     s: "buys",     rest: "a new tent",                zeit: ["next week"] }
+    ],
+    // if-Sätze Typ I (G16): wer = Name im if-Satz (dann heißt es hinten „Tom will … if he …“); {…} = Verb im if-Satz, grund = Grundform, wf = falsche Form; Hauptsatz: s2 + will + e + r2; neg = mit won't
+    ifSaetze: [
+      { w: "it {rains}",               grund: "rain",    wf: "rain",     s2: "we",  e: "stay",  ing: "staying",  r2: "at home" },
+      { w: "you {get} up late",        grund: "get",     wf: "gets",     s2: "you", e: "miss",  ing: "missing",  r2: "the bus" },
+      { w: "Tom {finds} the treasure", wer: "Tom", grund: "find",    wf: "find",     s2: "he",  e: "buy",   ing: "buying",   r2: "a boat" },
+      { w: "it {is} sunny",            grund: "be",      wf: "are",      s2: "we",  e: "go",    ing: "going",    r2: "to the beach" },
+      { w: "we {leave} now",           grund: "leave",   wf: "leaves",   s2: "we",  e: "miss",  ing: "missing",  r2: "the train", neg: true },
+      { w: "you {help} me",            grund: "help",    wf: "helps",    s2: "I",   e: "make",  ing: "making",   r2: "you a muffin" },
+      { w: "Emma {goes} to camp", wer: "Emma",      grund: "go",      wf: "go",       s2: "she", e: "sleep", ing: "sleeping", r2: "in a tent" },
+      { w: "we {explore} the cave",    grund: "explore", wf: "explores", s2: "we",  e: "find",  ing: "finding",  r2: "the smugglers' treasure" },
+      { w: "you {are} scared",         grund: "be",      wf: "is",       s2: "I",   e: "come",  ing: "coming",   r2: "with you" },
+      { w: "my parents {say} yes",     grund: "say",     wf: "says",     s2: "we",  e: "have",  ing: "having",   r2: "a party" },
+      { w: "Ben {sees} a ghost", wer: "Ben",       grund: "see",     wf: "see",      s2: "he",  e: "run",   ing: "running",  r2: "away" },
+      { w: "you {keep} in touch",      grund: "keep",    wf: "keeps",    s2: "we",  e: "stay",  ing: "staying",  r2: "friends forever" },
+      { w: "I {have} time",            grund: "have",    wf: "has",      s2: "I",   e: "help",  ing: "helping",  r2: "you" },
+      { w: "Lily {misses} the bus", wer: "Lily",    grund: "miss",    wf: "miss",     s2: "she", e: "walk",  ing: "walking",  r2: "to school" },
+      { w: "it {is} cold",             grund: "be",      wf: "are",      s2: "I",   e: "take",  ing: "taking",   r2: "my jacket" },
+      { w: "it {rains} tomorrow",      grund: "rain",    wf: "rain",     s2: "we",  e: "play",  ing: "playing",  r2: "table tennis outside", neg: true }
+    ],
+    // will (G19): Hoffnungen, Vermutungen, Vorhersagen
+    willSaetze: [
+      { pre: "I hope",   sub: "it",                e: "be",   r: "sunny at camp" },
+      { pre: "I think",  sub: "you",               e: "like", r: "the scones" },
+      { pre: "Maybe",    sub: "we",                e: "find", r: "the treasure" },
+      { pre: "I'm sure", sub: "you",               e: "feel", r: "at home quickly" },
+      { pre: "I hope",   sub: "we",                e: "keep", r: "in touch" },
+      { pre: "I think",  sub: "Tom",               e: "miss", r: "his old school" },
+      { pre: "I hope",   sub: "my new school",     e: "be",   r: "nice" },
+      { pre: "I'm sure", sub: "the farewell party", e: "be",  r: "great" },
+      { pre: "Maybe",    sub: "Emma",              e: "win",  r: "the quiz" },
+      { pre: "I think",  sub: "it",                e: "rain", r: "tomorrow" },
+      { pre: "I hope",   sub: "I",                 e: "see",  r: "you again soon" },
+      { pre: "I'm sure", sub: "your friends",      e: "miss", r: "you" }
+    ],
+    // going to (Unterschied zu will): fester Plan, schon vorbereitet
+    planSaetze: [
+      { pre: "We've already bought the tickets.",      sub: "we",  e: "see",     r: "the play on Saturday" },
+      { pre: "I've already packed my bag.",            sub: "I",   e: "sleep",   r: "in a tent at camp" },
+      { pre: "Tom has already planned everything.",    sub: "he",  e: "make",    r: "jewellery at camp" },
+      { pre: "It's all planned.",                      sub: "we",  e: "have",    r: "a farewell party on Friday" },
+      { pre: "Lily has already booked the trip.",      sub: "she", e: "explore", r: "the caves" },
+      { pre: "My parents have already sold our house.", sub: "we", e: "move",    r: "to Scotland" }
+    ],
+    erklaerungen: {
+      goingto: {
+        pos:  "Pläne für die Zukunft: am/is/are + going to + Grundform. Beispiel: {BEISPIEL}",
+        neg:  "Verneinung: I'm not / isn't / aren't + going to + Grundform. Beispiel: {BEISPIEL}",
+        frage: "Fragen: Am/Is/Are + Person + going to + Grundform? Beispiel: {BEISPIEL}",
+        zuordnen: "I → am going to. He, she, it und eine Person → is going to. You, we, they und mehrere Personen → are going to."
+      },
+      goingtofrage: {
+        frage:    "Fragen: Is/Are + Person + going to + Grundform? Beispiel: {BEISPIEL}",
+        kurzJa:   "Kurzantwort mit Ja: Yes, + Person + am/is/are. Beispiel: {BEISPIEL}",
+        kurzNein: "Kurzantwort mit Nein: No, + Person + 'm not/isn't/aren't. Beispiel: {BEISPIEL}",
+        zuordnen: "He, she, it und eine Person → Is … going to …? You, they und mehrere Personen → Are … going to …?"
+      },
+      ifsatz: {
+        wenn:  "Im if-Satz steht das simple present (he/she/it mit -s) – nie will! Beispiel: {BEISPIEL}",
+        haupt: "Im Hauptsatz steht will/'ll (oder won't) + Grundform. Beispiel: {BEISPIEL}",
+        komma: "Steht der if-Satz vorne, kommt ein Komma. Steht er hinten, gibt es kein Komma. Beispiel: {BEISPIEL}",
+        zuordnen: "Richtig: If + simple present, … will + Grundform. Falsch: will im if-Satz oder ein fehlendes -s bei he/she/it."
+      },
+      willgoing: {
+        will:  "Hoffnungen, Vermutungen und Vorhersagen (I hope, I think, maybe, I'm sure): will + Grundform. Beispiel: {BEISPIEL}",
+        going: "Ist etwas schon fest geplant oder vorbereitet, nimmst du going to. Beispiel: {BEISPIEL}",
+        zuordnen: "I hope, I think, maybe, I'm sure → will. Schon gekauft, gepackt, geplant → going to."
+      }
+    }
+  }
+});
+
+Object.assign(K6.generatoren, {
+  "6-G14": { baukasten: "6-U5", art: "progressiv" },
+  "6-G15": { baukasten: "6-U5", art: "progressivfrage" },
+  "6-G16": { baukasten: "6-U6", art: "ifsatz" },
+  "6-G17": { baukasten: "6-U6", art: "goingto" },
+  "6-G18": { baukasten: "6-U6", art: "goingtofrage" },
+  "6-G19": { baukasten: "6-U6", art: "willgoing" }
+});
+
+K6.aufgaben.push(
+  // ---------- 6-G14  Verlaufsform: Aussagen ----------
+  { thema: "6-G14", niveau: "gruen", form: "quiz", frage: "Look! The dog ___ in the lake.", optionen: ["is swimming", "swims", "is swiming"], loesung: "is swimming",
+    erklaerung: "Look! zeigt: Es passiert gerade jetzt → is + swimming (m verdoppelt). Beispiel: My sister is sitting in the garden." },
+  { thema: "6-G14", niveau: "gelb", form: "luecke", frage: "Listen! Somebody ___ (laugh) in the kitchen.", loesung: ["is laughing"],
+    erklaerung: "Listen! = jetzt gerade → is + Verb mit -ing. Beispiel: My dad is talking to a neighbour." },
+  { thema: "6-G14", niveau: "gelb", form: "satzbau", loesung: ["My friends are chatting online at the moment."],
+    erklaerung: "are + Verb mit -ing (chat → chatting). Beispiel: We are surfing the internet now." },
+  { thema: "6-G14", niveau: "rot", form: "fehler", satz: "Emma is writeing a text to her friend.", fehlerwort: "writeing", loesung: ["writing"],
+    erklaerung: "Stummes -e fällt weg: write → writing. Beispiel: Ben is making a video." },
+  { thema: "6-G14", niveau: "rot", form: "umformen", frage: "Use the present progressive:  my parents / paint / the kitchen / at the moment", loesung: ["My parents are painting the kitchen at the moment."],
+    erklaerung: "are + Verb mit -ing. Beispiel: My friends are planting flowers now." },
+
+  // ---------- 6-G15  Verlaufsform: Verneinung, Fragen, Kurzantworten ----------
+  { thema: "6-G15", niveau: "gruen", form: "quiz", frage: "___ you watching the video now?", optionen: ["Are", "Do", "Is"], loesung: "Are",
+    erklaerung: "Fragen in der Verlaufsform: Are + you + Verb mit -ing? Beispiel: Is Tom playing chess?" },
+  { thema: "6-G15", niveau: "gruen", form: "quiz", frage: "„Is Lily repairing her bike?“ – „No, …“", optionen: ["she isn't.", "she doesn't.", "she aren't."], loesung: "she isn't.",
+    erklaerung: "Kurzantwort mit is: No, she isn't. Beispiel: Are your friends swimming? – No, they aren't." },
+  { thema: "6-G15", niveau: "gelb", form: "luecke", frage: "Sorry, I can't talk. I ___ (not / sit) at my desk at the moment.", loesung: ["am not sitting", "'m not sitting"],
+    erklaerung: "I'm not + Verb mit -ing (sit → sitting). Beispiel: I'm not playing computer games now." },
+  { thema: "6-G15", niveau: "gelb", form: "satzbau", loesung: ["What are you doing at the moment?"],
+    erklaerung: "Fragewort + am/is/are + Person + Verb mit -ing? Beispiel: Where is Emma going?" },
+  { thema: "6-G15", niveau: "rot", form: "fehler", satz: "Tom don't playing chess at the moment.", fehlerwort: "don't", loesung: ["isn't", "is not"],
+    erklaerung: "In der Verlaufsform verneinst du mit isn't/aren't, nicht mit don't. Beispiel: My sister isn't sleeping now." },
+
+  // ---------- 6-G16  Bedingungssätze Typ I ----------
+  { thema: "6-G16", niveau: "gruen", form: "quiz", frage: "If it ___ sunny tomorrow, we'll have a picnic.", optionen: ["is", "will be", "are"], loesung: "is",
+    erklaerung: "Im if-Satz steht das simple present, nicht will. Beispiel: If it rains, we'll stay at home." },
+  { thema: "6-G16", niveau: "gelb", form: "luecke", frage: "If you ___ (keep) the secret, I ___ (tell) you everything.", loesung: [["keep"], ["'ll tell", "will tell"]],
+    erklaerung: "if + simple present, Hauptsatz mit will. Beispiel: If you help me, I'll make you a muffin." },
+  { thema: "6-G16", niveau: "gelb", form: "satzbau", loesung: ["We'll go to the beach if it is sunny.", "If it is sunny, we'll go to the beach."],
+    erklaerung: "Der if-Satz kann vorne (mit Komma) oder hinten (ohne Komma) stehen. Beispiel: I'll help you if I have time." },
+  { thema: "6-G16", niveau: "rot", form: "fehler", satz: "If Emma will come to the party, we'll have lots of fun.", fehlerwort: "will", loesung: ["comes"],
+    erklaerung: "Im if-Satz kein will! Simple present: If Emma comes … Beispiel: If Tom finds the treasure, he'll buy a boat." },
+  { thema: "6-G16", niveau: "rot", form: "umformen", frage: "Make one sentence with „if“:  You get up late. → You / miss / the bus",
+    loesung: ["If you get up late, you'll miss the bus.", "If you get up late, you will miss the bus.", "You'll miss the bus if you get up late.", "You will miss the bus if you get up late."],
+    erklaerung: "If + simple present, … will + Grundform. Beispiel: If it rains, we'll stay at home." },
+
+  // ---------- 6-G17  going to: Aussagen, Verneinung ----------
+  { thema: "6-G17", niveau: "gruen", form: "quiz", frage: "Next summer my family ___ going to travel to Scotland.", optionen: ["is", "are", "am"], loesung: "is",
+    erklaerung: "my family = it → is going to. Beispiel: My brother is going to learn to ski." },
+  { thema: "6-G17", niveau: "gelb", form: "luecke", frage: "We ___ (not / sleep) in a tent. We're going to stay in a hotel.", loesung: ["aren't going to sleep", "are not going to sleep", "'re not going to sleep"],
+    erklaerung: "Verneinung: aren't + going to + Grundform. Beispiel: Tom isn't going to sell his bike." },
+  { thema: "6-G17", niveau: "gelb", form: "satzbau", loesung: ["I'm going to make jewellery at the weekend."],
+    erklaerung: "am/is/are + going to + Grundform. Beispiel: Emma is going to explore the island." },
+  { thema: "6-G17", niveau: "rot", form: "fehler", satz: "My sister is going to changes school next year.", fehlerwort: "changes", loesung: ["change"],
+    erklaerung: "Nach going to steht die Grundform ohne -s. Beispiel: My dad is going to buy a new tent." },
+  { thema: "6-G17", niveau: "rot", form: "umformen", frage: "Use „going to“:  Lily / say goodbye to her friends / on Friday", loesung: ["Lily is going to say goodbye to her friends on Friday.", "Lily's going to say goodbye to her friends on Friday."],
+    erklaerung: "is + going to + Grundform. Beispiel: Tom is going to pack up his things tonight." },
+
+  // ---------- 6-G18  going to: Fragen, Kurzantworten ----------
+  { thema: "6-G18", niveau: "gruen", form: "quiz", frage: "___ your parents going to have a farewell party?", optionen: ["Are", "Is", "Do"], loesung: "Are",
+    erklaerung: "your parents = they → Are … going to …? Beispiel: Is Ben going to play table tennis?" },
+  { thema: "6-G18", niveau: "gelb", form: "luecke", frage: "Is Tom going to look after the dog? – Yes, ___.", loesung: ["he is", "yes, he is"],
+    erklaerung: "Kurzantwort: Yes, he is. Beispiel: Are you going to visit your grandparents? – Yes, I am." },
+  { thema: "6-G18", niveau: "gelb", form: "satzbau", loesung: ["What are you going to do in the summer holidays?"],
+    erklaerung: "Fragewort + am/is/are + Person + going to + Grundform? Beispiel: Where is Emma going to sleep?" },
+  { thema: "6-G18", niveau: "rot", form: "fehler", satz: "Are Emma going to explore the cave?", fehlerwort: "Are", loesung: ["Is"],
+    erklaerung: "Emma = she → Is. Beispiel: Is Lily going to make jewellery?" },
+  { thema: "6-G18", niveau: "rot", form: "umformen", frage: "Ask a question:  They are going to sell their old bikes.", loesung: ["Are they going to sell their old bikes?"],
+    erklaerung: "Are + they + going to + Grundform? Beispiel: Are your friends going to watch a film tonight?" },
+
+  // ---------- 6-G19  will (Hoffnungen, Vermutungen) – Unterschied zu going to ----------
+  { thema: "6-G19", niveau: "gruen", form: "quiz", frage: "I hope you ___ have a great time at your new school.", optionen: ["will", "are", "to"], loesung: "will",
+    erklaerung: "I hope … → will + Grundform. Beispiel: I think it will rain tomorrow." },
+  { thema: "6-G19", niveau: "gruen", form: "quiz", frage: "I've already bought a new tent. I ___ sleep in it at camp.", optionen: ["am going to", "will", "am"], loesung: "am going to",
+    erklaerung: "Das Zelt ist schon gekauft – es ist ein fester Plan → going to. Beispiel: We've bought the tickets. We're going to see the play." },
+  { thema: "6-G19", niveau: "gelb", form: "luecke", frage: "Maybe it ___ (snow) at Christmas this year.", loesung: ["will snow", "'ll snow"],
+    erklaerung: "maybe = Vermutung → will + Grundform. Beispiel: Maybe Emma will win the quiz." },
+  { thema: "6-G19", niveau: "rot", form: "fehler", satz: "I'm sure you will loves the scones.", fehlerwort: "loves", loesung: ["love"],
+    erklaerung: "Nach will steht die Grundform ohne -s. Beispiel: I think you will like the muffins." },
+  { thema: "6-G19", niveau: "rot", form: "umformen", frage: "Use „will“:  I think / my best friend / miss me", loesung: ["I think my best friend will miss me."],
+    erklaerung: "I think + will + Grundform. Beispiel: I'm sure your friends will miss you." }
+);
+
+K6.zusatzfragen.push(
+  { thema: "6-G14", frage: "Which is correct?", optionen: ["swimming", "swiming", "swimeing"], loesung: "swimming" },
+  { thema: "6-G14", frage: "Look! Tom … his bike.", optionen: ["is riding", "rides", "is rideing"], loesung: "is riding" },
+  { thema: "6-G14", frage: "Which sentence is correct?", optionen: ["We are waiting for the bus.", "We is waiting for the bus.", "We waiting for the bus."], loesung: "We are waiting for the bus." },
+  { thema: "6-G15", frage: "„Are you chatting online?“ – „Yes, …“", optionen: ["I am.", "I do.", "I chat."], loesung: "I am." },
+  { thema: "6-G15", frage: "My brother … sleeping. He's playing chess.", optionen: ["isn't", "doesn't", "aren't"], loesung: "isn't" },
+  { thema: "6-G15", frage: "Which question is correct?", optionen: ["Is Emma making a video?", "Does Emma making a video?", "Is Emma make a video?"], loesung: "Is Emma making a video?" },
+  { thema: "6-G16", frage: "If it … tomorrow, we'll stay at home.", optionen: ["rains", "will rain", "rain"], loesung: "rains" },
+  { thema: "6-G16", frage: "Which sentence is correct?", optionen: ["If you help me, I'll help you.", "If you will help me, I'll help you.", "If you helps me, I'll help you."], loesung: "If you help me, I'll help you." },
+  { thema: "6-G16", frage: "If Tom finds the treasure, he …", optionen: ["will buy a boat.", "buys a boat yesterday.", "will buys a boat."], loesung: "will buy a boat." },
+  { thema: "6-G17", frage: "We … going to visit our grandparents.", optionen: ["are", "is", "am"], loesung: "are" },
+  { thema: "6-G17", frage: "Which sentence is correct?", optionen: ["Ben is going to sell his bike.", "Ben is going to sells his bike.", "Ben going to sell his bike."], loesung: "Ben is going to sell his bike." },
+  { thema: "6-G17", frage: "I … going to change school.", optionen: ["'m not", "isn't", "don't"], loesung: "'m not" },
+  { thema: "6-G18", frage: "„Is Lily going to make jewellery?“ – „Yes, …“", optionen: ["she is.", "she does.", "she going."], loesung: "she is." },
+  { thema: "6-G18", frage: "Which question is correct?", optionen: ["Are you going to play table tennis?", "Do you going to play table tennis?", "Are you going play table tennis?"], loesung: "Are you going to play table tennis?" },
+  { thema: "6-G18", frage: "„Are your friends going to come?“ – „No, …“", optionen: ["they aren't.", "they don't.", "they isn't."], loesung: "they aren't." },
+  { thema: "6-G19", frage: "I hope it … sunny at camp.", optionen: ["will be", "will is", "be"], loesung: "will be" },
+  { thema: "6-G19", frage: "We've already bought the tickets. We …", optionen: ["are going to see the play.", "will to see the play.", "going to see the play."], loesung: "are going to see the play." },
+  { thema: "6-G19", frage: "Which sentence is correct?", optionen: ["I think you will like it.", "I think you will likes it.", "I think you will to like it."], loesung: "I think you will like it." }
 );
 
 // =====================================================================
