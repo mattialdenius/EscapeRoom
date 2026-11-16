@@ -172,3 +172,92 @@ K8.minispiele = {
   rutsche: { figur: "🏃", fisch: "🔍", hindernisse: ["📦", "🗑️", "🚧"], hintergrund: ["🏢", "☁️", "🏢", "🌧️"] },
   rutscheAutsch: ["Crash. Keep going.", "Mind the bins.", "Ouch.", "Up you get."]
 };
+
+// ---------- More mini games (from version 0.7.1): eight games per world ----------
+Object.assign(K8.minispiele.spiele, {
+  taschenlampe: {
+    titel: "🔦 Clues in the dark",
+    anleitung: "The lights are out in the office. Move your finger to shine the torch and hold the light on a clue for a moment. Some clues are hidden behind furniture.",
+    ziel: 6,
+    erfolg: "Six clues found. Sharp eyes, detective."
+  },
+  lasergitter: {
+    titel: "🚨 Sneak past the guard",
+    anleitung: "The guard's torch sweeps the corridor. Tap when it says OFF to slip past. Tap at the wrong moment and you lose a second, nothing more.",
+    ziel: 6,
+    erfolg: "Six corridors, and nobody saw you."
+  },
+  obstkorb: {
+    titel: "📮 Catch the evidence",
+    anleitung: "The wind blows the evidence off the desk! Move the bag with your finger and catch it. Watch out for rain and rubbish!",
+    ziel: 12,
+    erfolg: "All the evidence is safe. The inspector is impressed."
+  },
+  fuettern: {
+    titel: "🧳 Lost and found",
+    anleitung: "People have left things in the office. Drag each thing to its owner – or tap the right person.",
+    ziel: 6,
+    erfolg: "Everything is back with its owner. Case closed."
+  },
+  schaukel: {
+    titel: "🧗 Rooftop ropes",
+    anleitung: "Swing across the rooftops of London. Tap when the ring ⭕ appears to jump to the next rope!",
+    ziel: 6,
+    erfolg: "Six roofs and not one fall. Very stylish."
+  }
+});
+Object.assign(K8.minispiele, {
+  // ---------- Clues in the dark (taschenlampe) ----------
+  nachtTiere: [
+    { emoji: "🔑", en: "key",          de: "Schlüssel" },   { emoji: "👣", en: "footprints", de: "Fußspuren" },
+    { emoji: "🧤", en: "glove",        de: "Handschuh" },   { emoji: "✉️", en: "letter",     de: "Brief" },
+    { emoji: "🕶️", en: "sunglasses",   de: "Sonnenbrille" },{ emoji: "🎩", en: "hat",        de: "Hut" },
+    { emoji: "🔍", en: "magnifying glass", de: "Lupe" },    { emoji: "📷", en: "camera",     de: "Kamera" },
+    { emoji: "☂️", en: "umbrella",     de: "Regenschirm" }, { emoji: "💼", en: "briefcase",  de: "Aktentasche" },
+    { emoji: "🧾", en: "receipt",      de: "Kassenzettel" },{ emoji: "🗝️", en: "old key",    de: "alter Schlüssel" }
+  ],
+  kulisse: ["🪑", "🗄️", "🛋️", "🪴", "📚", "🗄️", "🪑", "🪴", "📦", "🛋️"],
+
+  // ---------- Sneak past the guard (lasergitter) ----------
+  lasergitter: { figur: "🕵️", ziel: "🚪", an: "ON", aus: "OFF", hinweis: "Tap when the light is OFF.", autsch: ["Wait for OFF.", "Too early.", "Patience, detective."] },
+
+  // ---------- Catch the evidence (obstkorb) ----------
+  obst: [
+    { emoji: "✉️", en: "letter",   de: "Brief" },        { emoji: "🔑", en: "key",      de: "Schlüssel" },
+    { emoji: "🖼️", en: "photo",    de: "Foto" },         { emoji: "🎫", en: "ticket",   de: "Eintrittskarte" },
+    { emoji: "💳", en: "card",     de: "Karte" },        { emoji: "🧾", en: "receipt",  de: "Kassenzettel" },
+    { emoji: "📒", en: "notebook", de: "Notizbuch" },    { emoji: "💍", en: "ring",     de: "Ring" },
+    { emoji: "🧤", en: "glove",    de: "Handschuh" },    { emoji: "🔍", en: "magnifying glass", de: "Lupe" }
+  ],
+  muell: ["💧", "🥫", "🧦", "🍌"],
+  autsch: ["Splash! Just rain.", "A tin? That's not evidence.", "Socks? Really?", "A banana? Not a clue."],
+
+  // ---------- Lost and found (fuettern): tiere = owners, futter = things ----------
+  tiere: [
+    { id: "chef",    emoji: "👨‍🍳", en: "chef",        de: "Koch",           witz: "The chef looks confused: “{futter}? That's not mine!”" },
+    { id: "doctor",  emoji: "👩‍⚕️", en: "doctor",      de: "Ärztin",         witz: "The doctor shakes her head: “{futter}? Not mine, sorry.”" },
+    { id: "painter", emoji: "👨‍🎨", en: "painter",     de: "Maler",          witz: "The painter laughs: “{futter}? I only need my brushes!”" },
+    { id: "pilot",   emoji: "👩‍✈️", en: "pilot",       de: "Pilotin",        witz: "The pilot smiles: “{futter}? Not in my cockpit!”" },
+    { id: "singer",  emoji: "🧑‍🎤", en: "singer",      de: "Sänger",         witz: "The singer sings: “{futter}? No, no, no-o-o!”" },
+    { id: "farmer",  emoji: "👨‍🌾", en: "farmer",      de: "Bauer",          witz: "The farmer frowns: “{futter}? Never seen that before.”" },
+    { id: "fire",    emoji: "👩‍🚒", en: "firefighter", de: "Feuerwehrfrau",  witz: "The firefighter says: “{futter}? Not mine – I've got my helmet!”" }
+  ],
+  futter: [
+    { emoji: "🍳", en: "frying pan",       de: "Pfanne",          haupt: ["chef"],    auch: [] },
+    { emoji: "🩺", en: "stethoscope",      de: "Stethoskop",      haupt: ["doctor"],  auch: [] },
+    { emoji: "💊", en: "pills",            de: "Tabletten",       haupt: ["doctor"],  auch: [] },
+    { emoji: "🖌️", en: "paintbrush",       de: "Pinsel",          haupt: ["painter"], auch: [] },
+    { emoji: "🎨", en: "palette",          de: "Farbpalette",     haupt: ["painter"], auch: [] },
+    { emoji: "✈️", en: "model plane",      de: "Modellflugzeug",  haupt: ["pilot"],   auch: [] },
+    { emoji: "🎤", en: "microphone",       de: "Mikrofon",        haupt: ["singer"],  auch: [] },
+    { emoji: "🎸", en: "guitar",           de: "Gitarre",         haupt: ["singer"],  auch: [] },
+    { emoji: "🚜", en: "toy tractor",      de: "Spielzeugtraktor", haupt: ["farmer"], auch: [] },
+    { emoji: "🧯", en: "fire extinguisher", de: "Feuerlöscher",   haupt: ["fire"],    auch: ["chef"] }
+  ],
+  lob: ["👍 Thanks!", "👍 That's mine!", "👍 Great!", "👍 Perfect!"],
+
+  // ---------- Rooftop ropes (schaukel) ----------
+  affe: "🕵️", seil: "#8a6d4b", seilDeko: "", netzZeichen: "🗑️",
+  netz: ["Into the bins! Try again.", "Oops! Again.", "Wait for the ring ⭕."]
+});
+

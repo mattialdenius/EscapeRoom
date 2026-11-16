@@ -171,3 +171,80 @@ K10.minispiele = {
   codeknacker: { ziffern: 5, legende: "● right place · ◐ wrong place · ○ not in the code", start: "Tap four digits.", fertig: "Code cracked." },
   lasergitter: { figur: "🧑‍🚀", ziel: "🛟", an: "ON", aus: "OFF", hinweis: "Tap when the field is OFF.", autsch: ["Zap. Wait for OFF.", "Too early.", "Patience, human."] }
 };
+
+// ---------- More mini games (from version 0.7.1): eight games per world ----------
+Object.assign(K10.minispiele.spiele, {
+  obstkorb: {
+    titel: "☄️ Crystal catcher",
+    anleitung: "Space crystals are floating past! Move the collector with your finger and catch them. Avoid the space junk!",
+    ziel: 12,
+    erfolg: "The tank is full of crystals. Power is back."
+  },
+  taschenlampe: {
+    titel: "🔦 Dark module",
+    anleitung: "The lights in the storage module are out. Move your finger to shine the torch and hold the light on the lost things. Some are behind boxes.",
+    ziel: 6,
+    erfolg: "Everything found. The module is tidy again."
+  },
+  seeloewe: {
+    titel: "🧑‍🚀 Zero-g ball",
+    anleitung: "Ball games are tricky in space! Keep the ball in the air – move the astronaut under it with your finger.",
+    ziel: 10,
+    erfolg: "Ten touches in zero gravity. Mission control applauds."
+  },
+  fuettern: {
+    titel: "🍱 Supply run",
+    anleitung: "Every part of the station needs supplies. Drag each thing to the right place – or tap the right place.",
+    ziel: 6,
+    erfolg: "Everything delivered. The station is running smoothly."
+  }
+});
+Object.assign(K10.minispiele, {
+  // ---------- Crystal catcher (obstkorb) ----------
+  obst: [
+    { emoji: "💎", en: "crystal",    de: "Kristall" },     { emoji: "⭐", en: "star",       de: "Stern" },
+    { emoji: "🔋", en: "battery",    de: "Batterie" },     { emoji: "💠", en: "blue crystal", de: "blauer Kristall" },
+    { emoji: "⚡", en: "energy",     de: "Energie" },      { emoji: "🧊", en: "ice",        de: "Eis" },
+    { emoji: "🌟", en: "stardust",   de: "Sternenstaub" }, { emoji: "🔮", en: "energy ball", de: "Energiekugel" }
+  ],
+  muell: ["🪨", "🔩", "🥫", "🧦"],
+  autsch: ["Space rock! Ouch.", "A loose bolt. Not useful.", "Who throws tins into space?", "Floating socks. Again."],
+
+  // ---------- Dark module (taschenlampe) ----------
+  nachtTiere: [
+    { emoji: "🔧", en: "spanner",     de: "Schraubenschlüssel" }, { emoji: "🪛", en: "screwdriver", de: "Schraubenzieher" },
+    { emoji: "🔋", en: "battery",     de: "Batterie" },           { emoji: "🧤", en: "glove",       de: "Handschuh" },
+    { emoji: "🎧", en: "headset",     de: "Headset" },            { emoji: "🧃", en: "juice",       de: "Saft" },
+    { emoji: "🍫", en: "chocolate",   de: "Schokolade" },         { emoji: "📷", en: "camera",      de: "Kamera" },
+    { emoji: "🧸", en: "teddy bear",  de: "Teddybär" },           { emoji: "🔑", en: "key",         de: "Schlüssel" },
+    { emoji: "📓", en: "logbook",     de: "Logbuch" },            { emoji: "🧦", en: "sock",        de: "Socke" }
+  ],
+  kulisse: ["📦", "🧰", "📦", "🛢️", "📦", "🧰", "🗄️", "📦", "🧰", "🗄️"],
+
+  // ---------- Zero-g ball (seeloewe) ----------
+  robbe: "🧑‍🚀", ball: "🪐", boden: "repeating-linear-gradient(90deg,#4a5070 0 18px,#353a55 18px 36px)",
+  platsch: ["It floated away! Again.", "New ball!", "Missed – keep going!"],
+
+  // ---------- Supply run (fuettern): tiere = places, futter = supplies ----------
+  tiere: [
+    { id: "garten",  emoji: "🌱", en: "greenhouse",   de: "Gewächshaus",   witz: "“{futter}? The plants don't need that.”" },
+    { id: "robot",   emoji: "🤖", en: "robot",        de: "Roboter",       witz: "“{futter}? Beep! Error!”" },
+    { id: "arzt",    emoji: "🏥", en: "medical room", de: "Krankenstation", witz: "“{futter}? Not in the medical room!”" },
+    { id: "kueche",  emoji: "🍽️", en: "kitchen",      de: "Küche",         witz: "“{futter}? You can't eat that!”" },
+    { id: "labor",   emoji: "🔬", en: "lab",          de: "Labor",         witz: "“{futter}? Not for our experiments!”" },
+    { id: "bett",    emoji: "🛏️", en: "sleeping room", de: "Schlafraum",   witz: "“{futter}? Not in bed, please.”" }
+  ],
+  futter: [
+    { emoji: "🌰", en: "seeds",        de: "Samen",         haupt: ["garten"], auch: ["kueche", "labor"] },
+    { emoji: "🔋", en: "batteries",    de: "Batterien",     haupt: ["robot"],  auch: ["labor"] },
+    { emoji: "🔧", en: "spanner",      de: "Schraubenschlüssel", haupt: ["robot"], auch: ["labor"] },
+    { emoji: "🩹", en: "plasters",     de: "Pflaster",      haupt: ["arzt"],   auch: [] },
+    { emoji: "💊", en: "medicine",     de: "Medizin",       haupt: ["arzt"],   auch: ["labor"] },
+    { emoji: "🥫", en: "tins of food", de: "Konservendosen", haupt: ["kueche"], auch: [] },
+    { emoji: "🍝", en: "pasta",        de: "Nudeln",        haupt: ["kueche"], auch: [] },
+    { emoji: "🧪", en: "test tubes",   de: "Reagenzgläser", haupt: ["labor"],  auch: ["arzt"] },
+    { emoji: "🧸", en: "teddy bear",   de: "Teddybär",      haupt: ["bett"],   auch: [] }
+  ],
+  lob: ["✅ Delivered!", "✅ Thanks!", "✅ Perfect!", "✅ Great!"]
+});
+

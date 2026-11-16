@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.4 (passt zu App-Version 0.6.10)
+   Version:  minispiele 0.5 (passt zu App-Version 0.7.1)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,10 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.5 (16.11.2026)  Mehr Spiele pro Welt: Jede Welt kann Aussehen und Texte anpassen –
+                       Seil statt Liane (seil, seilDeko, netzZeichen), Texte beim Füttern auf
+                       Englisch (Welten mit sprache "en"), Code-Knacker-Hinweise auf Deutsch (namen).
+                       Vorlese-Texte nennen den Spieltitel der Welt statt „Zoo“.
      0.4 (15.11.2026)  Neu für die Welten der Klassen 8–10: codeknacker (Code knacken mit
                        Hinweisen) und lasergitter (im richtigen Moment durchlaufen).
                        Die sieben bisherigen Spiele sind unverändert.
@@ -114,7 +118,8 @@ if(!document.getElementById("minispielStil")){
   .ms-sc-liane{position:absolute;width:6px;margin-left:-3px;background:#3d7a35;border:2px solid #000;border-radius:3px;transform-origin:50% 0}
   .ms-sc-liane::before{content:"";position:absolute;left:50%;top:-14px;width:34px;height:14px;margin-left:-17px;background:#2a5a25;border:2px solid #000;border-radius:8px}
   .ms-sc-liane span{position:absolute;left:-10px;top:40%;font-size:1.2rem}
-  .ms-sc-liane.naechste{background:#ffd23f}
+  .ms-sc-liane.seil::before{background:#6b4a2b}   /* Seil: Halterung aus Holz statt Blätter */
+  .ms-sc-liane.naechste{background:#ffd23f} .ms-sc-liane.seil.naechste{background:#ffd23f !important}
   .ms-sc-affe{position:absolute;left:0;top:0;font-size:2.8rem;line-height:1;pointer-events:none;will-change:transform}
   .ms-sc-ring{position:absolute;left:50%;top:50%;width:3.6rem;height:3.6rem;transform:translate(-50%,-50%);border:4px solid #fff;outline:3px solid #000;border-radius:50%;display:none}
   .ms-sc-ring.an{display:block}
@@ -134,6 +139,7 @@ function fuettern(buehne, ctx){
   blase.setAttribute("role", "status");
   wrap.append(karte, blase, reihe); buehne.appendChild(wrap);
   let F = null, gesperrt = false, zuletzt = [], timer = null;
+  const EN = ctx.sprache === "en", name = x => EN ? x.en : x.de;   // Welten der Klassen 8–10: Texte auf Englisch
 
   function neueRunde(){
     // Futter wählen, das zuletzt nicht dran war; richtiges Tier aus „haupt“, zwei falsche aus den übrigen
@@ -148,13 +154,13 @@ function fuettern(buehne, ctx){
     if(!richtig) return;
     zuletzt = zuletzt.concat(f.en).slice(-4); F = f; gesperrt = false;
     karte.replaceChildren(el("span", "e", f.emoji), el("b", null, f.en), el("small", null, f.de));
-    karte.setAttribute("aria-label", "Futter: " + f.en + " (" + f.de + ")");
+    karte.setAttribute("aria-label", (EN ? "" : "Futter: ") + f.en + " (" + f.de + ")");
     karte.style.transform = "";
     reihe.replaceChildren();
     mischen([richtig].concat(falsch)).forEach(t => {
       const b = el("button", "ms-tier"); b.type = "button"; b.dataset.id = t.id;
       b.append(el("span", "e", t.emoji), el("b", null, t.en), el("small", null, t.de));
-      b.setAttribute("aria-label", t.en + " (" + t.de + ") füttern");
+      b.setAttribute("aria-label", EN ? "give it to " + t.en : t.en + " (" + t.de + ") füttern");
       b.addEventListener("click", () => waehle(t, b));
       reihe.appendChild(b);
     });
@@ -164,12 +170,12 @@ function fuettern(buehne, ctx){
     const passt = F.haupt.includes(t.id) || (F.auch || []).includes(t.id);
     if(passt){
       gesperrt = true; knopf.classList.add("satt"); knopf.querySelector("b").textContent = wuerfle(D.lob || ["😋 Yum!"]);
-      blase.textContent = "✓ " + t.de + ": " + F.de + " – genau richtig!"; blase.classList.add("an");
+      blase.textContent = "✓ " + name(t) + ": " + name(F) + (EN ? " – perfect!" : " – genau richtig!"); blase.classList.add("an");
       ctx.ton("richtig"); ctx.punkt();
       timer = setTimeout(() => { if(ctx.laeuft()) neueRunde(); }, ctx.reduziert ? 450 : 650);
     } else {
       knopf.classList.add("nein"); knopf.disabled = true;
-      blase.textContent = "✗ " + fuelle(t.witz || "„{futter}? Nein danke!“", { futter: F.de }); blase.classList.add("an");
+      blase.textContent = "✗ " + fuelle(t.witz || (EN ? "“{futter}? No, thanks!”" : "„{futter}? Nein danke!“"), { futter: name(F) }); blase.classList.add("an");
       ctx.ton("falsch");
     }
   }
@@ -205,7 +211,7 @@ function fuettern(buehne, ctx){
 function taschenlampe(buehne, ctx){
   const D = ctx.daten, ziel = ctx.ziel, HALTEN = 0.5;   // so lange (Sekunden) muss das Licht auf dem Tier bleiben
   const dunkel = el("div", "ms-ta-dunkel"); buehne.appendChild(dunkel);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Dunkler Zoo. Mit dem Finger oder den Pfeiltasten leuchten.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Taschenlampen-Suche") + ". Mit dem Finger oder den Pfeiltasten leuchten.");
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const plaetze = [];
   const frei = (x, y, d) => plaetze.every(p => Math.hypot(p.x - x, p.y - y) > d);
@@ -260,8 +266,9 @@ function taschenlampe(buehne, ctx){
 function seeloewe(buehne, ctx){
   const D = ctx.daten;
   const ball = el("div", "ms-ro-ball", D.ball || "🏐"), robbe = el("div", "ms-ro-robbe", D.robbe || "🦭"), boden = el("div", "ms-ro-boden"), meldung = el("div", "ms-ro-meldung");
+  if(D.boden) boden.style.background = D.boden;   // eigener Boden (z. B. Raumstation statt Wasser)
   buehne.append(boden, robbe, ball, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Robben-Jonglage. Robbe mit dem Finger oder den Pfeiltasten bewegen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Robben-Jonglage") + ". Figur mit dem Finger oder den Pfeiltasten bewegen.");
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const g = ctx.reduziert ? 520 : 820;            // Schwerkraft (Pixel pro Sekunde²) – bei „Bewegung reduzieren“ langsamer
   const RB = 22, RW = 70;                         // Ball-Radius, halbe Robbenbreite (Trefferzone)
@@ -306,7 +313,7 @@ function obstkorb(buehne, ctx){
   const D = ctx.daten, obst = D.obst || [{ emoji: "🍎", en: "apple", de: "Apfel" }], muell = D.muell || ["🪨"];
   const korb = el("div", "ms-ok-korb", "🧺"), meldung = el("div", "ms-ro-meldung"), boden = el("div", "ms-ok-boden");
   buehne.append(boden, korb, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Obstkorb. Korb mit dem Finger oder den Pfeiltasten bewegen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Obstkorb") + ". Korb mit dem Finger oder den Pfeiltasten bewegen.");
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const KB = 46;                                   // halbe Korbbreite (Fangzone)
   const korbY = () => H() - 74;                    // Höhe des Korbrands
@@ -359,12 +366,13 @@ function schaukel(buehne, ctx){
   const D = ctx.daten;
   const welt = el("div", "ms-sc-welt"), affe = el("div", "ms-sc-affe", D.affe || "🐒"), ring = el("div", "ms-sc-ring"), netz = el("div", "ms-sc-netz"), meldung = el("div", "ms-ro-meldung");
   buehne.append(welt, netz, meldung); welt.append(affe); affe.appendChild(ring);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Affen-Schaukel. Tippen oder Leertaste, wenn der Ring erscheint.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Affen-Schaukel") + ". Tippen oder Leertaste, wenn der Ring erscheint.");
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const ABSTAND = () => Math.min(W() * 0.55, 260), L = () => Math.min(H() * 0.48, 230), OBEN = 54;
   const A = 0.62, PERIODE = ctx.reduziert ? 2.3 : 1.7, w = 2 * Math.PI / PERIODE;
   let lianen = [], nr = 0, phase = -Math.PI / 2, zustand = "schwingt", flug = null, kamera = 0, kamZiel = 0, raf = 0, t0 = 0, mtimer = null;
-  function liane(i){ const d = el("div", "ms-sc-liane"); d.innerHTML = "<span>🍃</span>"; welt.insertBefore(d, affe); lianen[i] = d; return d; }
+  function liane(i){ const d = el("div", "ms-sc-liane"); if(D.seil){ d.style.background = D.seil; d.classList.add("seil"); }
+    const deko = D.seilDeko != null ? D.seilDeko : "🍃"; if(deko) d.appendChild(el("span", null, deko)); welt.insertBefore(d, affe); lianen[i] = d; return d; }
   for(let i = 0; i < 3; i++) liane(i);
   const anker = i => ({ x: W() * 0.28 + i * ABSTAND(), y: OBEN });
   const winkel = () => A * Math.sin(phase), drehung = () => A * w * Math.cos(phase);
@@ -380,7 +388,7 @@ function schaukel(buehne, ctx){
       flug = { art: "sprung", t: 0, dauer: 0.5, start, ziel }; zustand = "fliegt";
     } else {
       flug = { art: "fall", t: 0, dauer: 0.6, start, ziel: { x: start.x + drehung() * 40, y: H() - 34 } }; zustand = "fliegt";
-      ctx.ton("falsch"); zeige("🕸️ " + wuerfle(D.netz || ["Ins Netz! Nochmal!"]));
+      ctx.ton("falsch"); zeige((D.netzZeichen || "🕸️") + " " + wuerfle(D.netz || ["Ins Netz! Nochmal!"]));
     }
   }
   function schritt(t){
@@ -448,7 +456,7 @@ function nachtflug(buehne, ctx){
   const band = laufband(buehne, [{ zeichen: F.himmel || ["✨"], anzahl: 14, y: [0.06, 0.92], faktor: 0.25, groesse: "1.1rem", klasse: "hell" }], ctx.reduziert);
   const polly = el("div", "ms-nf-polly", F.figur || "🦜"), meldung = el("div", "ms-ro-meldung");
   buehne.append(polly, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Pollys Nachtflug. Tippen oder Leertaste zum Flattern.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Nachtflug") + ". Tippen oder Leertaste zum Fliegen.");
   const tempo = () => clamp(W() * 0.42, 120, 220) * (ctx.reduziert ? 0.7 : 1);   // Tempo passt zur Breite → im Hochformat gleich viel Vorlauf
   const g = ctx.reduziert ? 520 : 680, FLAP = ctx.reduziert ? -240 : -270, RP = 18, BB = 54;
   let px = W() * 0.25, py = H() * 0.45, vy = 0, schutz = 0, baeume = [], sterne = [], raf = 0, t0 = 0, erster = 1.0, mtimer = null;
@@ -516,7 +524,7 @@ function rutsche(buehne, ctx){
     { zeichen: ["❄️", "·", "❄️"], anzahl: 10, y: [0.05, 0.6], faktor: 0.45, groesse: "1rem", klasse: "hell" }], ctx.reduziert);
   const boden = el("div", "ms-ru-boden"), pingu = el("div", "ms-ru-pingu", R.figur || "🐧"), meldung = el("div", "ms-ro-meldung");
   buehne.append(boden, pingu, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", "Pinguin-Rutsche. Tippen oder Leertaste zum Springen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Rutsche") + ". Tippen oder Leertaste zum Springen.");
   const BH = 56, bodenY = () => H() - BH;                       // Oberkante des Eises
   const g = ctx.reduziert ? 1150 : 1500, sprungH = () => clamp(H() * 0.3, 105, 150);
   const grundTempo = () => clamp(W() * 0.45, 140, 240) * (ctx.reduziert ? 0.7 : 1);
@@ -583,7 +591,7 @@ function codeknacker(buehne, ctx){
   const verlauf = el("div", "ms-ck-verlauf"), reihe = el("div", "ms-ck-reihe"), tasten = el("div", "ms-ck-tasten"), meldung = el("p", "ms-ck-meldung", D.start || "Tap " + n + " digits.");
   verlauf.setAttribute("role", "log"); meldung.setAttribute("role", "status");
   wrap.append(legende, verlauf, reihe, meldung, tasten); buehne.appendChild(wrap);
-  const NAME = { "●": "right place", "◐": "wrong place", "○": "not in the code" };
+  const NAME = D.namen || { "●": "right place", "◐": "wrong place", "○": "not in the code" };
   let timer = null, gesperrt = false;
   function zeichneReihe(){
     reihe.replaceChildren();

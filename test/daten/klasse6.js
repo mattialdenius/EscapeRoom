@@ -530,3 +530,67 @@ K6.minispiele = {
   ],
   kulisse: ["📦", "🛢️", "📦", "🧺", "🛢️", "📦", "🪜", "🧺", "📦", "🛢️"]
 };
+
+// ---------- Weitere Minispiele (ab Version 0.7.1): acht Spiele pro Welt ----------
+Object.assign(K6.minispiele.spiele, {
+  fuettern: {
+    titel: "🍲 Kombüsen-Chaos",
+    anleitung: "Die Bordtiere haben Hunger! Zieht das Essen zum richtigen Tier – oder tippt das Tier an.",
+    ziel: 6,
+    erfolg: "Alle satt! Der Schiffskoch ist zufrieden."
+  },
+  schaukel: {
+    titel: "🪢 Schwung am Tau",
+    anleitung: "Der Schiffsaffe schwingt am Tau. Tippt, sobald der Ring ⭕ um ihn erscheint – dann springt er zum nächsten Tau!",
+    ziel: 6,
+    erfolg: "Was für Sprünge! Ihr seid echte Takelage-Profis."
+  },
+  seeloewe: {
+    titel: "🐬 Delfin-Kunststück",
+    anleitung: "Ein Delfin begleitet das Schiff! Haltet den Ball in der Luft – schiebt den Delfin mit dem Finger unter den Ball.",
+    ziel: 10,
+    erfolg: "Die ganze Crew klatscht! 👏"
+  },
+  codeknacker: {
+    titel: "🗝️ Die Schatztruhe",
+    anleitung: "Die Schatztruhe hat ein Zahlenschloss mit drei Ziffern. Tippt drei Ziffern. Nach jedem Versuch gibt es Hinweise: ● richtige Ziffer am richtigen Platz, ◐ Ziffer kommt vor, aber woanders, ○ kommt nicht vor.",
+    ziel: 3,
+    erfolg: "Die Truhe ist offen – Gold! 🪙"
+  }
+});
+Object.assign(K6.minispiele, {
+  // ---------- Kombüsen-Chaos (Technik: fuettern) ----------
+  // haupt = passt eindeutig; auch = würde das auch fressen (wird nie als falsche Auswahl gezeigt)
+  tiere: [
+    { id: "papagei", emoji: "🦜", en: "parrot", de: "Papagei",     witz: "Der Papagei krächzt: „{futter}? Kraaah! Ich will Körner!“" },
+    { id: "affe",    emoji: "🐒", en: "monkey", de: "Schiffsaffe", witz: "Der Schiffsaffe schnuppert: „{futter}? Ich will was Gelbes!“" },
+    { id: "katze",   emoji: "🐈", en: "cat",    de: "Bordkatze",   witz: "Die Bordkatze dreht sich beleidigt um: „{futter}? Wo ist mein Fisch?“" },
+    { id: "hund",    emoji: "🐕", en: "dog",    de: "Schiffshund", witz: "Der Schiffshund knurrt: „{futter}? Wo ist mein Knochen?!“" },
+    { id: "ratte",   emoji: "🐀", en: "rat",    de: "Ratte",       witz: "Die Ratte piepst: „{futter}? Habt ihr keinen Käse?“" },
+    { id: "kroete",  emoji: "🐢", en: "turtle", de: "Schildkröte", witz: "Die Schildkröte zieht langsam den Kopf ein: „{futter}? Neeein danke.“" }
+  ],
+  futter: [
+    { emoji: "🌻", en: "sunflower seeds", de: "Sonnenblumenkerne", haupt: ["papagei"], auch: ["ratte"] },
+    { emoji: "🍌", en: "bananas",         de: "Bananen",           haupt: ["affe"],    auch: ["papagei", "ratte", "kroete"] },
+    { emoji: "🥥", en: "a coconut",       de: "Kokosnuss",         haupt: ["affe"],    auch: ["papagei", "ratte"] },
+    { emoji: "🐟", en: "fish",            de: "Fisch",             haupt: ["katze"],   auch: ["hund", "kroete"] },
+    { emoji: "🦴", en: "a bone",          de: "Knochen",           haupt: ["hund"],    auch: [] },
+    { emoji: "🌭", en: "sausages",        de: "Würstchen",         haupt: ["hund"],    auch: ["katze", "ratte"] },
+    { emoji: "🧀", en: "cheese",          de: "Käse",              haupt: ["ratte"],   auch: ["hund", "katze"] },
+    { emoji: "🥬", en: "lettuce",         de: "Salat",             haupt: ["kroete"],  auch: ["papagei", "affe", "ratte"] }
+  ],
+  lob: ["😋 Lecker!", "😋 Arrr, lecker!", "😋 Danke!", "😋 Mmmh!"],
+
+  // ---------- Schwung am Tau (Technik: schaukel) ----------
+  affe: "🐒", seil: "#b48a4e", seilDeko: "", netzZeichen: "🌊",
+  netz: ["Platsch, ins Wasser! Nochmal!", "Hoppla! Gleich nochmal!", "Fast! Wartet auf den Ring ⭕."],
+
+  // ---------- Delfin-Kunststück (Technik: seeloewe) ----------
+  robbe: "🐬", ball: "🏐",
+  platsch: ["Platsch! Nochmal!", "Ups! Neuer Ball!", "Daneben – weiter geht's!"],
+
+  // ---------- Die Schatztruhe (Technik: codeknacker) ----------
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!",
+                 namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } }
+});
+
