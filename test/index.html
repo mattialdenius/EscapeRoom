@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.7.2 (Prototyp)
+  Version 0.7.3 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.3 (16.11.2026)  – nur Testbereich
+    - Klasse 6, Unit 3 und 4 spielbar (G7–G13): neue Aufgabenarten komparativ, superlativ, someany, mengen,
+      praesensaussneg, praesensfrage (mit Kurzantworten), will (spontane Entscheidungen).
   v0.7.2 (16.11.2026)  – live geschaltet am 16.11.2026 (enthält auch 0.7.0 und 0.7.1)
     - Minispiele: drei Herzen ❤️❤️❤️, jeder Fehler kostet eines, beim dritten ist das Spiel vorbei (eigene Meldung je Welt).
       Code knacken: höchstens 6 Versuche. Taschenlampe: Fallen im Dunkeln. minispiele 0.6.
@@ -128,7 +131,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.2</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.3</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -536,7 +539,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.3</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -562,7 +565,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -576,7 +579,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.2"></script>
+<script src="daten/allgemein.js?v=0.7.3"></script>
 
 <script>
 /* #####################################################################
@@ -1661,6 +1664,206 @@ Object.assign(ART_BRAUCHT, {
   posspron: ["besitzer", "dinge", "farben"],
   perfekt: ["personen", "verbenPerf"],
   perfektfrage: ["personen", "verbenPerf"]
+});
+
+/* ---------- Klasse 6, Unit 3–4: Steigerung, some/any, Mengen, simple present, will ---------- */
+// Falsche Steigerungsformen, die Kinder oft bilden (für Quiz und Fehler-Finden)
+function steigerungFalsch(A, sup){
+  const ohneE = A.adj.replace(/e$/, "");
+  if(A.typ === "unreg") return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
+  if(A.typ === "lang")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
+  if(A.typ === "y")     return sup ? [A.adj + "est", "most " + A.adj] : [A.adj + "er", "more " + A.adj];
+  if(A.typ === "dopp")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
+  if(A.typ === "e")     return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];
+  return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];                    // kurz: tall
+}
+function steigerung(modus, bk, form, E){
+  const sup = modus === "sup", form_ = A => sup ? A.sup : A.komp;
+  const W = a => bk.adjektive.find(x => x.adj === a);
+  const KAT = sup ? ["-est", "most …", "unregelmäßig"] : ["-er", "more …", "unregelmäßig"];
+  const katVon = A => A.typ === "unreg" ? KAT[2] : A.typ === "lang" ? KAT[1] : KAT[0];
+  if(form === "zuordnen"){
+    let woerter;
+    for(let i = 0; i < 20; i++){
+      woerter = mehrere(bk.adjektive, 5).map(A => ({ text: A.adj, ziel: katVon(A) }));
+      if(new Set(woerter.map(w => w.ziel)).size >= 2) break;
+    }
+    return { kategorien: KAT, woerter, erklaerung: sup ? E.zuordnenSup : E.zuordnenKomp };
+  }
+  const liste = sup ? bk.superRahmen : bk.vergleiche;
+  const R = wuerfle(liste), A = W(wuerfle(R.w)), be = R.pl ? "are" : "is";
+  kern(A.adj + " " + R.a);
+  const satz = (r, x) => sup ? r.a + " " + (r.pl ? "are" : "is") + " the " + x + " " + r.n + " " + r.ort + "."
+                             : r.a + " " + (r.pl ? "are" : "is") + " " + x + " than " + r.b + ".";
+  // Beispiel: anderer Satz, gleiche Regel (‑er, more, ‑ier …)
+  const bsp = () => { const kand = [];
+    liste.forEach(r => r !== R && r.w.forEach(a => { const x = W(a); if(x.typ === A.typ || (A.typ === "unreg" && x.typ === "unreg")) kand.push([r, x]); }));
+    const [r, x] = kand.length ? wuerfle(kand) : [R, A]; return satz(r, form_(x)); };
+  const richtig = satz(R, form_(A));
+  const erkl = erklaere(E[(sup ? "sup_" : "komp_") + A.typ], { BEISPIEL: bspOhne(bsp, richtig) });
+  // as … as (nur beim Komparativ, ab und zu)
+  if(!sup && form === "quiz" && Math.random() < 0.25){
+    const t = R.a + " " + be + " as ___ as " + R.b + ".";
+    const b = bspOhne(() => { const r = anders(bk.vergleiche, R), a = W(wuerfle(r.w)); return r.a + " " + (r.pl ? "are" : "is") + " as " + a.adj + " as " + r.b + "."; }, t.replace("___", A.adj));
+    return { frage: t, optionen: mischen([A.adj, A.komp]), loesung: A.adj, erklaerung: erklaere(E.asas, { BEISPIEL: b }) };
+  }
+  const falsch = steigerungFalsch(A, sup);
+  if(form === "quiz") return { frage: satz(R, "___"), optionen: mischen(einzig([form_(A)].concat(falsch))), loesung: form_(A), erklaerung: erkl };
+  if(form === "luecke") return { frage: satz(R, "___ (" + A.adj + ")"), loesung: [form_(A)], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler"){
+    const f = falsch.find(x => !x.includes(" "));          // Fehlerwort muss ein einzelnes Wort sein
+    if(!f) return ARTEN[sup ? "superlativ" : "komparativ"](bk, form, E);
+    return { satz: satz(R, f), fehlerwort: f, loesung: [form_(A)], erklaerung: erkl };
+  }
+  if(form === "umformen"){
+    if(sup) return { frage: "Use the superlative:  " + R.a + " " + be + " " + (R.pl ? "very " + A.adj + " " + R.n : (/^[aeiou]/.test(A.adj) ? "an " : "a ") + A.adj + " " + R.n) + ". (" + R.ort + ")",
+                     loesung: [richtig], erklaerung: erkl };
+    return { frage: "Compare with „than“ (" + A.adj + "):  " + R.a + " – " + R.b, loesung: [richtig], erklaerung: erkl };
+  }
+  return null;
+}
+
+// ---------- some / any und something, anybody … ----------
+function someAny(bk, form, E){
+  // Fehler-Finden nur in Aussagen: „Can you see somebody?“ ist im Englischen nicht wirklich falsch
+  const typ = form === "umformen" ? wuerfle(["neg", "frage"]) : form === "fehler" ? wuerfle(["pos", "neg"]) : wuerfle(["pos", "neg", "frage"]);
+  const rahmen = form === "umformen" ? bk.someRahmen.filter(r => r.umformen) : bk.someRahmen;
+  const R = wuerfle(rahmen);
+  const zaehlbar = R.nur ? R.nur === "C" : Math.random() < 0.5;
+  const N = wuerfle(zaehlbar ? bk.nomenC : bk.nomenU);
+  kern(R.pos + N);
+  const wort = art => art + (R.w || "");                        // some → something …
+  const richtigWort = typ === "pos" ? wort("some") : wort("any"), falschWort = typ === "pos" ? wort("any") : wort("some");
+  const fuelle = (t, x) => gross(t.replace("{N}", N).replace("___", x));
+  const text = R[typ];
+  const varianten = x => R.w === "body" ? [x, x.replace("body", "one")] : [x];   // somebody = someone
+  const bsp = (art, ohne) => bspOhne(() => { const r = anders(bk.someRahmen, R), n = wuerfle(r.nur === "U" ? bk.nomenU : r.nur === "C" ? bk.nomenC : bk.nomenC.concat(bk.nomenU));
+    return gross(r[art].replace("{N}", n).replace("___", (art === "pos" ? "some" : "any") + (r.w || ""))); }, ohne);
+  const erkl = erklaere(E[typ], { BEISPIEL: bsp(typ, fuelle(text, richtigWort)) });
+  if(form === "quiz") return { frage: fuelle(text, "___"), optionen: mischen([richtigWort, falschWort]), loesung: richtigWort, erklaerung: erkl };
+  if(form === "luecke") return { frage: fuelle(text, "___ (" + wort("some") + " / " + wort("any") + ")"), loesung: varianten(richtigWort), erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [fuelle(text, richtigWort)], erklaerung: erkl };
+  if(form === "fehler") return { satz: fuelle(text, falschWort), fehlerwort: gross(falschWort) === fuelle(text, falschWort).split(" ")[0] ? gross(falschWort) : falschWort, loesung: varianten(richtigWort), erklaerung: erkl };
+  if(form === "umformen"){
+    const von = fuelle(R.pos, wort("some")), nach = fuelle(R[typ], wort("any"));
+    const alle = R.w === "body" ? [nach, nach.replace(/anybody/i, m => m[0] + "nyone")] : [nach];
+    return { frage: (typ === "neg" ? "Make it negative:  " : "Ask a question:  ") + von, loesung: alle, erklaerung: erkl };
+  }
+  if(form === "zuordnen"){
+    const K = ["some …", "any …"], woerter = [];
+    for(let i = 0; i < 30 && woerter.length < 4; i++){
+      const r = wuerfle(bk.someRahmen), t = wuerfle(["pos", "neg", "frage"]);
+      const n = wuerfle(r.nur === "U" ? bk.nomenU : r.nur === "C" ? bk.nomenC : bk.nomenC);
+      const s = gross(r[t].replace("{N}", n));
+      if(!woerter.some(w => w.text === s)) woerter.push({ text: s, ziel: t === "pos" ? K[0] : K[1] });
+    }
+    if(new Set(woerter.map(w => w.ziel)).size < 2) return someAny(bk, form, E);
+    return { kategorien: K, woerter, erklaerung: E.zuordnen };
+  }
+  return null;
+}
+
+// ---------- much / many / lots of / a lot of ----------
+function mengen(bk, form, E){
+  let R = wuerfle(bk.mengenRahmen);
+  if((form === "luecke" || form === "fehler" || form === "umformen") && R.typ === "pos") R = wuerfle(bk.mengenRahmen.filter(r => r.typ !== "pos"));
+  const zaehlbar = R.nur ? R.nur === "C" : Math.random() < 0.5;
+  const N = wuerfle(zaehlbar ? bk.nomenC : bk.nomenU);
+  kern(N + R.t);
+  const fuelle = (t, x, n) => gross(t.replace("{N}", n || N).replace("___", x));
+  const mm = zaehlbar ? "many" : "much";
+  const bsp = (pos, ohne) => bspOhne(() => { const r = wuerfle(bk.mengenRahmen.filter(x => (x.typ === "pos") === pos && x !== R)); const z = r.nur ? r.nur === "C" : zaehlbar;
+    const n = anders(z ? bk.nomenC : bk.nomenU, N); return fuelle(r.t, pos ? wuerfle(["lots of", "a lot of"]) : (z ? "many" : "much"), n); }, ohne);
+  if(form === "zuordnen"){
+    const woerter = mehrere(bk.nomenC, 2 + Math.floor(Math.random() * 2)).map(n => ({ text: n, ziel: "many" }))
+      .concat(mehrere(bk.nomenU, 2).map(n => ({ text: n, ziel: "much" })));
+    return { kategorien: ["much", "many"], woerter: mischen(woerter), erklaerung: E.zuordnen };
+  }
+  if(R.typ === "pos"){
+    const r = wuerfle(["lots of", "a lot of"]);
+    const erkl = erklaere(E.pos, { BEISPIEL: bsp(true, fuelle(R.t, r)) });
+    if(form === "quiz") return { frage: fuelle(R.t, "___"), optionen: mischen([r, zaehlbar ? "much" : "many"]), loesung: r, erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [fuelle(R.t, r)], erklaerung: erkl };
+  }
+  const erkl = erklaere(zaehlbar ? E.many : E.much, { BEISPIEL: bsp(false, fuelle(R.t, mm)) });
+  const anders_ = zaehlbar ? "much" : "many";
+  if(form === "quiz") return { frage: fuelle(R.t, "___"), optionen: mischen(["much", "many"]), loesung: mm, erklaerung: erkl };
+  if(form === "luecke") return { frage: fuelle(R.t, "___ (much / many)"), loesung: [mm], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [fuelle(R.t, mm)], erklaerung: erkl };
+  if(form === "fehler") return { satz: fuelle(R.t, anders_), fehlerwort: anders_, loesung: [mm], erklaerung: erkl };
+  if(form === "umformen") return { frage: "Ask with „How much“ or „How many“:  We need some " + N + ".", loesung: ["How " + mm + " " + N + " do we need?"],
+                                   erklaerung: erklaere(zaehlbar ? E.many : E.much, { BEISPIEL: bspOhne(() => { const n = anders(zaehlbar ? bk.nomenC : bk.nomenU, N); return "How " + mm + " " + n + " do you want?"; }, "How " + mm + " " + N) }) };
+  return null;
+}
+
+// ---------- will: spontane Entscheidungen ----------
+function willEntscheidung(bk, form, E){
+  const R = wuerfle(bk.entscheidungen), neg = !!R.neg, S = gross(R.sub);
+  kern(R.sit);
+  const rest = R.rest ? " " + R.rest : "";
+  const antw = (r, kurz) => { const s = gross(r.sub), re = r.rest ? " " + r.rest : "";
+    if(r.neg) return s + (kurz ? " won't " : " will not ") + r.e + re + ".";
+    return s + (kurz ? "'ll " : " will ") + r.e + re + "."; };
+  const richtig = [antw(R, true), antw(R, false)];
+  const zit = x => "„" + R.sit + "“ – „" + x + "“";
+  const bsp = () => bspOhne(() => { const r = anders(bk.entscheidungen.filter(x => !!x.neg === neg), R); return "„" + r.sit + "“ – „" + antw(r, true) + "“"; }, richtig[0]);
+  const erkl = erklaere(neg ? E.neg : E.pos, { BEISPIEL: bsp() });
+  if(form === "quiz"){
+    if(Math.random() < 0.5)
+      return { frage: zit(S + (neg ? " won't" : "'ll") + " ___" + rest + "."), optionen: mischen([R.e, R.s, "to " + R.e]), loesung: R.e, erklaerung: erkl };
+    const opt = neg ? ["won't", (R.sub === "I" ? "am" : "are") + " not", "not"] : ["will", R.sub === "I" ? "am" : "are", "to"];
+    return { frage: zit(S + " ___ " + R.e + rest + "."), optionen: mischen(opt), loesung: opt[0], erklaerung: erkl };
+  }
+  if(form === "luecke"){
+    const hinweis = "(" + R.sub + (neg ? " / not / " : " / ") + R.e + ")";
+    const l = neg ? [S + " won't " + R.e, S + " will not " + R.e] : [S + "'ll " + R.e, S + " will " + R.e];
+    return { frage: zit("___ " + hinweis + rest + "."), loesung: l, erklaerung: erkl };
+  }
+  if(form === "satzbau") return { loesung: [Math.random() < 0.5 ? richtig[0] : richtig[1]], erklaerung: erkl };
+  if(form === "fehler") return { satz: zit(S + (neg ? " won't " : "'ll ") + R.s + rest + "."), fehlerwort: R.s, loesung: [R.e], erklaerung: erkl };
+  if(form === "umformen") return { frage: "React with „" + (neg ? "won't" : "will") + "“ (" + R.e + rest + "):  „" + R.sit + "“", loesung: richtig, erklaerung: erkl };
+  if(form === "zuordnen"){
+    const mach = ok => () => { const r = wuerfle(bk.entscheidungen), s = gross(r.sub), re = r.rest ? " " + r.rest : "";
+      if(ok) return antw(r, Math.random() < 0.6);
+      return wuerfle([s + (r.neg ? " won't " : "'ll ") + r.s + re + ".", s + (r.neg ? " won't to " : " will to ") + r.e + re + ".",
+                      s + " " + (r.sub === "I" ? "am" : "are") + (r.neg ? " not " : " ") + r.e + re + "."]); };
+    return richtigFalsch(mach(true), mach(false), E.zuordnen);
+  }
+  return null;
+}
+
+Object.assign(ARTEN, {
+  komparativ: (bk, form, E) => steigerung("komp", bk, form, E),
+  superlativ: (bk, form, E) => steigerung("sup", bk, form, E),
+  someany: someAny,
+  mengen,
+  will: willEntscheidung,
+  // simple present Klasse 6: Aussagen UND Verneinung gemischt (G11)
+  praesensaussneg(bk, form, E){
+    return Math.random() < 0.5 ? simplePresent("verneinung", bk, form, E.verneinung) : simplePresent("aussage", bk, form, E.aussage);
+  },
+  // simple present Klasse 6: Fragen UND Kurzantworten (G12)
+  praesensfrage(bk, form, E){
+    if(form === "luecke" && Math.random() < 0.5){
+      const P = wuerfle(bk.personen.filter(p => p.text !== "I" && p.text !== "we")), V = wuerfle(bk.verben), ja = Math.random() < 0.5;
+      kern(V.grund + " " + V.rest);
+      const aux = P.er ? "does" : "do", re = V.rest ? " " + V.rest : "";
+      const prs = P.text === "you" ? ["I", "we"] : [P.pron];
+      const l = prs.map(x => x + " " + (ja ? aux : aux + "n't")); 
+      const q = anders(bk.personen.filter(p => p.text !== "I" && p.text !== "we" && p.text !== "you"), P), v = anders(bk.verben, V);
+      const bsp = gross(q.er ? "Does" : "Do") + " " + q.text + " " + v.grund + (v.rest ? " " + v.rest : "") + "? – " + (ja ? "Yes, " : "No, ") + q.pron + " " + (q.er ? "does" : "do") + (ja ? "" : "n't") + ".";
+      return { frage: gross(aux) + " " + P.text + " " + V.grund + re + "?  – " + (ja ? "Yes" : "No") + ", ___.", loesung: l.concat(l.map(x => (ja ? "yes, " : "no, ") + x)),
+               erklaerung: erklaere(ja ? E.kurzJa : E.kurzNein, { BEISPIEL: bsp }) };
+    }
+    // „Do we love pancakes?“ klingt seltsam → Fragen ohne „we“
+    return simplePresent("frage", Object.assign({}, bk, { personen: bk.personen.filter(p => p.text !== "we") }), form, E.frage);
+  }
+});
+Object.assign(ART_BRAUCHT, {
+  komparativ: ["adjektive", "vergleiche", "superRahmen"], superlativ: ["adjektive", "vergleiche", "superRahmen"],
+  someany: ["someRahmen", "nomenU", "nomenC"], mengen: ["mengenRahmen", "nomenU", "nomenC"],
+  will: ["entscheidungen"], praesensaussneg: ["personen", "verben"], praesensfrage: ["personen", "verben"]
 });
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};

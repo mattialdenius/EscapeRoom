@@ -1,7 +1,7 @@
 /* =====================================================================
    KLASSE 6  ·  Red Line 2  ·  alle Inhalte für Klasse 6
    ---------------------------------------------------------------------
-   STAND 16.11.2026: Unit 1 und 2 (Themen G1–G6) haben Aufgaben. Unit 3–6 folgen.
+   STAND 16.11.2026: Unit 1–4 (Themen G1–G13) haben Aufgaben. Unit 5–6 folgen.
    Themen ohne Aufgaben erscheinen im Startmenü nicht.
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -126,13 +126,13 @@ K6.themen = [
   { id: "6-G4",  klasse: 6, unit: 1, titel: "Die einfache Vergangenheit: Fragen, Kurzantworten", regel: "Did + Person + Grundform? → Did you visit your aunt? Kurzantworten: Yes, I did. / No, she didn’t. Mit Fragewort: Where did you stay?" },
   { id: "6-G5",  klasse: 6, unit: 2, titel: "Das Perfekt: Aussagen, Verneinung", regel: "have/has + 3. Form → I have tidied my room. Tom has seen a shark. Regelmäßig: -ed. Unregelmäßig lernen: see – saw – seen. just, already, never stehen vor der 3. Form. Verneinung: haven’t/hasn’t … yet (yet am Satzende)." },
   { id: "6-G6",  klasse: 6, unit: 2, titel: "Das Perfekt: Fragen, Kurzantworten", regel: "Have/Has + Person + 3. Form? → Have you ever been to London? Has Tom done his homework yet? Kurzantworten: Yes, I have. / No, he hasn’t." },
-  { id: "6-G7",  klasse: 6, unit: 3, titel: "Steigerung von Adjektiven mit -er und more", regel: "" },
-  { id: "6-G8",  klasse: 6, unit: 3, titel: "Steigerung von Adjektiven mit -est und most", regel: "" },
-  { id: "6-G9",  klasse: 6, unit: 3, titel: "Some und any", regel: "" },
-  { id: "6-G10", klasse: 6, unit: 4, titel: "Mengenangaben: much, many, lots of", regel: "" },
-  { id: "6-G11", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Aussagen, Verneinung", regel: "" },
-  { id: "6-G12", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Fragen, Kurzantworten", regel: "" },
-  { id: "6-G13", klasse: 6, unit: 4, titel: "Die Zukunft mit will (spontane Entscheidungen)", regel: "" },
+  { id: "6-G7",  klasse: 6, unit: 3, titel: "Steigerung von Adjektiven mit -er und more", regel: "Kurze Adjektive: + -er (tall → taller; big → bigger; heavy → heavier; large → larger). Lange Adjektive: more (more expensive, more famous). Unregelmäßig: good → better, bad → worse. Danach: than → My bag is bigger than your bag. Gleich: as … as → My bag is as heavy as your bag." },
+  { id: "6-G8",  klasse: 6, unit: 3, titel: "Steigerung von Adjektiven mit -est und most", regel: "Kurze Adjektive: the + -est (the tallest, the biggest, the heaviest). Lange Adjektive: the most (the most expensive, the most famous). Unregelmäßig: the best, the worst → This is the best burger in town." },
+  { id: "6-G9",  klasse: 6, unit: 3, titel: "Some und any", regel: "Bejahte Sätze: some, something, somebody, somewhere → There are some apples. Verneinte Sätze und Fragen: any, anything, anybody, anywhere → There aren’t any apples. Are there any apples?" },
+  { id: "6-G10", klasse: 6, unit: 4, titel: "Mengenangaben: much, many, lots of", regel: "many + zählbare Nomen in der Mehrzahl (many apples), much + nicht zählbare Nomen (much milk) – vor allem in Fragen und Verneinungen: How many …? How much …? In bejahten Sätzen: lots of / a lot of → We eat lots of pasta." },
+  { id: "6-G11", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Aussagen, Verneinung", regel: "Das simple present beschreibt Zustände (I like curry) und Dinge, die regelmäßig passieren (Tom usually has toast for breakfast). he/she/it: Verb + -s (watches, tries, has). Verneinung: don’t/doesn’t + Grundform." },
+  { id: "6-G12", klasse: 6, unit: 4, titel: "Die einfache Gegenwart: Fragen, Kurzantworten", regel: "Do/Does + Person + Grundform? → Does Emma like curry? Kurzantworten: Yes, she does. / No, she doesn’t. Mit Fragewort: What do you usually have for breakfast?" },
+  { id: "6-G13", klasse: 6, unit: 4, titel: "Die Zukunft mit will (spontane Entscheidungen)", regel: "Spontane Entscheidung (gerade eben entschieden): will + Grundform → „I’m thirsty.“ – „I’ll get some juice.“ Verneinung: won’t (= will not) → I won’t eat it." },
   { id: "6-G14", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Aussagen", regel: "" },
   { id: "6-G15", klasse: 6, unit: 5, titel: "Die Verlaufsform der Gegenwart: Verneinung, Fragen, Kurzantworten", regel: "" },
   { id: "6-G16", klasse: 6, unit: 6, titel: "Bedingungssätze Typ I", regel: "" },
@@ -465,6 +465,345 @@ K6.zusatzfragen = [
   { thema: "6-G6", frage: "Which question is correct?", optionen: ["Have you ever been to London?", "Did you ever been to London?", "Has you ever been to London?"], loesung: "Have you ever been to London?" },
   { thema: "6-G6", frage: "„Have your parents met the director?“ – „Yes, …“", optionen: ["they have.", "they has.", "they did."], loesung: "they have." }
 ];
+
+// =====================================================================
+// 3b) SATZBAUKASTEN Unit 3 und 4 (Wortschatz: Red Line 1 + Red Line 2 bis zur Unit)
+// =====================================================================
+// Erklärungen zur Steigerung – gelten für -er/more (G7) und -est/most (G8)
+const K6_STEIGERUNG = {
+  komp_kurz:  "Kurze Adjektive: + -er, danach than. Beispiel: {BEISPIEL}",
+  komp_e:     "Endet das Adjektiv auf -e, kommt nur -r dazu (large → larger). Beispiel: {BEISPIEL}",
+  komp_dopp:  "Kurzer Vokal + ein Konsonant am Ende: Der Konsonant wird verdoppelt (big → bigger). Beispiel: {BEISPIEL}",
+  komp_y:     "Endet das Adjektiv auf -y, wird daraus -ier (heavy → heavier). Beispiel: {BEISPIEL}",
+  komp_lang:  "Lange Adjektive (z. B. famous, expensive, beautiful) bekommen more davor, kein -er. Beispiel: {BEISPIEL}",
+  komp_unreg: "Unregelmäßig: good → better, bad → worse. Beispiel: {BEISPIEL}",
+  sup_kurz:   "Kurze Adjektive: the + Adjektiv + -est. Beispiel: {BEISPIEL}",
+  sup_e:      "Endet das Adjektiv auf -e, kommt nur -st dazu (large → the largest). Beispiel: {BEISPIEL}",
+  sup_dopp:   "Kurzer Vokal + ein Konsonant am Ende: Der Konsonant wird verdoppelt (big → the biggest). Beispiel: {BEISPIEL}",
+  sup_y:      "Endet das Adjektiv auf -y, wird daraus -iest (heavy → the heaviest). Beispiel: {BEISPIEL}",
+  sup_lang:   "Lange Adjektive (z. B. famous, expensive, beautiful) bekommen the most davor, kein -est. Beispiel: {BEISPIEL}",
+  sup_unreg:  "Unregelmäßig: good → the best, bad → the worst. Beispiel: {BEISPIEL}",
+  asas:       "Sind zwei Dinge gleich, sagst du as + Grundform + as (ohne -er). Beispiel: {BEISPIEL}",
+  zuordnenKomp: "Kurze Adjektive: -er (tall → taller, big → bigger, heavy → heavier). Lange Adjektive: more (more expensive). Unregelmäßig: good → better, bad → worse.",
+  zuordnenSup:  "Kurze Adjektive: -est (tall → tallest, big → biggest, heavy → heaviest). Lange Adjektive: most (most expensive). Unregelmäßig: good → best, bad → worst."
+};
+Object.assign(K6.baukasten, {
+  // ---------- Klasse 6, Unit 3 ----------
+  "6-U3": {
+    // typ: kurz (tall), e (large), dopp (big), y (heavy), lang (more/most), unreg (good, bad)
+    adjektive: [
+      { adj: "tall",  komp: "taller",  sup: "tallest",  typ: "kurz" }, { adj: "old",   komp: "older",   sup: "oldest",   typ: "kurz" },
+      { adj: "long",  komp: "longer",  sup: "longest",  typ: "kurz" }, { adj: "short", komp: "shorter", sup: "shortest", typ: "kurz" },
+      { adj: "cheap", komp: "cheaper", sup: "cheapest", typ: "kurz" }, { adj: "fast",  komp: "faster",  sup: "fastest",  typ: "kurz" },
+      { adj: "small", komp: "smaller", sup: "smallest", typ: "kurz" }, { adj: "low",   komp: "lower",   sup: "lowest",   typ: "kurz" },
+      { adj: "young", komp: "younger", sup: "youngest", typ: "kurz" },
+      { adj: "large", komp: "larger",  sup: "largest",  typ: "e" },    { adj: "nice",  komp: "nicer",   sup: "nicest",   typ: "e" },
+      { adj: "big",   komp: "bigger",  sup: "biggest",  typ: "dopp" },
+      { adj: "heavy", komp: "heavier", sup: "heaviest", typ: "y" },    { adj: "pretty", komp: "prettier", sup: "prettiest", typ: "y" },
+      { adj: "scary", komp: "scarier", sup: "scariest", typ: "y" },    { adj: "funny", komp: "funnier", sup: "funniest", typ: "y" },
+      { adj: "expensive",   komp: "more expensive",   sup: "most expensive",   typ: "lang" },
+      { adj: "beautiful",   komp: "more beautiful",   sup: "most beautiful",   typ: "lang" },
+      { adj: "colourful",   komp: "more colourful",   sup: "most colourful",   typ: "lang" },
+      { adj: "comfortable", komp: "more comfortable", sup: "most comfortable", typ: "lang" },
+      { adj: "fashionable", komp: "more fashionable", sup: "most fashionable", typ: "lang" },
+      { adj: "interesting", komp: "more interesting", sup: "most interesting", typ: "lang" },
+      { adj: "famous",      komp: "more famous",      sup: "most famous",      typ: "lang" },
+      { adj: "good",  komp: "better",  sup: "best",     typ: "unreg" }, { adj: "bad",  komp: "worse",   sup: "worst",    typ: "unreg" }
+    ],
+    // Vergleiche mit than (G7). w = passende Adjektive, pl = Mehrzahl (are)
+    // Hinweis: "famous" ist zweisilbig, wird aber mit more gesteigert – deshalb typ "lang".
+    vergleiche: [
+      { a: "The clock tower",  b: "the church",       w: ["tall", "old", "famous", "beautiful"] },
+      { a: "This bridge",      b: "the old bridge",   w: ["long", "low", "beautiful", "famous"] },
+      { a: "The big wheel",    b: "the clock tower",  w: ["tall", "scary", "famous"] },
+      { a: "My T-shirt",       b: "your T-shirt",     w: ["cheap", "expensive", "colourful", "fashionable", "small", "large", "nice"] },
+      { a: "The red dress",    b: "the blue dress",   w: ["pretty", "expensive", "cheap", "long", "short", "beautiful", "nice"] },
+      { a: "My bag",           b: "your bag",         w: ["heavy", "big", "small", "expensive"] },
+      { a: "These jeans",      b: "those jeans",      w: ["comfortable", "cheap", "expensive", "fashionable", "long"], pl: true },
+      { a: "My brother",       b: "my sister",        w: ["tall", "old", "young", "fast", "funny"] },
+      { a: "A plane",          b: "a train",          w: ["fast", "expensive"] },
+      { a: "The burger",       b: "the pizza",        w: ["cheap", "big", "good", "bad", "expensive"] },
+      { a: "This book",        b: "that book",        w: ["interesting", "funny", "scary", "good", "bad", "long"] },
+      { a: "The castle",       b: "the stadium",      w: ["old", "beautiful", "interesting", "famous", "big"] }
+    ],
+    // Superlativ-Sätze (G8): a … is the ___ n ort
+    superRahmen: [
+      { a: "The clock tower", n: "building", ort: "in the town",      w: ["tall", "old", "famous", "beautiful"] },
+      { a: "This dress",      n: "dress",    ort: "in the shop",      w: ["expensive", "cheap", "pretty", "beautiful", "colourful", "fashionable", "nice", "long"] },
+      { a: "Tom",             n: "boy",      ort: "in our class",     w: ["tall", "fast", "young", "old", "funny"] },
+      { a: "This bridge",     n: "bridge",   ort: "in the city",      w: ["long", "famous", "old", "beautiful"] },
+      { a: "This T-shirt",    n: "T-shirt",  ort: "in the sale",      w: ["cheap", "colourful", "large", "small", "nice"] },
+      { a: "The big wheel",   n: "sight",    ort: "in London",        w: ["famous", "good", "scary", "big"] },
+      { a: "These jeans",     n: "jeans",    ort: "in the shop",      w: ["comfortable", "expensive", "cheap", "fashionable"], pl: true },
+      { a: "This burger",     n: "burger",   ort: "at the market",    w: ["big", "good", "bad", "cheap", "expensive"] },
+      { a: "This bag",        n: "bag",      ort: "in the shop",      w: ["heavy", "big", "small", "expensive", "large"] },
+      { a: "The castle",      n: "castle",   ort: "in the country",   w: ["old", "beautiful", "famous", "big"] }
+    ],
+    // some / any (G9). ___ = Lücke, {N} = Nomen; w = "" (some/any), "thing", "body", "where"
+    // nur: "U" = nur nicht zählbare Nomen (milk), "C" = nur Mehrzahl (apples); umformen: true = Satz lässt sich direkt verneinen/umfragen
+    someRahmen: [
+      { w: "", nur: "U", pos: "There is ___ {N} on the table.",     neg: "There isn't ___ {N} on the table.",     frage: "Is there ___ {N} on the table?", umformen: true },
+      { w: "", nur: "C", pos: "There are ___ {N} on the table.",    neg: "There aren't ___ {N} on the table.",    frage: "Are there ___ {N} on the table?", umformen: true },
+      { w: "", nur: "C", pos: "There are ___ {N} in the kitchen.",  neg: "There aren't ___ {N} in the kitchen.",  frage: "Are there ___ {N} in the kitchen?", umformen: true },
+      { w: "",           pos: "We need ___ {N} for the cake.",     neg: "We don't need ___ {N} for the cake.",   frage: "Do we need ___ {N} for the cake?", umformen: true },
+      { w: "",           pos: "Tom bought ___ {N} at the market.", neg: "Tom didn't buy ___ {N} at the market.", frage: "Did Tom buy ___ {N} at the market?", umformen: true },
+      { w: "thing",      pos: "Emma bought ___ in the sale.",      neg: "Emma didn't buy ___ in the sale.",      frage: "Did Emma buy ___ in the sale?", umformen: true },
+      { w: "thing",      pos: "I want to eat ___.",                neg: "I don't want to eat ___.",              frage: "Do you want to eat ___?" },
+      { w: "thing",      pos: "There is ___ in my bag.",           neg: "There isn't ___ in my bag.",            frage: "Is there ___ in my bag?", umformen: true },
+      { w: "body",       pos: "___ is at the door.",               neg: "There isn't ___ at the door.",          frage: "Is ___ at the door?" },
+      { w: "body",       pos: "I can see ___ in the garden.",      neg: "I can't see ___ in the garden.",        frage: "Can you see ___ in the garden?" },
+      { w: "body",       pos: "Lily met ___ nice at the market.",  neg: "Lily didn't meet ___ at the market.",   frage: "Did Lily meet ___ at the market?" },
+      { w: "where",      pos: "We went ___ nice last summer.",     neg: "We didn't go ___ last summer.",         frage: "Did you go ___ last summer?" },
+      { w: "where",      pos: "My keys are ___ in this room.",     neg: "I can't find my keys ___.",             frage: "Have you seen my keys ___?" }
+    ],
+    nomenU: ["bread", "cheese", "milk", "sugar", "flour", "water", "tea", "chocolate"],
+    nomenC: ["apples", "bananas", "sandwiches", "eggs", "carrots", "cakes", "biscuits", "nuts"],
+    erklaerungen: {
+      komparativ: K6_STEIGERUNG,
+      superlativ: K6_STEIGERUNG,
+      someany: {
+        pos:   "In bejahten Sätzen steht some (something, somebody, somewhere). Beispiel: {BEISPIEL}",
+        neg:   "In verneinten Sätzen (not, n't) steht any (anything, anybody, anywhere). Beispiel: {BEISPIEL}",
+        frage: "In Fragen steht any (anything, anybody, anywhere). Beispiel: {BEISPIEL}",
+        zuordnen: "Bejahte Sätze → some, something, somebody, somewhere. Verneinte Sätze und Fragen → any, anything, anybody, anywhere."
+      }
+    }
+  },
+
+  // ---------- Klasse 6, Unit 4 ----------
+  "6-U4": {
+    personen: [
+      { text: "I",          er: false, pron: "I" },    { text: "you",        er: false, pron: "you" },
+      { text: "we",         er: false, pron: "we" },   { text: "they",       er: false, pron: "they" },
+      { text: "my parents", er: false, pron: "they" }, { text: "my friends", er: false, pron: "they" },
+      { text: "Tom and Emma", er: false, pron: "they" },
+      { text: "he",         er: true,  pron: "he" },   { text: "she",        er: true,  pron: "she" },
+      { text: "Tom",        er: true,  pron: "he" },   { text: "Emma",       er: true,  pron: "she" },
+      { text: "Ben",        er: true,  pron: "he" },   { text: "Lily",       er: true,  pron: "she" },
+      { text: "my dad",     er: true,  pron: "he" },   { text: "my mum",     er: true,  pron: "she" },
+      { text: "my brother", er: true,  pron: "he" },   { text: "my sister",  er: true,  pron: "she" }
+    ],
+    // simple present (G11, G12): Zustände (like, love, hate, want) und Gewohnheiten (mit Zeitangabe)
+    verben: [
+      { grund: "like",  s: "likes",   rest: "spicy food",            zeit: [] },
+      { grund: "love",  s: "loves",   rest: "pancakes",              zeit: [] },
+      { grund: "hate",  s: "hates",   rest: "mushrooms",             zeit: [] },
+      { grund: "like",  s: "likes",   rest: "Indian food",           zeit: [] },
+      { grund: "eat",   s: "eats",    rest: "fish fingers",          zeit: ["on Fridays"] },
+      { grund: "eat",   s: "eats",    rest: "cereal for breakfast",  zeit: ["every morning"] },
+      { grund: "drink", s: "drinks",  rest: "hot chocolate",         zeit: ["in the evening", "in winter"] },
+      { grund: "cook",  s: "cooks",   rest: "dinner",                zeit: ["at the weekend", "on Sundays"] },
+      { grund: "make",  s: "makes",   rest: "pancakes",              zeit: ["on Sundays"] },
+      { grund: "order", s: "orders",  rest: "pizza",                 zeit: ["on Fridays"] },
+      { grund: "have",  s: "has",     rest: "a packed lunch",        zeit: ["at school", "every day"] },
+      { grund: "have",  s: "has",     rest: "toast for breakfast",   zeit: ["every morning"] },
+      { grund: "go",    s: "goes",    rest: "to the market",         zeit: ["on Saturdays"] },
+      { grund: "watch", s: "watches", rest: "TV shows about food",   zeit: ["in the evening"] },
+      { grund: "try",   s: "tries",   rest: "new recipes",           zeit: ["at the weekend"] },
+      { grund: "buy",   s: "buys",    rest: "fresh bread",           zeit: ["every morning"] },
+      { grund: "pay",   s: "pays",    rest: "for lunch",             zeit: ["at school"] },
+      { grund: "drink", s: "drinks",  rest: "orange juice",          zeit: ["at breakfast"] }
+    ],
+    // much / many / lots of / a lot of (G10). typ: frage, neg, pos; nur: "U" / "C"
+    mengenRahmen: [
+      { t: "How ___ {N} do we need?",                typ: "frage" },
+      { t: "How ___ {N} do you want?",               typ: "frage" },
+      { t: "How ___ {N} is there in the kitchen?",   typ: "frage", nur: "U" },
+      { t: "How ___ {N} are there in the bowl?",     typ: "frage", nur: "C" },
+      { t: "We haven't got ___ {N}.",                typ: "neg" },
+      { t: "I don't eat ___ {N}.",                   typ: "neg" },
+      { t: "There isn't ___ {N} on the table.",      typ: "neg",   nur: "U" },
+      { t: "There aren't ___ {N} in the bowl.",      typ: "neg",   nur: "C" },
+      { t: "There are ___ {N} in the bowl.",         typ: "pos",   nur: "C" },
+      { t: "There is ___ {N} on the plate.",         typ: "pos",   nur: "U" },
+      { t: "My dad buys ___ {N} at the market.",     typ: "pos" }
+    ],
+    nomenU: ["rice", "pasta", "bread", "cheese", "juice", "milk", "butter", "jam", "soup", "yogurt", "ketchup", "salt", "garlic", "water"],
+    nomenC: ["potatoes", "tomatoes", "onions", "sausages", "carrots", "grapes", "oranges", "strawberries", "pancakes", "apples", "spring rolls", "mushrooms", "eggs", "pears"],
+    // will: spontane Entscheidungen (G13). sit = Situation, sub = I/we, e = Grundform, s = falsche -s-Form, neg = mit won't
+    entscheidungen: [
+      { sit: "I'm thirsty.",                         sub: "I",  e: "get",   s: "gets",   rest: "some juice" },
+      { sit: "The phone is ringing.",                sub: "I",  e: "answer", s: "answers", rest: "it" },
+      { sit: "It's cold in here.",                   sub: "I",  e: "close", s: "closes", rest: "the window" },
+      { sit: "This bag is very heavy!",              sub: "I",  e: "help",  s: "helps",  rest: "you" },
+      { sit: "There isn't any milk.",                sub: "I",  e: "buy",   s: "buys",   rest: "some milk" },
+      { sit: "The pancakes on the menu look delicious.", sub: "I", e: "have", s: "has",  rest: "the pancakes" },
+      { sit: "We're hungry.",                        sub: "we", e: "order", s: "orders", rest: "a pizza" },
+      { sit: "The table is dirty.",                  sub: "I",  e: "clean", s: "cleans", rest: "it" },
+      { sit: "Oh no, I haven't got a pen!",          sub: "I",  e: "lend",  s: "lends",  rest: "you mine" },
+      { sit: "The dog is hungry.",                   sub: "I",  e: "feed",  s: "feeds",  rest: "it" },
+      { sit: "Anything to drink?",                   sub: "I",  e: "have",  s: "has",    rest: "an orange juice, please" },
+      { sit: "It's raining.",                        sub: "we", e: "take",  s: "takes",  rest: "a taxi" },
+      { sit: "The soup is cold.",                    sub: "I",  e: "put",   s: "puts",   rest: "it in the microwave" },
+      { sit: "This curry is very spicy.",            sub: "I",  e: "eat",   s: "eats",   rest: "it", neg: true },
+      { sit: "The burger is very expensive.",        sub: "I",  e: "buy",   s: "buys",   rest: "it", neg: true },
+      { sit: "The TV show is boring.",               sub: "we", e: "watch", s: "watches", rest: "it", neg: true },
+      { sit: "The cake has got nuts in it.",         sub: "I",  e: "try",   s: "tries",  rest: "it", neg: true }
+    ],
+    erklaerungen: {
+      mengen: {
+        many: "many steht vor zählbaren Nomen in der Mehrzahl (apples, eggs) – vor allem in Fragen und verneinten Sätzen. Beispiel: {BEISPIEL}",
+        much: "much steht vor nicht zählbaren Nomen (milk, rice, bread) – vor allem in Fragen und verneinten Sätzen. Beispiel: {BEISPIEL}",
+        pos:  "In bejahten Sätzen sagst du lots of oder a lot of – das passt zu allen Nomen. Beispiel: {BEISPIEL}",
+        zuordnen: "Zählbar, Mehrzahl (apples, eggs) → many. Nicht zählbar (milk, rice, bread) → much."
+      },
+      praesensaussneg: {
+        aussage: {
+          er:       "Simple present: Bei he, she, it (Tom, my mum) bekommt das Verb ein -s (watch → watches, try → tries, have → has). Beispiel: {BEISPIEL}",
+          nichtEr:  "Bei „{P}“ (I, you, we, they) bekommt das Verb kein -s. Beispiel: {BEISPIEL}",
+          zuordnen: "He, she, it und eine Person → Verb mit -s: {S}. I, you, we, they → ohne -s: {GRUND}."
+        },
+        verneinung: {
+          er:       "Bei he, she, it verneinst du mit doesn't + Grundform (ohne -s). Beispiel: {BEISPIEL}",
+          nichtEr:  "Bei I, you, we, they verneinst du mit don't + Grundform. Beispiel: {BEISPIEL}",
+          zuordnen: "I, you, we, they → don't. He, she, it und eine Person → doesn't."
+        }
+      },
+      praesensfrage: {
+        frage: {
+          er:       "Fragen mit he, she, it beginnen mit Does. Das Verb hat dann KEIN -s. Beispiel: {BEISPIEL}",
+          nichtEr:  "Fragen mit I, you, we, they beginnen mit Do. Beispiel: {BEISPIEL}",
+          zuordnen: "I, you, we, they → Do. He, she, it und eine Person → Does."
+        },
+        kurzJa:   "Kurzantwort mit Ja: Yes, + Person + do/does. Beispiel: {BEISPIEL}",
+        kurzNein: "Kurzantwort mit Nein: No, + Person + don't/doesn't. Beispiel: {BEISPIEL}"
+      },
+      will: {
+        pos: "Entscheidest du spontan, sagst du will + Grundform (I'll = I will). Nach will steht nie -s und nie to. Beispiel: {BEISPIEL}",
+        neg: "Spontan entscheiden, etwas NICHT zu tun: won't (= will not) + Grundform. Beispiel: {BEISPIEL}",
+        zuordnen: "Richtig ist: will/'ll oder won't + Grundform. Falsch: -s nach will, to nach will oder am/are statt will."
+      }
+    }
+  }
+});
+
+Object.assign(K6.generatoren, {
+  "6-G7":  { baukasten: "6-U3", art: "komparativ" },
+  "6-G8":  { baukasten: "6-U3", art: "superlativ" },
+  "6-G9":  { baukasten: "6-U3", art: "someany" },
+  "6-G10": { baukasten: "6-U4", art: "mengen" },
+  "6-G11": { baukasten: "6-U4", art: "praesensaussneg" },
+  "6-G12": { baukasten: "6-U4", art: "praesensfrage" },
+  "6-G13": { baukasten: "6-U4", art: "will" }
+});
+
+K6.aufgaben.push(
+  // ---------- 6-G7  Steigerung mit -er und more ----------
+  { thema: "6-G7", niveau: "gruen", form: "quiz", frage: "London is ___ than my town.", optionen: ["bigger", "biger", "more big"], loesung: "bigger",
+    erklaerung: "big → bigger: Der Konsonant am Ende wird verdoppelt. Beispiel: My bag is bigger than your bag." },
+  { thema: "6-G7", niveau: "gruen", form: "quiz", frage: "My new jeans are ___ than my old jeans.", optionen: ["more comfortable", "comfortabler", "most comfortable"], loesung: "more comfortable",
+    erklaerung: "Lange Adjektive bekommen more davor. Beispiel: This dress is more expensive than that dress." },
+  { thema: "6-G7", niveau: "gelb", form: "luecke", frage: "Today is ___ (good) than yesterday.", loesung: ["better"],
+    erklaerung: "good ist unregelmäßig: good → better → best. Beispiel: The burger is better than the pizza." },
+  { thema: "6-G7", niveau: "gelb", form: "satzbau", loesung: ["My sister is as tall as my mum."],
+    erklaerung: "Gleich groß: as + Grundform + as. Beispiel: My bag is as heavy as your bag." },
+  { thema: "6-G7", niveau: "rot", form: "fehler", satz: "The tank top is cheaper as the T-shirt.", fehlerwort: "as", loesung: ["than"],
+    erklaerung: "Nach der Steigerungsform (cheaper) steht than. as steht nur bei as … as. Beispiel: The bridge is longer than the tower." },
+  { thema: "6-G7", niveau: "rot", form: "fehler", satz: "My bag is heavyer than your bag.", fehlerwort: "heavyer", loesung: ["heavier"],
+    erklaerung: "-y wird zu -ier: heavy → heavier. Beispiel: This book is funnier than that book." },
+
+  // ---------- 6-G8  Steigerung mit -est und most ----------
+  { thema: "6-G8", niveau: "gruen", form: "quiz", frage: "Big Ben is the ___ clock tower in London.", optionen: ["most famous", "famousest", "more famous"], loesung: "most famous",
+    erklaerung: "famous wird mit most gesteigert: the most famous. Beispiel: This is the most beautiful bridge in the city." },
+  { thema: "6-G8", niveau: "gruen", form: "quiz", frage: "This is the ___ pizza I have ever eaten!", optionen: ["best", "goodest", "better"], loesung: "best",
+    erklaerung: "good → better → best. Beispiel: The big wheel is the best sight in London." },
+  { thema: "6-G8", niveau: "gelb", form: "luecke", frage: "This is the ___ (big) burger at the market.", loesung: ["biggest"],
+    erklaerung: "big → the biggest: Der Konsonant wird verdoppelt. Beispiel: This bag is the biggest bag in the shop." },
+  { thema: "6-G8", niveau: "gelb", form: "satzbau", loesung: ["This is the most expensive dress in the shop."],
+    erklaerung: "the most + langes Adjektiv. Beispiel: These jeans are the most comfortable jeans in the shop." },
+  { thema: "6-G8", niveau: "rot", form: "fehler", satz: "Tom is the funnyest boy in our class.", fehlerwort: "funnyest", loesung: ["funniest"],
+    erklaerung: "-y wird zu -iest: funny → the funniest. Beispiel: The big wheel is the scariest sight in London." },
+  { thema: "6-G8", niveau: "rot", form: "umformen", frage: "Use the superlative:  The castle is very old. (the oldest building in the town)", loesung: ["The castle is the oldest building in the town."],
+    erklaerung: "the + Adjektiv + -est. Beispiel: The clock tower is the tallest building in the town." },
+
+  // ---------- 6-G9  some und any ----------
+  { thema: "6-G9", niveau: "gruen", form: "quiz", frage: "Are there ___ visitors in the castle today?", optionen: ["any", "some"], loesung: "any",
+    erklaerung: "In Fragen steht any. Beispiel: Is there any milk on the table?" },
+  { thema: "6-G9", niveau: "gruen", form: "quiz", frage: "Listen! ___ is at the door.", optionen: ["Somebody", "Anybody"], loesung: "Somebody",
+    erklaerung: "In bejahten Sätzen: somebody, something, somewhere. Beispiel: I can see somebody in the garden." },
+  { thema: "6-G9", niveau: "gelb", form: "luecke", frage: "I'm sorry, I haven't got ___ (some / any) money.", loesung: ["any"],
+    erklaerung: "Verneinter Satz (haven't) → any. Beispiel: There aren't any eggs in the kitchen." },
+  { thema: "6-G9", niveau: "gelb", form: "satzbau", loesung: ["Did you buy anything in the sale?"],
+    erklaerung: "In Fragen: anything, anybody, anywhere. Beispiel: Did you go anywhere last summer?" },
+  { thema: "6-G9", niveau: "rot", form: "fehler", satz: "I can't find my keys somewhere.", fehlerwort: "somewhere", loesung: ["anywhere"],
+    erklaerung: "Verneinter Satz (can't) → anywhere. Beispiel: We didn't go anywhere last summer." },
+  { thema: "6-G9", niveau: "rot", form: "umformen", frage: "Make it negative:  There are some sandwiches on the table.", loesung: ["There aren't any sandwiches on the table."],
+    erklaerung: "Verneinung: aren't + any. Beispiel: There isn't any bread in the kitchen." },
+
+  // ---------- 6-G10  much, many, lots of, a lot of ----------
+  { thema: "6-G10", niveau: "gruen", form: "quiz", frage: "How ___ spring rolls do you want?", optionen: ["many", "much"], loesung: "many",
+    erklaerung: "spring rolls kann man zählen (Mehrzahl) → many. Beispiel: How many potatoes do we need?" },
+  { thema: "6-G10", niveau: "gruen", form: "quiz", frage: "How ___ rice do we need for the curry?", optionen: ["much", "many"], loesung: "much",
+    erklaerung: "rice kann man nicht zählen → much. Beispiel: How much milk do we need?" },
+  { thema: "6-G10", niveau: "gelb", form: "luecke", frage: "There isn't ___ (much / many) ketchup on my plate.", loesung: ["much"],
+    erklaerung: "ketchup ist nicht zählbar → much. Beispiel: We haven't got much bread." },
+  { thema: "6-G10", niveau: "gelb", form: "satzbau", loesung: ["We eat a lot of pasta at home."],
+    erklaerung: "In bejahten Sätzen: lots of / a lot of. Beispiel: My dad buys lots of vegetables at the market." },
+  { thema: "6-G10", niveau: "rot", form: "fehler", satz: "How much tomatoes do you need for the sauce?", fehlerwort: "much", loesung: ["many"],
+    erklaerung: "tomatoes ist Mehrzahl (zählbar) → many. Beispiel: How many onions do we need?" },
+  { thema: "6-G10", niveau: "rot", form: "umformen", frage: "Ask with „How much“ or „How many“:  We need some cheese for the pasta bake.", loesung: ["How much cheese do we need for the pasta bake?"],
+    erklaerung: "cheese ist nicht zählbar → How much …? Beispiel: How much butter do we need?" },
+
+  // ---------- 6-G11  simple present: Aussagen, Verneinung ----------
+  { thema: "6-G11", niveau: "gruen", form: "quiz", frage: "My grandma usually ___ a cup of tea after lunch.", optionen: ["drinks", "drink"], loesung: "drinks",
+    erklaerung: "My grandma = she → Verb mit -s. Etwas passiert regelmäßig (usually). Beispiel: Tom usually eats cereal for breakfast." },
+  { thema: "6-G11", niveau: "gruen", form: "quiz", frage: "Emma is allergic to nuts. She ___ eat cake with nuts.", optionen: ["doesn't", "don't", "isn't"], loesung: "doesn't",
+    erklaerung: "Bei she: doesn't + Grundform. Beispiel: My brother doesn't like mushrooms." },
+  { thema: "6-G11", niveau: "gelb", form: "luecke", frage: "My dad ___ (wash) the dishes after dinner.", loesung: ["washes"],
+    erklaerung: "Nach -s, -sh, -ch, -x, -o kommt -es: wash → washes, watch → watches. Beispiel: Lily watches TV shows about food." },
+  { thema: "6-G11", niveau: "gelb", form: "satzbau", loesung: ["We don't eat pork at home."],
+    erklaerung: "don't + Grundform; Zeitangabe am Ende. Beispiel: They don't go to the market on Sundays." },
+  { thema: "6-G11", niveau: "rot", form: "fehler", satz: "Ben trys new recipes at the weekend.", fehlerwort: "trys", loesung: ["tries"],
+    erklaerung: "Konsonant + y → -ies: try → tries. Beispiel: My mum tries new recipes on Sundays." },
+
+  // ---------- 6-G12  simple present: Fragen, Kurzantworten ----------
+  { thema: "6-G12", niveau: "gruen", form: "quiz", frage: "___ your sister like spicy food?", optionen: ["Does", "Do", "Is"], loesung: "Does",
+    erklaerung: "your sister = she → Does. Beispiel: Does Tom eat fish fingers?" },
+  { thema: "6-G12", niveau: "gelb", form: "luecke", frage: "Do your parents cook at the weekend? – Yes, ___.", loesung: ["they do", "yes, they do"],
+    erklaerung: "your parents = they → Yes, they do. Beispiel: Do you like pancakes? – Yes, I do." },
+  { thema: "6-G12", niveau: "gelb", form: "satzbau", loesung: ["What do you usually have for breakfast?"],
+    erklaerung: "Fragewort – do/does – Person – Grundform? Beispiel: Where does Emma buy her bread?" },
+  { thema: "6-G12", niveau: "rot", form: "fehler", satz: "Does Lily drinks orange juice at breakfast?", fehlerwort: "drinks", loesung: ["drink"],
+    erklaerung: "Nach Does steht die Grundform ohne -s. Beispiel: Does Ben eat cereal for breakfast?" },
+  { thema: "6-G12", niveau: "rot", form: "umformen", frage: "Ask a question:  Tom orders pizza on Fridays.", loesung: ["Does Tom order pizza on Fridays?"],
+    erklaerung: "Does + Person + Grundform? Beispiel: Does my sister cook dinner on Sundays?" },
+
+  // ---------- 6-G13  will (spontane Entscheidungen) ----------
+  { thema: "6-G13", niveau: "gruen", form: "quiz", frage: "„I can't do my homework.“ – „Don't worry, I ___ help you.“", optionen: ["will", "am", "to"], loesung: "will",
+    erklaerung: "Spontane Entscheidung: will + Grundform. Beispiel: „I'm thirsty.“ – „I'll get some juice.“" },
+  { thema: "6-G13", niveau: "gelb", form: "luecke", frage: "„Anything to eat?“ – „___ (I / have) the chicken curry, please.“", loesung: ["I'll have", "I will have"],
+    erklaerung: "Bestellen im Restaurant ist eine spontane Entscheidung: I'll have … Beispiel: „Anything to drink?“ – „I'll have a lemonade.“" },
+  { thema: "6-G13", niveau: "gelb", form: "satzbau", loesung: ["I won't eat the mushrooms."],
+    erklaerung: "won't (= will not) + Grundform. Beispiel: „This curry is very spicy.“ – „I won't eat it.“" },
+  { thema: "6-G13", niveau: "rot", form: "fehler", satz: "„We're late!“ – „OK, we'll takes a taxi.“", fehlerwort: "takes", loesung: ["take"],
+    erklaerung: "Nach will/'ll steht die Grundform ohne -s: we'll take. Beispiel: „It's raining.“ – „We'll take the bus.“" },
+  { thema: "6-G13", niveau: "rot", form: "umformen", frage: "React with „won't“ (eat / the soup):  „The soup is very salty.“", loesung: ["I won't eat the soup.", "I will not eat the soup."],
+    erklaerung: "won't + Grundform. Beispiel: „The burger is very expensive.“ – „I won't buy it.“" }
+);
+
+K6.zusatzfragen.push(
+  { thema: "6-G7",  frage: "Which sentence is correct?", optionen: ["A plane is faster than a train.", "A plane is more fast than a train.", "A plane is faster as a train."], loesung: "A plane is faster than a train." },
+  { thema: "6-G7",  frage: "Which is correct?", optionen: ["more expensive", "expensiver", "expensivest"], loesung: "more expensive" },
+  { thema: "6-G7",  frage: "„good“ – „…“", optionen: ["better", "gooder", "more good"], loesung: "better" },
+  { thema: "6-G8",  frage: "Which is correct?", optionen: ["the heaviest", "the heavyest", "the most heavy"], loesung: "the heaviest" },
+  { thema: "6-G8",  frage: "„bad“ – „worse“ – „…“", optionen: ["the worst", "the baddest", "the worsest"], loesung: "the worst" },
+  { thema: "6-G8",  frage: "This is the … bridge in London.", optionen: ["most famous", "famousest", "more famous"], loesung: "most famous" },
+  { thema: "6-G9",  frage: "There aren't … eggs in the kitchen.", optionen: ["any", "some", "anything"], loesung: "any" },
+  { thema: "6-G9",  frage: "Did you buy … at the market?", optionen: ["anything", "something", "anybody"], loesung: "anything" },
+  { thema: "6-G9",  frage: "I can see … in the garden.", optionen: ["somebody", "anybody", "something"], loesung: "somebody" },
+  { thema: "6-G10", frage: "How … potatoes do we need?", optionen: ["many", "much", "a lot"], loesung: "many" },
+  { thema: "6-G10", frage: "We haven't got … milk.", optionen: ["much", "many", "a lot"], loesung: "much" },
+  { thema: "6-G10", frage: "Which sentence is correct?", optionen: ["There are lots of grapes in the bowl.", "There are much grapes in the bowl.", "There are lots grapes in the bowl."], loesung: "There are lots of grapes in the bowl." },
+  { thema: "6-G11", frage: "Which sentence is correct?", optionen: ["My mum watches TV shows about food.", "My mum watch TV shows about food.", "My mum watchs TV shows about food."], loesung: "My mum watches TV shows about food." },
+  { thema: "6-G11", frage: "Tom … like mushrooms.", optionen: ["doesn't", "don't", "isn't"], loesung: "doesn't" },
+  { thema: "6-G11", frage: "Which sentence is correct?", optionen: ["Ben tries new recipes.", "Ben trys new recipes.", "Ben try new recipes."], loesung: "Ben tries new recipes." },
+  { thema: "6-G12", frage: "„Does Emma like curry?“ – „Yes, …“", optionen: ["she does.", "she do.", "she likes."], loesung: "she does." },
+  { thema: "6-G12", frage: "Which question is correct?", optionen: ["Do your friends cook?", "Does your friends cook?", "Do your friends cooks?"], loesung: "Do your friends cook?" },
+  { thema: "6-G12", frage: "„Do you eat fish?“ – „No, …“", optionen: ["I don't.", "I doesn't.", "I not."], loesung: "I don't." },
+  { thema: "6-G13", frage: "„I'm hungry.“ – „I … make you a sandwich.“", optionen: ["'ll", "am", "to"], loesung: "'ll" },
+  { thema: "6-G13", frage: "Which sentence is correct?", optionen: ["I'll have the pancakes.", "I'll has the pancakes.", "I'll to have the pancakes."], loesung: "I'll have the pancakes." },
+  { thema: "6-G13", frage: "„This film is boring.“ – „I … watch it.“", optionen: ["won't", "willn't", "don't will"], loesung: "won't" }
+);
 
 // =====================================================================
 // 8) MINISPIELE
