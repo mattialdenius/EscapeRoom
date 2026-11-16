@@ -1331,3 +1331,30 @@ K5.minispiele = {
   rutsche: { figur: "🐧", fisch: "🐟", hindernisse: ["🧊", "⛄", "🪨"], hintergrund: ["🏔️", "❄️", "🏔️", "☁️"] },
   rutscheAutsch: ["Rumms! Weiterrutschen!", "Bauchlandung! Weiter!", "Autsch, kalt!", "Hoppla – Kopf hoch!"]
 };
+
+// ---------- Weitere Minispiele (ab Version 0.7.1): acht Spiele pro Welt ----------
+Object.assign(K5.minispiele.spiele, {
+  codeknacker: {
+    titel: "🔐 Futterlager-Code",
+    anleitung: "Das Futterlager hat ein Zahlenschloss mit drei Ziffern. Tippt drei Ziffern. Nach jedem Versuch gibt es Hinweise: ● richtige Ziffer am richtigen Platz, ◐ Ziffer kommt vor, aber woanders, ○ kommt nicht vor.",
+    ziel: 3,
+    erfolg: "Das Schloss springt auf! Die Tiere freuen sich auf ihr Futter."
+  }
+});
+Object.assign(K5.minispiele, {
+  // ---------- Futterlager-Code (Technik: codeknacker) ----------
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!", versuchText: "Noch {n} Versuche",
+                 namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } }
+});
+
+// ---------- Scheitern (ab Version 0.7.2): drei Herzen, Fallen bei der Taschenlampe ----------
+Object.assign(K5.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Oh nein, drei Fehler! Die Tiere lachen sich schlapp.", "Drei Fehler – die Zoowärterin pfeift ab!"],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🦨", text: "Puh, ein Stinktier!" },
+    { emoji: "🐝", text: "Bssss! Ein Wespennest!" },
+    { emoji: "🕷️", text: "Iiih, eine Spinne!" }
+  ]
+});

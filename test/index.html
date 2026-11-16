@@ -11,7 +11,7 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
-  v0.7.2 (16.11.2026)  – nur Testbereich
+  v0.7.2 (16.11.2026)  – live geschaltet am 16.11.2026 (enthält auch 0.7.0 und 0.7.1)
     - Minispiele: drei Herzen ❤️❤️❤️, jeder Fehler kostet eines, beim dritten ist das Spiel vorbei (eigene Meldung je Welt).
       Code knacken: höchstens 6 Versuche. Taschenlampe: Fallen im Dunkeln. minispiele 0.6.
   v0.7.1 (16.11.2026)  – nur Testbereich
@@ -1466,7 +1466,7 @@ Object.assign(ARTEN, {
     // Beispiel: anderer Satzrahmen derselben Sorte, möglichst gleiche Regel (‑ly, ‑ily, Sonderfall)
     const bsp = () => {
       const liste = istAdv ? bk.advRahmen : bk.adjRahmen, kand = [];
-      liste.forEach(r => r !== R && r.w.forEach(a => { const x = W(a); if(x.adj !== A.adj && (!istAdv || x.regel === A.regel)) kand.push([r, x]); }));
+      liste.forEach(r => r !== R && r.w.forEach(a => { const x = W(a); if(!istAdv || x.regel === A.regel) kand.push([r, x]); /* anderer Satz, gleiche Regel */ }));
       const [r, x] = kand.length ? wuerfle(kand) : [R, A];
       const p = anders(bk.personen.filter(q => !r.nurKind || q.kind), P);
       return baue(r, p, istAdv ? x.adv : x.adj);

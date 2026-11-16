@@ -185,3 +185,99 @@ K7.minispiele = {
   flug: { figur: "🦇", stern: "⏳", krone: "🏛️", himmel: ["✨", "·", "🖼️", "·", "✨", "·"] },
   flugAutsch: ["Autsch, eine Säule.", "Weiterflattern!", "Knapp daneben.", "Kurz getaumelt – weiter."]
 };
+
+// ---------- Weitere Minispiele (ab Version 0.7.1): acht Spiele pro Welt ----------
+Object.assign(K7.minispiele.spiele, {
+  obstkorb: {
+    titel: "🏺 Fallende Fundstücke",
+    anleitung: "Im Regal wackelt es! Schiebt den Korb mit dem Finger und fangt die Fundstücke auf. Vorsicht vor Spinnen und Staubwolken!",
+    ziel: 12,
+    erfolg: "Nichts kaputt! Der Kurator atmet auf."
+  },
+  schaukel: {
+    titel: "🌿 Liane im Urzeit-Saal",
+    anleitung: "Im Urzeit-Saal hängen Lianen. Tippt, sobald der Ring ⭕ erscheint – dann springt ihr zur nächsten Liane! Unten wartet der T-Rex …",
+    ziel: 6,
+    erfolg: "Sicher drüben! Der T-Rex schaut enttäuscht."
+  },
+  fuettern: {
+    titel: "🏛️ Ab in die richtige Epoche!",
+    anleitung: "Die Fundstücke sind durcheinander! Zieht jedes Fundstück zur richtigen Epoche – oder tippt die Epoche an.",
+    ziel: 6,
+    erfolg: "Alles richtig einsortiert! Ihr seid echte Historiker."
+  },
+  codeknacker: {
+    titel: "🔒 Tresor des Kurators",
+    anleitung: "Der Tresor hat ein Zahlenschloss mit drei Ziffern. Tippt drei Ziffern. Nach jedem Versuch gibt es Hinweise: ● richtige Ziffer am richtigen Platz, ◐ Ziffer kommt vor, aber woanders, ○ kommt nicht vor.",
+    ziel: 3,
+    erfolg: "Der Tresor ist offen! Darin liegt ein alter Zeitreise-Kompass."
+  },
+  lasergitter: {
+    titel: "🚨 Lichtschranke im Tresorraum",
+    anleitung: "Die Lichtschranke geht an und aus. Tippt, wenn AUS dasteht – dann huscht ihr durch. Zu früh getippt? Kurz warten, mehr passiert nicht.",
+    ziel: 6,
+    erfolg: "Sechs Schranken, kein Alarm. Meisterhaft!"
+  }
+});
+Object.assign(K7.minispiele, {
+  // ---------- Fallende Fundstücke (Technik: obstkorb) ----------
+  obst: [
+    { emoji: "🏺", en: "vase",      de: "Vase" },        { emoji: "🪙", en: "coin",      de: "Münze" },
+    { emoji: "👑", en: "crown",     de: "Krone" },       { emoji: "💍", en: "ring",      de: "Ring" },
+    { emoji: "📜", en: "scroll",    de: "Schriftrolle" },{ emoji: "🗿", en: "statue",    de: "Statue" },
+    { emoji: "🦴", en: "bone",      de: "Knochen" },     { emoji: "💎", en: "jewel",     de: "Edelstein" },
+    { emoji: "🛡️", en: "shield",    de: "Schild" },      { emoji: "⚱️", en: "urn",       de: "Urne" },
+    { emoji: "🧭", en: "compass",   de: "Kompass" },     { emoji: "⏳", en: "hourglass", de: "Sanduhr" }
+  ],
+  muell: ["🕷️", "💨", "🥫", "🧦"],
+  autsch: ["Iiih, eine Spinne!", "Hatschi! Nur Staub!", "Eine Dose? Die ist nicht antik!", "Socken gehören nicht ins Museum!"],
+
+  // ---------- Liane im Urzeit-Saal (Technik: schaukel) ----------
+  affe: "🧒", netzZeichen: "🦖",
+  netz: ["Rawr! Schnell wieder hoch!", "Knapp! Wartet auf den Ring ⭕.", "Hoppla! Nochmal!"],
+
+  // ---------- Ab in die richtige Epoche! (Technik: fuettern) ----------
+  // „tiere“ sind hier die Epochen, „futter“ die Fundstücke
+  tiere: [
+    { id: "dino",   emoji: "🦕", en: "dinosaurs",     de: "Zeit der Dinosaurier", witz: "Der Dino brüllt: „{futter}? So was gab es bei uns noch nicht!“" },
+    { id: "stein",  emoji: "🔥", en: "Stone Age",     de: "Steinzeit",            witz: "Die Steinzeit-Familie staunt: „{futter}? Kennen wir nicht!“" },
+    { id: "aegypten",emoji: "🐫", en: "Ancient Egypt", de: "Altes Ägypten",        witz: "Der Pharao runzelt die Stirn: „{futter}? Nicht aus meiner Zeit!“" },
+    { id: "rom",    emoji: "🏛️", en: "Ancient Rome",  de: "Antikes Rom",          witz: "Der Römer schüttelt den Kopf: „{futter}? Bei Jupiter, nein!“" },
+    { id: "ritter", emoji: "🏰", en: "Middle Ages",   de: "Mittelalter",          witz: "Der Ritter klappt das Visier hoch: „{futter}? Passt nicht in meine Burg!“" },
+    { id: "heute",  emoji: "🏙️", en: "today",         de: "Heute",                witz: "Die Museumsführerin lacht: „{futter}? Das ist doch uralt!“" }
+  ],
+  futter: [
+    { emoji: "🦖", en: "T. rex",          de: "T-Rex",             haupt: ["dino"],    auch: [] },
+    { emoji: "🥚", en: "dinosaur egg",    de: "Dinosaurier-Ei",    haupt: ["dino"],    auch: [] },
+    { emoji: "🦣", en: "mammoth",         de: "Mammut",            haupt: ["stein"],   auch: [] },
+    { emoji: "🪓", en: "stone axe",       de: "Steinaxt",          haupt: ["stein"],   auch: [] },
+    { emoji: "🔺", en: "pyramid",         de: "Pyramide",          haupt: ["aegypten"], auch: [] },
+    { emoji: "📜", en: "papyrus",         de: "Papyrus",           haupt: ["aegypten"], auch: ["rom"] },
+    { emoji: "🏟️", en: "arena",           de: "Arena",             haupt: ["rom"],     auch: ["heute"] },
+    { emoji: "🏺", en: "amphora",         de: "Amphore",           haupt: ["rom"],     auch: ["aegypten"] },
+    { emoji: "🛡️", en: "knight's shield", de: "Ritterschild",      haupt: ["ritter"],  auch: [] },
+    { emoji: "🪶", en: "quill",           de: "Schreibfeder",      haupt: ["ritter"],  auch: [] },
+    { emoji: "📱", en: "smartphone",      de: "Smartphone",        haupt: ["heute"],   auch: [] },
+    { emoji: "🎮", en: "game console",    de: "Spielkonsole",      haupt: ["heute"],   auch: [] }
+  ],
+  lob: ["✅ Richtig!", "✅ Passt!", "✅ Genau!", "✅ Super!"],
+
+  // ---------- Tresor des Kurators (Technik: codeknacker) ----------
+  codeknacker: { ziffern: 5, legende: "● richtiger Platz · ◐ falscher Platz · ○ nicht im Code", start: "Tippt drei Ziffern.", fertig: "Geknackt!", versuchText: "Noch {n} Versuche",
+                 namen: { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" } },
+
+  // ---------- Lichtschranke im Tresorraum (Technik: lasergitter) ----------
+  lasergitter: { figur: "🧒", ziel: "🚪", an: "AN", aus: "AUS", hinweis: "Tippt, wenn AUS dasteht.", autsch: ["Piep! Wartet auf AUS.", "Zu früh!", "Geduld …"] }
+});
+
+// ---------- Scheitern (ab Version 0.7.2): drei Herzen, Fallen bei der Taschenlampe ----------
+Object.assign(K7.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Drei Fehler – der Kurator schüttelt den Kopf.", "Alarm im Museum! Das Spiel ist vorbei."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🚨", text: "Alarm! Die Alarmanlage!" },
+    { emoji: "👻", text: "Buh! Das Museumsgespenst!" },
+    { emoji: "🕷️", text: "Iiih, eine Spinne!" }
+  ]
+});

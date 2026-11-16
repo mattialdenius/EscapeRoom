@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.6.10 (Prototyp)
+  Version 0.7.2 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,14 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.2 (16.11.2026)  – live geschaltet am 16.11.2026 (enthält auch 0.7.0 und 0.7.1)
+    - Minispiele: drei Herzen ❤️❤️❤️, jeder Fehler kostet eines, beim dritten ist das Spiel vorbei (eigene Meldung je Welt).
+      Code knacken: höchstens 6 Versuche. Taschenlampe: Fallen im Dunkeln. minispiele 0.6.
+  v0.7.1 (16.11.2026)  – nur Testbereich
+    - Acht Minispiele in jeder Welt (Klasse 5–10). Neue Varianten nur über die Daten der Klassen; minispiele 0.5.
+  v0.7.0 (16.11.2026)  – nur Testbereich
+    - Klasse 6, Unit 1 und 2 spielbar (G1–G6): neue Aufgabenarten adverb, posspron, pastaussneg, perfekt, perfektfrage;
+      Wortschatz Red Line 1 + Red Line 2 bis zur Unit (daten/klasse6.js).
   v0.6.10 (15.11.2026)  – live geschaltet am 15.11.2026 (enthält auch 0.6.8 und 0.6.9)
     - Logo (Ordner bild/): Symbol im Browser-Tab und auf dem Home-Bildschirm, klein auf dem Startbildschirm,
       ganz klein in der Fußzeile und unter den Knöpfen im Finale (nicht auf der Urkunde).
@@ -120,7 +128,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.6.10</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.2</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -159,6 +167,9 @@
   .logo-fuss{width:18px;height:18px;vertical-align:-4px;margin-right:.2rem}
   .logo-finale{display:block;margin:1rem auto 0;width:40px;height:40px;opacity:.85}
   .vorschau-hinweis{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:50;background:#ffd23f;color:#000;border:2px solid #000;border-radius:10px;padding:.2rem .6rem;font-size:.85rem;font-weight:bold;pointer-events:none}
+  .ms-herzen{font-size:1.15rem;letter-spacing:.1rem;align-self:center;filter:drop-shadow(0 1px 0 #000)}
+  .ms-herzen.weg{visibility:hidden}
+  .ms-herzen .leer{opacity:.45}
   .ms-hud{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;pointer-events:none;z-index:6}
   .ms-uhr,.ms-punkte{font:bold 1.2rem/1 ui-monospace,Menlo,Consolas,monospace;background:#000;color:#ffd23f;border:2px solid #ffd23f;border-radius:12px;padding:.35rem .55rem;white-space:nowrap}
   .ms-punkte{color:#fff;border-color:#fff}
@@ -500,7 +511,7 @@
     <p id="msMeldung" class="ms-meldung" role="status"></p>
     <div id="msFeld" class="ms-feld" hidden>
       <div id="msBuehne" class="ms-buehne"></div>
-      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
+      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msHerzen" class="ms-herzen" role="status"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
     </div>
     <div id="msStart" class="knopfreihe"><button id="btnMsLos" class="gruen">▶ Los!</button><button id="btnMsNein" class="zweit">Lieber nicht</button></div>
     <div id="msErgebnis" class="ms-ergebnis" hidden><p id="msErgebnisText" role="status"></p><button id="btnMsWeiter" class="gruen">Weiter</button></div>
@@ -525,7 +536,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.6.10</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -551,7 +562,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.6.10";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -565,7 +576,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.6.10"></script>
+<script src="daten/allgemein.js?v=0.7.2"></script>
 
 <script>
 /* #####################################################################
@@ -1413,6 +1424,244 @@ Object.assign(ARTEN, {
     return null;
   }
 });
+
+/* ---------- Klasse 6 (Red Line 2): weitere Aufgabenarten ---------- */
+const wasWere = p => (p.er || p.text === "I") ? "was" : "were";
+const HV = p => p.er ? "has" : "have", HVN = p => p.er ? "hasn't" : "haven't";
+// Kurzformen beim Perfekt als weitere richtige Lösung (I have → I've, he has → he's)
+const PERF_KURZ = { "I have": "I've", "you have": "you've", "we have": "we've", "they have": "they've", "he has": "he's", "she has": "she's" };
+function perfVarianten(satz){
+  const l = [satz];
+  Object.keys(PERF_KURZ).forEach(k => { const re = new RegExp("^" + k + " ", "i"); if(re.test(satz)) l.push(gross(PERF_KURZ[k]) + " " + satz.replace(re, "")); });
+  return l;
+}
+// Personenfilter wie in Klasse 5: nurKind (z. B. Hausaufgaben), einzeln (z. B. „his mobile“ nicht bei mehreren)
+// Beispiel für die Erklärung, das NICHT die Lösung verrät (bis zu 8 Versuche)
+function bspOhne(mach, loesung){
+  const kernVon = x => String(x).replace(/^(Tom and Emma|Emma and Tom) /, "").replace(/[.?!]$/, "").toLowerCase();
+  let b = mach(); for(let i = 0; i < 8 && kernVon(b).includes(kernVon(loesung)) ; i++) b = mach();
+  return b;
+}
+const passtPerson = (v, p) => (!v.nurKind || p.kind) && (!v.einzeln || p.er || p.text === "I" || p.text === "you");
+const personenFuer = (liste, v) => { const l = liste.filter(p => passtPerson(v, p)); return l.length ? l : liste; };
+
+Object.assign(ARTEN, {
+  // ---------- Vergangenheit: Aussagen UND Verneinung in einem Thema (Klasse 6, G3) ----------
+  pastaussneg(bk, form, E){
+    const neg = form === "umformen" ? Math.random() < 0.6 : Math.random() < 0.5;
+    return neg ? vergangenheit("neg", bk, form, Object.assign({}, E, { zuordnen: E.zuordnenNeg }))
+               : vergangenheit("aussage", bk, form, Object.assign({}, E, { zuordnen: E.zuordnenAussage }));
+  },
+
+  // ---------- Adjektiv oder Adverb (Klasse 6, G1) ----------
+  adverb(bk, form, E){
+    const W = a => bk.adjAdv.find(x => x.adj === a);
+    const istAdv = form === "umformen" || Math.random() < 0.6;
+    const R = wuerfle((istAdv ? bk.advRahmen : bk.adjRahmen).filter(r => form !== "satzbau" || r.t.split(" ").length >= 3));   // Satzbau braucht mindestens 3 Wörter
+    const A = W(wuerfle(R.w)), P = wuerfle(bk.personen.filter(p => !R.nurKind || p.kind));
+    kern(A.adj);
+    const korrekt = istAdv ? A.adv : A.adj;
+    const falsch = istAdv ? (A.adv === A.adj ? A.adj + "ly" : A.adj) : A.adv;
+    const baue = (r, p, x) => gross(r.t.replace(/\{P\}/g, p.text).replace(/\{POSS\}/g, p.poss).replace(/\{WAS\}/g, wasWere(p)).replace("___", x)).replace(/\s+([.!?])/g, "$1").replace(/\s\s+/g, " ");
+    // Beispiel: anderer Satzrahmen derselben Sorte, möglichst gleiche Regel (‑ly, ‑ily, Sonderfall)
+    const bsp = () => {
+      const liste = istAdv ? bk.advRahmen : bk.adjRahmen, kand = [];
+      liste.forEach(r => r !== R && r.w.forEach(a => { const x = W(a); if(!istAdv || x.regel === A.regel) kand.push([r, x]); /* anderer Satz, gleiche Regel */ }));
+      const [r, x] = kand.length ? wuerfle(kand) : [R, A];
+      const p = anders(bk.personen.filter(q => !r.nurKind || q.kind), P);
+      return baue(r, p, istAdv ? x.adv : x.adj);
+    };
+    const erkl = erklaere(istAdv ? E[A.regel] : E.adj, { BEISPIEL: bspOhne(bsp, baue(R, P, korrekt)) });
+    if(form === "quiz") return { frage: baue(R, P, "___"), optionen: mischen([korrekt, falsch]), loesung: korrekt, erklaerung: erkl };
+    if(form === "luecke") return { frage: baue(R, P, "___ (" + A.adj + ")"), loesung: [korrekt], erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [baue(R, P, korrekt)], erklaerung: erkl };
+    if(form === "fehler") return { satz: baue(R, P, falsch), fehlerwort: falsch, loesung: [korrekt], erklaerung: erkl };
+    if(form === "umformen"){
+      // „Tom answered the question. (nervous)“ → „Tom answered the question nervously.“  Das Adverb darf auch am Satzende stehen.
+      const ohne = baue(R, P, ""), ende = ohne.replace(/([.!?])$/, " " + A.adv + "$1");
+      return { frage: "Use the adverb of „" + A.adj + "“:  " + ohne, loesung: einzig([baue(R, P, A.adv), ende]), erklaerung: erkl };
+    }
+    if(form === "zuordnen"){
+      const eindeutig = bk.adjAdv.filter(x => x.adj !== x.adv), K = ["Adjektiv", "Adverb"];
+      const woerter = mehrere(eindeutig, 5).map(x => Math.random() < 0.5 ? { text: x.adj, ziel: K[0] } : { text: x.adv, ziel: K[1] });
+      return { kategorien: K, woerter, erklaerung: E.zuordnen };
+    }
+    return null;
+  },
+
+  // ---------- Possessivpronomen mine, yours, his … (Klasse 6, G2) ----------
+  posspron(bk, form, E){
+    const OBJ = { I: "me", you: "you", he: "him", she: "her", we: "us", they: "them" };
+    const pron = bk.besitzer.filter(b => b.text === b.sub);            // I, you, he, she, we, they
+    const namen = bk.besitzer.filter(b => b.text !== b.sub);           // Tom, my sister, my parents …
+    const D = wuerfle(bk.dinge), F = wuerfle(bk.farben);
+    kern(D);
+    const vorDing = form === "fehler" ? Math.random() < 0.35 : (form === "quiz" && Math.random() < 0.3);   // Lücke VOR dem Nomen (my / mine?)
+    const bspPron = b => { const q = anders(pron.filter(x => x.sub !== b.sub), b), d = anders(bk.dinge, D); return "This " + d + " is " + q.pron + "."; };
+    const bspDet  = b => { const q = anders(pron.filter(x => x.sub !== b.sub), b), d = anders(bk.dinge, D); return "This is " + q.det + " " + d + "."; };
+    if(form === "zuordnen"){
+      const K = mehrere(["mine", "yours", "his", "hers", "ours", "theirs"], 4);
+      const kand = mischen(bk.besitzer.filter(b => K.includes(b.pron))), woerter = [];
+      const frei = x => !woerter.some(w => w.text === x.text);
+      K.forEach(k => { const b = kand.find(x => x.pron === k && frei(x)); if(b) woerter.push({ text: b.text, ziel: k }); });
+      const extra = kand.find(frei); if(extra) woerter.push({ text: extra.text, ziel: extra.pron });
+      return { kategorien: K, woerter: mischen(woerter), erklaerung: E.zuordnen };
+    }
+    if(vorDing){
+      const B = wuerfle(pron), f = B.pron;
+      const anfang = wuerfle(["This is ", "That's ", "Where is "]);
+      const s = x => anfang + x + " " + D + (anfang === "Where is " ? "?" : ".");
+      const erkl = erklaere(E.det, { BEISPIEL: bspDet(B) });
+      if(form === "quiz") return { frage: s("___ (" + B.sub + ")"), optionen: mischen(einzig([B.det, B.pron, OBJ[B.sub]])), loesung: B.det, erklaerung: erkl };
+      if(B.det === B.pron) return ARTEN.posspron(bk, form, E);   // his = his → kein Fehler möglich
+      return { satz: s(f), fehlerwort: f, loesung: [B.det], erklaerung: erkl };
+    }
+    // Lücke OHNE Nomen danach → mine, yours …
+    const typ = wuerfle(["dies", "frage", "nicht", "wessen", "farbe"]);
+    let B, satz, hinweis = true;
+    if(typ === "frage"){   // Is this Tom's bag? – Yes, it's ___.
+      B = wuerfle(bk.besitzer.filter(b => b.sub !== "I"));
+      const gen = B.text === B.sub ? (B.sub === "you" ? null : B.det) : (/s$/.test(B.text) && B.sub === "they" ? B.text + "'" : B.text + "'s");
+      if(!gen){ B = bk.besitzer.find(b => b.sub === "I"); satz = x => "Is this your " + D + "? – Yes, it's " + x + "."; }
+      else satz = x => "Is this " + gen + " " + D + "? – Yes, it's " + x + ".";
+      hinweis = false;
+    } else {
+      B = wuerfle(pron.filter(b => typ !== "nicht" || b.sub !== "I"));
+      if(typ === "dies")   satz = x => "This " + D + " is " + x + ".";
+      if(typ === "nicht")  satz = x => "This isn't my " + D + ". It's " + x + ".";
+      if(typ === "wessen") satz = x => "Whose " + D + " is this? – It's " + x + ".";
+      if(typ === "farbe")  satz = x => "The " + F + " " + D + " is " + x + ".";
+    }
+    const erkl = erklaere(E.pron, { BEISPIEL: bspPron(B) });
+    const lueckeText = "___" + (hinweis ? " (" + B.sub + ")" : "");
+    const falsche = einzig([B.det, OBJ[B.sub], B.sub].filter(x => x !== B.pron));
+    if(form === "quiz") return { frage: satz(lueckeText), optionen: mischen([B.pron].concat(falsche.slice(0, 2))), loesung: B.pron, erklaerung: erkl };
+    if(form === "luecke"){ if(!hinweis) return ARTEN.posspron(bk, form, E); return { frage: satz(lueckeText), loesung: [B.pron], erklaerung: erkl }; }
+    if(form === "satzbau"){
+      const b = wuerfle(pron);
+      return { loesung: [wuerfle(["This " + F + " " + D + " is " + b.pron + ".", "Is this " + D + " " + b.pron + "?", "The " + D + " is " + b.pron + "."])], erklaerung: erklaere(E.pron, { BEISPIEL: bspPron(b) }) };
+    }
+    if(form === "fehler"){
+      if(B.det === B.pron || !hinweis) return ARTEN.posspron(bk, form, E);   // his = his
+      return { satz: satz(B.det), fehlerwort: B.det, loesung: [B.pron], erklaerung: erkl };
+    }
+    if(form === "umformen"){
+      const b = wuerfle(pron.filter(x => x.det !== x.pron));
+      return { frage: "Use mine, yours, his …:  This is " + b.det + " " + D + ". → This " + D + " is …", loesung: ["This " + D + " is " + b.pron + "."],
+               erklaerung: erklaere(E.pron, { BEISPIEL: bspPron(b) }) };
+    }
+    return null;
+  },
+
+  // ---------- Perfekt: Aussagen und Verneinung (Klasse 6, G5) ----------
+  perfekt(bk, form, E){
+    const erledigt = bk.verbenPerf.filter(v => v.typ === "erledigt"), erlebt = bk.verbenPerf.filter(v => v.typ === "erlebt");
+    let art = wuerfle(["just", "already", "never", "neg", "neg"]);
+    if(form === "zuordnen") art = "zuordnen";
+    const V = wuerfle(art === "never" ? erlebt : erledigt), P = wuerfle(personenFuer(bk.personen, V));
+    kern(V.grund + " " + V.rest);
+    const r = (v, p) => { const t = mitPoss(v.rest, p); return t ? " " + t : ""; };
+    const satz = (p, v, a, teil) => {
+      const pt = teil || v.part;
+      if(a === "neg") return gross(p.text) + " " + HVN(p) + " " + pt + r(v, p) + " yet.";
+      return gross(p.text) + " " + HV(p) + " " + a + " " + pt + r(v, p) + ".";
+    };
+    const andererSatz = a => { const v = anders(a === "never" ? erlebt : erledigt, V), q = anders(personenFuer(bk.personen, v), P); return satz(q, v, a); };
+    const erkl = erklaere(art === "neg" ? E.neg : V.unreg ? E.unreg : E.reg, { BEISPIEL: andererSatz(art === "zuordnen" ? "just" : art) });
+    const L = (a, teil) => perfVarianten(satz(P, V, a, teil));
+    if(form === "zuordnen"){
+      if(Math.random() < 0.5)
+        return { kategorien: ["has", "have"], woerter: mehrere(bk.personen, 5).map(p => ({ text: p.text, ziel: HV(p) })), erklaerung: E.zuordnen };
+      const mach = ok => () => { const v = wuerfle(erledigt), p = wuerfle(personenFuer(bk.personen, v)), a = wuerfle(["just", "already"]);
+        if(ok) return satz(p, v, a);
+        return wuerfle([() => gross(p.text) + " " + (p.er ? "have" : "has") + " " + a + " " + v.part + r(v, p) + ".",
+                        () => v.unreg && v.past !== v.part ? satz(p, v, a, v.past) : gross(p.text) + " " + HV(p) + " " + a + " " + v.grund + r(v, p) + "."])(); };
+      return richtigFalsch(mach(true), mach(false), E.zuordnenSaetze);
+    }
+    if(form === "quiz"){
+      if(art === "neg") return { frage: gross(P.text) + " ___ " + V.part + r(V, P) + " yet.", optionen: mischen(["haven't", "hasn't", "didn't"]), loesung: HVN(P), erklaerung: erkl };
+      if(V.unreg && V.past !== V.part && Math.random() < 0.5)
+        return { frage: gross(P.text) + " " + HV(P) + " " + art + " ___" + r(V, P) + ".", optionen: mischen(einzig([V.part, V.past, V.grund])), loesung: V.part, erklaerung: erkl };
+      return { frage: gross(P.text) + " ___ " + art + " " + V.part + r(V, P) + ".", optionen: mischen(["has", "have", "is"]), loesung: HV(P), erklaerung: erkl };
+    }
+    if(form === "luecke"){
+      if(art === "neg") return { frage: gross(P.text) + " ___ (not / " + V.grund + ")" + r(V, P) + " yet.", loesung: [HVN(P) + " " + V.part], erklaerung: erkl };
+      return { frage: gross(P.text) + " ___ (" + art + " / " + V.grund + ")" + r(V, P) + ".", loesung: [HV(P) + " " + art + " " + V.part], erklaerung: erkl };
+    }
+    if(form === "satzbau") return { loesung: [satz(P, V, art)], erklaerung: erkl };
+    if(form === "fehler"){
+      if(art === "neg" || Math.random() < 0.4){
+        const f = art === "neg" ? (P.er ? "haven't" : "hasn't") : (P.er ? "have" : "has");
+        const s = art === "neg" ? gross(P.text) + " " + f + " " + V.part + r(V, P) + " yet." : gross(P.text) + " " + f + " " + art + " " + V.part + r(V, P) + ".";
+        return { satz: s, fehlerwort: f, loesung: [art === "neg" ? HVN(P) : HV(P)], erklaerung: erkl };
+      }
+      const f = V.unreg ? (V.past !== V.part ? V.past : V.grund) : V.grund;
+      if(f === V.part) return ARTEN.perfekt(bk, form, E);
+      return { satz: satz(P, V, art, f), fehlerwort: f, loesung: [V.part], erklaerung: erkl };
+    }
+    if(form === "umformen"){
+      if(art === "neg" || art === "already"){
+        const v = wuerfle(erledigt), p = wuerfle(personenFuer(bk.personen, v));
+        return { frage: "Make it negative. Use „yet“:  " + satz(p, v, "already"), loesung: perfVarianten(satz(p, v, "neg")),
+                 erklaerung: erklaere(E.neg, { BEISPIEL: bspOhne(() => andererSatz("neg"), satz(p, v, "neg")) }) };
+      }
+      if(art === "never") return { frage: "Use „never“:  " + gross(P.text) + " " + HV(P) + " " + V.part + r(V, P) + ".", loesung: L(art), erklaerung: erkl };
+      const jetzt = gross(P.text) + " " + (P.er ? V.s : V.grund) + r(V, P) + ".";
+      return { frage: "Use the present perfect and „" + art + "“:  " + jetzt, loesung: L(art), erklaerung: erkl };
+    }
+    return null;
+  },
+
+  // ---------- Perfekt: Fragen und Kurzantworten (Klasse 6, G6) ----------
+  perfektfrage(bk, form, E){
+    const alleP = bk.personen.filter(p => p.text !== "I" && p.text !== "we");
+    const erledigt = bk.verbenPerf.filter(v => v.typ === "erledigt"), erlebt = bk.verbenPerf.filter(v => v.typ === "erlebt");
+    const ever = Math.random() < 0.55, V = wuerfle(ever ? erlebt : erledigt), P = wuerfle(personenFuer(alleP, V));
+    kern(V.grund + " " + V.rest);
+    const r = (v, p) => { const t = mitPoss(v.rest, p); return t ? " " + t : ""; };
+    const frage = (p, v, aux, teil) => (aux || gross(HV(p))) + " " + p.text + (v.typ === "erlebt" ? " ever " : " ") + (teil || v.part) + r(v, p) + (v.typ === "erlebt" ? "" : " yet") + "?";
+    const aussage = (p, v) => gross(p.text) + " " + HV(p) + " " + v.part + r(v, p) + ".";
+    const bspFrage = () => { const v = anders(bk.verbenPerf, V), q = anders(personenFuer(alleP, v), P); return frage(q, v); };
+    const kurz = (p, ja) => { const prs = p.text === "you" ? [["I", "have"], ["we", "have"]] : [[p.pron, HV(p)]];
+      const v = prs.map(([x, h]) => x + " " + (ja ? h : h + "n't")); return v.concat(v.map(x => (ja ? "yes, " : "no, ") + x)); };
+    const erkl = erklaere(E.frage, { BEISPIEL: bspFrage() });
+    const richtig = frage(P, V);
+    if(form === "quiz"){
+      if(V.unreg && V.past !== V.part && Math.random() < 0.5)
+        return { frage: frage(P, V, null, "___"), optionen: mischen(einzig([V.part, V.past, V.grund])), loesung: V.part, erklaerung: erkl };
+      return { frage: frage(P, V, "___"), optionen: mischen(["Has", "Have", "Did"]), loesung: gross(HV(P)), erklaerung: erkl };
+    }
+    if(form === "luecke"){
+      if(Math.random() < 0.55) return { frage: "___ " + P.text + (ever ? " ever " : " ") + "___ (" + V.grund + ")" + r(V, P) + (ever ? "" : " yet") + "?", loesung: [[gross(HV(P))], [V.part]], erklaerung: erkl };
+      const ja = Math.random() < 0.5, v = anders(bk.verbenPerf, V), q = anders(personenFuer(alleP, v), P);
+      return { frage: richtig + "  – " + (ja ? "Yes" : "No") + ", ___.", loesung: kurz(P, ja),
+               erklaerung: erklaere(ja ? E.kurzJa : E.kurzNein, { BEISPIEL: frage(q, v) + " – " + (ja ? "Yes, " : "No, ") + kurz(q, ja)[0] + "." }) };
+    }
+    if(form === "satzbau") return { loesung: mitTausch(richtig, P), erklaerung: erkl };
+    if(form === "fehler"){
+      if(V.unreg && V.past !== V.part && Math.random() < 0.5) return { satz: frage(P, V, null, V.past), fehlerwort: V.past, loesung: [V.part], erklaerung: erkl };
+      const f = P.er ? "Have" : "Has";   // „Did …“ wäre doppeldeutig (Did Tom clear …? geht auch)
+      return { satz: frage(P, V, f), fehlerwort: f, loesung: [gross(HV(P))], erklaerung: erkl };
+    }
+    if(form === "umformen") return { frage: "Ask a question. Use „" + (ever ? "ever" : "yet") + "“:  " + aussage(P, V), loesung: mitTausch(richtig, P), erklaerung: erkl };
+    if(form === "zuordnen"){
+      if(Math.random() < 0.5)
+        return { kategorien: ["Has …?", "Have …?"], woerter: mehrere(alleP, 5).map(p => ({ text: p.text, ziel: p.er ? "Has …?" : "Have …?" })), erklaerung: E.zuordnen };
+      const mach = ok => () => { const v = wuerfle(bk.verbenPerf), p = wuerfle(personenFuer(alleP, v));
+        if(ok) return frage(p, v);
+        return wuerfle([() => frage(p, v, p.er ? "Have" : "Has"), () => frage(p, v, "Did"), () => v.unreg && v.past !== v.part ? frage(p, v, null, v.past) : frage(p, v, null, v.grund)])(); };
+      return richtigFalsch(mach(true), mach(false), E.zuordnenSaetze);
+    }
+    return null;
+  }
+});
+Object.assign(ART_BRAUCHT, {
+  pastaussneg: ["personen", "verbenPast", "zeitenPast"],
+  adverb: ["personen", "adjAdv", "advRahmen", "adjRahmen"],
+  posspron: ["besitzer", "dinge", "farben"],
+  perfekt: ["personen", "verbenPerf"],
+  perfektfrage: ["personen", "verbenPerf"]
+});
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};
 function mitExtras(name){
@@ -1526,10 +1775,10 @@ const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => 
 const UI_TEXTE = {
   de: { minispiel: "🎁 Minispiel?", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
         los: "▶ Los!", nein: "Lieber nicht", weiter: "Weiter", ziel: "Ziel: {z} in {s} Sekunden.", geschafft: "⭐ Geschafft! ",
-        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!" },
+        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!", gameOver: "Game over! Drei Fehler – das Spiel ist vorbei.", gesperrt: "Keine Versuche mehr – das Schloss ist gesperrt." },
   en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
-        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!" }
+        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked." }
 };
 const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
 const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
@@ -2149,18 +2398,31 @@ function minispielOeffnen(){
   const gewuenscht = (location.search.match(/[?&]spiel=(\w+)/) || [])[1];   // Testhilfe: …?spiel=codeknacker
   const name = gewuenscht && namen.includes(gewuenscht) ? gewuenscht : wuerfle(namen.length > 1 ? namen.filter(n => n !== msLetztes) : namen); msLetztes = name;   // nicht zweimal hintereinander dasselbe
   const sp = minispielDaten().spiele[name], sek = Math.max(5, Math.round(EINSTELLUNGEN.minispielSekunden) || 30);
-  ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null };
+  ms = { name, sp, rest: sek, punkte: 0, ziel: Math.max(1, Math.round(sp.ziel) || 5), laeuft: false, ende: false, stopp: null, uhr: null, herzen: MS_HERZEN, grund: null };
+  herzenZeigen(); $("msHerzen").classList.remove("weg");
   $("msTitel").textContent = sp.titel || "Minispiel"; $("msAnleitung").textContent = (sp.anleitung || "") + " " + ui("ziel", { z: ms.ziel, s: sek });
   $("msUhr").textContent = "⏱ " + sek; $("msUhr").classList.remove("knapp");
   $("msPunkte").textContent = "🎯 0 / " + ms.ziel; $("msMeldung").textContent = "";
   $("msBuehne").replaceChildren(); $("msFeld").hidden = true; $("msStart").hidden = false; $("msErgebnis").hidden = true; $("msErgebnisText").textContent = "";
   zeige("minispiel"); $("btnMsLos").focus();
 }
+// Drei Herzen: jeder Fehler im Minispiel kostet eines, beim letzten ist das Spiel vorbei
+const MS_HERZEN = 3;
+function herzenZeigen(){
+  const h = $("msHerzen"); if(!h || !ms) return;
+  h.innerHTML = Array.from({ length: MS_HERZEN }, (_, i) => i < ms.herzen ? "❤️" : '<span class="leer">🤍</span>').join("");
+  h.setAttribute("aria-label", (sprache() === "en" ? "Lives: " : "Leben: ") + ms.herzen + " / " + MS_HERZEN);
+}
+function minispielVerloren(grund){ if(!ms || ms.ende) return; ms.laeuft = false; ms.grund = grund || "herzen"; setTimeout(() => minispielEnde(false), 700); }
 function minispielLos(){
   if(!ms || ms.laeuft || ms.ende) return;
   $("msStart").hidden = true; $("msFeld").hidden = false; ms.laeuft = true;
   $("msFeld").scrollIntoView({ block: "end", behavior: reduziert() ? "auto" : "smooth" });   // Spielfläche ganz ins Bild (wichtig am Handy)
   const ctx = { daten: minispielDaten(), ziel: ms.ziel, reduziert: reduziert(), ton, laeuft: () => !!ms && ms.laeuft,
+    titel: String(ms.sp.titel || "").replace(/^\S+\s/, ""), sprache: sprache(),
+    fehler: () => { if(!ms || !ms.laeuft) return; ms.herzen = Math.max(0, ms.herzen - 1); herzenZeigen(); if(ms.herzen <= 0) minispielVerloren(); },
+    verloren: () => minispielVerloren("versuche"),   // Code knacken: alle Versuche verbraucht
+    herzenAus: () => { $("msHerzen").classList.add("weg"); },
     sage: t => { $("msMeldung").textContent = t; },
     punkt: () => { if(!ms || !ms.laeuft) return; ms.punkte++;
       $("msPunkte").textContent = "🎯 " + Math.min(ms.punkte, ms.ziel) + " / " + ms.ziel;
@@ -2176,8 +2438,11 @@ function minispielLos(){
 function minispielEnde(erfolg){
   if(!ms || ms.ende) return; ms.ende = true; ms.laeuft = false; clearInterval(ms.uhr);
   try { if(typeof ms.stopp === "function") ms.stopp(); } catch(e){}
+  const D = minispielDaten() || {};
   const text = erfolg ? ui("geschafft") + (ms.sp.erfolg || "")
-                      : ui("zeitUm", { p: ms.punkte, z: ms.ziel }) + (ms.punkte >= ms.ziel - 2 ? ui("knapp") : ".") + ui("naechstesMal");
+             : ms.grund === "versuche" ? "🔒 " + ui("gesperrt") + ui("naechstesMal")
+             : ms.grund === "herzen" ? "💔 " + (D.gameOver && D.gameOver.length ? wuerfle(D.gameOver) : ui("gameOver")) + ui("naechstesMal")
+             : ui("zeitUm", { p: ms.punkte, z: ms.ziel }) + (ms.punkte >= ms.ziel - 2 ? ui("knapp") : ".") + ui("naechstesMal");
   $("msErgebnisText").textContent = text; $("msErgebnis").hidden = false; $("btnMsWeiter").focus();
   if(erfolg){ ton("jingle"); starteKonfetti(); }
   ansage(text);

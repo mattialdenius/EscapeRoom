@@ -177,3 +177,91 @@ K9.minispiele = {
   flug: { figur: "🛸", stern: "📡", krone: "🏢", himmel: ["✨", "·", "🌙", "·", "✨", "·"] },
   flugAutsch: ["Bump. Still flying.", "Careful.", "Close one.", "Rotor check … fine."]
 };
+
+// ---------- More mini games (from version 0.7.1): eight games per world ----------
+Object.assign(K9.minispiele.spiele, {
+  taschenlampe: {
+    titel: "📂 Find the secret files",
+    anleitung: "The power is off in the archive. Move your finger to shine the torch and hold the light on each secret item. Some are hidden behind shelves.",
+    ziel: 6,
+    erfolg: "All files secured. Good work, agent."
+  },
+  obstkorb: {
+    titel: "🪂 Supply drop",
+    anleitung: "Supplies are falling from the helicopter! Move the crate with your finger and catch them. Don't catch the decoys!",
+    ziel: 12,
+    erfolg: "Supplies complete. The mission can continue."
+  },
+  fuettern: {
+    titel: "🧰 Gadget check",
+    anleitung: "Every mission needs the right gadget. Drag the gadget to the mission – or tap the right mission.",
+    ziel: 6,
+    erfolg: "Every agent is ready. Gadget check complete."
+  },
+  seeloewe: {
+    titel: "🤖 Keep-up training",
+    anleitung: "Training time! Keep the ball in the air – move the robot under the ball with your finger.",
+    ziel: 10,
+    erfolg: "Ten touches. Even the training robot is impressed."
+  }
+});
+Object.assign(K9.minispiele, {
+  // ---------- Find the secret files (taschenlampe) ----------
+  nachtTiere: [
+    { emoji: "📁", en: "file",       de: "Akte" },         { emoji: "💾", en: "disk",      de: "Diskette" },
+    { emoji: "🔑", en: "key",        de: "Schlüssel" },    { emoji: "🪪", en: "ID card",   de: "Ausweis" },
+    { emoji: "📸", en: "camera",     de: "Kamera" },       { emoji: "🗺️", en: "map",       de: "Karte" },
+    { emoji: "⌚", en: "watch",      de: "Armbanduhr" },   { emoji: "🔋", en: "battery",   de: "Batterie" },
+    { emoji: "📼", en: "tape",       de: "Videokassette" },{ emoji: "🎧", en: "headphones", de: "Kopfhörer" },
+    { emoji: "✉️", en: "letter",     de: "Brief" },        { emoji: "🕶️", en: "sunglasses", de: "Sonnenbrille" }
+  ],
+  kulisse: ["🗄️", "📦", "🗄️", "🖥️", "📦", "🗄️", "🪴", "📦", "🖥️", "🗄️"],
+
+  // ---------- Supply drop (obstkorb) ----------
+  obst: [
+    { emoji: "🔋", en: "battery",   de: "Batterie" },    { emoji: "📱", en: "phone",     de: "Handy" },
+    { emoji: "🔦", en: "torch",     de: "Taschenlampe" },{ emoji: "🗺️", en: "map",       de: "Karte" },
+    { emoji: "🧭", en: "compass",   de: "Kompass" },     { emoji: "🎧", en: "headset",   de: "Headset" },
+    { emoji: "🔑", en: "key",       de: "Schlüssel" },   { emoji: "💾", en: "disk",      de: "Diskette" },
+    { emoji: "🍫", en: "chocolate", de: "Schokolade" },  { emoji: "🩹", en: "plaster",   de: "Pflaster" }
+  ],
+  muell: ["🪨", "🐟", "🧦", "🥾"],
+  autsch: ["A rock? Not useful.", "A fish? Who packed this?", "Socks again …", "An old boot. Decoy!"],
+
+  // ---------- Gadget check (fuettern): tiere = missions, futter = gadgets ----------
+  tiere: [
+    { id: "nacht",   emoji: "🌑", en: "night mission",      de: "Nachteinsatz",          witz: "“{futter}? Useless in the dark!”" },
+    { id: "wasser",  emoji: "🌊", en: "underwater mission", de: "Unterwasser-Einsatz",   witz: "“{futter}? That will just get wet …”" },
+    { id: "berg",    emoji: "🏔️", en: "mountain mission",   de: "Einsatz in den Bergen", witz: "“{futter}? Not much help on a cliff!”" },
+    { id: "tresor",  emoji: "🔒", en: "locked safe",        de: "verschlossener Tresor", witz: "“{futter}? The safe stays closed.”" },
+    { id: "funk",    emoji: "📡", en: "secret message",     de: "geheime Nachricht",     witz: "“{futter}? Nobody will hear you!”" },
+    { id: "sprung",  emoji: "🛩️", en: "jump from a plane",  de: "Sprung aus dem Flugzeug", witz: "“{futter}? Please don't jump with that!”" }
+  ],
+  futter: [
+    { emoji: "🔦", en: "torch",           de: "Taschenlampe",  haupt: ["nacht"],  auch: ["wasser", "berg", "tresor"] },
+    { emoji: "🤿", en: "diving mask",     de: "Taucherbrille", haupt: ["wasser"], auch: [] },
+    { emoji: "🪢", en: "rope",            de: "Seil",          haupt: ["berg"],   auch: [] },
+    { emoji: "🔑", en: "key",             de: "Schlüssel",     haupt: ["tresor"], auch: [] },
+    { emoji: "🩺", en: "stethoscope",     de: "Stethoskop",    haupt: ["tresor"], auch: [] },
+    { emoji: "📻", en: "radio",           de: "Funkgerät",     haupt: ["funk"],   auch: [] },
+    { emoji: "💻", en: "laptop",          de: "Laptop",        haupt: ["funk"],   auch: ["tresor"] },
+    { emoji: "🪂", en: "parachute",       de: "Fallschirm",    haupt: ["sprung"], auch: [] }
+  ],
+  lob: ["✅ Ready!", "✅ Good choice!", "✅ Perfect!", "✅ Check!"],
+
+  // ---------- Keep-up training (seeloewe) ----------
+  robbe: "🤖", ball: "⚽", boden: "repeating-linear-gradient(90deg,#3b4455 0 18px,#2a3140 18px 36px)",
+  platsch: ["Dropped! Again.", "New ball!", "Missed – keep going!"]
+});
+
+// ---------- Losing (from version 0.7.2): three hearts, traps in the torch game ----------
+Object.assign(K9.minispiele, {
+  // Meldung, wenn alle drei Herzen weg sind (eine davon wird ausgelost)
+  gameOver: ["Mission failed, agent. Three mistakes.", "Game over. Back to training."],
+  // Taschenlampe: Fallen im Dunkeln – wer sie zu lange anleuchtet, verliert ein Herz
+  fallen: [
+    { emoji: "🚨", text: "Alarm! Security is coming." },
+    { emoji: "🪤", text: "Snap! A trap!" },
+    { emoji: "🕷️", text: "A spider! Eek!" }
+  ]
+});
