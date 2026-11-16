@@ -142,6 +142,25 @@ K6.themen = [
 ];
 
 // =====================================================================
+// 4) WÖRTERHILFE: deutsche Bedeutung für erschließbare Wörter
+//     Steht ein Wort hier, ist es in den Aufgaben gepunktet unterstrichen;
+//     Antippen zeigt die Bedeutung. Mehrzahl-Formen erkennt das Spiel selbst.
+//     Die Tiere auf der Schiffskarte sagen beim Antippen eines dieser Wörter.
+// =====================================================================
+K6.woerterhilfe = [
+  { en: "hotel", de: "Hotel" }, { en: "museum", de: "Museum" }, { en: "cricket", de: "Cricket" }, { en: "volleyball", de: "Volleyball" },
+  { en: "concert", de: "Konzert" }, { en: "band", de: "Band" }, { en: "souvenir", de: "Souvenir" }, { en: "e-mail", de: "E-Mail" },
+  { en: "website", de: "Website" }, { en: "film", de: "Film" }, { en: "party", de: "Party" }, { en: "star", de: "Star" },
+  { en: "pizza", de: "Pizza" }, { en: "burger", de: "Burger" }, { en: "ketchup", de: "Ketchup" }, { en: "curry", de: "Curry" },
+  { en: "pasta", de: "Pasta, Nudeln" }, { en: "yogurt", de: "Joghurt" }, { en: "salad", de: "Salat" }, { en: "chocolate", de: "Schokolade" },
+  { en: "tomato", de: "Tomate" }, { en: "toast", de: "Toast" }, { en: "lemonade", de: "Limonade" }, { en: "microwave", de: "Mikrowelle" },
+  { en: "muffin", de: "Muffin" }, { en: "scone", de: "Scone (Teegebäck)" }, { en: "taxi", de: "Taxi" }, { en: "jeans", de: "Jeans" },
+  { en: "T-shirt", de: "T-Shirt" }, { en: "tank top", de: "Tanktop" }, { en: "video", de: "Video" }, { en: "internet", de: "Internet" },
+  { en: "online", de: "online" }, { en: "stadium", de: "Stadion" }, { en: "market", de: "Markt" }, { en: "camp", de: "Camp, Ferienlager" },
+  { en: "quiz", de: "Quiz" }, { en: "picnic", de: "Picknick" }, { en: "garden", de: "Garten" }, { en: "ski", de: "Ski fahren" }
+];
+
+// =====================================================================
 // 3) DER SATZBAUKASTEN (Generator) – Wortschatz: Red Line 1 komplett + Red Line 2 bis zur Unit
 //    "6-U1" = Klasse 6, Unit 1 (Red Line 1 und Red Line 2, Unit 1)
 //    "6-U2" = Klasse 6, Unit 2 (zusätzlich Red Line 2, Unit 2)
