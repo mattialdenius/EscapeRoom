@@ -21,6 +21,7 @@ const EINSTELLUNGEN = {
   minispieleAktiv: true,                                 // true = nach einem geschafften Raubtierhaus/Zusatzraum erscheint „🎁 Minispiel?“ (false = nie)
   minispielSekunden: 30,                                 // so lange dauert ein Minispiel höchstens
   minispielAbstand: 4,                                   // dasselbe Minispiel kommt höchstens alle 4 Durchgänge (gilt, solange die Seite offen ist)
+  testCode: "3110",                                      // NUR im Testbereich (Adresse …/test/): Schloss ist immer bedienbar, dieser Code führt direkt zum Siegbildschirm. Im Liveordner wirkungslos.
   entdeckerModus: true,                                  // true = Zoo-Karte statt Kachel-Übersicht (Hauptversion). Backup ohne Karte: Adresse mit ?karte=0
   woerterhilfeAktiv: true,                               // true = Wörter aus der WOERTERHILFE sind unterstrichen, Antippen zeigt Deutsch
   // Welche Rätselformen gehören zu welchem Niveau?

@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.7.7 (Prototyp)
+  Version 0.7.8 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,8 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.8 (18.11.2026)  – nur Testbereich
+    - Testmodus (nur unter …/test/): Schloss immer bedienbar, Code 3110 (testCode in allgemein.js) führt sofort zum Siegbildschirm.
   v0.7.7 (18.11.2026)  – nur Testbereich
     - Siegbild hinter der Tür im Finale: welt.finaleBild (Klasse 5: bild/finale-5.jpg). Ohne Bild weiter 🌅.
   v0.7.6 (18.11.2026)  – live geschaltet am 18.11.2026
@@ -143,7 +145,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.7</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.8</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -552,7 +554,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.7</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.8</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -578,7 +580,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.7";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.8";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -592,7 +594,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.7"></script>
+<script src="daten/allgemein.js?v=0.7.8"></script>
 
 <script>
 /* #####################################################################
@@ -2679,6 +2681,9 @@ function ziehbar(chip, ablegen, waehle){
 
 /* ===================== ZAHLENSCHLOSS AM AUSGANG ===================== */
 const werte = [0, 0, 0, 0];
+// Testmodus: nur im Testbereich (Adresse enthält /test/). Dann ist das Schloss immer bedienbar und
+// der testCode aus daten/allgemein.js öffnet sofort die Tür – zum Prüfen des Siegbildschirms.
+const TESTMODUS = typeof EINSTELLUNGEN !== "undefined" && /\/test\//.test(location.pathname) && /^\d{4}$/.test(String(EINSTELLUNGEN.testCode || ""));
 function radSetzen(i, w){
   werte[i] = ((w % 10) + 10) % 10;
   const a = $("raeder").querySelectorAll(".anzeige")[i];
@@ -2689,7 +2694,8 @@ function torStatus(){
   const alle = S.raeume.every(r => r.geschafft), n = S.torVersuche, max = EINSTELLUNGEN.torVersuche;
   $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – " +
     (alle ? "Code eingeben · Versuche: " + "●".repeat(n) + "○".repeat(Math.max(0, max - n)) : "🔒 erst nach allen 4 Räumen bedienbar");
-  $("btnTor").disabled = !alle || n <= 0;
+  $("btnTor").disabled = !(alle || TESTMODUS) || n <= 0;
+  if(TESTMODUS && !alle) $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – 🧪 Testmodus: " + EINSTELLUNGEN.testCode + " öffnet sofort";
 }
 function baueRaeder(){
   const box = $("raeder"); box.innerHTML = "";
@@ -2715,8 +2721,12 @@ function siegBildSetzen(){
   else { l.textContent = "🌅"; l.classList.remove("bild"); l.style.backgroundImage = ""; }
 }
 $("btnTor").onclick = () => {
-  if(!S.raeume.every(r => r.geschafft) || S.torVersuche <= 0) return;
-  if(werte.join("") === S.code.join("")){
+  const alle = S.raeume.every(r => r.geschafft), testCode = TESTMODUS && werte.join("") === String(EINSTELLUNGEN.testCode);
+  if(!testCode && (!alle || S.torVersuche <= 0)){
+    if(TESTMODUS && !alle) $("codeMeldung").textContent = "🧪 Testmodus: Vor dem Ende öffnet nur " + EINSTELLUNGEN.testCode + ".";
+    return;
+  }
+  if(testCode || werte.join("") === S.code.join("")){
     countdownStop(); zeige("finale"); starteKonfetti(); ton("jingle");
     $("finaleText").textContent = welt().finale;
     $("finaleRueck").innerHTML = ""; $("finaleRueck").appendChild(rueckmeldung());
@@ -3025,7 +3035,7 @@ const EscapeAPI = {
       raeume: S.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji, thema: r.themen.map(id => themaVon(id).titel).join(" · "),
         zustand: raumZustand(r, i), richtig: r.richtig, von: EINSTELLUNGEN.aufgabenProRaum,
         ziffer: r.ziffer, kandidaten: r.kandidaten ? r.kandidaten.slice() : null })),
-      torBereit: S.raeume.every(r => r.geschafft), torVersuche: S.torVersuche,
+      torBereit: S.raeume.every(r => r.geschafft) || TESTMODUS, torVersuche: S.torVersuche,
       zeit: { mitLimit: wahl.zeit === "mit", restSekunden: wahl.zeit === "mit" ? rest : null, pausiert: pausiert },
       niveau: wahl.niveau
     };
