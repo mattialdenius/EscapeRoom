@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 9  ·  Red Line 5  ·  alle Inhalte für Klasse 9
+   KLASSE 9  ·  alle Inhalte für Klasse 9
    ---------------------------------------------------------------------
    NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
    Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
@@ -121,7 +121,7 @@ K9.welt.figurSvg =
   '<circle cx="49" cy="86" r="4.5" fill="#39e6ff" stroke="#000" stroke-width="2"/>';
 // ---------- Ende KARTE ----------
 
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 5)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 K9.themen = [
   { id: "9-G1",  klasse: 9, unit: 1, titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "" },
   { id: "9-G2",  klasse: 9, unit: 1, titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "" },

@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 10  ·  Red Line 6  ·  alle Inhalte für Klasse 10
+   KLASSE 10  ·  alle Inhalte für Klasse 10
    ---------------------------------------------------------------------
    NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
    Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
@@ -119,7 +119,7 @@ K10.welt.figurSvg =
   '<path d="M96 22 L104 14 M100 30 L110 28" stroke="#ff9f1c" stroke-width="3" stroke-linecap="round"/>';
 // ---------- Ende KARTE ----------
 
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 6)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 K10.themen = [
   { id: "10-G1", klasse: 10, unit: 1, titel: "Gegenwartszeiten", regel: "" },
   { id: "10-G2", klasse: 10, unit: 1, titel: "Das Perfekt", regel: "" },
