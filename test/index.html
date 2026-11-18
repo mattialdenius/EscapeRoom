@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
-  Version 0.7.5 (Prototyp)
+  Version 0.7.6 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.6 (18.11.2026)  – nur Testbereich
+    - Fehlerkorrektur Ziehen: Ein Wort konnte als „Schatten“ mitten auf dem Bildschirm hängen bleiben
+      (zweiter Finger, abgebrochene Geste). Jetzt zählt nur ein Finger, und übrig gebliebene Schatten werden entfernt.
   v0.7.5 (16.11.2026)  – live geschaltet am 16.11.2026
     - Klasse 6: Wörterhilfe ergänzt (erschließbare Wörter). Die Tiere auf der Schiffskarte sagen jetzt Wörter statt nur 💬.
   v0.7.4 (16.11.2026)  – live geschaltet am 16.11.2026 (enthält auch 0.7.3)
@@ -137,7 +140,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.5</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.6</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -545,7 +548,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.5</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.6</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -571,7 +574,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.5";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.6";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -585,7 +588,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.5"></script>
+<script src="daten/allgemein.js?v=0.7.6"></script>
 
 <script>
 /* #####################################################################
@@ -2239,6 +2242,7 @@ function figurSagt(text){ if(!text) return; const b = $("sprechblase"); b.textCo
 const sage = schluessel => figurSagt(zufallSatz(welt().saetze[schluessel]));
 
 function zeige(id, optionen){
+  kloneWeg();
   const vorher = aktiverBildschirm; aktiverBildschirm = id;
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("aktiv"));
   $(id).classList.add("aktiv");
@@ -2462,6 +2466,7 @@ function zeichneSchluessel(){
   box.setAttribute("aria-label", r.richtig + " von " + n + " Schlüsselteilen");
 }
 function zeigeAufgabe(){
+  kloneWeg();
   const r = S.raeume[S.aktuell], a = r.liste[r.index];
   zeichneSchluessel();
   $("feedback").hidden = true; $("btnWeiter").hidden = true; $("btnPruefen").hidden = false; $("btnPruefen").disabled = false;
@@ -2635,13 +2640,20 @@ const RAETSEL = {
 };
 
 /* ----- Drag & Drop mit Finger und Maus (Pointer Events) + Antippen als Alternative ----- */
+// Entfernt alle übrig gebliebenen Schatten-Wörter (Sicherheitsnetz, z. B. bei Bildschirmwechsel mitten im Ziehen)
+function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht")); }
 function ziehbar(chip, ablegen, waehle){
   let start = null, klon = null, bewegt = false, ueber = null;
   const zoneBei = (x, y) => { const e = document.elementFromPoint(x, y); return e ? e.closest(".zone") : null; };
-  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; };
-  chip.addEventListener("pointerdown", e => { if(chip.disabled || (e.button && e.button !== 0)) return; start = { x: e.clientX, y: e.clientY }; bewegt = false; try { chip.setPointerCapture(e.pointerId); } catch(_){} });
+  let finger = null;   // nur EIN Finger zieht – ein zweiter Finger wird ignoriert
+  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; finger = null; };
+  chip.addEventListener("pointerdown", e => {
+    if(chip.disabled || (e.button && e.button !== 0)) return;
+    if(start && finger !== e.pointerId) return;                 // zweiter Finger auf demselben Wort: ignorieren
+    aufraeumen(); kloneWeg();                                    // falls noch ein altes Schatten-Wort herumhängt
+    start = { x: e.clientX, y: e.clientY }; bewegt = false; finger = e.pointerId; try { chip.setPointerCapture(e.pointerId); } catch(_){} });
   chip.addEventListener("pointermove", e => {
-    if(!start) return;
+    if(!start || e.pointerId !== finger) return;
     if(!bewegt && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8){
       bewegt = true; const r = chip.getBoundingClientRect();
       klon = chip.cloneNode(true); klon.classList.add("klon"); klon.style.width = r.width + "px";
@@ -2651,11 +2663,13 @@ function ziehbar(chip, ablegen, waehle){
       const z = zoneBei(e.clientX, e.clientY); if(z !== ueber){ if(ueber) ueber.classList.remove("ueber"); ueber = z; if(z) z.classList.add("ueber"); } }
   });
   chip.addEventListener("pointerup", e => {
-    if(!start) return;
+    if(!start || e.pointerId !== finger) return;
     if(bewegt){ const z = zoneBei(e.clientX, e.clientY); aufraeumen(); if(z) ablegen(chip, z); }
     else { aufraeumen(); waehle(chip); }
   });
   chip.addEventListener("pointercancel", aufraeumen);
+  // iPad: Verliert das Wort den Finger (z. B. durch eine Systemgeste), Schatten-Wort entfernen statt hängen zu lassen
+  chip.addEventListener("lostpointercapture", () => { if(start) aufraeumen(); });
   chip.addEventListener("click", e => { if(e.detail === 0) waehle(chip); });   // Tastatur (Enter/Leertaste)
 }
 
