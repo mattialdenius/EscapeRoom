@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 8  ·  Red Line 4  ·  alle Inhalte für Klasse 8
+   KLASSE 8  ·  alle Inhalte für Klasse 8
    ---------------------------------------------------------------------
    NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
    Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
@@ -120,7 +120,7 @@ K8.welt.figurSvg =
   '<path d="M33 36 L87 36" stroke="#000" stroke-width="5"/>';
 // ---------- Ende KARTE ----------
 
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 4)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 K8.themen = [
   { id: "8-G1",  klasse: 8, unit: 1, titel: "Die einfache Vergangenheit", regel: "" },
   { id: "8-G2",  klasse: 8, unit: 1, titel: "Die Vorvergangenheit", regel: "" },

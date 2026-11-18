@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 5  ·  Red Line 1  ·  alle Inhalte für Klasse 5
+   KLASSE 5  ·  alle Inhalte für Klasse 5
    ---------------------------------------------------------------------
    Diese Datei gehört zum Grammar Escape Room (index.html).
    Hier stehen NUR Inhalte: Welt, Themen, Satzbaukästen, Aufgaben.
@@ -124,7 +124,7 @@ K5.welt = {
 };
 
 // =====================================================================
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 1)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 //    id = Klasse-Grammatiknummer, regel = Text der Hilfekarte (kann leer sein)
 // =====================================================================
 K5.themen = [

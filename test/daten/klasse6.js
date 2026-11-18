@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 6  ·  Red Line 2  ·  alle Inhalte für Klasse 6
+   KLASSE 6  ·  alle Inhalte für Klasse 6
    ---------------------------------------------------------------------
    STAND 16.11.2026: Alle Units 1–6 (Themen G1–G19) haben Aufgaben.
    Themen ohne Aufgaben erscheinen im Startmenü nicht.
@@ -118,7 +118,7 @@ K6.welt.figurSvg =
   '<circle cx="60" cy="24" r="6" fill="#f4ead2" stroke="#000" stroke-width="2.5"/>';
 // ---------- Ende KARTE ----------
 
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 2)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 K6.themen = [
   { id: "6-G1",  klasse: 6, unit: 1, titel: "Adjektive und Adverbien", regel: "Adjektiv: Wie ist jemand oder etwas? → Tom is quiet. Emma is a careful girl. Adverb: Wie macht jemand etwas? → Tom speaks quietly. Adverb = Adjektiv + -ly (quick → quickly), -y wird zu -ily (happy → happily). Sonderfälle: good → well, fast → fast, hard → hard." },
   { id: "6-G2",  klasse: 6, unit: 1, titel: "Possessivpronomen", regel: "Ohne Nomen danach: mine, yours, his, hers, ours, theirs → This bag is mine. Mit Nomen danach: my, your, his, her, our, their → This is my bag." },
@@ -161,9 +161,9 @@ K6.woerterhilfe = [
 ];
 
 // =====================================================================
-// 3) DER SATZBAUKASTEN (Generator) – Wortschatz: Red Line 1 komplett + Red Line 2 bis zur Unit
-//    "6-U1" = Klasse 6, Unit 1 (Red Line 1 und Red Line 2, Unit 1)
-//    "6-U2" = Klasse 6, Unit 2 (zusätzlich Red Line 2, Unit 2)
+// 3) DER SATZBAUKASTEN (Generator) – Wortschatz: Klasse 5 komplett + Klasse 6 bis zur Unit
+//    "6-U1" = Klasse 6, Unit 1 (Wortschatz Klasse 5 und Klasse 6 bis Unit 1)
+//    "6-U2" = Klasse 6, Unit 2 (zusätzlich Wortschatz bis Unit 2)
 // =====================================================================
 K6.baukasten = {
   // ---------- Klasse 6, Unit 1 ----------
@@ -486,7 +486,7 @@ K6.zusatzfragen = [
 ];
 
 // =====================================================================
-// 3b) SATZBAUKASTEN Unit 3 und 4 (Wortschatz: Red Line 1 + Red Line 2 bis zur Unit)
+// 3b) SATZBAUKASTEN Unit 3 und 4 (Wortschatz: Klasse 5 + Klasse 6 bis zur Unit)
 // =====================================================================
 // Erklärungen zur Steigerung – gelten für -er/more (G7) und -est/most (G8)
 const K6_STEIGERUNG = {

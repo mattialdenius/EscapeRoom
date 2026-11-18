@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   =====================================================================
-  GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10 (Red Line 1–6)
+  GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
   Version 0.7.6 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
@@ -14,6 +14,7 @@
   v0.7.6 (18.11.2026)  – nur Testbereich
     - Fehlerkorrektur Ziehen: Ein Wort konnte als „Schatten“ mitten auf dem Bildschirm hängen bleiben
       (zweiter Finger, abgebrochene Geste). Jetzt zählt nur ein Finger, und übrig gebliebene Schatten werden entfernt.
+    - Kein Lehrwerksname mehr (Startbildschirm und Kommentare): Das Spiel passt zu allen Lehrwerken.
   v0.7.5 (16.11.2026)  – live geschaltet am 16.11.2026
     - Klasse 6: Wörterhilfe ergänzt (erschließbare Wörter). Die Tiere auf der Schiffskarte sagen jetzt Wörter statt nur 💬.
   v0.7.4 (16.11.2026)  – live geschaltet am 16.11.2026 (enthält auch 0.7.3)
@@ -30,7 +31,7 @@
     - Acht Minispiele in jeder Welt (Klasse 5–10). Neue Varianten nur über die Daten der Klassen; minispiele 0.5.
   v0.7.0 (16.11.2026)  – nur Testbereich
     - Klasse 6, Unit 1 und 2 spielbar (G1–G6): neue Aufgabenarten adverb, posspron, pastaussneg, perfekt, perfektfrage;
-      Wortschatz Red Line 1 + Red Line 2 bis zur Unit (daten/klasse6.js).
+      Wortschatz Klasse 5 + Klasse 6 bis zur Unit (daten/klasse6.js).
   v0.6.10 (15.11.2026)  – live geschaltet am 15.11.2026 (enthält auch 0.6.8 und 0.6.9)
     - Logo (Ordner bild/): Symbol im Browser-Tab und auf dem Home-Bildschirm, klein auf dem Startbildschirm,
       ganz klein in der Fußzeile und unter den Knöpfen im Finale (nicht auf der Urkunde).
@@ -1437,7 +1438,7 @@ Object.assign(ARTEN, {
   }
 });
 
-/* ---------- Klasse 6 (Red Line 2): weitere Aufgabenarten ---------- */
+/* ---------- Klasse 6: weitere Aufgabenarten ---------- */
 const wasWere = p => (p.er || p.text === "I") ? "was" : "were";
 const HV = p => p.er ? "has" : "have", HVN = p => p.er ? "hasn't" : "haven't";
 // Kurzformen beim Perfekt als weitere richtige Lösung (I have → I've, he has → he's)
@@ -2295,7 +2296,7 @@ function setupZeigen(){
     const k = wahl.klasse, W = welt();
     if(!W && KLASSEN_DATEIEN[k]) ladeKlasse(k).then(ok => { if(ok && schritt === 0 && wahl.klasse === k) setupZeigen(); });
     const name = el("div", "welt-name");
-    name.innerHTML = (W ? W.emoji + " " + esc(W.name) : KLASSEN_DATEIEN[k] ? "⏳ wird geladen …" : "🚧") + "<small>Klasse " + k + " · Red Line " + (k - 4) + "</small>";
+    name.innerHTML = (W ? W.emoji + " " + esc(W.name) : KLASSEN_DATEIEN[k] ? "⏳ wird geladen …" : "🚧") + "<small>Klasse " + k + "</small>";
     s.append(reihe, name); box.appendChild(s);
     bereit = !!W && klasseBereit(k);
     if(!bereit && (W || !KLASSEN_DATEIEN[k])){ const h = el("p", "hinweis-bald", "🚧 Für Klasse " + k + " gibt es noch keine Aufgaben. Kommt bald!"); box.appendChild(h); }

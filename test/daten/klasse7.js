@@ -1,5 +1,5 @@
 /* =====================================================================
-   KLASSE 7  ·  Red Line 3  ·  alle Inhalte für Klasse 7
+   KLASSE 7  ·  alle Inhalte für Klasse 7
    ---------------------------------------------------------------------
    NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
    Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
@@ -119,7 +119,7 @@ K7.welt.figurSvg =
   '<circle cx="88" cy="112" r="10" fill="#d9b45a" stroke="#000" stroke-width="3"/><path d="M88 112 L88 106 M88 112 L92 114" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>';
 // ---------- Ende KARTE ----------
 
-// 2) DIE THEMEN (laut „Themenuebersicht“, Red Line 3)
+// 2) DIE THEMEN (laut „Themenuebersicht“)
 K7.themen = [
   { id: "7-G1",  klasse: 7, unit: 1, titel: "Die einfache Gegenwart", regel: "" },
   { id: "7-G2",  klasse: 7, unit: 1, titel: "Die einfache Vergangenheit", regel: "" },
