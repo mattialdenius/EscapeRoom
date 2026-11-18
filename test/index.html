@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.7.9 (Prototyp)
+  Version 0.8.0 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.8.0 (18.11.2026)  – nur Testbereich
+    - Klasse 7, Unit 1 und 2 spielbar (G1–G5): neue Aufgabenarten praesensalle, vergangenheitalle (mit used to), reflexiv
+      (mit each other und „Fallen“ wie sich treffen → meet); Wörterhilfe Klasse 7.
   v0.7.9 (18.11.2026)  – nur Testbereich
     - Siegbilder für Klasse 6 (Schatzinsel), 7 (Zeitreise in den Stadtpark) und 8 (Detektive am Tresor).
   v0.7.8 (18.11.2026)  – nur Testbereich
@@ -147,7 +150,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.9</title>
+<title>Grammatik-Escape-Room Englisch – v0.8.0</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -556,7 +559,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.9</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.8.0</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -582,7 +585,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.9";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.8.0";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -596,7 +599,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.9"></script>
+<script src="daten/allgemein.js?v=0.8.0"></script>
 
 <script>
 /* #####################################################################
@@ -1595,7 +1598,9 @@ Object.assign(ARTEN, {
       const mach = ok => () => { const v = wuerfle(erledigt), p = wuerfle(personenFuer(bk.personen, v)), a = wuerfle(["just", "already"]);
         if(ok) return satz(p, v, a);
         return wuerfle([() => gross(p.text) + " " + (p.er ? "have" : "has") + " " + a + " " + v.part + r(v, p) + ".",
-                        () => v.unreg && v.past !== v.part ? satz(p, v, a, v.past) : gross(p.text) + " " + HV(p) + " " + a + " " + v.grund + r(v, p) + "."])(); };
+                        () => v.unreg && v.past !== v.part ? satz(p, v, a, v.past)
+                              : v.grund !== v.part ? gross(p.text) + " " + HV(p) + " " + a + " " + v.grund + r(v, p) + "."
+                              : gross(p.text) + " " + (p.er ? "have" : "has") + " " + a + " " + v.part + r(v, p) + "."])(); };   // put = put: dann has/have vertauschen
       return richtigFalsch(mach(true), mach(false), E.zuordnenSaetze);
     }
     if(form === "quiz"){
@@ -2107,6 +2112,92 @@ Object.assign(ART_BRAUCHT, {
   progressiv: ["personen", "verbenIng"], progressivfrage: ["personen", "verbenIng"],
   goingto: ["personen", "plaene"], goingtofrage: ["personen", "plaene"],
   ifsatz: ["ifSaetze"], willgoing: ["willSaetze", "planSaetze"]
+});
+
+/* ---------- Klasse 7: Gegenwart gemischt, Vergangenheit mit used to, Reflexivpronomen ---------- */
+// used to + Grundform (früher war das so)
+function usedTo(bk, form, E){
+  const R = wuerfle(bk.usedTo);
+  kern(R.sub + R.e + R.rest);
+  const satz = (x, r = R) => r.sub + " " + x + (r.rest ? " " + r.rest : "") + ".";
+  const richtig = satz("used to " + R.e);
+  const bsp = bspOhne(() => { const r = anders(bk.usedTo, R); return satz("used to " + r.e, r); }, richtig);
+  const erkl = erklaere(E.regel, { BEISPIEL: bsp });
+  if(form === "quiz") return { frage: satz("___"), optionen: mischen(["used to " + R.e, "use to " + R.e, "used to " + R.past]), loesung: "used to " + R.e, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + R.e + ")"), loesung: ["used to " + R.e], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler"){
+    if(Math.random() < 0.5 && R.past !== R.e) return { satz: satz("used to " + R.past), fehlerwort: R.past, loesung: [R.e], erklaerung: erkl };
+    return { satz: satz("use to " + R.e), fehlerwort: "use", loesung: ["used"], erklaerung: erkl };
+  }
+  if(form === "umformen"){
+    const vorher = "In the past, " + (R.sub === "I" ? "I" : R.sub.replace(/^\w/, c => c.toLowerCase())) + " " + R.past + (R.rest ? " " + R.rest : "") + ".";
+    return { frage: "Use „used to“:  " + vorher, loesung: [richtig, "In the past, " + (R.sub === "I" ? "I" : R.sub.replace(/^\w/, c => c.toLowerCase())) + " used to " + R.e + (R.rest ? " " + R.rest : "") + "."], erklaerung: erkl };
+  }
+  return null;
+}
+
+// Reflexivpronomen (myself …), each other und „Fallen“ (deutsch „sich“, englisch ohne)
+function reflexiv(bk, form, E){
+  const typ = form === "umformen" ? "each" : form === "zuordnen" ? "refl"
+            : form === "quiz" ? wuerfle(["refl", "refl", "each", "falle"]) : wuerfle(["refl", "refl", "each"]);
+  if(typ === "falle"){
+    const R = wuerfle(bk.reflFallen); kern(R.t);
+    const r2 = anders(bk.reflFallen, R);
+    return { frage: R.t, optionen: mischen([R.r].concat(R.f)), loesung: R.r,
+             erklaerung: erklaere(E.falle, { DE: R.de, BEISPIEL: r2.t.replace("___", r2.r) + " (" + r2.de + ")" }) };
+  }
+  if(typ === "each"){
+    const R = wuerfle(bk.eachOther); kern(R.a + R.b + R.e);
+    const satz = (x, r = R) => gross(r.a) + " and " + r.b + " " + r.e + " " + x + (r.rest ? " " + r.rest : "") + ".";
+    const richtig = satz("each other");
+    const bsp = bspOhne(() => satz("each other", anders(bk.eachOther, R)), richtig);
+    const erkl = erklaere(E.each, { BEISPIEL: bsp });
+    if(form === "quiz") return { frage: satz("___"), optionen: mischen(["each other", "themselves", "each others"]), loesung: "each other", erklaerung: erkl };
+    if(form === "luecke") return { frage: satz("___ (einander)"), loesung: ["each other"], erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+    if(form === "fehler") return { satz: satz("each others"), fehlerwort: "others", loesung: ["other"], erklaerung: erkl };
+    if(form === "umformen"){
+      const a = gross(R.a), b = gross(R.b);
+      return { frage: "Use „each other“:  " + a + " " + R.s + " " + R.b + (R.rest ? " " + R.rest : "") + ". " + b + " " + R.s + " " + R.a.replace(/^My /, "my ") + (R.rest ? " " + R.rest : "") + ".",
+               loesung: [richtig], erklaerung: erkl };
+    }
+  }
+  // Reflexivpronomen
+  const R = wuerfle(bk.reflRahmen), P = wuerfle(bk.personen.filter(p => p.refl && (!R.nurKind || p.kind)));
+  kern(R.t);
+  const satz = (x, p = P, r = R) => gross(r.t.replace("{P}", p.text).replace("{POSS}", p.poss || "").replace("{R}", x));
+  const richtig = satz(P.refl);
+  const bsp = bspOhne(() => { const r = anders(bk.reflRahmen, R), q = anders(bk.personen.filter(x => x.refl && x.refl !== P.refl), P); return satz(q.refl, q, r); }, richtig);
+  const erkl = erklaere(E.refl, { BEISPIEL: bsp });
+  if(form === "zuordnen"){
+    const K = ["-self", "-selves"], kand = mischen(bk.personen.filter(p => p.refl && p.text !== "you"));
+    const woerter = mischen(kand.filter(p => !p.mehr).slice(0, 3).concat(kand.filter(p => p.mehr).slice(0, 2))).map(p => ({ text: p.text, ziel: p.mehr ? K[1] : K[0] }));
+    return { kategorien: K, woerter, erklaerung: E.zuordnen };
+  }
+  if(form === "quiz") return { frage: satz("___"), optionen: mischen([P.refl].concat(P.falsch.slice(0, 2))), loesung: P.refl, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + P.pron + ")"), loesung: P.text === "you" ? ["yourself", "yourselves"] : [P.refl], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(P.falsch[0]), fehlerwort: P.falsch[0], loesung: P.text === "you" ? ["yourself", "yourselves"] : [P.refl], erklaerung: erkl };
+  return null;
+}
+
+Object.assign(ARTEN, {
+  // simple present: Aussagen, Verneinung, Fragen und Kurzantworten gemischt
+  praesensalle(bk, form, E){ return Math.random() < 0.6 ? ARTEN.praesensaussneg(bk, form, E) : ARTEN.praesensfrage(bk, form, E); },
+  // simple past: Aussagen, Verneinung, Fragen und used to gemischt
+  vergangenheitalle(bk, form, E){
+    const r = Math.random();
+    if(form !== "zuordnen" && r < 0.3) return usedTo(bk, form, E.usedto);
+    if(r < 0.65) return ARTEN.pastaussneg(bk, form, E.past);
+    return ARTEN.pastfrage(bk, form, E.frage);
+  },
+  reflexiv
+});
+Object.assign(ART_BRAUCHT, {
+  praesensalle: ["personen", "verben"],
+  vergangenheitalle: ["personen", "verbenPast", "zeitenPast", "usedTo"],
+  reflexiv: ["personen", "reflRahmen", "eachOther", "reflFallen"]
 });
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};

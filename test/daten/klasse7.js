@@ -1,9 +1,8 @@
 /* =====================================================================
    KLASSE 7  ·  alle Inhalte für Klasse 7
    ---------------------------------------------------------------------
-   NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
-   Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
-   Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=7
+   STAND 18.11.2026: Unit 1 und 2 (Themen G1–G5) haben Aufgaben. Unit 3–5 folgen.
+   Themen ohne Aufgaben erscheinen im Startmenü nicht.
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
 
@@ -122,11 +121,11 @@ K7.welt.figurSvg =
 
 // 2) DIE THEMEN (laut „Themenuebersicht“)
 K7.themen = [
-  { id: "7-G1",  klasse: 7, unit: 1, titel: "Die einfache Gegenwart", regel: "" },
-  { id: "7-G2",  klasse: 7, unit: 1, titel: "Die einfache Vergangenheit", regel: "" },
-  { id: "7-G3",  klasse: 7, unit: 2, titel: "Reflexivpronomen und each other", regel: "" },
-  { id: "7-G4",  klasse: 7, unit: 2, titel: "Adjektive und Adverbien", regel: "" },
-  { id: "7-G5",  klasse: 7, unit: 2, titel: "Das Perfekt", regel: "" },
+  { id: "7-G1",  klasse: 7, unit: 1, titel: "Die einfache Gegenwart", regel: "Simple present für Zustände (I like history) und Gewohnheiten (Tom goes to the library on Fridays). he/she/it: Verb + -s (crosses, watches). Verneinung: don’t/doesn’t + Grundform. Fragen: Do/Does + Person + Grundform? Kurzantwort: Yes, she does. / No, he doesn’t." },
+  { id: "7-G2",  klasse: 7, unit: 1, titel: "Die einfache Vergangenheit", regel: "Regelmäßig: Verb + -ed (visit → visited). Unregelmäßig lernen: fight → fought, speak → spoke, fall → fell. Verneinung: didn’t + Grundform. Fragen: Did + Person + Grundform? Früher war es so (heute nicht mehr): used to + Grundform → My grandma used to work in a factory." },
+  { id: "7-G3",  klasse: 7, unit: 2, titel: "Reflexivpronomen und each other", regel: "Mit sich selbst: myself, yourself, himself, herself, itself, ourselves, yourselves, themselves → Tom cut himself. Gegenseitig: each other → Tom and Emma help each other. Achtung: meet (sich treffen), feel (sich fühlen), remember (sich erinnern), relax (sich ausruhen) – im Englischen ohne -self!" },
+  { id: "7-G4",  klasse: 7, unit: 2, titel: "Adjektive und Adverbien", regel: "Adjektiv: Wie ist jemand oder etwas? → The test was easy. Adverb: Wie macht jemand etwas? → She climbed slowly. Adjektiv + -ly (slow → slowly), -y → -ily (easy → easily), -le → -ly (terrible → terribly). Sonderfälle: good → well, fast → fast, hard → hard." },
+  { id: "7-G5",  klasse: 7, unit: 2, titel: "Das Perfekt", regel: "have/has + 3. Form → I have tried rafting. Tom has fallen off his skateboard. Unregelmäßig lernen: fall – fell – fallen, ride – rode – ridden. just, already, never, ever stehen vor der 3. Form. Verneinung: haven’t/hasn’t … yet." },
   { id: "7-G6",  klasse: 7, unit: 3, titel: "Relativsätze mit Relativpronomen", regel: "" },
   { id: "7-G7",  klasse: 7, unit: 3, titel: "Das Gerundium", regel: "" },
   { id: "7-G8",  klasse: 7, unit: 3, titel: "Die Zukunft mit will", regel: "" },
@@ -138,6 +137,350 @@ K7.themen = [
   { id: "7-G14", klasse: 7, unit: 5, titel: "Possessivpronomen", regel: "" },
   { id: "7-G15", klasse: 7, unit: 5, titel: "Modale Hilfsverben", regel: "" }
 ];
+
+// =====================================================================
+// 4) WÖRTERHILFE: deutsche Bedeutung für erschließbare Wörter
+//     Steht ein Wort hier, ist es in den Aufgaben gepunktet unterstrichen;
+//     Antippen zeigt die Bedeutung. Mehrzahl-Formen erkennt das Spiel selbst.
+//     Die Figuren auf der Museumskarte sagen beim Antippen eines dieser Wörter.
+// =====================================================================
+K7.woerterhilfe = [
+  { en: "souvenir", de: "Souvenir" }, { en: "tunnel", de: "Tunnel" }, { en: "gas", de: "Gas" }, { en: "industry", de: "Industrie" },
+  { en: "project", de: "Projekt" }, { en: "brochure", de: "Broschüre" }, { en: "presenter", de: "Präsentator/in" }, { en: "title", de: "Titel" },
+  { en: "sport", de: "Sport" }, { en: "rafting", de: "Rafting" }, { en: "rugby", de: "Rugby" }, { en: "zip line", de: "Seilrutsche" },
+  { en: "skateboard", de: "Skateboard" }, { en: "trick", de: "Trick" }, { en: "training", de: "Training" }, { en: "reporter", de: "Reporter/in" },
+  { en: "ambulance", de: "Krankenwagen" }, { en: "operation", de: "Operation" }, { en: "medicine", de: "Medizin" }, { en: "bandage", de: "Bandage, Verband" },
+  { en: "plaster", de: "Pflaster" }, { en: "police", de: "Polizei" }, { en: "camping", de: "Camping" }, { en: "pineapple", de: "Ananas" },
+  { en: "museum", de: "Museum" }, { en: "telephone", de: "Telefon" }, { en: "metal", de: "Metall" }, { en: "plastic", de: "Plastik" },
+  { en: "material", de: "Material" }, { en: "hostel", de: "Hostel, Herberge" }, { en: "caravan", de: "Wohnwagen" }, { en: "buffet", de: "Buffet" },
+  { en: "insect", de: "Insekt" }, { en: "radio", de: "Radio" }, { en: "mechanic", de: "Mechaniker/in" }, { en: "milkshake", de: "Milchshake" },
+  { en: "musical", de: "Musical" }, { en: "orchestra", de: "Orchester" }, { en: "guitar", de: "Gitarre" }, { en: "shampoo", de: "Shampoo" },
+  { en: "kangaroo", de: "Känguru" }, { en: "tram", de: "Straßenbahn" }, { en: "ferry", de: "Fähre" }
+];
+
+// =====================================================================
+// 3) DER SATZBAUKASTEN (Generator) – Wortschatz: Klasse 5–6 komplett + Klasse 7 bis zur Unit
+// =====================================================================
+const K7_PERSONEN = [
+  // er: he/she/it · pron: für Kurzantworten · refl: Reflexivpronomen · falsch: typische falsche Formen · mehr: Mehrzahl (-selves)
+  { text: "I",            er: false, pron: "I",    poss: "my",    kind: true, refl: "myself",     falsch: ["meself", "myselves"] },
+  { text: "you",          er: false, pron: "you",  poss: "your",  kind: true, refl: "yourself",   falsch: ["youself", "yourselfs"] },
+  { text: "we",           er: false, pron: "we",   poss: "our",   kind: true, refl: "ourselves",  falsch: ["ourself", "usselves"], mehr: true },
+  { text: "they",         er: false, pron: "they", poss: "their", kind: true, refl: "themselves", falsch: ["theirselves", "themself"], mehr: true },
+  { text: "my parents",   er: false, pron: "they", poss: "their",             refl: "themselves", falsch: ["theirselves", "themself"], mehr: true },
+  { text: "my friends",   er: false, pron: "they", poss: "their", kind: true, refl: "themselves", falsch: ["theirselves", "themself"], mehr: true },
+  { text: "Tom and Emma", er: false, pron: "they", poss: "their", kind: true, refl: "themselves", falsch: ["theirselves", "themself"], mehr: true },
+  { text: "he",           er: true,  pron: "he",   poss: "his",   kind: true, refl: "himself",    falsch: ["hisself", "himselves"] },
+  { text: "she",          er: true,  pron: "she",  poss: "her",   kind: true, refl: "herself",    falsch: ["sheself", "herselves"] },
+  { text: "Tom",          er: true,  pron: "he",   poss: "his",   kind: true, refl: "himself",    falsch: ["hisself", "himselves"] },
+  { text: "Emma",         er: true,  pron: "she",  poss: "her",   kind: true, refl: "herself",    falsch: ["sheself", "herselves"] },
+  { text: "Ben",          er: true,  pron: "he",   poss: "his",   kind: true, refl: "himself",    falsch: ["hisself", "himselves"] },
+  { text: "Lily",         er: true,  pron: "she",  poss: "her",   kind: true, refl: "herself",    falsch: ["sheself", "herselves"] },
+  { text: "my brother",   er: true,  pron: "he",   poss: "his",   kind: true, refl: "himself",    falsch: ["hisself", "himselves"] },
+  { text: "my sister",    er: true,  pron: "she",  poss: "her",   kind: true, refl: "herself",    falsch: ["sheself", "herselves"] },
+  { text: "my grandma",   er: true,  pron: "she",  poss: "her",               refl: "herself",    falsch: ["sheself", "herselves"] },
+  { text: "my uncle",     er: true,  pron: "he",   poss: "his",               refl: "himself",    falsch: ["hisself", "himselves"] }
+];
+K7.baukasten = {
+  // ---------- Klasse 7, Unit 1 ----------
+  "7-U1": {
+    personen: K7_PERSONEN,
+    // simple present (G1): Zustände und Gewohnheiten
+    verben: [
+      { grund: "live",  s: "lives",   rest: "in a tiny village",          zeit: [] },
+      { grund: "like",  s: "likes",   rest: "history",                    zeit: [] },
+      { grund: "love",  s: "loves",   rest: "old stories",                zeit: [] },
+      { grund: "hate",  s: "hates",   rest: "noisy streets",              zeit: [] },
+      { grund: "go",    s: "goes",    rest: "to the library",             zeit: ["on Fridays", "every week"] },
+      { grund: "buy",   s: "buys",    rest: "bread at the baker's",       zeit: ["every morning"] },
+      { grund: "walk",  s: "walks",   rest: "past the old mine",          zeit: ["every day"] },
+      { grund: "take",  s: "takes",   rest: "public transport",           zeit: ["every day"] },
+      { grund: "cross", s: "crosses", rest: "the street at the corner",   zeit: ["every morning"] },
+      { grund: "learn", s: "learns",  rest: "about the Vikings",          zeit: ["in history lessons"] },
+      { grund: "read",  s: "reads",   rest: "books about the past",       zeit: ["in the evening"] },
+      { grund: "fall",  s: "falls",   rest: "asleep in front of the TV",  zeit: ["in the evening"] },
+      { grund: "visit", s: "visits",  rest: "the newsagent's",            zeit: ["on Sundays"] },
+      { grund: "watch", s: "watches", rest: "TV shows about history",     zeit: ["at the weekend"] }
+    ],
+    // simple past (G2)
+    verbenPast: [
+      { grund: "visit",  s: "visits",  past: "visited",  rest: "the old coal mine" },
+      { grund: "cross",  s: "crosses", past: "crossed",  rest: "the old bridge" },
+      { grund: "notice", s: "notices", past: "noticed",  rest: "a strange smell" },
+      { grund: "cough",  s: "coughs",  past: "coughed",  rest: "all night", zeit: ["last week", "yesterday"] },
+      { grund: "touch",  s: "touches", past: "touched",  rest: "the old stones" },
+      { grund: "scream", s: "screams", past: "screamed", rest: "in the dark tunnel" },
+      { grund: "call",   s: "calls",   past: "called",   rest: "{POSS} grandma" },
+      { grund: "fight",  s: "fights",  past: "fought",   rest: "with {POSS} brother", unreg: true, falsch: ["fighted"], nurKind: true },
+      { grund: "speak",  s: "speaks",  past: "spoke",    rest: "to the presenter",   unreg: true, falsch: ["speaked"] },
+      { grund: "fall",   s: "falls",   past: "fell",     rest: "asleep on the bus",  unreg: true, falsch: ["falled"] },
+      { grund: "take",   s: "takes",   past: "took",     rest: "the train to the city centre", unreg: true, falsch: ["taked"] },
+      { grund: "go",     s: "goes",    past: "went",     rest: "to the library",     unreg: true, falsch: ["goed"] },
+      { grund: "buy",    s: "buys",    past: "bought",   rest: "a souvenir",         unreg: true, falsch: ["buyed"] },
+      { grund: "get",    s: "gets",    past: "got",      rest: "out of the tunnel",  unreg: true, falsch: ["getted"] },
+      { grund: "see",    s: "sees",    past: "saw",      rest: "an old canary cage", unreg: true }
+    ],
+    zeitenPast: ["yesterday", "last week", "last summer", "last weekend", "two days ago"],
+    // used to (G2): früher war das so. past = einfache Vergangenheit (für Umformen und Fehler)
+    usedTo: [
+      { sub: "My grandma",  e: "work",  past: "worked",  rest: "in a factory" },
+      { sub: "Miners",      e: "take",  past: "took",    rest: "canaries into the mines" },
+      { sub: "People",      e: "live",  past: "lived",   rest: "in tiny houses near the mine" },
+      { sub: "My dad",      e: "play",  past: "played",  rest: "rugby" },
+      { sub: "We",          e: "live",  past: "lived",   rest: "in a village" },
+      { sub: "This town",   e: "be",    past: "was",     rest: "very noisy" },
+      { sub: "Children",    e: "work",  past: "worked",  rest: "in the coal mines" },
+      { sub: "I",           e: "be",    past: "was",     rest: "afraid of the dark" },
+      { sub: "There",       e: "be",    past: "was",     rest: "a coal mine here" },
+      { sub: "My uncle",    e: "have",  past: "had",     rest: "a pet shop in the city centre" }
+    ],
+    erklaerungen: {
+      praesensalle: {
+        aussage: {
+          er:       "Simple present: Bei he, she, it (Tom, my grandma) bekommt das Verb ein -s (watch → watches, cross → crosses). Beispiel: {BEISPIEL}",
+          nichtEr:  "Bei „{P}“ (I, you, we, they) bekommt das Verb kein -s. Beispiel: {BEISPIEL}",
+          zuordnen: "He, she, it und eine Person → Verb mit -s: {S}. I, you, we, they → ohne -s: {GRUND}."
+        },
+        verneinung: {
+          er:       "Bei he, she, it verneinst du mit doesn't + Grundform (ohne -s). Beispiel: {BEISPIEL}",
+          nichtEr:  "Bei I, you, we, they verneinst du mit don't + Grundform. Beispiel: {BEISPIEL}",
+          zuordnen: "I, you, we, they → don't. He, she, it und eine Person → doesn't."
+        },
+        frage: {
+          er:       "Fragen mit he, she, it beginnen mit Does. Das Verb hat dann KEIN -s. Beispiel: {BEISPIEL}",
+          nichtEr:  "Fragen mit I, you, we, they beginnen mit Do. Beispiel: {BEISPIEL}",
+          zuordnen: "I, you, we, they → Do. He, she, it und eine Person → Does."
+        },
+        kurzJa:   "Kurzantwort mit Ja: Yes, + Person + do/does. Beispiel: {BEISPIEL}",
+        kurzNein: "Kurzantwort mit Nein: No, + Person + don't/doesn't. Beispiel: {BEISPIEL}"
+      },
+      vergangenheitalle: {
+        past: {
+          reg:   "Regelmäßige Verben bekommen in der Vergangenheit -ed (bei -e nur -d; stop → stopped). Beispiel: {BEISPIEL}",
+          unreg: "Dieses Verb ist unregelmäßig: Die Vergangenheitsform musst du lernen (fight → fought, speak → spoke). Beispiel: {BEISPIEL}",
+          neg:   "Verneinung in der Vergangenheit: didn't + Grundform. Beispiel: {BEISPIEL}",
+          zuordnenAussage: "Regelmäßige Verben bekommen -ed (visit → visited). Unregelmäßige Verben haben eine eigene Form (fall → fell, speak → spoke).",
+          zuordnenNeg: "Richtig ist: didn't + Grundform. Nach didn't steht nie die Vergangenheitsform."
+        },
+        frage: {
+          frage:    "Fragen in der Vergangenheit: Did + Person + Grundform. Beispiel: {BEISPIEL}",
+          kurzJa:   "Kurzantwort mit Ja: Yes, + Person + did. Beispiel: {BEISPIEL}",
+          kurzNein: "Kurzantwort mit Nein: No, + Person + didn't. Beispiel: {BEISPIEL}",
+          zuordnen: "Richtig ist: Did + Person + Grundform. Nach Did steht nie die Vergangenheitsform."
+        },
+        usedto: {
+          regel: "Etwas war früher so, ist es heute aber nicht mehr: used to + Grundform (nicht „use to“, keine -ed-Form danach). Beispiel: {BEISPIEL}"
+        }
+      }
+    }
+  },
+
+  // ---------- Klasse 7, Unit 2 ----------
+  "7-U2": {
+    personen: K7_PERSONEN,
+    // Reflexivpronomen (G3): {P} = Person, {R} = Reflexivpronomen, {POSS} = my/his …
+    reflRahmen: [
+      { t: "{P} cut {R} on a sharp rock." },
+      { t: "{P} burnt {R} in the kitchen." },
+      { t: "{P} enjoyed {R} at the activity centre." },
+      { t: "{P} made {R} a sandwich." },
+      { t: "{P} bought {R} a new skateboard." },
+      { t: "{P} kept {R} safe on the zip line." },
+      { t: "{P} looked after {R} very well." }
+    ],
+    // each other: A and B + Verb + each other. s = Verb mit -s (für „Tom helps Emma. Emma helps Tom.“)
+    eachOther: [
+      { a: "Tom",        b: "Emma",      e: "help",  s: "helps",  rest: "with the project" },
+      { a: "Lily",       b: "Ben",       e: "text",  s: "texts",  rest: "every day" },
+      { a: "my brother", b: "my sister", e: "call",  s: "calls",  rest: "every weekend" },
+      { a: "Emma",       b: "Lily",      e: "know",  s: "knows",  rest: "very well" },
+      { a: "Ben",        b: "Tom",       e: "like",  s: "likes",  rest: "" },
+      { a: "the knight", b: "the king", e: "help", s: "helps", rest: "in the battle" }
+    ],
+    // „Fallen“: im Deutschen mit „sich“, im Englischen OHNE Reflexivpronomen
+    reflFallen: [
+      { t: "We ___ at the station at eight o'clock.",   r: "met",      f: ["met ourselves", "met us"],         de: "sich treffen" },
+      { t: "I ___ tired after the zip line.",             r: "felt",     f: ["felt myself", "felt me"],          de: "sich fühlen" },
+      { t: "Do you ___ our trip to the coast?",           r: "remember", f: ["remember yourself", "remember you"], de: "sich erinnern" },
+      { t: "Let's ___ after the rugby training.",         r: "relax",    f: ["relax ourselves", "relax us"],     de: "sich ausruhen" }
+    ],
+    // Adjektiv / Adverb (G4) – wie in Klasse 6, mit neuem Wortschatz. regel: ly, ily, le (terrible → terribly), unreg
+    adjAdv: [
+      { adj: "slow",       adv: "slowly",       regel: "ly" },  { adj: "loud",      adv: "loudly",      regel: "ly" },
+      { adj: "safe",       adv: "safely",       regel: "ly" },  { adj: "patient",   adv: "patiently",   regel: "ly" },
+      { adj: "quiet",      adv: "quietly",      regel: "ly" },  { adj: "careful",   adv: "carefully",   regel: "ly" },
+      { adj: "dangerous",  adv: "dangerously",  regel: "ly" },  { adj: "sad",       adv: "sadly",       regel: "ly" },
+      { adj: "bad",        adv: "badly",        regel: "ly" },  { adj: "nervous",   adv: "nervously",   regel: "ly" },
+      { adj: "happy",      adv: "happily",      regel: "ily" }, { adj: "easy",      adv: "easily",      regel: "ily" },
+      { adj: "terrible",   adv: "terribly",     regel: "le" },
+      { adj: "good",       adv: "well",         regel: "unreg" }, { adj: "fast",    adv: "fast",        regel: "unreg" },
+      { adj: "hard",       adv: "hard",         regel: "unreg" }
+    ],
+    advRahmen: [
+      { t: "{P} climbed the rock ___.",                w: ["slow", "careful", "fast", "easy"] },
+      { t: "{P} spoke ___ in the dark tunnel.",        w: ["quiet", "loud", "nervous"] },
+      { t: "{P} waited ___ for the ambulance.",        w: ["patient", "nervous", "quiet"] },
+      { t: "{P} played rugby very ___.",               w: ["good", "bad", "terrible"] },
+      { t: "{P} crossed the street ___.",              w: ["careful", "safe", "slow", "fast", "dangerous"] },
+      { t: "{P} sang ___ at the party.",               w: ["loud", "terrible", "good", "happy", "bad"] },
+      { t: "{P} trained ___ every day.",               w: ["hard"] },
+      { t: "{P} rode {POSS} skateboard ___.",          w: ["fast", "careful", "dangerous", "slow"] },
+      { t: "{P} looked ___ at the old photos.",        w: ["sad", "happy"] },
+      { t: "{P} finished the climbing wall ___.",      w: ["easy", "fast", "slow"] }
+    ],
+    adjRahmen: [
+      { t: "{P} {WAS} very ___.",                      w: ["patient", "quiet", "nervous", "sad", "happy", "careful"] },
+      { t: "That was a ___ accident.",                 w: ["terrible", "bad"] },
+      { t: "Be ___ on the zip line!",                  w: ["careful", "quiet", "patient"] },
+      { t: "The test was ___.",                        w: ["easy", "terrible", "bad"] },
+      { t: "Rafting can be ___.",                      w: ["dangerous", "slow", "loud", "easy"] }
+    ],
+    // Perfekt (G5) – noch ohne since/for. typ: erledigt (just, already, not … yet) / erlebt (ever, never)
+    verbenPerf: [
+      { grund: "put",    s: "puts",    past: "put",      part: "put",      rest: "a plaster on the cut",   typ: "erledigt", unreg: true },
+      { grund: "call",   s: "calls",   past: "called",   part: "called",   rest: "the ambulance",          typ: "erledigt" },
+      { grund: "cool",   s: "cools",   past: "cooled",   part: "cooled",   rest: "the burn with water",    typ: "erledigt" },
+      { grund: "finish", s: "finishes", past: "finished", part: "finished", rest: "{POSS} project",        typ: "erledigt", nurKind: true },
+      { grund: "write",  s: "writes",  past: "wrote",    part: "written",  rest: "the brochure",           typ: "erledigt", unreg: true },
+      { grund: "buy",    s: "buys",    past: "bought",   part: "bought",   rest: "the tickets",            typ: "erledigt", unreg: true },
+      { grund: "read",   s: "reads",   past: "read",     part: "read",     rest: "the safety rules",       typ: "erledigt", unreg: true },
+      { grund: "put",    s: "puts",    past: "put",      part: "put",      rest: "on {POSS} helmet",       typ: "erledigt", unreg: true, einzeln: true },
+      { grund: "take",   s: "takes",   past: "took",     part: "taken",    rest: "{POSS} medicine",        typ: "erledigt", unreg: true, einzeln: true },
+      { grund: "eat",    s: "eats",    past: "ate",      part: "eaten",    rest: "{POSS} lunch",           typ: "erledigt", unreg: true },
+      { grund: "be",     s: "is",      past: "was",      part: "been",     rest: "to the coast",           typ: "erlebt",   unreg: true },
+      { grund: "try",    s: "tries",   past: "tried",    part: "tried",    rest: "rafting",                typ: "erlebt" },
+      { grund: "have",   s: "has",     past: "had",      part: "had",      rest: "an operation",           typ: "erlebt",   unreg: true },
+      { grund: "break",  s: "breaks",  past: "broke",    part: "broken",   rest: "{POSS} arm",             typ: "erlebt",   unreg: true, einzeln: true },
+      { grund: "fall",   s: "falls",   past: "fell",     part: "fallen",   rest: "off a skateboard",       typ: "erlebt",   unreg: true },
+      { grund: "hold",   s: "holds",   past: "held",     part: "held",     rest: "a real sword",           typ: "erlebt",   unreg: true },
+      { grund: "see",    s: "sees",    past: "saw",      part: "seen",     rest: "a knight in armour",     typ: "erlebt",   unreg: true },
+      { grund: "climb",  s: "climbs",  past: "climbed",  part: "climbed",  rest: "a mountain",             typ: "erlebt" },
+      { grund: "play",   s: "plays",   past: "played",   part: "played",   rest: "rugby",                  typ: "erlebt" },
+      { grund: "ride",   s: "rides",   past: "rode",     part: "ridden",   rest: "a zip line",             typ: "erlebt",   unreg: true }
+    ],
+    erklaerungen: {
+      reflexiv: {
+        refl:  "Tut jemand etwas mit sich selbst, steht das Reflexivpronomen: myself, yourself, himself, herself, ourselves, themselves. Beispiel: {BEISPIEL}",
+        each:  "Tun zwei (oder mehr) etwas gegenseitig, heißt es each other (einander). Beispiel: {BEISPIEL}",
+        falle: "Achtung: Im Deutschen heißt es „{DE}“, im Englischen steht hier KEIN Reflexivpronomen. Beispiel: {BEISPIEL}",
+        zuordnen: "Eine Person → -self (myself, himself, herself). Mehrere Personen → -selves (ourselves, themselves)."
+      },
+      adverb: {
+        ly:    "Wie macht jemand etwas? Dann brauchst du ein Adverb: Adjektiv + -ly. Beispiel: {BEISPIEL}",
+        ily:   "Wie macht jemand etwas? Dann brauchst du ein Adverb. Endet das Adjektiv auf -y, wird daraus -ily (easy → easily). Beispiel: {BEISPIEL}",
+        le:    "Endet das Adjektiv auf -le, wird daraus -ly (terrible → terribly). Beispiel: {BEISPIEL}",
+        unreg: "Sonderfälle beim Adverb: good → well, fast → fast, hard → hard (ohne -ly! hardly heißt „kaum“). Beispiel: {BEISPIEL}",
+        adj:   "Wie ist jemand oder etwas? Nach be (is, was …) und vor einem Nomen steht das Adjektiv, ohne -ly. Beispiel: {BEISPIEL}",
+        zuordnen: "Adjektive beschreiben eine Person oder Sache (slow, careful). Adverbien beschreiben, wie jemand etwas tut, sie enden meist auf -ly (slowly). Sonderfall: good → well."
+      },
+      perfekt: {
+        reg:   "Perfekt: have/has + 3. Form. Bei he, she, it steht has. Regelmäßige Verben: 3. Form mit -ed (call → called). Beispiel: {BEISPIEL}",
+        unreg: "Perfekt: have/has + 3. Form. Dieses Verb ist unregelmäßig, die 3. Form musst du lernen (fall – fell – fallen). Beispiel: {BEISPIEL}",
+        neg:   "Verneinung im Perfekt: haven't/hasn't + 3. Form. „yet“ (noch nicht) steht am Satzende. Beispiel: {BEISPIEL}",
+        zuordnen: "I, you, we, they und mehrere Personen → have. He, she, it und eine Person → has.",
+        zuordnenSaetze: "Richtig ist: has (bei he, she, it) oder have + 3. Form. Nicht die 2. Form (took, fell) und nicht die Grundform."
+      }
+    }
+  }
+};
+
+// =====================================================================
+// 5) GENERATOREN: Welches Thema nutzt welchen Baukasten und welche Aufgaben-Art?
+// =====================================================================
+K7.generatoren = {
+  "7-G1": { baukasten: "7-U1", art: "praesensalle" },
+  "7-G2": { baukasten: "7-U1", art: "vergangenheitalle" },
+  "7-G3": { baukasten: "7-U2", art: "reflexiv" },
+  "7-G4": { baukasten: "7-U2", art: "adverb" },
+  "7-G5": { baukasten: "7-U2", art: "perfekt" }
+};
+
+// =====================================================================
+// 6) DIE AUFGABEN (handgeschriebener Pool)
+// =====================================================================
+K7.aufgaben = [
+  // ---------- 7-G1  simple present ----------
+  { thema: "7-G1", niveau: "gruen", form: "quiz", frage: "My grandma ___ in a tiny village near the coast.", optionen: ["lives", "live", "living"], loesung: "lives",
+    erklaerung: "My grandma = she → Verb mit -s. Beispiel: My uncle works in a factory." },
+  { thema: "7-G1", niveau: "gelb", form: "luecke", frage: "___ your brother ___ (take) public transport to school?", loesung: [["Does"], ["take"]],
+    erklaerung: "Frage mit he/she: Does + Person + Grundform. Beispiel: Does Lily go to the library on Fridays?" },
+  { thema: "7-G1", niveau: "gelb", form: "satzbau", loesung: ["We don't live in the city centre."],
+    erklaerung: "Verneinung: don't + Grundform. Beispiel: My parents don't like noisy streets." },
+  { thema: "7-G1", niveau: "rot", form: "fehler", satz: "Tom crosss the street at the corner every morning.", fehlerwort: "crosss", loesung: ["crosses"],
+    erklaerung: "Nach -s, -sh, -ch, -x kommt -es: cross → crosses. Beispiel: My sister watches TV shows about history." },
+  { thema: "7-G1", niveau: "rot", form: "umformen", frage: "Ask a question:  Ben reads books about the past.", loesung: ["Does Ben read books about the past?"],
+    erklaerung: "Does + Person + Grundform? Beispiel: Does Emma like history?" },
+
+  // ---------- 7-G2  simple past und used to ----------
+  { thema: "7-G2", niveau: "gruen", form: "quiz", frage: "The Vikings ___ England more than 1,000 years ago.", optionen: ["invaded", "invade", "invadeed"], loesung: "invaded",
+    erklaerung: "Regelmäßig: invade → invaded (bei -e nur -d). Beispiel: The miners noticed a strange smell." },
+  { thema: "7-G2", niveau: "gruen", form: "quiz", frage: "In the past, children ___ work in coal mines.", optionen: ["used to", "use to", "were used"], loesung: "used to",
+    erklaerung: "Früher war es so, heute nicht mehr: used to + Grundform. Beispiel: My grandma used to work in a factory." },
+  { thema: "7-G2", niveau: "gelb", form: "luecke", frage: "The miner ___ (speak) to the canary in the dark tunnel.", loesung: ["spoke"],
+    erklaerung: "speak ist unregelmäßig: speak – spoke. Beispiel: The presenter spoke about the Vikings." },
+  { thema: "7-G2", niveau: "gelb", form: "satzbau", loesung: ["Did you go to the souvenir shop?"],
+    erklaerung: "Did + Person + Grundform? Beispiel: Did Tom buy a souvenir?" },
+  { thema: "7-G2", niveau: "rot", form: "fehler", satz: "My dad used to plays rugby every weekend.", fehlerwort: "plays", loesung: ["play"],
+    erklaerung: "Nach used to steht die Grundform. Beispiel: We used to live in a village." },
+  { thema: "7-G2", niveau: "rot", form: "umformen", frage: "Make it negative:  The miners fell asleep in the tunnel.", loesung: ["The miners didn't fall asleep in the tunnel."],
+    erklaerung: "didn't + Grundform: fell → didn't fall. Beispiel: Emma didn't take the train." },
+
+  // ---------- 7-G3  Reflexivpronomen und each other ----------
+  { thema: "7-G3", niveau: "gruen", form: "quiz", frage: "Be careful with the knife, Ben! Don't cut ___!", optionen: ["yourself", "youself", "yourselfs"], loesung: "yourself",
+    erklaerung: "you (eine Person) → yourself. Beispiel: I made myself a sandwich." },
+  { thema: "7-G3", niveau: "gruen", form: "quiz", frage: "Emma and Lily ___ at the activity centre every Saturday.", optionen: ["meet", "meet themselves", "meet each others"], loesung: "meet",
+    erklaerung: "„sich treffen“ heißt einfach meet – ohne themselves. Beispiel: We met at the station." },
+  { thema: "7-G3", niveau: "gelb", form: "luecke", frage: "The children enjoyed ___ (they) at the camping trip.", loesung: ["themselves"],
+    erklaerung: "they → themselves. Beispiel: My parents enjoyed themselves at the party." },
+  { thema: "7-G3", niveau: "gelb", form: "satzbau", loesung: ["Tom and Lily help each other with their homework."],
+    erklaerung: "Gegenseitig = each other. Beispiel: My brother and my sister call each other every weekend." },
+  { thema: "7-G3", niveau: "rot", form: "fehler", satz: "My little brother cut hisself on a sharp rock.", fehlerwort: "hisself", loesung: ["himself"],
+    erklaerung: "Es heißt himself (nicht hisself). Beispiel: Tom bought himself a skateboard." },
+  { thema: "7-G3", niveau: "rot", form: "umformen", frage: "Use „each other“:  Emma likes Ben. Ben likes Emma.", loesung: ["Emma and Ben like each other.", "Ben and Emma like each other."],
+    erklaerung: "Gegenseitig = each other. Beispiel: Lily and Ben text each other every day." },
+
+  // ---------- 7-G4  Adjektive und Adverbien ----------
+  { thema: "7-G4", niveau: "gruen", form: "quiz", frage: "The instructor explained the rules very ___.", optionen: ["patiently", "patient"], loesung: "patiently",
+    erklaerung: "Wie erklärte er? → Adverb: patient → patiently. Beispiel: Tom waited patiently for the bus." },
+  { thema: "7-G4", niveau: "gelb", form: "luecke", frage: "Our team played ___ (terrible) yesterday.", loesung: ["terribly"],
+    erklaerung: "-le wird zu -ly: terrible → terribly. Beispiel: My sister sang terribly." },
+  { thema: "7-G4", niveau: "gelb", form: "satzbau", loesung: ["The zip line was very dangerous."],
+    erklaerung: "Nach be steht das Adjektiv. Beispiel: The test was easy." },
+  { thema: "7-G4", niveau: "rot", form: "fehler", satz: "Lily climbed the rock very good.", fehlerwort: "good", loesung: ["well"],
+    erklaerung: "Wie kletterte sie? → Adverb: good → well. Beispiel: Ben plays rugby well." },
+
+  // ---------- 7-G5  Perfekt ----------
+  { thema: "7-G5", niveau: "gruen", form: "quiz", frage: "Have you ever ___ a real knight?", optionen: ["seen", "saw", "see"], loesung: "seen",
+    erklaerung: "Nach have/has steht die 3. Form: see – saw – seen. Beispiel: Tom has never seen a sword." },
+  { thema: "7-G5", niveau: "gelb", form: "luecke", frage: "The operator ___ (just / call) the ambulance.", loesung: ["has just called"],
+    erklaerung: "The operator = he/she → has + just + 3. Form. Beispiel: My mum has just put a plaster on the cut." },
+  { thema: "7-G5", niveau: "gelb", form: "satzbau", loesung: ["My brother has never fallen off his skateboard."],
+    erklaerung: "never steht zwischen has und der 3. Form. Beispiel: I have never had an operation." },
+  { thema: "7-G5", niveau: "rot", form: "fehler", satz: "Have you ever rode a zip line?", fehlerwort: "rode", loesung: ["ridden"],
+    erklaerung: "Nach have steht die 3. Form: ride – rode – ridden. Beispiel: Emma has ridden a zip line." },
+  { thema: "7-G5", niveau: "rot", form: "umformen", frage: "Make it negative. Use „yet“:  Ben has already taken his medicine.", loesung: ["Ben hasn't taken his medicine yet."],
+    erklaerung: "hasn't + 3. Form … yet. Beispiel: We haven't bought the tickets yet." }
+];
+
+// =====================================================================
+// 7) ZUSATZFRAGEN für den Zusatzraum (Quiz mit 3 Antworten)
+// =====================================================================
+K7.zusatzfragen = [
+  { thema: "7-G1", frage: "Which sentence is correct?", optionen: ["My uncle watches TV shows.", "My uncle watchs TV shows.", "My uncle watch TV shows."], loesung: "My uncle watches TV shows." },
+  { thema: "7-G1", frage: "„Does Emma like history?“ – „Yes, …“", optionen: ["she does.", "she likes.", "she do."], loesung: "she does." },
+  { thema: "7-G2", frage: "Which is the past of „fight“?", optionen: ["fought", "fighted", "fight"], loesung: "fought" },
+  { thema: "7-G2", frage: "Which sentence is correct?", optionen: ["We used to live in a village.", "We use to live in a village.", "We used to lived in a village."], loesung: "We used to live in a village." },
+  { thema: "7-G2", frage: "„Did you see the mine?“ – „No, …“", optionen: ["I didn't.", "I don't.", "I wasn't."], loesung: "I didn't." },
+  { thema: "7-G3", frage: "They enjoyed …", optionen: ["themselves.", "theirselves.", "themself."], loesung: "themselves." },
+  { thema: "7-G3", frage: "Which sentence is correct?", optionen: ["We met at the station.", "We met ourselves at the station.", "We met us at the station."], loesung: "We met at the station." },
+  { thema: "7-G3", frage: "Ben and Lily text … every day.", optionen: ["each other", "each others", "themself"], loesung: "each other" },
+  { thema: "7-G4", frage: "Which is the adverb of „terrible“?", optionen: ["terribly", "terriblely", "terrible"], loesung: "terribly" },
+  { thema: "7-G4", frage: "Which sentence is correct?", optionen: ["She climbed the rock slowly.", "She climbed the rock slow.", "She slowly climbed the rock slow."], loesung: "She climbed the rock slowly." },
+  { thema: "7-G5", frage: "Which is the 3rd form of „fall“?", optionen: ["fallen", "fell", "falled"], loesung: "fallen" },
+  { thema: "7-G5", frage: "Which sentence is correct?", optionen: ["Tom has just called the ambulance.", "Tom have just called the ambulance.", "Tom has just call the ambulance."], loesung: "Tom has just called the ambulance." },
+  { thema: "7-G5", frage: "„Has Emma tried rafting?“ – „No, …“", optionen: ["she hasn't.", "she didn't.", "she isn't."], loesung: "she hasn't." }
+];
+
 
 // =====================================================================
 // 8) MINISPIELE
