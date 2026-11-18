@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.7.6 (Prototyp)
+  Version 0.7.7 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,8 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.7.7 (18.11.2026)  – nur Testbereich
+    - Siegbild hinter der Tür im Finale: welt.finaleBild (Klasse 5: bild/finale-5.jpg). Ohne Bild weiter 🌅.
   v0.7.6 (18.11.2026)  – live geschaltet am 18.11.2026
     - Fehlerkorrektur Ziehen: Ein Wort konnte als „Schatten“ mitten auf dem Bildschirm hängen bleiben
       (zweiter Finger, abgebrochene Geste). Jetzt zählt nur ein Finger, und übrig gebliebene Schatten werden entfernt.
@@ -141,7 +143,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.6</title>
+<title>Grammatik-Escape-Room Englisch – v0.7.7</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -386,6 +388,7 @@
   #finale,#gescheitert{text-align:center}
   .tuerbuehne{position:relative;width:min(100%,360px);aspect-ratio:3/2.2;margin:0 auto 1rem;border:6px solid #000;border-radius:8px;overflow:hidden;background:#1a1a1a}
   .licht{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;background:radial-gradient(circle at 50% 60%,#fffbe0,#ffe27a 45%,#ffb703)}
+  .licht.bild{background-size:cover;background-position:center;background-color:#ffe27a}
   .halb{position:absolute;top:0;bottom:0;width:50%;border:3px solid #000;transition:transform 2.2s cubic-bezier(.6,0,.3,1);
     background:repeating-linear-gradient(90deg,#2b2b2b 0 8px,transparent 8px 30px),linear-gradient(#5b4a32,#3a2e1e)}
   .halb.links{left:0} .halb.rechts{right:0}
@@ -549,7 +552,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.6</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.7</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -575,7 +578,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.6";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.7.7";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -589,7 +592,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.6"></script>
+<script src="daten/allgemein.js?v=0.7.7"></script>
 
 <script>
 /* #####################################################################
@@ -2705,6 +2708,12 @@ function baueRaeder(){
     radSetzen(i, 0);
   });
 }
+// Siegbild hinter der Tür: welt.finaleBild (Datei im Ordner bild/), sonst Sonnenaufgang 🌅
+function siegBildSetzen(){
+  const l = document.querySelector("#tuerbuehne .licht"), b = welt().finaleBild;
+  if(b){ l.textContent = ""; l.classList.add("bild"); l.style.backgroundImage = "url('" + b + "')"; }
+  else { l.textContent = "🌅"; l.classList.remove("bild"); l.style.backgroundImage = ""; }
+}
 $("btnTor").onclick = () => {
   if(!S.raeume.every(r => r.geschafft) || S.torVersuche <= 0) return;
   if(werte.join("") === S.code.join("")){
@@ -2712,6 +2721,7 @@ $("btnTor").onclick = () => {
     $("finaleText").textContent = welt().finale;
     $("finaleRueck").innerHTML = ""; $("finaleRueck").appendChild(rueckmeldung());
     ansage("Der Ausgang ist offen! Mission geschafft.");
+    siegBildSetzen();
     const tb = $("tuerbuehne"); tb.classList.remove("auf"); void tb.offsetWidth; setTimeout(() => tb.classList.add("auf"), 400);
   } else {
     const m = $("codeMeldung"); S.torVersuche--; ton("falsch");
