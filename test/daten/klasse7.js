@@ -24,6 +24,7 @@ K7.welt = {
   ],
   zusatzraum: { name: "Zeitstrudel", emoji: "🌀", text: "Der Zeitstrudel zieht! Antwortet, bevor er euch in eine andere Epoche schleudert." },
   ausgang:    { name: "Zeitmaschine", emoji: "⏱️" },
+  finaleBild: "bild/finale-7.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "Die Zeitmaschine springt an – und ihr landet pünktlich in der Gegenwart. Professorin Tempora: „Saubere Arbeit. Ich trage euch ins Gästebuch ein.“",
   gescheitert:"Zu spät – das Museum öffnet und der Hausmeister findet euch neben einer qualmenden Zeitmaschine. Neuer Versuch!",
   gescheitertTor: "Drei falsche Codes – die Zeitmaschine geht in den Notfallmodus. Neuer Versuch!",
