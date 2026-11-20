@@ -25,6 +25,7 @@ K10.welt = {
   ],
   zusatzraum: { name: "Airlock", emoji: "🌌", text: "Oxygen is dropping in the airlock. Answer quickly." },
   ausgang:    { name: "Escape Pod", emoji: "🚀" },
+  finaleBild: "bild/finale-10.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "The escape pod launches. Earth is waiting. ARIA: “Mission complete. I'm going back to sleep now.”",
   gescheitert:"Oxygen too low – the station's emergency system sends you back to the start. Try again.",
   gescheitertTor: "Three wrong codes – the escape pod is locked for safety reasons. Try again.",
