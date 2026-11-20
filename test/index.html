@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.8.3 (Prototyp)
+  Version 0.9.0 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,10 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.0 (20.11.2026)  – nur Testbereich
+    - Klasse 8, Unit 1 und 2 spielbar (G1–G5): neue Aufgabenarten satzpool (geprüfte Sätze mit Lücke, Fehler,
+      Umformen, Zuordnen) und pastalle (simple past mit Verneinung und Fragen). Wörterhilfe Klasse 8.
+    - Britische und amerikanische Schreibung zählen beide als richtig (colour/color, centre/center …).
   v0.8.3 (20.11.2026)  – nur Testbereich
     - Siegbilder für Klasse 9 (Flucht zum Helikopter) und Klasse 10 (Fluchtkapsel im Orbit).
   v0.8.2 (20.11.2026)  – live geschaltet am 20.11.2026
@@ -159,7 +163,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.8.3</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.0</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -568,7 +572,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.8.3</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.9.0</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -594,7 +598,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.8.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.0";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -608,7 +612,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.8.3"></script>
+<script src="daten/allgemein.js?v=0.9.0"></script>
 
 <script>
 /* #####################################################################
@@ -631,8 +635,16 @@ function gross(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 function norm(s){
   return String(s).toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s+/g, " ").trim()
     .replace(/\bcan't\b/g, "cannot").replace(/\bwon't\b/g, "will not").replace(/n't\b/g, " not")
-    .replace(/\s+([.?!,])/g, "$1").replace(/[.?!]+$/, "").replace(/\s+/g, " ").trim();
+    .replace(/\s+([.?!,])/g, "$1").replace(/[.?!]+$/, "").replace(/\s+/g, " ").trim()
+    .replace(/[a-z]+/g, w => BE_AE[w] || w);
 }
+// Britische und amerikanische Schreibung gelten beide als richtig (colour = color, centre = center …)
+const BE_AE = { colour: "color", colours: "colors", centre: "center", centres: "centers", favourite: "favorite", favourites: "favorites",
+  neighbour: "neighbor", neighbours: "neighbors", theatre: "theater", theatres: "theaters", honour: "honor", harbour: "harbor",
+  travelled: "traveled", travelling: "traveling", cancelled: "canceled", grey: "gray", programme: "program", programmes: "programs",
+  licence: "license", metre: "meter", metres: "meters", kilometre: "kilometer", kilometres: "kilometers", organise: "organize",
+  organised: "organized", realise: "realize", realised: "realized", apologise: "apologize", favour: "favor", behaviour: "behavior",
+  labour: "labor", humour: "humor", flavour: "flavor", jewellery: "jewelry", practise: "practice", practised: "practiced", mum: "mom", mums: "moms" };
 // Namenspaare dürfen in beliebiger Reihenfolge stehen: „Tom and Emma“ = „Emma and Tom“
 function mitNamenTausch(liste){
   const out = [];
@@ -1158,7 +1170,7 @@ function vergangenheit(art, bk, form, E){
     if(form === "zuordnen"){
       const reg = mischen(einzigNach(bk.verbenPast.filter(v => !unreg(v)), "grund")), ir = mischen(einzigNach(bk.verbenPast.filter(unreg), "grund"));
       const nR = Math.min(Math.floor(Math.random() * 5), reg.length), auswahl = reg.slice(0, nR).concat(ir.slice(0, 4 - nR));
-      const K = ["+ ed", "unregelmäßig"];
+      const K = ["+ ed", E.unregName || "unregelmäßig"];
       return { kategorien: K, woerter: mischen(auswahl).map(v => ({ text: v.grund, ziel: unreg(v) ? K[1] : K[0] })), erklaerung: E.zuordnen };
     }
     return t;
@@ -2034,14 +2046,15 @@ function ifSatz(bk, form, E){
   const R = wuerfle(bk.ifSaetze);
   kern(R.w);
   const wenn = R.w.replace(/[{}]/g, ""), verbIf = R.w.match(/\{([^}]+)\}/)[1];
-  const kurz = R.s2 === "I" ? "I'll" : R.s2 + "'ll", haupt = (k, neg) => (neg ? R.s2 + (k ? " won't " : " will not ") : (k ? kurz : R.s2 + " will") + " ") + R.e + (R.r2 ? " " + R.r2 : "");
+  const istPron = x => /^(I|you|he|she|it|we|they)$/i.test(x);   // 'll nur nach Pronomen (nicht „the boss'll“)
+  const kurz = istPron(R.s2) ? R.s2 + "'ll" : R.s2 + " will", haupt = (k, neg) => (neg ? R.s2 + (k ? " won't " : " will not ") : (k ? kurz : R.s2 + " will") + " ") + R.e + (R.r2 ? " " + R.r2 : "");
   const vorn = (k = true) => "If " + wenn + ", " + haupt(k, R.neg) + ".";
   // Steht ein Name im if-Satz („If Tom finds …, he'll …“), wandert er hinten nach vorn: „Tom will … if he finds …“
   const hinten = (k = !R.wer) => R.wer
     ? R.wer + (R.neg ? (k ? " won't " : " will not ") : (k ? "'ll " : " will ")) + R.e + (R.r2 ? " " + R.r2 : "") + " if " + R.s2 + wenn.slice(R.wer.length) + "."
     : gross(haupt(k, R.neg)) + " if " + wenn + ".";
   const alle = einzig([vorn(true), vorn(false), hinten(true), hinten(false)]);
-  const andere = () => { const r = anders(bk.ifSaetze, R); const w = r.w.replace(/[{}]/g, ""), k = r.s2 === "I" ? "I'll" : r.s2 + "'ll";
+  const andere = () => { const r = anders(bk.ifSaetze, R); const w = r.w.replace(/[{}]/g, ""), k = istPron(r.s2) ? r.s2 + "'ll" : r.s2 + " will";
     return "If " + w + ", " + (r.neg ? r.s2 + " won't " : k + " ") + r.e + (r.r2 ? " " + r.r2 : "") + "."; };
   const erklIf = erklaere(E.wenn, { BEISPIEL: bspOhne(andere, vorn()) }), erklHaupt = erklaere(E.haupt, { BEISPIEL: bspOhne(andere, vorn()) });
   const mitLuecke = (x) => R.w.replace(/\{[^}]+\}/, x);
@@ -2067,7 +2080,7 @@ function ifSatz(bk, form, E){
     return { frage: "Make one sentence with „if“:  " + w + " → " + gross(R.s2) + (R.neg ? " / not / " : " / ") + R.e + (R.r2 ? " " + R.r2 : ""), loesung: alle, erklaerung: erklIf };
   }
   if(form === "zuordnen"){
-    const mach = ok => () => { const r = wuerfle(bk.ifSaetze), w = r.w.replace(/[{}]/g, ""), k = r.s2 === "I" ? "I'll" : r.s2 + "'ll";
+    const mach = ok => () => { const r = wuerfle(bk.ifSaetze), w = r.w.replace(/[{}]/g, ""), k = istPron(r.s2) ? r.s2 + "'ll" : r.s2 + " will";
       const h = (r.neg ? r.s2 + " won't " : k + " ") + r.e + (r.r2 ? " " + r.r2 : "");
       if(ok) return Math.random() < 0.5 || r.wer ? "If " + w + ", " + h + "." : gross(h) + " if " + w + ".";
       return wuerfle([() => "If " + r.w.replace(/\{[^}]+\}/, r.wf) + ", " + h + ".",
@@ -2438,6 +2451,55 @@ Object.assign(ART_BRAUCHT, {
   presvsprog: ["personen", "verbenPP", "signalGewohnheit", "signalJetzt"], modalk7: ["modalSaetze"],
   steigerungk7: ["adjektive", "vergleiche", "superRahmen"], willvorhersage: ["willSaetze"]
 });
+
+/* ---------- Klasse 8: Satz-Pool (handgeschriebene Sätze mit Lücke, Umformen, Zuordnen) ----------
+   Wird für Themen benutzt, bei denen fertige, geprüfte Sätze besser sind als ein Baukasten.
+   Baukasten-Felder:
+     saetze:   [{ t: "… ___ …", r: [richtige Lösungen], f: [falsche Auswahl], h: "Hinweis in Klammern", e: "Erklärungs-Schlüssel",
+                  fehler: "falsches Wort"  ODER  { ersatz: "has left", wort: "has", loesung: ["had"] },  k: "Baustein (optional)" }]
+     umformen: [{ a: "Arbeitsauftrag", von: "Ausgangssatz", nach: [alle richtigen Sätze], e: "Erklärungs-Schlüssel", k? }]
+     zuordnen: { kategorien: [2–3 Kästen], woerter: [{ text, ziel }] }
+   Erklärungen: erklaerungen.satzpool = { <e>: "… {BEISPIEL}", zuordnen: "…" } */
+function satzpool(bk, form, E){
+  const voll = (R, x) => R.t.replace("___", x);
+  const gr = (R, x) => /^___/.test(R.t) ? gross(x) : x;
+  const beispiel = (R, loesungSatz) => {
+    const gleich = bk.saetze.filter(x => x.e === R.e && x !== R), um = (bk.umformen || []).filter(x => x.e === R.e && x !== R);
+    const mach = () => (gleich.length && (!um.length || Math.random() < 0.6)) ? (r => gross(voll(r, gr(r, r.r[0]))))(wuerfle(gleich))
+                     : um.length ? wuerfle(um).nach[0] : gross(voll(R, gr(R, R.r[0])));
+    return bspOhne(mach, loesungSatz);
+  };
+  const erkl = (R, loesungSatz) => erklaere(E[R.e], { BEISPIEL: beispiel(R, loesungSatz) });
+  if(form === "zuordnen" && bk.zuordnen){
+    const Z = bk.zuordnen, woerter = [];
+    mischen(Z.kategorien).forEach(k => { const w = wuerfle(Z.woerter.filter(x => x.ziel === k)); if(w) woerter.push(w); });
+    mischen(Z.woerter.filter(w => !woerter.includes(w))).slice(0, 5 - woerter.length).forEach(w => woerter.push(w));
+    kern("Z|" + woerter.map(w => w.text).sort().join("|"));
+    return { kategorien: Z.kategorien, woerter: mischen(woerter.map(w => ({ text: w.text, ziel: w.ziel }))), erklaerung: E.zuordnen };
+  }
+  if(form === "umformen" && bk.umformen && bk.umformen.length){
+    const U = wuerfle(bk.umformen); kern(U.k || U.von);
+    return { frage: U.a + "  " + U.von, loesung: U.nach, erklaerung: erklaere(E[U.e], { BEISPIEL: beispiel(U, U.nach[0]) }) };
+  }
+  if(form === "fehler"){
+    const R = wuerfle(bk.saetze.filter(x => x.fehler)); if(!R) return satzpool(bk, "quiz", E);
+    kern(R.k || R.t);
+    const F = typeof R.fehler === "string" ? { ersatz: R.fehler, wort: R.fehler, loesung: R.r } : R.fehler;
+    return { satz: gross(voll(R, gr(R, F.ersatz))), fehlerwort: gr(R, F.wort), loesung: F.loesung || R.r, erklaerung: erkl(R, voll(R, R.r[0])) };
+  }
+  const R = wuerfle(bk.saetze.filter(x => form !== "satzbau" || !x.keinSatzbau)); kern(R.k || R.t);
+  const satz = gross(voll(R, gr(R, R.r[0]))), ek = erkl(R, satz);
+  if(form === "quiz") return { frage: R.t, optionen: mischen([gr(R, R.r[0])].concat(R.f.slice(0, 2).map(x => gr(R, x)))), loesung: gr(R, R.r[0]), erklaerung: ek };
+  if(form === "luecke") return { frage: R.t.replace("___", "___" + (R.h ? " (" + R.h + ")" : "")), loesung: R.r.map(x => gr(R, x)).concat(R.r), erklaerung: ek };
+  if(form === "satzbau") return { loesung: [satz], erklaerung: ek };
+  return satzpool(bk, "quiz", E);
+}
+// simple past komplett: Aussagen, Verneinung, Fragen und Kurzantworten (ohne used to)
+Object.assign(ARTEN, {
+  satzpool,
+  pastalle(bk, form, E){ return Math.random() < 0.6 ? ARTEN.pastaussneg(bk, form, E.past) : ARTEN.pastfrage(bk, form, E.frage); }
+});
+Object.assign(ART_BRAUCHT, { satzpool: ["saetze"], pastalle: ["personen", "verbenPast", "zeitenPast"] });
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};
 function mitExtras(name){
