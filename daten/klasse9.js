@@ -25,6 +25,7 @@ K9.welt = {
   ],
   zusatzraum: { name: "Laser Room", emoji: "🚨", text: "Lasers are moving. Answer before they reach you." },
   ausgang:    { name: "Emergency Exit", emoji: "🚪" },
+  finaleBild: "bild/finale-9.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "Lockdown over. You're out. Nova on the radio: “Clean job. I'll pretend I'm not impressed.”",
   gescheitert:"Security caught you. Mission failed – new attempt.",
   gescheitertTor: "Three wrong codes – full lockdown. Mission failed – new attempt.",
