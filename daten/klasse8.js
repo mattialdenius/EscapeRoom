@@ -25,6 +25,7 @@ K8.welt = {
   ],
   zusatzraum: { name: "Interview Room", emoji: "🎙️", text: "The suspect is getting nervous. Ask your questions – fast." },
   ausgang:    { name: "Evidence Safe", emoji: "🔐" },
+  finaleBild: "bild/finale-8.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "The safe is open. Case closed. Inspector Morgan nods: “Not bad. Not bad at all.”",
   gescheitert:"Too late. The thief got away with the files. Let's try again.",
   gescheitertTor: "Three wrong codes – the safe is locked for tonight. Let's try again.",

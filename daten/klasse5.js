@@ -27,6 +27,7 @@ K5.welt = {
   ],
   zusatzraum: { name: "Raubtierhaus", emoji: "🦁", text: "Psst! Der Löwe schläft nur ganz kurz. Antwortet, bevor er aufwacht!" },
   ausgang:    { name: "Zootor", emoji: "🚪" },
+  finaleBild: "bild/finale-5.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "Das Zootor ist offen! Ihr seid entkommen und die Tiere winken euch nach. Kraaah!",
   gescheitert:"Oh je, der Nachtwächter hat euch entdeckt! Diesmal hat es nicht geklappt. Versucht es gleich noch einmal!",
   gescheitertTor: "Alarm! Nach drei falschen Codes hat sich das Zootor verriegelt und der Nachtwächter ist unterwegs. Versucht es gleich noch einmal!",

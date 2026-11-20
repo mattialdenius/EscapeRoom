@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.7.6 (Prototyp)
+  Version 0.8.2 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,22 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.8.2 (20.11.2026)  – live geschaltet am 20.11.2026
+    - Weniger Wiederholungen: Derselbe Baustein (z. B. hairdryer, derselbe Grundsatz) kommt innerhalb von
+      10 Aufgaben nur einmal vor (vorher 4). Einstellbar in allgemein.js: bausteinAbstand.
+    - Klasse 7: mehr Sätze für Modalverben, Relativsätze und each other (Umformen).
+  v0.8.1 (18.11.2026)  – live geschaltet am 20.11.2026
+    - Klasse 7 komplett (Unit 3–5, G6–G15): neue Aufgabenarten relativ, gerund, ifsatz2 (mit Typ I ↔ II),
+      someanyno (no/nothing … und Angebote), presvsprog, modal, steigerungk7 (less/least), willvorhersage.
+  v0.8.0 (18.11.2026)  – live geschaltet am 20.11.2026
+    - Klasse 7, Unit 1 und 2 spielbar (G1–G5): neue Aufgabenarten praesensalle, vergangenheitalle (mit used to), reflexiv
+      (mit each other und „Fallen“ wie sich treffen → meet); Wörterhilfe Klasse 7.
+  v0.7.9 (18.11.2026)  – live geschaltet am 20.11.2026
+    - Siegbilder für Klasse 6 (Schatzinsel), 7 (Zeitreise in den Stadtpark) und 8 (Detektive am Tresor).
+  v0.7.8 (18.11.2026)  – live geschaltet am 20.11.2026
+    - Testmodus (nur unter …/test/): Schloss immer bedienbar, Code 3110 (testCode in allgemein.js) führt sofort zum Siegbildschirm.
+  v0.7.7 (18.11.2026)  – live geschaltet am 20.11.2026
+    - Siegbild hinter der Tür im Finale: welt.finaleBild (Klasse 5: bild/finale-5.jpg). Ohne Bild weiter 🌅.
   v0.7.6 (18.11.2026)  – live geschaltet am 18.11.2026
     - Fehlerkorrektur Ziehen: Ein Wort konnte als „Schatten“ mitten auf dem Bildschirm hängen bleiben
       (zweiter Finger, abgebrochene Geste). Jetzt zählt nur ein Finger, und übrig gebliebene Schatten werden entfernt.
@@ -141,7 +157,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.7.6</title>
+<title>Grammatik-Escape-Room Englisch – v0.8.2</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -386,6 +402,7 @@
   #finale,#gescheitert{text-align:center}
   .tuerbuehne{position:relative;width:min(100%,360px);aspect-ratio:3/2.2;margin:0 auto 1rem;border:6px solid #000;border-radius:8px;overflow:hidden;background:#1a1a1a}
   .licht{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;background:radial-gradient(circle at 50% 60%,#fffbe0,#ffe27a 45%,#ffb703)}
+  .licht.bild{background-size:cover;background-position:center;background-color:#ffe27a}
   .halb{position:absolute;top:0;bottom:0;width:50%;border:3px solid #000;transition:transform 2.2s cubic-bezier(.6,0,.3,1);
     background:repeating-linear-gradient(90deg,#2b2b2b 0 8px,transparent 8px 30px),linear-gradient(#5b4a32,#3a2e1e)}
   .halb.links{left:0} .halb.rechts{right:0}
@@ -549,7 +566,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.7.6</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.8.2</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -575,7 +592,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.7.6";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.8.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -589,7 +606,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.7.6"></script>
+<script src="daten/allgemein.js?v=0.8.2"></script>
 
 <script>
 /* #####################################################################
@@ -782,7 +799,7 @@ function ladeKlasse(k){
 let aktuellerKern = null;
 const kern = k => { aktuellerKern = String(k).trim(); };
 let letzteKerne = [];                 // die zuletzt gezogenen Kerne (wird bei jedem Missionsstart geleert)
-const KERN_ABSTAND = 4;               // so viele Aufgaben lang darf dasselbe Hauptwort nicht wiederkommen
+const KERN_ABSTAND = () => EINSTELLUNGEN.bausteinAbstand || 10;   // so viele Aufgaben lang darf derselbe Baustein (Ding, Satz, Person …) nicht wiederkommen
 // Jede „art“ baut aus den Wortlisten eines Baukastens eine Aufgabe in der gewünschten Form.
 // Gibt eine Art für eine Form nichts zurück (null), nimmt das Spiel automatisch eine andere Form.
 function erklaere(vorlage, werte){ return String(vorlage || "").replace(/\{(\w+)\}/g, (m, k) => werte[k] != null ? werte[k] : m); }
@@ -1588,7 +1605,9 @@ Object.assign(ARTEN, {
       const mach = ok => () => { const v = wuerfle(erledigt), p = wuerfle(personenFuer(bk.personen, v)), a = wuerfle(["just", "already"]);
         if(ok) return satz(p, v, a);
         return wuerfle([() => gross(p.text) + " " + (p.er ? "have" : "has") + " " + a + " " + v.part + r(v, p) + ".",
-                        () => v.unreg && v.past !== v.part ? satz(p, v, a, v.past) : gross(p.text) + " " + HV(p) + " " + a + " " + v.grund + r(v, p) + "."])(); };
+                        () => v.unreg && v.past !== v.part ? satz(p, v, a, v.past)
+                              : v.grund !== v.part ? gross(p.text) + " " + HV(p) + " " + a + " " + v.grund + r(v, p) + "."
+                              : gross(p.text) + " " + (p.er ? "have" : "has") + " " + a + " " + v.part + r(v, p) + "."])(); };   // put = put: dann has/have vertauschen
       return richtigFalsch(mach(true), mach(false), E.zuordnenSaetze);
     }
     if(form === "quiz"){
@@ -2058,8 +2077,17 @@ function ifSatz(bk, form, E){
 
 // ---------- will (Hoffnung, Vermutung, Vorhersage) – und Unterschied zu going to ----------
 function willGoing(bk, form, E){
-  const plan = (form === "quiz" && Math.random() < 0.4);
+  // planSaetze leer (Klasse 7, G8): nur will/won't ohne Gegenüberstellung mit going to
+  const mitPlan = bk.planSaetze && bk.planSaetze.length;
+  const plan = mitPlan && form === "quiz" && Math.random() < 0.4;
+  const W = r => r.neg ? "won't" : "will";
+  const satz = (x, r) => r.pre + " " + r.sub + " " + x + (r.r ? " " + r.r : "") + ".";
   if(form === "zuordnen"){
+    if(!mitPlan){
+      const mach = ok => () => { const r = wuerfle(bk.willSaetze);
+        return ok ? satz(W(r) + " " + r.e, r) : satz(wuerfle([W(r) + " " + sForm(r.e), W(r) + " to " + r.e, (r.neg ? "not will " : "will ") + (r.e === "be" ? "is" : r.e + "s")]), r); };
+      return richtigFalsch(mach(true), mach(false), E.zuordnen);
+    }
     const K = ["will", "going to"];
     const w = mehrere(bk.willSaetze, 2 + Math.floor(Math.random() * 2)).map(r => ({ text: r.pre + " " + r.sub + " …", ziel: K[0] }));
     const g = mehrere(bk.planSaetze, 4 - w.length).map(r => ({ text: r.pre + " …", ziel: K[1] }));
@@ -2073,18 +2101,17 @@ function willGoing(bk, form, E){
     const bsp = bspOhne(() => { const r = anders(bk.planSaetze, R); return r.pre + " " + gross(r.sub) + " " + beVon(r.sub) + " going to " + r.e + " " + r.r + "."; }, R.pre);
     return { frage: R.pre + " " + s, optionen: mischen([be + " going to", "will", be]), loesung: be + " going to", erklaerung: erklaere(E.going, { BEISPIEL: bsp }) };
   }
-  const R = wuerfle(bk.willSaetze);
+  const R = wuerfle(bk.willSaetze), w = W(R);
   kern(R.pre + R.sub + R.e);
-  const satz = (x, r = R) => r.pre + " " + r.sub + " " + x + (r.r ? " " + r.r : "") + ".";
-  const richtig = satz("will " + R.e), kurzV = satz("'ll " + R.e).replace(" 'll", "'ll");
-  const bsp = bspOhne(() => { const r = anders(bk.willSaetze, R); return satz("will " + r.e, r); }, richtig);
-  const erkl = erklaere(E.will, { BEISPIEL: bsp });
+  const richtig = satz(w + " " + R.e, R), kurzV = R.neg ? satz("will not " + R.e, R) : satz("'ll " + R.e, R).replace(" 'll", "'ll");
+  const bsp = bspOhne(() => { const r = anders(bk.willSaetze.filter(x => !!x.neg === !!R.neg), R); return satz(W(r) + " " + r.e, r); }, richtig);
+  const erkl = erklaere(R.neg && E.willNeg ? E.willNeg : E.will, { BEISPIEL: bsp });
   const fs = sForm(R.e);
-  if(form === "quiz") return { frage: satz("___ " + R.e), optionen: mischen(["will", R.sub === "I" ? "am" : "is", "to"]), loesung: "will", erklaerung: erkl };
-  if(form === "luecke") return { frage: satz("___ (" + R.e + ")"), loesung: ["will " + R.e, "'ll " + R.e], erklaerung: erkl };
+  if(form === "quiz") return { frage: satz("___ " + R.e, R), optionen: mischen(R.neg ? ["won't", R.sub === "I" ? "am not" : "isn't", "don't will"] : ["will", R.sub === "I" ? "am" : "is", "to"]), loesung: w, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + (R.neg ? "not / " : "") + R.e + ")", R), loesung: R.neg ? ["won't " + R.e, "will not " + R.e] : ["will " + R.e, "'ll " + R.e], erklaerung: erkl };
   if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
-  if(form === "fehler") return { satz: satz("will " + fs), fehlerwort: fs, loesung: [R.e], erklaerung: erkl };
-  if(form === "umformen") return { frage: "Use „will“:  " + R.pre + " / " + R.sub + " / " + R.e + (R.r ? " " + R.r : ""), loesung: einzig([richtig, kurzV]), erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(w + " " + fs, R), fehlerwort: fs, loesung: [R.e], erklaerung: erkl };
+  if(form === "umformen") return { frage: "Use „" + w + "“:  " + R.pre + " / " + R.sub + " / " + R.e + (R.r ? " " + R.r : ""), loesung: einzig([richtig, kurzV]), erklaerung: erkl };
   return null;
 }
 
@@ -2100,6 +2127,314 @@ Object.assign(ART_BRAUCHT, {
   progressiv: ["personen", "verbenIng"], progressivfrage: ["personen", "verbenIng"],
   goingto: ["personen", "plaene"], goingtofrage: ["personen", "plaene"],
   ifsatz: ["ifSaetze"], willgoing: ["willSaetze", "planSaetze"]
+});
+
+/* ---------- Klasse 7: Gegenwart gemischt, Vergangenheit mit used to, Reflexivpronomen ---------- */
+// used to + Grundform (früher war das so)
+function usedTo(bk, form, E){
+  const R = wuerfle(bk.usedTo);
+  kern(R.sub + R.e + R.rest);
+  const satz = (x, r = R) => r.sub + " " + x + (r.rest ? " " + r.rest : "") + ".";
+  const richtig = satz("used to " + R.e);
+  const bsp = bspOhne(() => { const r = anders(bk.usedTo, R); return satz("used to " + r.e, r); }, richtig);
+  const erkl = erklaere(E.regel, { BEISPIEL: bsp });
+  if(form === "quiz") return { frage: satz("___"), optionen: mischen(["used to " + R.e, "use to " + R.e, "used to " + R.past]), loesung: "used to " + R.e, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + R.e + ")"), loesung: ["used to " + R.e], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler"){
+    if(Math.random() < 0.5 && R.past !== R.e) return { satz: satz("used to " + R.past), fehlerwort: R.past, loesung: [R.e], erklaerung: erkl };
+    return { satz: satz("use to " + R.e), fehlerwort: "use", loesung: ["used"], erklaerung: erkl };
+  }
+  if(form === "umformen"){
+    const vorher = "In the past, " + (R.sub === "I" ? "I" : R.sub.replace(/^\w/, c => c.toLowerCase())) + " " + R.past + (R.rest ? " " + R.rest : "") + ".";
+    return { frage: "Use „used to“:  " + vorher, loesung: [richtig, "In the past, " + (R.sub === "I" ? "I" : R.sub.replace(/^\w/, c => c.toLowerCase())) + " used to " + R.e + (R.rest ? " " + R.rest : "") + "."], erklaerung: erkl };
+  }
+  return null;
+}
+
+// Reflexivpronomen (myself …), each other und „Fallen“ (deutsch „sich“, englisch ohne)
+function reflexiv(bk, form, E){
+  const typ = form === "umformen" ? "each" : form === "zuordnen" ? "refl"
+            : form === "quiz" ? wuerfle(["refl", "refl", "each", "falle"]) : wuerfle(["refl", "refl", "each"]);
+  if(typ === "falle"){
+    const R = wuerfle(bk.reflFallen); kern(R.t);
+    const r2 = anders(bk.reflFallen, R);
+    return { frage: R.t, optionen: mischen([R.r].concat(R.f)), loesung: R.r,
+             erklaerung: erklaere(E.falle, { DE: R.de, BEISPIEL: r2.t.replace("___", r2.r) + " (" + r2.de + ")" }) };
+  }
+  if(typ === "each"){
+    const R = wuerfle(bk.eachOther); kern(R.a + R.b + R.e);
+    const satz = (x, r = R) => gross(r.a) + " and " + r.b + " " + r.e + " " + x + (r.rest ? " " + r.rest : "") + ".";
+    const richtig = satz("each other");
+    const bsp = bspOhne(() => satz("each other", anders(bk.eachOther, R)), richtig);
+    const erkl = erklaere(E.each, { BEISPIEL: bsp });
+    if(form === "quiz") return { frage: satz("___"), optionen: mischen(["each other", "themselves", "each others"]), loesung: "each other", erklaerung: erkl };
+    if(form === "luecke") return { frage: satz("___ (einander)"), loesung: ["each other"], erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+    if(form === "fehler") return { satz: satz("each others"), fehlerwort: "others", loesung: ["other"], erklaerung: erkl };
+    if(form === "umformen"){
+      const a = gross(R.a), b = gross(R.b);
+      return { frage: "Use „each other“:  " + a + " " + R.s + " " + R.b + (R.rest ? " " + R.rest : "") + ". " + b + " " + R.s + " " + R.a.replace(/^My /, "my ") + (R.rest ? " " + R.rest : "") + ".",
+               loesung: [richtig], erklaerung: erkl };
+    }
+  }
+  // Reflexivpronomen
+  const R = wuerfle(bk.reflRahmen), P = wuerfle(bk.personen.filter(p => p.refl && (!R.nurKind || p.kind)));
+  kern(R.t);
+  const satz = (x, p = P, r = R) => gross(r.t.replace("{P}", p.text).replace("{POSS}", p.poss || "").replace("{R}", x));
+  const richtig = satz(P.refl);
+  const bsp = bspOhne(() => { const r = anders(bk.reflRahmen, R), q = anders(bk.personen.filter(x => x.refl && x.refl !== P.refl), P); return satz(q.refl, q, r); }, richtig);
+  const erkl = erklaere(E.refl, { BEISPIEL: bsp });
+  if(form === "zuordnen"){
+    const K = ["-self", "-selves"], kand = mischen(bk.personen.filter(p => p.refl && p.text !== "you"));
+    const woerter = mischen(kand.filter(p => !p.mehr).slice(0, 3).concat(kand.filter(p => p.mehr).slice(0, 2))).map(p => ({ text: p.text, ziel: p.mehr ? K[1] : K[0] }));
+    return { kategorien: K, woerter, erklaerung: E.zuordnen };
+  }
+  if(form === "quiz") return { frage: satz("___"), optionen: mischen([P.refl].concat(P.falsch.slice(0, 2))), loesung: P.refl, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + P.pron + ")"), loesung: P.text === "you" ? ["yourself", "yourselves"] : [P.refl], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(P.falsch[0]), fehlerwort: P.falsch[0], loesung: P.text === "you" ? ["yourself", "yourselves"] : [P.refl], erklaerung: erkl };
+  return null;
+}
+
+Object.assign(ARTEN, {
+  // simple present: Aussagen, Verneinung, Fragen und Kurzantworten gemischt
+  praesensalle(bk, form, E){ return Math.random() < 0.6 ? ARTEN.praesensaussneg(bk, form, E) : ARTEN.praesensfrage(bk, form, E); },
+  // simple past: Aussagen, Verneinung, Fragen und used to gemischt
+  vergangenheitalle(bk, form, E){
+    const r = Math.random();
+    if(form !== "zuordnen" && r < 0.3) return usedTo(bk, form, E.usedto);
+    if(r < 0.65) return ARTEN.pastaussneg(bk, form, E.past);
+    return ARTEN.pastfrage(bk, form, E.frage);
+  },
+  reflexiv
+});
+Object.assign(ART_BRAUCHT, {
+  praesensalle: ["personen", "verben"],
+  vergangenheitalle: ["personen", "verbenPast", "zeitenPast", "usedTo"],
+  reflexiv: ["personen", "reflRahmen", "eachOther", "reflFallen"]
+});
+
+/* ---------- Klasse 7, Unit 3–5: Relativsätze, Gerundium, if Typ II, some/any/no, present ↔ progressive, Modalverben ---------- */
+// Aufgaben aus einem Pool fertiger Sätze mit ___ (r = alle richtigen Wörter, f = falsche Auswahl)
+function poolAufgabe(R, form, erkl, hinweis){
+  const fuelle = x => R.t.replace("___", x), richtig = R.r[0];
+  const gr = x => /^___/.test(R.t) ? gross(x) : x;
+  if(form === "quiz") return { frage: R.t, optionen: mischen([gr(richtig)].concat(R.f.slice(0, 2).map(gr))), loesung: gr(richtig), erklaerung: erkl };
+  if(form === "luecke") return { frage: R.t.replace("___", "___" + (hinweis ? " (" + hinweis + ")" : "")), loesung: R.r.concat(R.lang || []), erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [gross(fuelle(richtig))], erklaerung: erkl };
+  if(form === "fehler"){ const f = R.f.find(x => !x.includes(" ")); if(!f || R.keinFehler) return null;
+    return { satz: gross(fuelle(gr(f))), fehlerwort: gr(f), loesung: R.r.concat(R.lang || []), erklaerung: erkl }; }
+  return null;
+}
+
+// ---------- Relativsätze: who, which, that, whose ----------
+function relativ(bk, form, E){
+  if(form === "zuordnen"){
+    const K = ["who", "which"], w = mehrere(bk.relPersonen, 2 + Math.floor(Math.random() * 2)).map(t => ({ text: t, ziel: K[0] }))
+      .concat(mehrere(bk.relDinge, 2).map(t => ({ text: t, ziel: K[1] })));
+    return { kategorien: K, woerter: mischen(w), erklaerung: E.zuordnen };
+  }
+  const liste = form === "umformen" ? bk.relSaetze.filter(r => r.s1) : bk.relSaetze;
+  const R = wuerfle(liste); kern(R.t);
+  const bsp = bspOhne(() => { const r = anders(bk.relSaetze.filter(x => x.art === R.art), R); return r.t.replace("___", r.r[0]); }, R.t.replace("___", R.r[0]));
+  const erkl = erklaere(E[R.art], { BEISPIEL: bsp });
+  if(form === "umformen") return { frage: "Make one sentence (who / which / whose):  " + R.s1 + " " + R.s2, loesung: R.r.map(x => R.t.replace("___", x)), erklaerung: erkl };
+  const opt = { t: R.t, r: R.r, f: ["who", "which", "whose"].filter(x => !R.r.includes(x)).concat(R.art === "whose" ? [] : []) };
+  if(R.art === "whose") opt.f = ["who", "which"];
+  if(form === "fehler"){ const f = R.art === "who" ? "which" : R.art === "which" ? "who" : "who"; return { satz: R.t.replace("___", f), fehlerwort: f, loesung: R.r, erklaerung: erkl }; }
+  return poolAufgabe(opt, form, erkl, "who / which / whose");
+}
+
+// ---------- Gerundium: als Subjekt und nach Verben (enjoy, love …) ----------
+function gerund(bk, form, E){
+  const A = wuerfle(bk.aktivitaeten), rest = A.rest ? " " + A.rest : "";
+  kern(A.e + A.rest);
+  const subj = form === "umformen" || Math.random() < 0.45;
+  if(subj){
+    const S = wuerfle(bk.gerundSubjekt);
+    const satz = x => gross(x) + rest + " " + S.t + ".";
+    const richtig = satz(A.ing);
+    const bsp = bspOhne(() => { const a = anders(bk.aktivitaeten, A), s = anders(bk.gerundSubjekt, S); return gross(a.ing) + (a.rest ? " " + a.rest : "") + " " + s.t + "."; }, richtig);
+    const erkl = erklaere(E.subjekt, { BEISPIEL: bsp });
+    if(form === "umformen") return { frage: "Start with the -ing form:  It " + S.t.replace(/^is /, "is ").replace(/^can be /, "can be ") + " to " + A.e + rest + ".", loesung: [richtig], erklaerung: erkl };
+    if(form === "quiz") return { frage: "___" + rest + " " + S.t + ".", optionen: mischen([gross(A.ing), gross(A.e), gross(A.s)]), loesung: gross(A.ing), erklaerung: erkl };
+    if(form === "luecke") return { frage: "___ (" + A.e + ")" + rest + " " + S.t + ".", loesung: [A.ing], erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+    if(form === "fehler") return { satz: gross(A.e) + rest + " " + S.t + ".", fehlerwort: gross(A.e), loesung: [A.ing], erklaerung: erkl };
+  }
+  const V = wuerfle(bk.gerundVerben), P = wuerfle(bk.personen.filter(p => p.kind));
+  const verb = P.er ? V.s : V.e;
+  const satz = x => gross(P.text) + " " + verb + " " + x + rest + ".";
+  const richtig = satz(A.ing);
+  const bsp = bspOhne(() => { const a = anders(bk.aktivitaeten, A), v = anders(bk.gerundVerben, V), q = anders(bk.personen.filter(p => p.kind), P);
+    return gross(q.text) + " " + (q.er ? v.s : v.e) + " " + a.ing + (a.rest ? " " + a.rest : "") + "."; }, richtig);
+  const erkl = erklaere(E.verb, { BEISPIEL: bsp, V: V.e });
+  if(form === "quiz") return { frage: satz("___"), optionen: mischen([A.ing, A.e, A.s]), loesung: A.ing, erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + A.e + ")"), loesung: [A.ing], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(A.e), fehlerwort: A.e, loesung: [A.ing], erklaerung: erkl };
+  if(form === "zuordnen"){
+    const mach = ok => () => { const a = wuerfle(bk.aktivitaeten), v = wuerfle(bk.gerundVerben), q = wuerfle(bk.personen.filter(p => p.kind)), re = a.rest ? " " + a.rest : "";
+      const vb = q.er ? v.s : v.e;
+      if(ok) return Math.random() < 0.5 ? gross(q.text) + " " + vb + " " + a.ing + re + "." : gross(a.ing) + re + " " + wuerfle(bk.gerundSubjekt).t + ".";
+      return Math.random() < 0.5 ? gross(q.text) + " " + vb + " " + a.e + re + "." : gross(a.e) + re + " " + wuerfle(bk.gerundSubjekt).t + "."; };
+    return richtigFalsch(mach(true), mach(false), E.zuordnen);
+  }
+  return null;
+}
+
+// ---------- if-Sätze Typ II (und Gegenüberstellung mit Typ I) ----------
+function ifSatz2(bk, form, E){
+  const typ1 = form === "zuordnen" ? false : (form === "quiz" ? Math.random() < 0.3 : false);
+  if(typ1){
+    const R = wuerfle(bk.ifSaetze), wenn = R.w.replace(/[{}]/g, ""), kurz = R.s2 === "I" ? "I'll" : R.s2 + "'ll";
+    kern(R.w);
+    const opt = [kurz + " " + R.e, R.s2 + " would " + R.e, R.s2 + " " + R.ing];
+    return { frage: "If " + wenn + ", ___" + (R.r2 ? " " + R.r2 : "") + ".", optionen: mischen(opt), loesung: opt[0],
+             erklaerung: erklaere(E.typ1, { BEISPIEL: "If it is sunny, we'll go cycling." }) };
+  }
+  if(form === "zuordnen"){
+    const K = ["Typ I (real möglich)", "Typ II (nur vorgestellt)"];
+    const s1 = mehrere(bk.ifSaetze, 2).map(r => ({ text: "If " + r.w.replace(/[{}]/g, "") + ", " + (r.neg ? r.s2 + " won't " : (r.s2 === "I" ? "I'll " : r.s2 + "'ll ")) + r.e + (r.r2 ? " " + r.r2 : "") + ".", ziel: K[0] }));
+    const s2 = mehrere(bk.ifSaetze2, 2 + Math.floor(Math.random() * 2)).map(r => ({ text: "If " + r.w.replace(/[{}]/g, "") + ", " + r.s2 + " would " + r.e + (r.r2 ? " " + r.r2 : "") + ".", ziel: K[1] }));
+    return { kategorien: K, woerter: mischen(s1.concat(s2)), erklaerung: E.zuordnen };
+  }
+  const R = wuerfle(bk.ifSaetze2); kern(R.w);
+  const wenn = R.w.replace(/[{}]/g, ""), verbIf = R.w.match(/\{([^}]+)\}/)[1], mitV = x => R.w.replace(/\{[^}]+\}/, x);
+  const pron = /^(I|you|he|she|it|we|they)$/.test(R.s2);
+  const haupt = (k) => (k && pron ? (R.s2 === "I" ? "I'd" : R.s2 + "'d") : R.s2 + " would") + " " + R.e + (R.r2 ? " " + R.r2 : "");
+  const ifVarianten = [verbIf].concat(R.alt ? [R.alt] : []);
+  const saetze = [];
+  ifVarianten.forEach(v => [true, false].forEach(k => {
+    if(k && !pron) return;
+    saetze.push("If " + mitV(v) + ", " + haupt(k) + ".");
+    saetze.push(R.wer ? R.wer + " would " + R.e + (R.r2 ? " " + R.r2 : "") + " if " + R.s2 + mitV(v).slice(R.wer.length) + "." : gross(haupt(k)) + " if " + mitV(v) + ".");
+  }));
+  const richtig = "If " + wenn + ", " + haupt(false) + ".";
+  const bsp = bspOhne(() => { const r = anders(bk.ifSaetze2, R); return "If " + r.w.replace(/[{}]/g, "") + ", " + r.s2 + " would " + r.e + (r.r2 ? " " + r.r2 : "") + "."; }, richtig);
+  const erklW = erklaere(E.wenn, { BEISPIEL: bsp }), erklH = erklaere(E.haupt, { BEISPIEL: bsp });
+  if(form === "quiz"){
+    if(Math.random() < 0.5) return { frage: "If " + mitV("___") + ", " + haupt(false) + ".", optionen: mischen([verbIf, R.grund === "be" ? "am" : R.wf, "will " + R.grund]), loesung: verbIf, erklaerung: erklW };
+    const opt = [R.s2 + " would " + R.e, R.s2 + " will " + R.e, R.s2 + " would " + R.past2];
+    return { frage: "If " + wenn + ", ___" + (R.r2 ? " " + R.r2 : "") + ".", optionen: mischen(opt), loesung: opt[0], erklaerung: erklH };
+  }
+  if(form === "luecke") return { frage: "If " + mitV("___ (" + R.grund + ")") + ", " + R.s2 + " ___ (" + R.e + ")" + (R.r2 ? " " + R.r2 : "") + ".",
+                                 loesung: [ifVarianten, ["would " + R.e].concat(pron ? ["'d " + R.e] : [])], erklaerung: erklW };
+  if(form === "satzbau") return { loesung: [richtig].concat(saetze.filter(s => s !== richtig)), erklaerung: erklaere(E.komma, { BEISPIEL: bsp }) };
+  if(form === "fehler") return { satz: "If " + wenn + ", " + R.s2 + " would " + R.past2 + (R.r2 ? " " + R.r2 : "") + ".", fehlerwort: R.past2, loesung: [R.e], erklaerung: erklH };
+  if(form === "umformen"){
+    const r1 = wuerfle(bk.ifTausch);
+    return { frage: "Make it unreal (Typ II):  " + r1.von, loesung: r1.nach, erklaerung: erklaere(E.tausch, { BEISPIEL: bsp }) };
+  }
+  return null;
+}
+
+// ---------- some / any / no (nobody, nothing …) und some in Angeboten ----------
+function someAnyNo(bk, form, E){
+  const r = Math.random();
+  if(form === "umformen" && r < 0.4){
+    const R = wuerfle(bk.noTausch); kern(R.von);
+    return { frage: "Use „" + R.wort + "“:  " + R.von, loesung: R.nach, erklaerung: erklaere(E.no, { BEISPIEL: anders(bk.noTausch, R).nach[0] }) };
+  }
+  if((form === "quiz" || form === "luecke" || form === "satzbau" || form === "fehler") && r < 0.35){
+    const pool = r < 0.2 ? bk.noSaetze : bk.angebote, key = r < 0.2 ? "no" : "angebot";
+    const R = wuerfle(pool); kern(R.t);
+    const b = anders(pool, R);
+    const a = poolAufgabe(R, form, erklaere(E[key], { BEISPIEL: b.t.replace("___", b.r[0]).replace(/^\w/, c => c.toUpperCase()) }), R.hinweis);
+    if(a) return a;
+  }
+  return someAny(bk, form, E);
+}
+
+// ---------- simple present ↔ present progressive (mit Signalwörtern) ----------
+function presVsProg(bk, form, E){
+  if(form === "zuordnen"){
+    const K = ["simple present", "present progressive"];
+    const w = mehrere(bk.signalGewohnheit, 2 + Math.floor(Math.random() * 2)).map(s => ({ text: s.wort, ziel: K[0] }))
+      .concat(mehrere(bk.signalJetzt, 2).map(s => ({ text: s.wort, ziel: K[1] })));
+    return { kategorien: K, woerter: mischen(w), erklaerung: E.zuordnen };
+  }
+  const jetzt = form === "fehler" ? true : form === "umformen" ? true : Math.random() < 0.5;
+  const V = wuerfle(bk.verbenPP), P = wuerfle(bk.personen.filter(p => p.be));
+  kern(V.e + V.rest);
+  const rest = V.rest ? " " + mitPossR(V.rest, P) : "";
+  const S = wuerfle(jetzt ? bk.signalJetzt : bk.signalGewohnheit);
+  const pres = P.er ? V.s : V.e, prog = P.be + " " + V.ing;
+  const bau = (verb, sig) => {
+    if(sig.pos === "anfang") return sig.wort + " " + gross(P.text) + " " + verb + rest + ".";
+    if(sig.pos === "mitte") return gross(P.text) + " " + sig.wort + " " + verb + rest + ".";
+    return gross(P.text) + " " + verb + rest + " " + sig.wort + ".";
+  };
+  const korrekt = jetzt ? prog : pres;
+  const richtig = bau(korrekt, S);
+  const bsp = bspOhne(() => { const v = anders(bk.verbenPP, V), q = anders(bk.personen.filter(p => p.be), P), s = anders(jetzt ? bk.signalJetzt : bk.signalGewohnheit, S);
+    const re = v.rest ? " " + mitPossR(v.rest, q) : "", vb = jetzt ? q.be + " " + v.ing : (q.er ? v.s : v.e);
+    return s.pos === "anfang" ? s.wort + " " + gross(q.text) + " " + vb + re + "." : s.pos === "mitte" ? gross(q.text) + " " + s.wort + " " + vb + re + "." : gross(q.text) + " " + vb + re + " " + s.wort + "."; }, richtig);
+  const erkl = erklaere(jetzt ? E.jetzt : E.gewohnheit, { BEISPIEL: bsp, SIGNAL: S.wort });
+  if(form === "quiz"){
+    const falsch3 = P.be + " " + V.e;
+    return { frage: bau("___", S), optionen: mischen([korrekt, jetzt ? pres : prog, falsch3]), loesung: korrekt, erklaerung: erkl };
+  }
+  if(form === "luecke") return { frage: bau("___ (" + V.e + ")", S), loesung: jetzt ? beVarianten(prog).concat([P.be + " " + V.ing]) : [pres], erklaerung: erkl };
+  if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
+  if(form === "fehler"){
+    if(S.pos === "mitte") return presVsProg(bk, form, E);
+    return { satz: bau(pres, S), fehlerwort: pres, loesung: [prog], erklaerung: erkl };
+  }
+  if(form === "umformen"){
+    const g = wuerfle(bk.signalGewohnheit.filter(s => s.pos === "ende")), n = wuerfle(bk.signalJetzt.filter(s => s.pos === "ende"));
+    return { frage: "Use „" + n.wort + "“:  " + bau(pres, g), loesung: beVarianten(gross(P.text) + " " + prog + rest + " " + n.wort + "."), erklaerung: erkl };
+  }
+  return null;
+}
+
+// ---------- Modalverben: can, can't, must, mustn't, needn't, may, may not ----------
+function modalK7(bk, form, E){
+  if(form === "zuordnen"){
+    const K = ["Verbot", "Pflicht", "nicht nötig"], map = { verbot: K[0], pflicht: K[1], unnoetig: K[2] };
+    const kand = mischen(bk.modalSaetze.filter(r => map[r.bed])), woerter = [];
+    K.forEach(k => { const r = kand.find(x => map[x.bed] === k && !woerter.some(w => w.text === x.t)); if(r) woerter.push({ text: gross(r.t.replace("___", r.r[0])), ziel: k }); });
+    const extra = kand.find(x => !woerter.some(w => w.text === gross(x.t.replace("___", x.r[0])))); if(extra) woerter.push({ text: gross(extra.t.replace("___", extra.r[0])), ziel: map[extra.bed] });
+    return { kategorien: K, woerter: mischen(woerter), erklaerung: E.zuordnen };
+  }
+  if(form === "umformen"){
+    const R = wuerfle(bk.modalSaetze.filter(r => r.imp)); kern(R.t);
+    return { frage: "Say it with a modal verb (" + R.r[0] + "):  " + R.imp, loesung: R.um, erklaerung: erklaere(E[R.bed], { BEISPIEL: anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).t.replace("___", anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).r[0]) }) };
+  }
+  const R = wuerfle(bk.modalSaetze.filter(r => form !== "fehler" || !r.keinFehler)); kern(R.t);
+  const b = anders(bk.modalSaetze.filter(x => x.bed === R.bed), R);
+  const erkl = erklaere(E[R.bed], { BEISPIEL: gross(b.t.replace("___", b.r[0])) });
+  const a = poolAufgabe(R, form, erkl, E.hinweis[R.bed]);
+  return a || modalK7(bk, "quiz", E);
+}
+
+// ---------- Steigerung Klasse 7: -er/-est, more/most und less / the least ----------
+function steigerungK7(bk, form, E){
+  if(Math.random() < 0.25 && (form === "quiz" || form === "fehler" || form === "satzbau")){
+    const sup = Math.random() < 0.5, lang = bk.adjektive.filter(a => a.typ === "lang").map(a => a.adj);
+    const R = wuerfle((sup ? bk.superRahmen : bk.vergleiche).filter(r => r.w.some(a => lang.includes(a))));
+    const A = wuerfle(R.w.filter(a => lang.includes(a))), be = R.pl ? "are" : "is";
+    kern("less" + A + R.a);
+    const satz = x => sup ? R.a + " " + be + " the " + x + " " + A + " " + R.n + " " + R.ort + "." : R.a + " " + be + " " + x + " " + A + " than " + R.b + ".";
+    const richtigW = sup ? "least" : "less", erkl = erklaere(E.less, { BEISPIEL: sup ? "The tent is the least comfortable place to sleep." : "A tent is less comfortable than a caravan." });   // Beispiel kommt in den Aufgaben nie vor
+    if(form === "quiz") return { frage: satz("___"), optionen: mischen([richtigW, sup ? "less" : "least", sup ? "lessest" : "lesser"]), loesung: richtigW, erklaerung: erkl };
+    if(form === "satzbau") return { loesung: [satz(richtigW)], erklaerung: erkl };
+    if(form === "fehler") return { satz: satz(sup ? "less" : "least"), fehlerwort: sup ? "less" : "least", loesung: [richtigW], erklaerung: erkl };
+  }
+  return steigerung(Math.random() < 0.5 ? "komp" : "sup", bk, form, E);
+}
+
+Object.assign(ARTEN, {
+  relativ, gerund, ifsatz2: ifSatz2, someanyno: someAnyNo, presvsprog: presVsProg, modalk7: modalK7,
+  steigerungk7: steigerungK7,
+  willvorhersage: (bk, form, E) => willGoing(Object.assign({}, bk, { planSaetze: [] }), form, E)
+});
+Object.assign(ART_BRAUCHT, {
+  relativ: ["relSaetze", "relPersonen", "relDinge"], gerund: ["aktivitaeten", "gerundVerben", "gerundSubjekt", "personen"],
+  ifsatz2: ["ifSaetze2", "ifSaetze", "ifTausch"], someanyno: ["someRahmen", "nomenU", "nomenC", "noSaetze", "angebote", "noTausch"],
+  presvsprog: ["personen", "verbenPP", "signalGewohnheit", "signalJetzt"], modalk7: ["modalSaetze"],
+  steigerungk7: ["adjektive", "vergleiche", "superRahmen"], willvorhersage: ["willSaetze"]
 });
 // Baukasten mit oder ohne die „…Extra“-Listen (erschließbare Wörter)
 const baukastenCache = {};
@@ -2177,12 +2512,12 @@ function zieheAufgabe(themen, niveau, form, benutzt, nurNeu){
     const zuerstHand = hand.length && (!genThemen.length || Math.random() < 0.45);
     if(zuerstHand){ benutzt.add(schluessel(hand[0])); return hand[0]; }
     if(genThemen.length){
-      for(let i = 0; i < 40; i++){
+      for(let i = 0; i < 80; i++){
         const a = generiere(wuerfle(genThemen), niveau, v.form || wuerfle(formen));
-        const kernFrei = !a || !a.kern || !letzteKerne.includes(a.kern) || i >= 30;   // nach 30 Versuchen Kern-Regel lockern
+        const kernFrei = !a || !a.kern || !letzteKerne.includes(a.kern) || i >= 60;   // erst nach 60 Versuchen Baustein-Regel lockern (nur bei sehr kleinen Listen)
         if(a && kernFrei && (!v.neu || !benutzt.has(schluessel(a)))){
           benutzt.add(schluessel(a));
-          if(a.kern){ letzteKerne.push(a.kern); if(letzteKerne.length > KERN_ABSTAND) letzteKerne.shift(); }
+          if(a.kern){ letzteKerne.push(a.kern); if(letzteKerne.length > KERN_ABSTAND()) letzteKerne.shift(); }
           return a;
         }
       }
@@ -2676,6 +3011,9 @@ function ziehbar(chip, ablegen, waehle){
 
 /* ===================== ZAHLENSCHLOSS AM AUSGANG ===================== */
 const werte = [0, 0, 0, 0];
+// Testmodus: nur im Testbereich (Adresse enthält /test/). Dann ist das Schloss immer bedienbar und
+// der testCode aus daten/allgemein.js öffnet sofort die Tür – zum Prüfen des Siegbildschirms.
+const TESTMODUS = typeof EINSTELLUNGEN !== "undefined" && /\/test\//.test(location.pathname) && /^\d{4}$/.test(String(EINSTELLUNGEN.testCode || ""));
 function radSetzen(i, w){
   werte[i] = ((w % 10) + 10) % 10;
   const a = $("raeder").querySelectorAll(".anzeige")[i];
@@ -2686,7 +3024,8 @@ function torStatus(){
   const alle = S.raeume.every(r => r.geschafft), n = S.torVersuche, max = EINSTELLUNGEN.torVersuche;
   $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – " +
     (alle ? "Code eingeben · Versuche: " + "●".repeat(n) + "○".repeat(Math.max(0, max - n)) : "🔒 erst nach allen 4 Räumen bedienbar");
-  $("btnTor").disabled = !alle || n <= 0;
+  $("btnTor").disabled = !(alle || TESTMODUS) || n <= 0;
+  if(TESTMODUS && !alle) $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – 🧪 Testmodus: " + EINSTELLUNGEN.testCode + " öffnet sofort";
 }
 function baueRaeder(){
   const box = $("raeder"); box.innerHTML = "";
@@ -2705,13 +3044,24 @@ function baueRaeder(){
     radSetzen(i, 0);
   });
 }
+// Siegbild hinter der Tür: welt.finaleBild (Datei im Ordner bild/), sonst Sonnenaufgang 🌅
+function siegBildSetzen(){
+  const l = document.querySelector("#tuerbuehne .licht"), b = welt().finaleBild;
+  if(b){ l.textContent = ""; l.classList.add("bild"); l.style.backgroundImage = "url('" + b + "')"; }
+  else { l.textContent = "🌅"; l.classList.remove("bild"); l.style.backgroundImage = ""; }
+}
 $("btnTor").onclick = () => {
-  if(!S.raeume.every(r => r.geschafft) || S.torVersuche <= 0) return;
-  if(werte.join("") === S.code.join("")){
+  const alle = S.raeume.every(r => r.geschafft), testCode = TESTMODUS && werte.join("") === String(EINSTELLUNGEN.testCode);
+  if(!testCode && (!alle || S.torVersuche <= 0)){
+    if(TESTMODUS && !alle) $("codeMeldung").textContent = "🧪 Testmodus: Vor dem Ende öffnet nur " + EINSTELLUNGEN.testCode + ".";
+    return;
+  }
+  if(testCode || werte.join("") === S.code.join("")){
     countdownStop(); zeige("finale"); starteKonfetti(); ton("jingle");
     $("finaleText").textContent = welt().finale;
     $("finaleRueck").innerHTML = ""; $("finaleRueck").appendChild(rueckmeldung());
     ansage("Der Ausgang ist offen! Mission geschafft.");
+    siegBildSetzen();
     const tb = $("tuerbuehne"); tb.classList.remove("auf"); void tb.offsetWidth; setTimeout(() => tb.classList.add("auf"), 400);
   } else {
     const m = $("codeMeldung"); S.torVersuche--; ton("falsch");
@@ -3015,7 +3365,7 @@ const EscapeAPI = {
       raeume: S.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji, thema: r.themen.map(id => themaVon(id).titel).join(" · "),
         zustand: raumZustand(r, i), richtig: r.richtig, von: EINSTELLUNGEN.aufgabenProRaum,
         ziffer: r.ziffer, kandidaten: r.kandidaten ? r.kandidaten.slice() : null })),
-      torBereit: S.raeume.every(r => r.geschafft), torVersuche: S.torVersuche,
+      torBereit: S.raeume.every(r => r.geschafft) || TESTMODUS, torVersuche: S.torVersuche,
       zeit: { mitLimit: wahl.zeit === "mit", restSekunden: wahl.zeit === "mit" ? rest : null, pausiert: pausiert },
       niveau: wahl.niveau
     };

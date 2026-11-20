@@ -11,6 +11,7 @@
 // =====================================================================
 const EINSTELLUNGEN = {
   aufgabenProRaum: 10,                                   // so viele RICHTIGE Antworten braucht man pro Raum
+  bausteinAbstand: 10,                                   // derselbe Baustein (Ding, Grundsatz …) kommt erst nach so vielen Aufgaben wieder
   zeitlimitMinuten:   { gruen: 15, gelb: 20, rot: 25 },  // Spielzeit im Modus „mit Zeitlimit“
   zusatzraumAktiv: true,                                 // true = nach jedem Raum kommt der Zusatzraum
   zusatzraumSekunden: { gruen: 30, gelb: 25, rot: 20 },  // Zeit für die Bonusfrage
@@ -21,6 +22,7 @@ const EINSTELLUNGEN = {
   minispieleAktiv: true,                                 // true = nach einem geschafften Raubtierhaus/Zusatzraum erscheint „🎁 Minispiel?“ (false = nie)
   minispielSekunden: 30,                                 // so lange dauert ein Minispiel höchstens
   minispielAbstand: 4,                                   // dasselbe Minispiel kommt höchstens alle 4 Durchgänge (gilt, solange die Seite offen ist)
+  testCode: "3110",                                      // NUR im Testbereich (Adresse …/test/): Schloss ist immer bedienbar, dieser Code führt direkt zum Siegbildschirm. Im Liveordner wirkungslos.
   entdeckerModus: true,                                  // true = Zoo-Karte statt Kachel-Übersicht (Hauptversion). Backup ohne Karte: Adresse mit ?karte=0
   woerterhilfeAktiv: true,                               // true = Wörter aus der WOERTERHILFE sind unterstrichen, Antippen zeigt Deutsch
   // Welche Rätselformen gehören zu welchem Niveau?

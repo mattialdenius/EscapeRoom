@@ -23,6 +23,7 @@ K6.welt = {
   ],
   zusatzraum: { name: "Pulverkammer", emoji: "💣", text: "Vorsicht, die Lunte brennt! Antwortet, bevor es knallt!" },
   ausgang:    { name: "Beiboot", emoji: "🚣" },
+  finaleBild: "bild/finale-6.jpg",   // Bild hinter der Tür, wenn die Mission geschafft ist (Format etwa 15:11)
   finale:     "Das Schloss springt auf! Ihr rudert im Beiboot davon. Käpt'n Grammar salutiert: „Gute Fahrt, ihr Grammatik-Piraten!“",
   gescheitert:"Arrr! Die Crew hat euch erwischt. Strafe: Deck schrubben! Versucht es gleich noch einmal.",
   gescheitertTor: "Dreimal der falsche Code – das Beiboot bleibt angekettet und die Crew wird misstrauisch. Versucht es gleich noch einmal!",
