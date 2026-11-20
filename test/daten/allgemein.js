@@ -11,6 +11,7 @@
 // =====================================================================
 const EINSTELLUNGEN = {
   aufgabenProRaum: 10,                                   // so viele RICHTIGE Antworten braucht man pro Raum
+  bausteinAbstand: 10,                                   // derselbe Baustein (Ding, Grundsatz …) kommt erst nach so vielen Aufgaben wieder
   zeitlimitMinuten:   { gruen: 15, gelb: 20, rot: 25 },  // Spielzeit im Modus „mit Zeitlimit“
   zusatzraumAktiv: true,                                 // true = nach jedem Raum kommt der Zusatzraum
   zusatzraumSekunden: { gruen: 30, gelb: 25, rot: 20 },  // Zeit für die Bonusfrage

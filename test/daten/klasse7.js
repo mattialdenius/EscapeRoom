@@ -295,7 +295,11 @@ K7.baukasten = {
       { a: "my brother", b: "my sister", e: "call",  s: "calls",  rest: "every weekend" },
       { a: "Emma",       b: "Lily",      e: "know",  s: "knows",  rest: "very well" },
       { a: "Ben",        b: "Tom",       e: "like",  s: "likes",  rest: "" },
-      { a: "the knight", b: "the king", e: "help", s: "helps", rest: "in the battle" }
+      { a: "the knight", b: "the king", e: "help", s: "helps", rest: "in the battle" },
+      { a: "Emma",       b: "Tom",       e: "visit", s: "visits", rest: "every summer" },
+      { a: "my mum",     b: "my dad",    e: "help",  s: "helps",  rest: "in the kitchen" },
+      { a: "Lily",       b: "Emma",      e: "call",  s: "calls",  rest: "every evening" },
+      { a: "Ben",        b: "Lily",      e: "text",  s: "texts",  rest: "after school" }
     ],
     // „Fallen“: im Deutschen mit „sich“, im Englischen OHNE Reflexivpronomen
     reflFallen: [
@@ -515,19 +519,19 @@ Object.assign(K7.baukasten, {
       { art: "who",   t: "That's the inventor ___ invented the telephone.",      r: ["who", "that"],   s1: "That's the inventor.", s2: "He invented the telephone." },
       { art: "who",   t: "We met a girl ___ lives in a cottage near the lake.",   r: ["who", "that"],   s1: "We met a girl.",       s2: "She lives in a cottage near the lake." },
       { art: "who",   t: "I have a neighbour ___ can repair radios.",             r: ["who", "that"],   s1: "I have a neighbour.",  s2: "He can repair radios." },
-      { art: "who",   t: "The soldier ___ won the battle became a leader.",       r: ["who", "that"] },
-      { art: "who",   t: "Mary Anderson is the woman ___ invented the windscreen wiper.", r: ["who", "that"] },
-      { art: "who",   t: "The mechanic ___ repaired our car was very friendly.",  r: ["who", "that"] },
+      { art: "who",   t: "The soldier ___ won the battle became a leader.",       r: ["who", "that"], s1: "The soldier became a leader.", s2: "He won the battle." },
+      { art: "who",   t: "Mary Anderson is the woman ___ invented the windscreen wiper.", r: ["who", "that"], s1: "Mary Anderson is the woman.", s2: "She invented the windscreen wiper." },
+      { art: "who",   t: "The mechanic ___ repaired our car was very friendly.",  r: ["who", "that"], s1: "The mechanic was very friendly.", s2: "He repaired our car." },
       { art: "which", t: "This is the wheel ___ is made of rubber.",               r: ["which", "that"], s1: "This is the wheel.",   s2: "It is made of rubber." },
       { art: "which", t: "We stayed at a campsite ___ was next to a lake.",        r: ["which", "that"], s1: "We stayed at a campsite.", s2: "It was next to a lake." },
       { art: "which", t: "I bought a trolley suitcase ___ has four wheels.",       r: ["which", "that"], s1: "I bought a trolley suitcase.", s2: "It has four wheels." },
-      { art: "which", t: "The steam engine is an invention ___ changed the world.", r: ["which", "that"] },
+      { art: "which", t: "The steam engine is an invention ___ changed the world.", r: ["which", "that"], s1: "The steam engine is an invention.", s2: "It changed the world." },
       { art: "which", t: "Look at the spider ___ made this huge web!",             r: ["which", "that"] },
       { art: "which", t: "There is a wind farm ___ makes clean electricity near our village.", r: ["which", "that"] },
       { art: "whose", t: "That's the girl ___ brother is a vet.",                  r: ["whose"],         s1: "That's the girl.",     s2: "Her brother is a vet." },
-      { art: "whose", t: "Bell was an inventor ___ mother was deaf.",              r: ["whose"] },
+      { art: "whose", t: "Bell was an inventor ___ mother was deaf.",              r: ["whose"],         s1: "Bell was an inventor.", s2: "His mother was deaf." },
       { art: "whose", t: "I know a boy ___ dad is a mechanic.",                    r: ["whose"],         s1: "I know a boy.",        s2: "His dad is a mechanic." },
-      { art: "whose", t: "This is the man ___ caravan is in our garden.",          r: ["whose"] }
+      { art: "whose", t: "This is the man ___ caravan is in our garden.",          r: ["whose"],         s1: "This is the man.", s2: "His caravan is in our garden." }
     ],
     relPersonen: ["the inventor", "the queen", "the soldier", "the vet", "the mechanic", "the leader", "my neighbour"],
     relDinge:    ["the steam engine", "the light bulb", "the tyre", "the radio", "the caravan", "the wind turbine", "the telephone"],
@@ -617,6 +621,8 @@ Object.assign(K7.baukasten, {
       { w: "my sister {were} here",      wer: "my sister", alt: "was", grund: "be", wf: "is", s2: "she", e: "help", past2: "helped", r2: "me" },
       { w: "it {snowed} today",          grund: "snow", wf: "snows", s2: "we",  e: "build",  past2: "built",   r2: "a snowman" },
       { w: "I {found} a gold coin",      grund: "find", wf: "find", s2: "I",    e: "buy",    past2: "bought",  r2: "a milkshake for everybody" },
+      { w: "I {were} a vet", alt: "was", grund: "be", wf: "am", s2: "I", e: "help", past2: "helped", r2: "all the animals" },
+      { w: "we {lived} by the sea", grund: "live", wf: "live", s2: "we", e: "go", past2: "went", r2: "swimming every day" },
       { w: "the Titanic {had} more lifeboats", grund: "have", wf: "has", s2: "more people", e: "survive", past2: "survived", r2: "" }
     ],
     // if-Sätze Typ I – für die Gegenüberstellung mit Typ II
@@ -759,7 +765,7 @@ Object.assign(K7.baukasten, {
       { text: "my exchange partner", sub: "she", det: "her", pron: "hers" },
       { text: "my parents", sub: "they", det: "their", pron: "theirs" }, { text: "Tom and Emma", sub: "they", det: "their", pron: "theirs" }
     ],
-    dinge:  ["towel", "toothbrush", "comb", "hairbrush", "hairdryer", "mirror", "clarinet", "guitar", "ticket", "shampoo"],
+    dinge:  ["towel", "toothbrush", "comb", "hairbrush", "hairdryer", "mirror", "clarinet", "guitar", "ticket", "shampoo", "perfume", "shower gel"],
     farben: ["red", "blue", "green", "black", "yellow", "white"],
     // Modalverben (G15). bed = Bedeutung; r = richtige Wörter; f = falsche Auswahl; lang = weitere richtige Langformen
     // imp/um = Aufforderung → Satz mit Modalverb (für „Umformen“)
@@ -768,13 +774,16 @@ Object.assign(K7.baukasten, {
         imp: "Don't touch the paintings!", um: ["You mustn't touch the paintings.", "You must not touch the paintings.", "You may not touch the paintings."] },
       { bed: "verbot",   t: "Tram rules: You ___ eat or drink on the tram.",       r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
         imp: "Don't eat or drink on the tram!", um: ["You mustn't eat or drink on the tram.", "You must not eat or drink on the tram.", "You may not eat or drink on the tram."] },
-      { bed: "verbot",   t: "School rules: You ___ use your mobile in class.",     r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"] },
+      { bed: "verbot",   t: "School rules: You ___ use your mobile in class.",     r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't use your mobile in class!", um: ["You mustn't use your mobile in class.", "You must not use your mobile in class.", "You may not use your mobile in class."] },
       { bed: "pflicht",  t: "Tram rules: You ___ buy a ticket before you get on.", r: ["must"], f: ["mustn't", "needn't"],
         imp: "Buy a ticket before you get on!", um: ["You must buy a ticket before you get on."] },
       { bed: "pflicht",  t: "Hostel rules: You ___ check in before ten o'clock.",  r: ["must"], f: ["mustn't", "needn't"],
         imp: "Check in before ten o'clock!", um: ["You must check in before ten o'clock."] },
-      { bed: "pflicht",  t: "You ___ show your ticket to the driver.",             r: ["must"], f: ["mustn't", "needn't"] },
-      { bed: "unnoetig", t: "The museum is free. You ___ pay.",                    r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"] },
+      { bed: "pflicht",  t: "You ___ show your ticket to the driver.",             r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Show your ticket to the driver!", um: ["You must show your ticket to the driver."] },
+      { bed: "unnoetig", t: "The museum is free. You ___ pay.",                    r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "The museum is free. It isn't necessary to pay.", um: ["You needn't pay.", "You need not pay.", "The museum is free. You needn't pay.", "The museum is free. You need not pay."] },
       { bed: "unnoetig", t: "The hostel has towels. You ___ bring your own towel.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
         imp: "It isn't necessary to bring a towel.", um: ["You needn't bring a towel.", "You need not bring a towel."] },
       { bed: "unnoetig", t: "It's a bank holiday. We ___ get up early.",            r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"] },
