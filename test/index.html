@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.3 (Prototyp)
+  Version 0.9.4 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,14 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.4 (20.11.2026)  – nur Testbereich (Generalcheck, Paket 1: Bewertung)
+    - Fehler finden: Steht das Fehlerwort mehrmals im Satz, zählt nur die richtige Stelle (generierte Aufgaben
+      mit doppeltem Fehlerwort werden neu gewürfelt; handgeschriebene brauchen dann „fehlerStelle“).
+    - Kurz- und Langform gelten als gleich (I'm = I am, they've = they have, he's got = he has got, it's = it is …);
+      bei „Write the short form“ bleibt die Kurzform Pflicht (genau: true).
+    - Satzbau und Umformen: Die Zeitangabe darf auch am Satzanfang stehen (und umgekehrt), z. B. „At the moment …“.
+    - Weitere britisch/amerikanische Paare (learnt/learned, tyre/tire, burnt/burned …); angezeigte Lösung beim
+      Fehler finden am Satzanfang großgeschrieben.
   v0.9.3 (20.11.2026)  – nur Testbereich
     - Englische Bedienung ab Klasse 8 vollständig: Startmenü (ab Wahl der Klasse), Intro, Übersicht, Räume,
       Rückmeldungen, Rätselformen, Zusatzraum, Zahlenschloss, Auswertung, Dialog und Fußzeile. Alle Texte stehen
@@ -175,7 +183,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.3</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.4</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -584,7 +592,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.3</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.4</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -610,7 +618,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -624,7 +632,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.3"></script>
+<script src="daten/allgemein.js?v=0.9.4"></script>
 
 <script>
 /* #####################################################################
@@ -650,13 +658,64 @@ function norm(s){
     .replace(/\s+([.?!,])/g, "$1").replace(/[.?!]+$/, "").replace(/\s+/g, " ").trim()
     .replace(/[a-z]+/g, w => BE_AE[w] || w);
 }
+// Wie norm(), aber Kurz- und Langform gelten zusätzlich als gleich (ab v0.9.4):
+// 'm = am, 're = are, 've = have, 'll = will. Bei 's und 'd nur nach Pronomen u. Ä. (nicht nach Namen,
+// damit „Tom's bike“ unberührt bleibt) und je nach folgendem Wort eindeutig: he's got/been/seen = he has,
+// sonst he is; I'd seen/been = I had, sonst I would. So wird „He is got“ NICHT als richtig gewertet.
+const KURZ_VOR = "i|you|he|she|it|we|they|that|there|here|what|who|where|how|when|why|this|everything|nothing|something|somebody|someone|nobody|everybody|everyone";
+const PART_UNREG = new Set(("been got gotten gone done had seen made taken given eaten written known flown driven ridden broken spoken stolen " +
+  "chosen forgotten fallen frozen hidden thrown worn torn grown drawn shown sung swum drunk begun run come become " +
+  "bought brought caught taught thought fought found heard held kept left lost met paid read said sent sold slept " +
+  "spent stood told understood won built felt fed hurt put cut let hit shut lent laid led sat").split(" "));
+const ADJ_ED = new Set(("tired bored interested excited scared worried surprised called named married supposed used allowed " +
+  "disappointed annoyed frightened pleased amazed shocked closed locked crowded talented").split(" "));
+const partizip = w => PART_UNREG.has(w) || (/ed$/.test(w) && !ADJ_ED.has(w));
+function normLang(s){
+  let n = norm(s).replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will");
+  n = n.replace(new RegExp("\\b(" + KURZ_VOR + ")'(s|d)(?= (\\w+)|$)", "g"), (m, wer, art, nach) => {
+    const p = nach && (partizip(nach) || nach === "better");
+    return wer + " " + (art === "s" ? (p && nach !== "better" ? "has" : "is") : (p ? "had" : "would"));
+  });
+  return n.replace(/\s+/g, " ").trim();
+}
+// Vergleich für eingetippte Antworten; genau = true schaltet die Kurzform-Gleichsetzung aus
+// (z. B. bei „Write the short form“, wo gerade die Kurzform verlangt ist).
+const gleich = (a, b, genau) => genau ? norm(a) === norm(b) : normLang(a) === normLang(b);
+// Zeitangabe am Satzende darf auch vorne stehen und umgekehrt (ab v0.9.4): „My brother is sitting … at the moment.“
+// = „At the moment my brother is sitting …“. Nur bei einfachen Aussagesätzen (kein Komma, kein if/when/who …); Wörter wie yet/already/just/ever/never
+// gehören absichtlich NICHT dazu, weil sie nicht an den Satzanfang dürfen.
+const ZEIT_MUSTER = "(?:at the moment|right now|now|today|tonight|tomorrow|yesterday|after school|at breakfast|" +
+  "at (?:the )?weekends?|at \\w+ o'clock|every (?:day|week|month|year|morning|afternoon|evening|night|weekend|summer|winter)|" +
+  "(?:last|next|this) (?:week|weekend|month|year|summer|winter|spring|autumn|morning|afternoon|evening|night|monday|tuesday|wednesday|thursday|friday|saturday|sunday)|on (?:mon|tues|wednes|thurs|fri|satur|sun)days?|" +
+  "in the (?:morning|afternoon|evening)s?|in (?:the )?(?:winter|summer|spring|autumn|fall)(?: holidays)?|" +
+  "(?:once|twice|three times) a (?:day|week|month|year)|(?:a|one|two|three|four|five|ten|\\w+) (?:days|weeks|months|years) ago|(?:a|one) (?:day|week|month|year) ago)";
+const ZEIT_HINTEN = new RegExp("^(.+\\S) (" + ZEIT_MUSTER + ")$", "i"), ZEIT_VORN = new RegExp("^(" + ZEIT_MUSTER + ") (.+)$", "i");
+function mitZeitTausch(liste){
+  const out = [];
+  liste.forEach(l => { l = String(l); out.push(l);
+    const m0 = l.match(/^(.*?)([.]?)$/), kern_ = m0[1], ende = m0[2];
+    if(/[?!,]/.test(kern_) || /\b(if|when|because|while|before|after|until|unless|that|who|which|whose|where)\b/i.test(kern_)) return;   // nur einfache Hauptsätze
+    let m = kern_.match(ZEIT_HINTEN); if(m) out.push(gross(m[2]) + " " + m[1] + ende);
+    m = kern_.match(ZEIT_VORN); if(m) out.push(gross(m[2]) + " " + m[1].toLowerCase() + ende);
+  });
+  return out;
+}
 // Britische und amerikanische Schreibung gelten beide als richtig (colour = color, centre = center …)
 const BE_AE = { colour: "color", colours: "colors", centre: "center", centres: "centers", favourite: "favorite", favourites: "favorites",
   neighbour: "neighbor", neighbours: "neighbors", theatre: "theater", theatres: "theaters", honour: "honor", harbour: "harbor",
   travelled: "traveled", travelling: "traveling", cancelled: "canceled", grey: "gray", programme: "program", programmes: "programs",
   licence: "license", metre: "meter", metres: "meters", kilometre: "kilometer", kilometres: "kilometers", organise: "organize",
   organised: "organized", realise: "realize", realised: "realized", apologise: "apologize", favour: "favor", behaviour: "behavior",
-  labour: "labor", humour: "humor", flavour: "flavor", jewellery: "jewelry", practise: "practice", practised: "practiced", mum: "mom", mums: "moms" };
+  labour: "labor", humour: "humor", flavour: "flavor", jewellery: "jewelry", practise: "practice", practised: "practiced", mum: "mom", mums: "moms",
+  // ab v0.9.4 ergänzt
+  learnt: "learned", burnt: "burned", dreamt: "dreamed", spelt: "spelled", smelt: "smelled", spoilt: "spoiled", leant: "leaned", leapt: "leaped",
+  tyre: "tire", tyres: "tires", pyjamas: "pajamas", aeroplane: "airplane", aeroplanes: "airplanes", defence: "defense", offence: "offense",
+  analyse: "analyze", traveller: "traveler", travellers: "travelers", cancelling: "canceling", labelled: "labeled", modelling: "modeling",
+  catalogue: "catalog", colourful: "colorful", neighbourhood: "neighborhood", neighbourhoods: "neighborhoods", centimetre: "centimeter",
+  centimetres: "centimeters", litre: "liter", litres: "liters", organisation: "organization", recognise: "recognize", recognised: "recognized",
+  memorise: "memorize", apologised: "apologized", practising: "practicing", realising: "realizing", organising: "organizing",
+  doughnut: "donut", doughnuts: "donuts", maths: "math", greys: "grays", harbours: "harbors",
+  behaviours: "behaviors", flavours: "flavors", honours: "honors" };
 // Namenspaare dürfen in beliebiger Reihenfolge stehen: „Tom and Emma“ = „Emma and Tom“
 function mitNamenTausch(liste){
   const out = [];
@@ -664,6 +723,7 @@ function mitNamenTausch(liste){
   return out;
 }
 const ohneZeichen = w => w.replace(/[.,!?;:„“"]/g, "");
+const fehlerwortAnzahl = t => t.satz.split(" ").filter(x => ohneZeichen(x).toLowerCase() === t.fehlerwort.toLowerCase()).length;
 const themaVon = id => THEMEN.find(t => t.id === id);
 const reduziert = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 function ansage(text){ const a = $("ansage"); a.textContent = ""; setTimeout(() => { a.textContent = text; }, 60); }
@@ -770,7 +830,8 @@ function pruefeKlasse(K, datei){
         else if(mehr ? a.loesung.length !== luecken : luecken !== 1) f.push(n + "Anzahl der Lücken (" + luecken + ") passt nicht zur Anzahl der Lösungen."); }
       if(a.form === "satzbau" && (!liste(a.loesung) || a.loesung[0].split(" ").length < 3)) f.push(n + "Satzbau braucht in „loesung“ mindestens einen Satz mit 3 Wörtern.");
       if(a.form === "fehler"){ if(!txt(a.satz) || !txt(a.fehlerwort) || !liste(a.loesung)) f.push(n + "Fehler finden braucht „satz“, „fehlerwort“ und „loesung“.");
-        else if(!a.satz.split(" ").some(w => ohneZeichen(w).toLowerCase() === a.fehlerwort.toLowerCase())) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ kommt im Satz nicht vor."); }
+        else if(!a.satz.split(" ").some(w => ohneZeichen(w).toLowerCase() === a.fehlerwort.toLowerCase())) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ kommt im Satz nicht vor.");
+        else if(fehlerwortAnzahl(a) > 1 && !(a.fehlerStelle >= 1 && a.fehlerStelle <= fehlerwortAnzahl(a))) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ steht mehrmals im Satz. Bitte mit fehlerStelle angeben, welches gemeint ist (1 = erstes)."); }
       if(a.form === "umformen" && (!txt(a.frage) || !liste(a.loesung))) f.push(n + "Umformen braucht „frage“ und „loesung“.");
     });
     if(Array.isArray(zusatz)) zusatz.forEach((z, i) => { const n = P + "zusatzfragen Nr. " + (i+1) + ": ";
@@ -970,7 +1031,7 @@ const ARTEN = {
     if(form === "umformen"){
       if(kurzVon(P) && Math.random() < 0.5){
         const q = anders(bk.personen.filter(x => kurzVon(x)), P), c = anders(ergFuer(bk, q), C);
-        return { frage: "Write the short form:  " + beSatz(P, C), loesung: [gross(kurzVon(P)) + " " + C.text + "."],
+        return { frage: "Write the short form:  " + beSatz(P, C), loesung: [gross(kurzVon(P)) + " " + C.text + "."], genau: true,
                  erklaerung: erklaere(E.kurz, { BEISPIEL: beSatz(q, c) + " → " + gross(kurzVon(q)) + " " + c.text + "." }) };
       }
       const P2 = istDing(P) ? wuerfle(alleSubjekte(bk).ds.filter(q => q.be !== P.be && C.text.indexOf(q.text.split(" ").pop().replace(/s$/, "")) < 0))
@@ -2526,10 +2587,15 @@ function mitExtras(name){
 function generiere(themaId, niveau, form){
   const g = GENERATOREN[themaId]; if(!g || !ARTEN[g.art]) return null;
   const bk = mitExtras(g.baukasten);
-  aktuellerKern = null;
-  const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
-  if(!t) return null;
-  return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
+  // „Fehler finden“: Steht das Fehlerwort mehrmals im Satz, wäre unklar, welches gemeint ist → neu würfeln (ab v0.9.4)
+  for(let versuch = 0; versuch < 25; versuch++){
+    aktuellerKern = null;
+    const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
+    if(!t) return null;
+    if(t.satz && t.fehlerwort && !t.fehlerStelle && fehlerwortAnzahl(t) > 1) continue;
+    return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
+  }
+  return null;
 }
 
 /* ===================== WÖRTERHILFE (antippbare Wörter) ===================== */
@@ -3080,8 +3146,8 @@ const RAETSEL = {
     box.appendChild(p);
     let loesungsText = ""; teile.forEach((t, i) => { loesungsText += t + (i < teile.length - 1 ? loes[i][0] : ""); });
     return { pruefe(){ if(felder.some(f => !f.value.trim())) return null;
-        return felder.every((f, i) => loes[i].some(l => norm(l) === norm(f.value))); },
-      sperre(){ felder.forEach((f, i) => { f.disabled = true; f.classList.add(loes[i].some(l => norm(l) === norm(f.value)) ? "richtig" : "falsch"); }); },
+        return felder.every((f, i) => loes[i].some(l => gleich(l, f.value, a.genau))); },
+      sperre(){ felder.forEach((f, i) => { f.disabled = true; f.classList.add(loes[i].some(l => gleich(l, f.value, a.genau)) ? "richtig" : "falsch"); }); },
       loesung: loesungsText, unvollstaendig: ui("lueckenFuellen") };
   },
 
@@ -3097,7 +3163,7 @@ const RAETSEL = {
       vorrat.appendChild(c); return c; });
     box.append(zeile, vorrat, hilfeZeile(woerter));
     const gebaut = () => [...zeile.querySelectorAll(".chip")].map(c => c.textContent).join(" ") + ende;
-    return { pruefe(){ if(vorrat.querySelectorAll(".chip").length) return null; return mitNamenTausch(a.loesung).some(l => norm(l) === norm(gebaut())); },
+    return { pruefe(){ if(vorrat.querySelectorAll(".chip").length) return null; return mitZeitTausch(mitNamenTausch(a.loesung)).some(l => gleich(l, gebaut(), a.genau)); },
       sperre(ok){ chips.forEach(c => { c.disabled = true; c.classList.add(ok ? "richtig" : "falsch"); }); },
       loesung: a.loesung.join(ui("oder")), unvollstaendig: ui("alleWoerter") };
   },
@@ -3105,6 +3171,10 @@ const RAETSEL = {
   fehler(a, box){
     const w = el("div", "satzwoerter"); let gewaehlt = null;
     const woerter = a.satz.split(" ");
+    // Stelle(n) des Fehlerworts; steht es mehrmals im Satz, zählt nur die Stelle aus „fehlerStelle“ (1 = erstes Vorkommen)
+    const stellen = woerter.map((x, i) => ohneZeichen(x).toLowerCase() === a.fehlerwort.toLowerCase() ? i : -1).filter(i => i >= 0);
+    const fehlerIndex = stellen[(a.fehlerStelle || 1) - 1];
+    const amAnfang = fehlerIndex === 0;
     const knoepfe = woerter.map((wort, i) => { const b = el("button", "", wort); b.type = "button"; b.setAttribute("aria-pressed", "false");
       b.onclick = () => { gewaehlt = gewaehlt === i ? null : i; knoepfe.forEach((k, j) => { k.classList.toggle("gewaehlt", j === gewaehlt); k.setAttribute("aria-pressed", j === gewaehlt); }); if(gewaehlt !== null) inp.focus({ preventScroll: true }); };
       w.appendChild(b); return b; });
@@ -3113,9 +3183,9 @@ const RAETSEL = {
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
     z.appendChild(inp); box.append(w, hilfeZeile(woerter), z);
     return { pruefe(){ if(gewaehlt === null || !inp.value.trim()) return null;
-        return ohneZeichen(woerter[gewaehlt]).toLowerCase() === a.fehlerwort.toLowerCase() && a.loesung.some(l => norm(l) === norm(inp.value)); },
+        return gewaehlt === fehlerIndex && a.loesung.some(l => gleich(l, inp.value, a.genau)); },
       sperre(){ knoepfe.forEach(k => k.disabled = true); inp.disabled = true; },
-      loesung: ui("fehlerLoesung", { f: a.fehlerwort, r: a.loesung[0] }),
+      loesung: ui("fehlerLoesung", { f: a.fehlerwort, r: amAnfang ? gross(a.loesung[0]) : a.loesung[0] }),
       unvollstaendig: ui("fehlerUnvollst") };
   },
 
@@ -3125,7 +3195,7 @@ const RAETSEL = {
     const inp = el("input"); inp.type = "text"; ["autocomplete","autocorrect"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
     z.appendChild(inp); box.appendChild(z);
-    return { pruefe: () => !inp.value.trim() ? null : mitNamenTausch(a.loesung).some(l => norm(l) === norm(inp.value)),
+    return { pruefe: () => !inp.value.trim() ? null : mitZeitTausch(mitNamenTausch(a.loesung)).some(l => gleich(l, inp.value, a.genau)),
       sperre(){ inp.disabled = true; }, loesung: a.loesung.join(ui("oder")), unvollstaendig: ui("satzSchreiben") };
   },
 

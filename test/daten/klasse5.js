@@ -1031,7 +1031,7 @@ K5.aufgaben = [
     erklaerung: "Wem gehört es? they → their. Beispiel: My parents have a cat. Their cat is black." },
   { thema: "5-G11", niveau: "rot", form: "fehler", satz: "Emma and Lily are my friends. I like they very much.", fehlerwort: "they", loesung: ["them"],
     erklaerung: "Nach einem Verb steht die Objektform: they → them. Beispiel: My cousins are funny. I like them." },
-  { thema: "5-G11", niveau: "rot", form: "umformen", frage: "Use him, her, it or them:  I give the present to my sister.", loesung: ["I give the present to her."],
+  { thema: "5-G11", niveau: "rot", form: "umformen", frage: "Use him, her, it or them:  I give the present to my sister.", loesung: ["I give the present to her.", "I give her the present."],
     erklaerung: "my sister → she → her (Objektform nach to). Beispiel: I give the card to my dad. → I give the card to him." },
 
   // ---------- 5-G12  Wortstellung ----------
