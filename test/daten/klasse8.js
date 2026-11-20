@@ -1200,3 +1200,23 @@ Object.assign(K8.minispiele, {
     { emoji: "🕷️", text: "A spider! Eek!" }
   ]
 });
+
+// ---------- Two more mini games (from version 0.9.2) ----------
+Object.assign(K8.minispiele.spiele, {
+  kabel: {
+    titel: "🔌 Fix the alarm system",
+    anleitung: "Someone cut the wires of the alarm. Drag each cable to the socket with the same colour and symbol – or tap the cable, then the socket.",
+    ziel: 3,
+    erfolg: "Alarm system online. Nobody gets into this office tonight."
+  },
+  sequenz: {
+    titel: "🧠 Remember the combination",
+    anleitung: "The safe shows its combination for a moment. Watch the buttons light up, then tap them in the same order.",
+    ziel: 4,
+    erfolg: "Click. The safe is open. Excellent memory, detective."
+  }
+});
+Object.assign(K8.minispiele, {
+  kabel: { kasten: "Alarm box", hinweis: "Same colour, same symbol.", fertig: ["Alarm box fixed!", "Wires connected!"], autsch: ["Sparks! Wrong socket.", "Bzzzt! Try another socket."] },
+  sequenz: { zeichen: ["1", "2", "3", "4", "5", "6", "7", "8", "9"], schau: "Watch", du: "Your turn", gut: ["Correct!", "Nice work!", "Exactly!"], autsch: ["Wrong order. Watch again.", "Not quite. Watch again."] }
+});

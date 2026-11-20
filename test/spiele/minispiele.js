@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.6 (passt zu App-Version 0.7.2)
+   Version:  minispiele 0.7 (passt zu App-Version 0.9.2)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,8 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.7 (20.11.2026)  Vier neue Spiele für die älteren Klassen: kabel (Kabel verbinden), andocken
+                       (Andockmanöver), sequenz (Sicherheitssequenz merken), signal (Signal einstellen).
      0.6 (16.11.2026)  Man kann scheitern: drei Herzen, jeder Fehler kostet eines (ctx.fehler).
                        Code knacken: höchstens 6 Versuche (versuche). Taschenlampe: Fallen im
                        Dunkeln (fallen), die man nicht zu lange anleuchten darf.
@@ -737,5 +739,287 @@ if(!document.getElementById("minispielStilNeu")){
   document.head.appendChild(st);
 }
 
-window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel, nachtflug, rutsche, codeknacker, lasergitter });
+// =====================================================================
+// 10) KABEL VERBINDEN – jedes Kabel zur Buchse mit gleicher Farbe UND gleichem Symbol (für Klasse 8–10)
+//     Ziehen (oder erst Stecker, dann Buchse antippen). Jeder fertige Schaltkasten = 1 Punkt.
+//     Falsche Buchse kostet ein Herz. Farbe + Symbol, damit es auch bei Rot-Grün-Schwäche klappt.
+//     Daten: KN.minispiele.kabel = { kasten: "Box", hinweis: "…", fertig: ["…"], autsch: ["…"] }
+// =====================================================================
+const KABEL = [
+  { c: "#ff4d6d", s: "●", n: "red circle" },   { c: "#4dabf7", s: "▲", n: "blue triangle" }, { c: "#ffd23f", s: "■", n: "yellow square" },
+  { c: "#51cf66", s: "★", n: "green star" },   { c: "#cc5de8", s: "◆", n: "purple diamond" }, { c: "#ff922b", s: "✚", n: "orange cross" }
+];
+function kabel(buehne, ctx){
+  const D = (ctx.daten && ctx.daten.kabel) || {};
+  const wrap = el("div", "ms-kb"), kopf = el("p", "ms-kb-kopf"), feld = el("div", "ms-kb-feld"), meldung = el("div", "ms-ro-meldung");
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg"); svg.setAttribute("class", "ms-kb-svg");
+  const links = el("div", "ms-kb-spalte"), rechts = el("div", "ms-kb-spalte");
+  feld.append(svg, links, rechts); wrap.append(kopf, feld, meldung); buehne.appendChild(wrap);
+  let kasten = 0, kabelNr = [], fertig = new Set(), aktiv = null, zeiger = null, sperre = false, mtimer = null, ntimer = null;
+  const anzahl = () => [4, 4, 5, 5, 6][Math.min(kasten, 4)];
+  function zeige(t){ meldung.textContent = t; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function neuerKasten(){
+    fertig = new Set(); aktiv = null; zeiger = null; sperre = false;
+    kabelNr = mischen(KABEL.map((_, i) => i)).slice(0, anzahl());
+    links.replaceChildren(); rechts.replaceChildren();
+    kabelNr.forEach(i => links.appendChild(knopf(i, "stecker")));
+    mischen(kabelNr).forEach(i => rechts.appendChild(knopf(i, "buchse")));
+    kopf.textContent = (D.kasten || "Box") + " " + (kasten + 1) + " · " + (D.hinweis || "Drag each cable to the same colour and symbol.");
+    zeichne();
+  }
+  function knopf(i, art){
+    const k = KABEL[i], b = el("button", "ms-kb-" + art, k.s); b.type = "button"; b.dataset.i = i;
+    b.style.background = k.c; b.setAttribute("aria-label", (art === "stecker" ? "cable " : "socket ") + k.n); return b;
+  }
+  const mitte = (e, rechtsSeite) => { const f = feld.getBoundingClientRect(), r = e.getBoundingClientRect(); return { x: (rechtsSeite ? r.left : r.right) - f.left, y: r.top + r.height / 2 - f.top }; };
+  function linie(a, b, farbe, gestrichelt){
+    const g = document.createElementNS(NS, "g");
+    [["#000", 12], [farbe, 7]].forEach(([c, w]) => { const l = document.createElementNS(NS, "line"); l.setAttribute("x1", a.x); l.setAttribute("y1", a.y); l.setAttribute("x2", b.x); l.setAttribute("y2", b.y);
+      l.setAttribute("stroke", c); l.setAttribute("stroke-width", w); l.setAttribute("stroke-linecap", "round"); if(gestrichelt) l.setAttribute("stroke-dasharray", "4 12"); g.appendChild(l); });
+    svg.appendChild(g);
+  }
+  function zeichne(){
+    svg.replaceChildren();
+    fertig.forEach(i => { const s = links.querySelector('[data-i="' + i + '"]'), z = rechts.querySelector('[data-i="' + i + '"]'); if(s && z) linie(mitte(s, false), mitte(z, true), KABEL[i].c); });
+    if(aktiv != null && zeiger){ const s = links.querySelector('[data-i="' + aktiv + '"]'); if(s) linie(mitte(s, false), zeiger, KABEL[aktiv].c, true); }
+    links.querySelectorAll(".ms-kb-stecker").forEach(b => { b.classList.toggle("fertig", fertig.has(+b.dataset.i)); b.classList.toggle("aktiv", +b.dataset.i === aktiv); });
+    rechts.querySelectorAll(".ms-kb-buchse").forEach(b => b.classList.toggle("fertig", fertig.has(+b.dataset.i)));
+  }
+  function verbinde(i){
+    if(aktiv == null || sperre || !ctx.laeuft()) return;
+    if(i === aktiv){
+      fertig.add(i); aktiv = null; zeiger = null; ctx.ton("klick"); zeichne();
+      if(fertig.size === kabelNr.length){ sperre = true; ctx.ton("richtig"); zeige("⚡ " + wuerfle(D.fertig || ["Power on!"])); kasten++; ctx.punkt(); ntimer = setTimeout(() => { if(ctx.laeuft()) neuerKasten(); }, 700); }
+    } else {
+      ctx.ton("falsch"); zeige("💥 " + wuerfle(D.autsch || ["Sparks! Wrong socket."])); aktiv = null; zeiger = null; zeichne(); if(ctx.fehler) ctx.fehler();
+    }
+  }
+  const punktIn = e => { const f = feld.getBoundingClientRect(); return { x: e.clientX - f.left, y: e.clientY - f.top }; };
+  const runter = e => {
+    if(!ctx.laeuft() || sperre) return;
+    const s = e.target.closest(".ms-kb-stecker"), z = e.target.closest(".ms-kb-buchse");
+    if(s && !fertig.has(+s.dataset.i)){ e.preventDefault(); aktiv = +s.dataset.i; zeiger = punktIn(e); zeichne(); return; }
+    if(z && aktiv != null && !fertig.has(+z.dataset.i)){ e.preventDefault(); verbinde(+z.dataset.i); }
+  };
+  const bewegt = e => { if(aktiv == null || !e.buttons && e.pointerType === "mouse") return; zeiger = punktIn(e); zeichne(); };
+  const hoch = e => {
+    if(aktiv == null) return;
+    const ziel = document.elementFromPoint(e.clientX, e.clientY), z = ziel && ziel.closest && ziel.closest(".ms-kb-buchse");
+    if(z && !fertig.has(+z.dataset.i)) verbinde(+z.dataset.i);
+    else { zeiger = null; zeichne(); }   // Stecker bleibt gewählt: jetzt die Buchse antippen
+  };
+  wrap.addEventListener("pointerdown", runter); wrap.addEventListener("pointermove", bewegt); wrap.addEventListener("pointerup", hoch);
+  const neu = () => zeichne(); window.addEventListener("resize", neu);
+  neuerKasten();
+  return () => { clearTimeout(mtimer); clearTimeout(ntimer); window.removeEventListener("resize", neu); wrap.removeEventListener("pointerdown", runter); wrap.removeEventListener("pointermove", bewegt); wrap.removeEventListener("pointerup", hoch); };
+}
+
+// =====================================================================
+// 11) ANDOCKEN – Raumschiff/Drohne langsam in die Schleuse steuern (für Klasse 9–10)
+//     Finger halten = Schub in Richtung Finger. Loslassen = das Schiff treibt weiter.
+//     In der Schleuse: langsam genug = 1 Punkt, zu schnell = Herz weg. Trümmer kosten ein Herz.
+//     Tempo steht als Zahl und Wort da (nicht nur Farbe).
+//     Daten: KN.minispiele.andocken = { figur, dock, truemmer: [...], limit, hinweis, ok, zuSchnell, autsch: [...], gelandet: [...] }
+// =====================================================================
+function andocken(buehne, ctx){
+  const D = (ctx.daten && ctx.daten.andocken) || {};
+  const wrap = el("div", "ms-ad"), hinweis = el("p", "ms-ad-hinweis", D.hinweis || "Hold your finger where you want to fly. Dock slowly!");
+  const dock = el("div", "ms-ad-dock", D.dock || "DOCK"), schiff = el("div", "ms-ad-schiff", D.figur || "🚀"), tacho = el("div", "ms-ad-tacho"), meldung = el("div", "ms-ro-meldung");
+  wrap.append(hinweis, dock, schiff, tacho, meldung); buehne.appendChild(wrap);
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (D.hinweis || "Hold your finger where you want to fly.") + " Arrow keys = thrust.");
+  const LIMIT = Math.max(40, D.limit || 95), A = 300, TOP = 58;
+  let W = 0, H = 0, x = 0, y = 0, vx = 0, vy = 0, dx = 0, runde = 0, schub = null, schutz = 0, raf = 0, t0 = 0, mtimer = null, warte = 0;
+  const tasten = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }, gedrueckt = new Set();
+  let truemmer = [];
+  function zeige(t){ meldung.textContent = t; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function mass(){ W = wrap.clientWidth; H = wrap.clientHeight; }
+  function start(){
+    mass(); x = W / 2; y = H - 40; vx = 0; vy = 0;
+    dx = 60 + Math.random() * Math.max(10, W - 120); dock.style.left = dx + "px"; dock.style.top = TOP + "px";
+    truemmer.forEach(t => t.d.remove()); truemmer = [];
+    const n = Math.min(3, 1 + runde);
+    for(let i = 0; i < n; i++){
+      const d = el("div", "ms-ad-truemmer", wuerfle(D.truemmer || ["☄️", "🪨"])); wrap.appendChild(d);
+      const ty = TOP + 90 + (H - TOP - 200) * ((i + 0.5) / n);
+      truemmer.push({ d, x: Math.random() * W, y: ty, v: (Math.random() < 0.5 ? -1 : 1) * (55 + Math.random() * 45 + runde * 10) });
+    }
+  }
+  function tempo(){ return Math.hypot(vx, vy); }
+  function schritt(t){
+    const dt = Math.min(0.05, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    if(W !== wrap.clientWidth || H !== wrap.clientHeight) mass();
+    if(warte > 0){ warte -= dt; if(warte <= 0) start(); }
+    else {
+      let ax = 0, ay = 0;
+      if(schub){ const l = Math.hypot(schub.x - x, schub.y - y); if(l > 8){ ax = (schub.x - x) / l * A; ay = (schub.y - y) / l * A; } }
+      gedrueckt.forEach(k => { ax += tasten[k][0] * A; ay += tasten[k][1] * A; });
+      vx += ax * dt; vy += ay * dt; const f = Math.pow(0.7, dt); vx *= f; vy *= f;
+      const v = tempo(); if(v > 260){ vx *= 260 / v; vy *= 260 / v; }
+      x += vx * dt; y += vy * dt;
+      if(x < 20){ x = 20; vx = 0; } if(x > W - 20){ x = W - 20; vx = 0; } if(y > H - 24){ y = H - 24; vy = 0; }
+      if(schutz > 0) schutz -= dt;
+      truemmer.forEach(o => { o.x += o.v * dt; if(o.x < -30) o.x = W + 30; if(o.x > W + 30) o.x = -30; o.d.style.transform = "translate(" + (o.x - 20) + "px," + (o.y - 20) + "px)";
+        if(schutz <= 0 && Math.hypot(o.x - x, o.y - y) < 34){ schutz = 1.2; vy = 140; vx = 0; ctx.ton("falsch"); zeige("💥 " + wuerfle(D.autsch || ["Ouch! Debris."])); if(ctx.fehler) ctx.fehler(); } });
+      // Schleuse erreicht?
+      if(y < TOP + 52){
+        if(Math.abs(x - dx) < 44){
+          if(tempo() <= LIMIT){ runde++; ctx.ton("richtig"); zeige("✅ " + wuerfle(D.gelandet || ["Docked!"])); ctx.punkt(); warte = 0.6; vx = vy = 0; y = TOP + 30; x = dx; }
+          else { ctx.ton("falsch"); zeige("💥 " + (D.zuSchnell || "Too fast! Try again.")); if(ctx.fehler) ctx.fehler(); warte = 0.6; vx = vy = 0; }
+        } else if(y < TOP + 20){ y = TOP + 20; vy = Math.max(0, vy); }
+      }
+    }
+    const v = Math.round(tempo()), ok = v <= LIMIT;
+    tacho.textContent = "SPEED " + v + " · " + (ok ? (D.ok || "OK ✓") : (D.zuSchnellKurz || "TOO FAST ✗"));
+    tacho.classList.toggle("schnell", !ok);
+    schiff.style.transform = "translate(" + (x - 22) + "px," + (y - 22) + "px)";
+    schiff.classList.toggle("blinkt", schutz > 0 && !ctx.reduziert);
+    raf = requestAnimationFrame(schritt);
+  }
+  const punkt = e => { const r = wrap.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  const runter = e => { e.preventDefault(); schub = punkt(e); };
+  const bewegt = e => { if(schub) schub = punkt(e); };
+  const hoch = () => { schub = null; };
+  const taste = e => { if(tasten[e.key]){ e.preventDefault(); if(e.type === "keydown") gedrueckt.add(e.key); else gedrueckt.delete(e.key); } };
+  wrap.addEventListener("pointerdown", runter); wrap.addEventListener("pointermove", bewegt); wrap.addEventListener("pointerup", hoch); wrap.addEventListener("pointercancel", hoch); wrap.addEventListener("lostpointercapture", hoch);
+  buehne.addEventListener("keydown", taste); buehne.addEventListener("keyup", taste);
+  start(); raf = requestAnimationFrame(schritt); setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); buehne.removeEventListener("keydown", taste); buehne.removeEventListener("keyup", taste); buehne.removeAttribute("tabindex"); };
+}
+
+// =====================================================================
+// 12) SEQUENZ MERKEN – Felder leuchten nacheinander auf, dann nachtippen (für Klasse 8–10)
+//     Jede geschaffte Folge = 1 Punkt, danach kommt ein Feld dazu (Start: 3 Felder).
+//     Falsch getippt kostet ein Herz; dieselbe Folge wird dann noch einmal gezeigt.
+//     Daten: KN.minispiele.sequenz = { zeichen: [9 Zeichen], schau: "Watch!", du: "Your turn!", autsch: [...], gut: [...] }
+// =====================================================================
+function sequenz(buehne, ctx){
+  const D = (ctx.daten && ctx.daten.sequenz) || {}, Z = (D.zeichen && D.zeichen.length >= 9 ? D.zeichen : ["1", "2", "3", "4", "5", "6", "7", "8", "9"]).slice(0, 9);
+  const wrap = el("div", "ms-sq"), status = el("p", "ms-sq-status"), gitter = el("div", "ms-sq-gitter"), meldung = el("div", "ms-ro-meldung");
+  status.setAttribute("role", "status"); wrap.append(status, gitter, meldung); buehne.appendChild(wrap);
+  const felder = Z.map((z, i) => { const b = el("button", "ms-sq-feld", z); b.type = "button"; b.dataset.i = i; gitter.appendChild(b); return b; });
+  let folge = [], pos = 0, zeigt = true, timer = [], mtimer = null;
+  const takt = ctx.reduziert ? 750 : 560;
+  function zeige(t){ meldung.textContent = t; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 800); }
+  function vorspielen(){
+    zeigt = true; pos = 0; gitter.classList.add("zeigt"); status.textContent = "👀 " + (D.schau || "Watch!") + " · " + folge.length;
+    folge.forEach((i, k) => {
+      timer.push(setTimeout(() => { if(!ctx.laeuft()) return; felder[i].classList.add("an"); ctx.ton("klick"); }, 500 + k * takt));
+      timer.push(setTimeout(() => felder[i].classList.remove("an"), 500 + k * takt + takt * 0.65));
+    });
+    timer.push(setTimeout(() => { zeigt = false; gitter.classList.remove("zeigt"); status.textContent = "👉 " + (D.du || "Your turn!") + " · " + folge.length; }, 500 + folge.length * takt));
+  }
+  function tipp(i){
+    if(zeigt || !ctx.laeuft()) return;
+    felder[i].classList.add("an"); setTimeout(() => felder[i].classList.remove("an"), 180);
+    if(folge[pos] === i){
+      pos++; ctx.ton("klick");
+      if(pos === folge.length){ ctx.ton("richtig"); zeige("✅ " + wuerfle(D.gut || ["Correct!"])); ctx.punkt(); folge.push(Math.floor(Math.random() * 9)); zeigt = true; timer.push(setTimeout(() => { if(ctx.laeuft()) vorspielen(); }, 700)); }
+    } else {
+      ctx.ton("falsch"); zeige("✗ " + wuerfle(D.autsch || ["Wrong order. Watch again."])); zeigt = true; if(ctx.fehler) ctx.fehler();
+      timer.push(setTimeout(() => { if(ctx.laeuft()) vorspielen(); }, 900));
+    }
+  }
+  const runter = e => { const f = e.target.closest(".ms-sq-feld"); if(!f) return; e.preventDefault(); tipp(+f.dataset.i); };
+  const taste = e => { if(/^[1-9]$/.test(e.key)){ e.preventDefault(); tipp(+e.key - 1); } };
+  gitter.addEventListener("pointerdown", runter); buehne.addEventListener("keydown", taste);
+  for(let k = 0; k < 3; k++) folge.push(Math.floor(Math.random() * 9));
+  vorspielen(); buehne.tabIndex = 0; setTimeout(() => { try { buehne.focus({ preventScroll: true }); } catch(e){} }, 50);
+  return () => { timer.forEach(clearTimeout); clearTimeout(mtimer); gitter.removeEventListener("pointerdown", runter); buehne.removeEventListener("keydown", taste); buehne.removeAttribute("tabindex"); };
+}
+
+// =====================================================================
+// 13) SIGNAL EINSTELLEN – die eigene Welle mit zwei Reglern auf die Zielwelle legen (für Klasse 9–10)
+//     Höhe und Anzahl der Wellen (je 1–5). „Lock“ drücken: passt es, kommt ein Funkspruch (1 Punkt),
+//     sonst kostet es ein Herz. Zielwelle gestrichelt, eigene Welle durchgezogen (nicht nur Farbe).
+//     Daten: KN.minispiele.signal = { funk: ["…"], hoehe: "Height", wellen: "Waves", lock: "Lock signal", ziel: "target", du: "you", autsch: [...] }
+// =====================================================================
+function signal(buehne, ctx){
+  const D = (ctx.daten && ctx.daten.signal) || {};
+  const wrap = el("div", "ms-sg"), leg = el("p", "ms-sg-legende", "- - - " + (D.ziel || "target signal") + "   ── " + (D.du || "your signal"));
+  const cv = el("canvas", "ms-sg-bild"), funk = el("p", "ms-sg-funk", "📻 …"), regler = el("div", "ms-sg-regler"), lock = el("button", "ms-sg-lock", "📡 " + (D.lock || "Lock signal"));
+  lock.type = "button"; funk.setAttribute("role", "status");
+  const mach = (txt) => { const l = el("label", "ms-sg-zeile"), s = el("span", null, txt), r = el("input"); r.type = "range"; r.min = 1; r.max = 5; r.step = 1; l.append(s, r); regler.appendChild(l); return r; };
+  const rH = mach("↕ " + (D.hoehe || "Height")), rW = mach("↔ " + (D.wellen || "Waves"));
+  const meldung = el("div", "ms-ro-meldung");
+  wrap.append(leg, cv, funk, regler, lock, meldung); buehne.appendChild(wrap);
+  let zh = 3, zw = 3, phase = 0, raf = 0, t0 = 0, mtimer = null, sperre = false, nr = 0;
+  const funksprueche = mischen(D.funk || ["We hear you loud and clear.", "Signal received. Stand by.", "Message received. Over."]);
+  function zeige(t){ meldung.textContent = t; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function neuesZiel(){
+    const altH = zh, altW = zw;
+    do { zh = 1 + Math.floor(Math.random() * 5); zw = 1 + Math.floor(Math.random() * 5); } while((zh === altH && zw === altW) || (zh === +rH.value && zw === +rW.value));
+    wrap.dataset.ziel = zh + "," + zw;   // nur für automatische Tests
+  }
+  function welle(c, w, h, a, n, gestrichelt, farbe){
+    c.save(); c.lineWidth = gestrichelt ? 5 : 4; c.strokeStyle = farbe; c.setLineDash(gestrichelt ? [10, 8] : []);
+    c.beginPath(); for(let px = 0; px <= w; px += 3){ const yy = h / 2 - Math.sin((px / w) * n * Math.PI * 2 + phase) * a * (h * 0.085); px ? c.lineTo(px, yy) : c.moveTo(px, yy); } c.stroke(); c.restore();
+  }
+  function zeichne(t){
+    const dt = Math.min(0.05, (t - (t0 || t)) / 1000); t0 = t;
+    if(!ctx.laeuft()){ raf = 0; return; }
+    if(!ctx.reduziert) phase += dt * 2.2;
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if(cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)){ cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const c = cv.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
+    c.strokeStyle = "rgba(255,255,255,.15)"; c.lineWidth = 1; c.beginPath(); c.moveTo(0, h / 2); c.lineTo(w, h / 2); c.stroke();
+    welle(c, w, h, zh, zw, true, "#ffd23f"); welle(c, w, h, +rH.value, +rW.value, false, "#7df9ff");
+    raf = requestAnimationFrame(zeichne);
+  }
+  function pruefe(){
+    if(sperre || !ctx.laeuft()) return;
+    if(+rH.value === zh && +rW.value === zw){
+      sperre = true; ctx.ton("richtig"); funk.textContent = "📻 „" + funksprueche[nr % funksprueche.length] + "“"; nr++; ctx.punkt();
+      setTimeout(() => { sperre = false; if(ctx.laeuft()) neuesZiel(); }, 900);
+    } else { ctx.ton("falsch"); zeige("📶 " + wuerfle(D.autsch || ["No signal. Keep tuning."])); if(ctx.fehler) ctx.fehler(); }
+  }
+  lock.addEventListener("click", pruefe);
+  rH.value = 1 + Math.floor(Math.random() * 5); rW.value = 1 + Math.floor(Math.random() * 5); neuesZiel();
+  raf = requestAnimationFrame(zeichne);
+  return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); lock.removeEventListener("click", pruefe); };
+}
+
+// Aussehen der vier Spiele für die älteren Klassen (einmal einfügen)
+if(!document.getElementById("minispielStilAlt")){
+  const st = el("style"); st.id = "minispielStilAlt";
+  st.textContent = `
+  .ms-kb{position:absolute;inset:0;display:flex;flex-direction:column;padding:3.2rem .6rem .6rem;box-sizing:border-box;background:linear-gradient(#0d1b2a,#1b263b)}
+  .ms-kb-kopf{margin:0 0 .3rem;text-align:center;font-weight:700;color:#cfd8ff;font-size:.95rem}
+  .ms-kb-feld{position:relative;flex:1;display:flex;justify-content:space-between;align-items:stretch;padding:0 4%}
+  .ms-kb-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  .ms-kb-spalte{display:flex;flex-direction:column;justify-content:space-around;z-index:2}
+  .ms-kb-stecker,.ms-kb-buchse{width:3.3rem;height:3.3rem;border:4px solid #000;font:700 1.6rem/1 system-ui,sans-serif;color:#000;cursor:pointer;box-shadow:0 4px 0 #000;touch-action:none}
+  .ms-kb-stecker{border-radius:50% 12px 12px 50%}
+  .ms-kb-buchse{border-radius:12px 50% 50% 12px;outline:4px dashed #fff;outline-offset:3px}
+  .ms-kb-stecker.aktiv{transform:scale(1.15);box-shadow:0 0 0 5px #fff}
+  .ms-kb-stecker.fertig,.ms-kb-buchse.fertig{opacity:.55;outline:none;cursor:default}
+  .ms-ad{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 30% 20%,#1d2b53,#060913 70%);touch-action:none}
+  .ms-ad-hinweis{position:absolute;left:0;right:0;bottom:.3rem;margin:0;text-align:center;font-size:.85rem;color:#cfd8ff;pointer-events:none}
+  .ms-ad-dock{position:absolute;transform:translateX(-50%);width:88px;height:46px;border:4px solid #fff;border-top:none;border-radius:0 0 14px 14px;background:repeating-linear-gradient(45deg,#ffd23f 0 10px,#000 10px 20px);
+    display:flex;align-items:flex-end;justify-content:center;font:700 .8rem ui-monospace,Menlo,monospace;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
+  .ms-ad-schiff{position:absolute;left:0;top:0;width:44px;height:44px;font-size:2.4rem;line-height:44px;text-align:center;will-change:transform}
+  .ms-ad-schiff.blinkt{opacity:.45}
+  .ms-ad-truemmer{position:absolute;left:0;top:0;width:40px;height:40px;font-size:2rem;line-height:40px;text-align:center;will-change:transform}
+  .ms-ad-tacho{position:absolute;right:.5rem;bottom:3.2rem;background:#fff;color:#000;border:3px solid #000;border-radius:10px;padding:.1rem .5rem;font:700 .95rem ui-monospace,Menlo,monospace}
+  .ms-ad-tacho.schnell{background:#000;color:#fff;border:3px dashed #fff}
+  .ms-sq{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:3.2rem .6rem .6rem;box-sizing:border-box;background:#0b1220}
+  .ms-sq-status{margin:0;font-weight:700;font-size:1.15rem;min-height:1.4em}
+  .ms-sq-gitter{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;width:min(78vw,300px)}
+  .ms-sq-feld{aspect-ratio:1;min-height:3.6rem;font:700 1.7rem ui-monospace,Menlo,monospace;background:#1e2a44;color:#cfd8ff;border:4px solid #000;border-radius:14px;box-shadow:0 4px 0 #000;cursor:pointer;touch-action:none}
+  .ms-sq-feld.an{background:#ffd23f;color:#000;transform:scale(1.06);box-shadow:0 0 0 5px #fff}
+  .ms-sq-gitter.zeigt .ms-sq-feld{cursor:wait}
+  .ms-sg{position:absolute;inset:0;display:flex;flex-direction:column;gap:.35rem;padding:3.2rem .7rem .6rem;box-sizing:border-box;background:#06121a}
+  .ms-sg-legende{margin:0;text-align:center;font:700 .85rem ui-monospace,Menlo,monospace;color:#cfd8ff}
+  .ms-sg-bild{flex:1;min-height:90px;width:100%;background:#000;border:3px solid #2f4a5a;border-radius:12px}
+  .ms-sg-funk{margin:0;min-height:1.3em;text-align:center;font-style:italic}
+  .ms-sg-regler{display:flex;flex-direction:column;gap:.3rem}
+  .ms-sg-zeile{display:flex;align-items:center;gap:.6rem;font-weight:700}
+  .ms-sg-zeile span{min-width:6.2rem}
+  .ms-sg-zeile input{flex:1;height:2.6rem;accent-color:#7df9ff;touch-action:manipulation}
+  .ms-sg-lock{align-self:center;min-height:3rem;padding:0 1.4rem;font-weight:700;font-size:1.1rem;background:#ffd23f;color:#000;border:4px solid #000;border-radius:14px;box-shadow:0 4px 0 #000;cursor:pointer}
+  @media (prefers-reduced-motion: reduce){ .ms-sq-feld.an{transform:none} }`;
+  document.head.appendChild(st);
+}
+
+window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel, nachtflug, rutsche, codeknacker, lasergitter, kabel, andocken, sequenz, signal });
 })();

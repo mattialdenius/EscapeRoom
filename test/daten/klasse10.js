@@ -260,3 +260,40 @@ Object.assign(K10.minispiele, {
     { emoji: "🕷️", text: "A space spider?!" }
   ]
 });
+
+// ---------- Four more mini games for older students (from version 0.9.2): twelve games ----------
+Object.assign(K10.minispiele.spiele, {
+  kabel: {
+    titel: "🔌 Emergency power",
+    anleitung: "The main power is down. Drag each cable to the socket with the same colour and symbol – or tap the cable, then the socket. Wrong socket = sparks!",
+    ziel: 3,
+    erfolg: "Emergency power online. ARIA: “Lights on. You're welcome.”"
+  },
+  andocken: {
+    titel: "🚀 Dock the escape pod",
+    anleitung: "Hold your finger where the pod should fly – the engine pushes towards your finger. Let go and it drifts. Dock SLOWLY and avoid the space debris.",
+    ziel: 3,
+    erfolg: "Three perfect dockings. Mission control applauds."
+  },
+  sequenz: {
+    titel: "🧠 Reactor start sequence",
+    anleitung: "The reactor shows its start sequence for a moment. Watch the panel light up, then tap the same order. It gets longer every time.",
+    ziel: 4,
+    erfolg: "Reactor online. ARIA: “Impressive memory – for a carbon-based life form.”"
+  },
+  signal: {
+    titel: "📡 Contact Earth",
+    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave from Earth. Then tap „Lock signal“. A wrong lock wastes energy.",
+    ziel: 3,
+    erfolg: "Contact with Earth. Three messages received."
+  }
+});
+Object.assign(K10.minispiele, {
+  kabel: { kasten: "Power unit", hinweis: "Same colour, same symbol.", fertig: ["Power unit online!", "Circuit closed!"], autsch: ["Sparks! Wrong socket.", "Bzzzt! Short circuit."] },
+  andocken: { figur: "🚀", dock: "DOCK", truemmer: ["☄️", "🪨", "🛰️"], limit: 95, hinweis: "Hold = engine pushes towards your finger. Dock slowly!",
+              gelandet: ["Docked!", "Soft docking!", "Perfect!"], zuSchnell: "Too fast! The pod bounced off.", autsch: ["Ouch! Space debris.", "Bump! Fly around it."] },
+  sequenz: { zeichen: ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ"], schau: "Watch", du: "Your turn", gut: ["Sequence correct!", "Reactor stable!", "Exactly!"], autsch: ["Wrong sequence. Watch again.", "Reactor warning! Watch again."] },
+  signal: { hoehe: "Height", wellen: "Waves", lock: "Lock signal", ziel: "Earth", du: "station", autsch: ["No signal. Keep tuning.", "Only static from space."],
+            funk: ["Station, this is Houston. We hear you loud and clear.", "A rescue ship is on its way.", "Your oxygen levels look good.",
+                   "Please send us the data from the greenhouse.", "Well done, crew. Stay calm and follow the plan.", "We will open the landing zone in two hours."] }
+});

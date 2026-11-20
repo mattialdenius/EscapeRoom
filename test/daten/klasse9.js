@@ -266,3 +266,40 @@ Object.assign(K9.minispiele, {
     { emoji: "🕷️", text: "A spider! Eek!" }
   ]
 });
+
+// ---------- Four more mini games for older students (from version 0.9.2): twelve games ----------
+Object.assign(K9.minispiele.spiele, {
+  kabel: {
+    titel: "🔌 Rewire the server",
+    anleitung: "The server is down. Drag each cable to the socket with the same colour and symbol – or tap the cable, then the socket. Wrong socket = sparks!",
+    ziel: 3,
+    erfolg: "Server online. Nova: “Not bad for a human.”"
+  },
+  andocken: {
+    titel: "🛸 Drone landing",
+    anleitung: "Hold your finger where the drone should fly – it pushes towards your finger. Let go and it drifts. Fly into the hangar SLOWLY and avoid the birds.",
+    ziel: 3,
+    erfolg: "Three perfect landings. The drone pilot badge is yours."
+  },
+  sequenz: {
+    titel: "🧠 Lab access code",
+    anleitung: "The lab door shows its access code for a moment. Watch the buttons light up, then tap them in the same order. It gets longer every time.",
+    ziel: 4,
+    erfolg: "Access granted. Your memory is a secret weapon."
+  },
+  signal: {
+    titel: "📡 Intercept the radio",
+    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave. Then tap „Lock signal“. Wrong lock = the enemy hears you.",
+    ziel: 3,
+    erfolg: "Three messages intercepted. HQ is impressed."
+  }
+});
+Object.assign(K9.minispiele, {
+  kabel: { kasten: "Server", hinweis: "Same colour, same symbol.", fertig: ["Server back online!", "Connection stable!"], autsch: ["Sparks! Wrong socket.", "Bzzzt! That's the wrong one."] },
+  andocken: { figur: "🛸", dock: "HANGAR", truemmer: ["🐦", "🎈", "🪁"], limit: 95, hinweis: "Hold = push towards your finger. Land slowly!",
+              gelandet: ["Landed!", "Smooth landing!", "Perfect!"], zuSchnell: "Too fast! Crash landing.", autsch: ["Ouch! Watch out for the birds.", "Bump! Fly around it."] },
+  sequenz: { zeichen: ["1", "2", "3", "4", "5", "6", "7", "8", "9"], schau: "Watch", du: "Your turn", gut: ["Correct!", "Access level up!", "Exactly!"], autsch: ["Wrong code. Watch again.", "Access denied. Watch again."] },
+  signal: { hoehe: "Height", wellen: "Waves", lock: "Lock signal", ziel: "target", du: "you", autsch: ["No signal. Keep tuning.", "Static … that's not it."],
+            funk: ["Agent Fox to base: The package is in the red car.", "The meeting is at midnight. Don't be late.", "Nobody must know about the plan.",
+                   "The code word is “blue moon”.", "Leave the building through the back door.", "The target has just left the hotel."] }
+});
