@@ -11,7 +11,7 @@ const K9 = neueKlasse(9);   // bitte nicht ändern
 
 // 1) DIE WELT
 K9.welt = {
-  name: "Die Agentenzentrale", emoji: "🔐",
+  name: "Agent Headquarters", emoji: "🔐",
   sprache: "en",   // Bedienung rund um Minispiel, Zusatzraum und Karte auf Englisch
   figur: "Agent Nova",
   intro: "Nova here, on the radio. Bad news: our headquarters is in lockdown and you're inside. " +
@@ -124,17 +124,17 @@ K9.welt.figurSvg =
 
 // 2) DIE THEMEN (laut „Themenuebersicht“)
 K9.themen = [
-  { id: "9-G1",  klasse: 9, unit: 1, titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "" },
-  { id: "9-G2",  klasse: 9, unit: 1, titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "" },
-  { id: "9-G3",  klasse: 9, unit: 2, titel: "Relativsätze mit und ohne Relativpronomen", regel: "" },
-  { id: "9-G4",  klasse: 9, unit: 2, titel: "Die Verlaufsform der Vergangenheit", regel: "" },
-  { id: "9-G5",  klasse: 9, unit: 3, titel: "Das Partizip Präsens", regel: "" },
-  { id: "9-G6",  klasse: 9, unit: 3, titel: "Die Vorvergangenheit", regel: "" },
-  { id: "9-G7",  klasse: 9, unit: 3, titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
-  { id: "9-G8",  klasse: 9, unit: 4, titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
-  { id: "9-G9",  klasse: 9, unit: 4, titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
-  { id: "9-G10", klasse: 9, unit: 4, titel: "Zukunftszeiten (will und going to)", regel: "" },
-  { id: "9-G11", klasse: 9, unit: 4, titel: "Zukunftszeiten (simple present und present progressive)", regel: "" }
+  { id: "9-G1",  klasse: 9, unit: 1, titelEn: "Modal verbs and their substitutes", titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "" },
+  { id: "9-G2",  klasse: 9, unit: 1, titelEn: "Comparison of adjectives and adverbs", titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "" },
+  { id: "9-G3",  klasse: 9, unit: 2, titelEn: "Relative clauses with and without relative pronouns", titel: "Relativsätze mit und ohne Relativpronomen", regel: "" },
+  { id: "9-G4",  klasse: 9, unit: 2, titelEn: "Past progressive", titel: "Die Verlaufsform der Vergangenheit", regel: "" },
+  { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "" },
+  { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "" },
+  { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
+  { id: "9-G8",  klasse: 9, unit: 4, titelEn: "Reported speech I (change of tense → simple past)", titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
+  { id: "9-G9",  klasse: 9, unit: 4, titelEn: "Reported speech II (change of tense → past perfect)", titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
+  { id: "9-G10", klasse: 9, unit: 4, titelEn: "Future: will and going to", titel: "Zukunftszeiten (will und going to)", regel: "" },
+  { id: "9-G11", klasse: 9, unit: 4, titelEn: "Future: simple present and present progressive", titel: "Zukunftszeiten (simple present und present progressive)", regel: "" }
 ];
 
 // =====================================================================

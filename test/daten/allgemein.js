@@ -34,10 +34,11 @@ const EINSTELLUNGEN = {
 };
 
 // Ampel-Niveaus (Name und Beschreibung auf dem Startbildschirm)
+// nameEn / textEn: Anzeige in den Welten mit englischer Bedienung (ab Klasse 8)
 const NIVEAUS = {
-  gruen: { name: "Leicht", farbe: "#3ddc97", text: "Erkennen und auswählen. Mit Hilfekarte." },
-  gelb:  { name: "Mittel", farbe: "#ffd23f", text: "Anwenden: Lücken füllen, Sätze bauen." },
-  rot:   { name: "Schwer", farbe: "#ff4d4d", text: "Fehler finden, Sätze selbst bilden." }
+  gruen: { name: "Leicht", farbe: "#3ddc97", text: "Erkennen und auswählen. Mit Hilfekarte.", nameEn: "Easy", textEn: "Recognise and choose. With a help card." },
+  gelb:  { name: "Mittel", farbe: "#ffd23f", text: "Anwenden: Lücken füllen, Sätze bauen.", nameEn: "Medium", textEn: "Use it: fill in gaps, build sentences." },
+  rot:   { name: "Schwer", farbe: "#ff4d4d", text: "Fehler finden, Sätze selbst bilden.", nameEn: "Hard", textEn: "Find mistakes, write sentences yourself." }
 };
 
 // Arbeitsanweisungen für die Rätselformen (Englisch + kleine deutsche Hilfe darunter)

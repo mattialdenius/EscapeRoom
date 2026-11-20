@@ -11,7 +11,7 @@ const K10 = neueKlasse(10);   // bitte nicht ändern
 
 // 1) DIE WELT
 K10.welt = {
-  name: "Die Raumstation", emoji: "🛰️",
+  name: "The Space Station", emoji: "🛰️",
   sprache: "en",   // Bedienung rund um Minispiel, Zusatzraum und Karte auf Englisch
   figur: "ARIA, station AI",
   intro: "Hello. I am ARIA, the station's AI. I was asleep. Now I'm not. " +
@@ -122,13 +122,13 @@ K10.welt.figurSvg =
 
 // 2) DIE THEMEN (laut „Themenuebersicht“)
 K10.themen = [
-  { id: "10-G1", klasse: 10, unit: 1, titel: "Gegenwartszeiten", regel: "" },
-  { id: "10-G2", klasse: 10, unit: 1, titel: "Das Perfekt", regel: "" },
-  { id: "10-G3", klasse: 10, unit: 2, titel: "Bedingungssätze Typ I und II", regel: "" },
-  { id: "10-G4", klasse: 10, unit: 2, titel: "Das Passiv", regel: "" },
-  { id: "10-G5", klasse: 10, unit: 3, titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "" },
-  { id: "10-G6", klasse: 10, unit: 3, titel: "Vergangenheitszeiten", regel: "" },
-  { id: "10-G7", klasse: 10, unit: 3, titel: "Bedingungssätze Typ III", regel: "" }
+  { id: "10-G1", klasse: 10, unit: 1, titelEn: "Present tenses", titel: "Gegenwartszeiten", regel: "" },
+  { id: "10-G2", klasse: 10, unit: 1, titelEn: "Present perfect", titel: "Das Perfekt", regel: "" },
+  { id: "10-G3", klasse: 10, unit: 2, titelEn: "Conditional sentences type I and II", titel: "Bedingungssätze Typ I und II", regel: "" },
+  { id: "10-G4", klasse: 10, unit: 2, titelEn: "The passive", titel: "Das Passiv", regel: "" },
+  { id: "10-G5", klasse: 10, unit: 3, titelEn: "Reported speech (places, times, commands and requests)", titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "" },
+  { id: "10-G6", klasse: 10, unit: 3, titelEn: "Past tenses", titel: "Vergangenheitszeiten", regel: "" },
+  { id: "10-G7", klasse: 10, unit: 3, titelEn: "Conditional sentences type III", titel: "Bedingungssätze Typ III", regel: "" }
 ];
 
 // =====================================================================
