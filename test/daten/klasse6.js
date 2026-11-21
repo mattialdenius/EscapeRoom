@@ -658,7 +658,20 @@ Object.assign(K6.baukasten, {
       { sit: "This curry is very spicy.",            sub: "I",  e: "eat",   s: "eats",   rest: "it", neg: true },
       { sit: "The burger is very expensive.",        sub: "I",  e: "buy",   s: "buys",   rest: "it", neg: true },
       { sit: "The TV show is boring.",               sub: "we", e: "watch", s: "watches", rest: "it", neg: true },
-      { sit: "The cake has got nuts in it.",         sub: "I",  e: "try",   s: "tries",  rest: "it", neg: true }
+      { sit: "The cake has got nuts in it.",         sub: "I",  e: "try",   s: "tries",  rest: "it", neg: true },
+      // ab v0.9.9 (Paket 6)
+      { sit: "I'm hungry.",                          sub: "I",  e: "make",  s: "makes",  rest: "a sandwich" },
+      { sit: "We haven't got any bread.",            sub: "we", e: "buy",   s: "buys",   rest: "some bread" },
+      { sit: "I can't find my keys.",                sub: "I",  e: "look",  s: "looks",  rest: "in my bag" },
+      { sit: "Mum is very tired.",                   sub: "I",  e: "cook",  s: "cooks",  rest: "dinner" },
+      { sit: "The bus is late.",                     sub: "we", e: "walk",  s: "walks",  rest: "to school" },
+      { sit: "That's a great idea!",                 sub: "I",  e: "call",  s: "calls",  rest: "Tom" },
+      { sit: "The film starts in five minutes.",     sub: "I",  e: "get",   s: "gets",   rest: "some popcorn" },
+      { sit: "My bike is broken.",                   sub: "I",  e: "take",  s: "takes",  rest: "the bus" },
+      { sit: "The water is very cold.",              sub: "I",  e: "swim",  s: "swims",  rest: "today", neg: true },
+      { sit: "These shoes are too small.",           sub: "I",  e: "buy",   s: "buys",   rest: "them", neg: true },
+      { sit: "It's very late.",                      sub: "we", e: "watch", s: "watches", rest: "another film", neg: true },
+      { sit: "The milk is old.",                     sub: "I",  e: "drink", s: "drinks", rest: "it", neg: true }
     ],
     erklaerungen: {
       mengen: {
@@ -927,7 +940,20 @@ Object.assign(K6.baukasten, {
       { w: "I {have} time",            grund: "have",    wf: "has",      s2: "I",   e: "help",  ing: "helping",  r2: "you" },
       { w: "Lily {misses} the bus", wer: "Lily",    grund: "miss",    wf: "miss",     s2: "she", e: "walk",  ing: "walking",  r2: "to school" },
       { w: "it {is} cold",             grund: "be",      wf: "are",      s2: "I",   e: "take",  ing: "taking",   r2: "my jacket" },
-      { w: "it {rains} tomorrow",      grund: "rain",    wf: "rain",     s2: "we",  e: "play",  ing: "playing",  r2: "table tennis outside", neg: true }
+      { w: "it {rains} tomorrow",      grund: "rain",    wf: "rain",     s2: "we",  e: "play",  ing: "playing",  r2: "table tennis outside", neg: true },
+      // ab v0.9.9 (Paket 6)
+      { w: "you {come} to my party",   grund: "come",    wf: "comes",    s2: "we",  e: "have",  ing: "having",   r2: "lots of fun" },
+      { w: "Mia {wins} the quiz", wer: "Mia", grund: "win", wf: "win",  s2: "she", e: "get",   ing: "getting",  r2: "a prize" },
+      { w: "I {finish} my homework",   grund: "finish",  wf: "finishes", s2: "I",   e: "call",  ing: "calling",  r2: "you" },
+      { w: "we {take} the bus",        grund: "take",    wf: "takes",    s2: "we",  e: "be",    ing: "being",    r2: "there at ten" },
+      { w: "Grandma {visits} us", wer: "Grandma", grund: "visit", wf: "visit", s2: "she", e: "bring", ing: "bringing", r2: "a cake" },
+      { w: "the shop {is} closed",     grund: "be",      wf: "are",      s2: "we",  e: "buy",   ing: "buying",   r2: "the milk tomorrow" },
+      { w: "I {get} a dog",            grund: "get",     wf: "gets",     s2: "I",   e: "walk",  ing: "walking",  r2: "it every day" },
+      { w: "my friends {come} too",    grund: "come",    wf: "comes",    s2: "I",   e: "go",    ing: "going",    r2: "to the party" },
+      { w: "Sam {is} late again", wer: "Sam", grund: "be", wf: "are",   s2: "he",  e: "miss",  ing: "missing",  r2: "the film" },
+      { w: "you {open} the window",    grund: "open",    wf: "opens",    s2: "it",  e: "be",    ing: "being",    r2: "cold in here" },
+      { w: "you {shout}",              grund: "shout",   wf: "shouts",   s2: "the cat", e: "come", ing: "coming", r2: "back", neg: true },
+      { w: "we {are} too late",        grund: "be",      wf: "is",       s2: "we",  e: "see",   ing: "seeing",   r2: "the start of the film", neg: true }
     ],
     // will (G19): Hoffnungen, Vermutungen, Vorhersagen
     willSaetze: [
@@ -942,7 +968,22 @@ Object.assign(K6.baukasten, {
       { pre: "Maybe",    sub: "Emma",              e: "win",  r: "the quiz" },
       { pre: "I think",  sub: "it",                e: "rain", r: "tomorrow" },
       { pre: "I hope",   sub: "I",                 e: "see",  r: "you again soon" },
-      { pre: "I'm sure", sub: "your friends",      e: "miss", r: "you" }
+      { pre: "I'm sure", sub: "your friends",      e: "miss", r: "you" },
+      // ab v0.9.9 (Paket 6)
+      { pre: "I think",  sub: "we",                e: "have", r: "a lot of fun" },
+      { pre: "Maybe",    sub: "it",                e: "be",   r: "cold tomorrow" },
+      { pre: "I hope",   sub: "you",               e: "like", r: "your new room" },
+      { pre: "I'm sure", sub: "Ben",               e: "find", r: "new friends" },
+      { pre: "I think",  sub: "the test",          e: "be",   r: "easy" },
+      { pre: "Maybe",    sub: "my parents",        e: "buy",  r: "a new car" },
+      { pre: "I hope",   sub: "Grandma",           e: "visit", r: "us at Christmas" },
+      { pre: "I'm sure", sub: "you",               e: "do",   r: "well in the test" },
+      { pre: "I think",  sub: "Lily",              e: "love", r: "the present" },
+      { pre: "Maybe",    sub: "I",                 e: "get",  r: "a dog for my birthday" },
+      { pre: "I hope",   sub: "the bus",           e: "come", r: "soon" },
+      { pre: "I'm sure", sub: "we",                e: "see",  r: "lots of animals at the zoo" },
+      { pre: "I think",  sub: "Tom",               e: "be",   r: "late again" },
+      { pre: "Maybe",    sub: "you",               e: "meet", r: "a famous person in London" }
     ],
     // going to (Unterschied zu will): fester Plan, schon vorbereitet
     planSaetze: [

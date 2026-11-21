@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.8 (Prototyp)
+  Version 0.9.9 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,12 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.9 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 6a: Aufgabenpools Klasse 5–7)
+    - Rund 150 neue Satzbausteine (5-G6, 6-G13, 6-G16, 6-G19, 7-G3, 7-G6, 7-G8, 7-G9, 7-G10, 7-G15): jetzt pro Thema,
+      Niveau und Form mindestens 25 verschiedene Aufgaben – die Zwillingsaufgabe bleibt in derselben Form.
+    - Quiz-Aufgaben mit gleichem Satz, aber anderer Lösung gelten nicht mehr als Wiederholung (Schlüssel inkl. Lösung).
+    - 7-G15 Umformen: Erklärbeispiel aus EINEM Satz (vorher konnten zwei Sätze vermischt werden).
+    - Zwillingsaufgabe: erst gleiche Form neu, dann gleiche Form (früher gesehen, nie die gerade falsche), erst danach andere Form.
   v0.9.8 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 5: Inhalte Klasse 8)
     - Wortschatz K8 an die Units angepasst: old tower, started, sad, want, too small, scary, pancakes, run,
       singer, hot weather; Rahmengeschichte „Quick“ statt „Hurry“.
@@ -206,7 +212,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.8</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.9</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -616,7 +622,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.8</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.9</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -642,7 +648,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.8";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.9";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -656,7 +662,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.8"></script>
+<script src="daten/allgemein.js?v=0.9.9"></script>
 
 <script>
 /* #####################################################################
@@ -2520,7 +2526,8 @@ function modalK7(bk, form, E){
   }
   if(form === "umformen"){
     const R = wuerfle(bk.modalSaetze.filter(r => r.imp)); kern(R.t);
-    return { frage: "Say it with a modal verb (" + R.r[0] + "):  " + R.imp, loesung: R.um, erklaerung: erklaere(E[R.bed], { BEISPIEL: anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).t.replace("___", anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).r[0]) }) };
+    const b = anders(bk.modalSaetze.filter(x => x.bed === R.bed), R);   // ein Beispielsatz (vorher zwei verschiedene gemischt) – v0.9.9
+    return { frage: "Say it with a modal verb (" + R.r[0] + "):  " + R.imp, loesung: R.um, erklaerung: erklaere(E[R.bed], { BEISPIEL: gross(b.t.replace("___", b.r[0])) }) };
   }
   const R = wuerfle(bk.modalSaetze.filter(r => form !== "fehler" || !r.keinFehler)); kern(R.t);
   const b = anders(bk.modalSaetze.filter(x => x.bed === R.bed), R);
@@ -2671,17 +2678,22 @@ function hilfeZeile(woerter){
 
 /* ===================== AUFGABEN ZIEHEN (ohne Doppelungen) ===================== */
 function schluessel(a){
-  return a.form + "|" + (a.frage || a.satz || "") + "|" + (a.form === "satzbau" ? a.loesung[0] : "") +
+  // Quiz: Lösung gehört zum Schlüssel – sonst gelten „the ___ building“ mit old/tall/famous als dieselbe Aufgabe (v0.9.9)
+  return a.form + "|" + (a.frage || a.satz || "") + "|" + (a.form === "satzbau" ? a.loesung[0] : a.form === "quiz" ? a.loesung : "") +
          (a.form === "zuordnen" ? a.kategorien.join("/") + ":" + a.woerter.map(w => w.text).join(",") : "");
 }
 const hatInhalt = id => AUFGABEN.some(a => a.thema === id) || !!GENERATOREN[id];
-function zieheAufgabe(themen, niveau, form, benutzt, nurNeu){
+// ohne = Schlüssel der gerade falsch gelösten Aufgabe (nur bei der Zwillingsaufgabe). Dann gilt (ab v0.9.9):
+// gleiche Form neu → gleiche Form, schon früher gesehen (aber nie die gerade falsche) → erst dann eine andere Form.
+function zieheAufgabe(themen, niveau, form, benutzt, nurNeu, ohne){
   const formen = EINSTELLUNGEN.formenNachNiveau[niveau];
-  const versuche = [{ form, neu: true }, { form: null, neu: true }, { form, neu: false }, { form: null, neu: false }];
+  const versuche = ohne ? [{ form, neu: true }, { form, neu: false }, { form: null, neu: true }, { form: null, neu: false }]
+                        : [{ form, neu: true }, { form: null, neu: true }, { form, neu: false }, { form: null, neu: false }];
+  const erlaubt = a => !ohne || schluessel(a) !== ohne;
   for(const v of versuche){
     if(nurNeu && !v.neu) continue;   // lieber ein anderes Thema als eine Wiederholung
     const passt = a => themen.includes(a.thema) && a.niveau === niveau && (v.form ? a.form === v.form : formen.includes(a.form));
-    const hand = mischen(AUFGABEN.filter(a => passt(a) && (!v.neu || !benutzt.has(schluessel(a)))));
+    const hand = mischen(AUFGABEN.filter(a => passt(a) && erlaubt(a) && (!v.neu || !benutzt.has(schluessel(a)))));
     const genThemen = themen.filter(id => GENERATOREN[id]);
     // bunt mischen: mal handgeschrieben, mal aus dem Baukasten
     const zuerstHand = hand.length && (!genThemen.length || Math.random() < 0.45);
@@ -2690,7 +2702,7 @@ function zieheAufgabe(themen, niveau, form, benutzt, nurNeu){
       for(let i = 0; i < 80; i++){
         const a = generiere(wuerfle(genThemen), niveau, v.form || wuerfle(formen));
         const kernFrei = !a || !a.kern || !letzteKerne.includes(a.kern) || i >= 60;   // erst nach 60 Versuchen Baustein-Regel lockern (nur bei sehr kleinen Listen)
-        if(a && kernFrei && (!v.neu || !benutzt.has(schluessel(a)))){
+        if(a && kernFrei && erlaubt(a) && (!v.neu || !benutzt.has(schluessel(a)))){
           benutzt.add(schluessel(a));
           if(a.kern){ letzteKerne.push(a.kern); if(letzteKerne.length > KERN_ABSTAND()) letzteKerne.shift(); }
           return a;
@@ -3111,7 +3123,7 @@ function pruefen(){
     ton("falsch"); sage("falsch"); ansage(ui("falsch1Ansage") + a.erklaerung);
     $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("zumZwilling");
     // Zwillingsaufgabe: neue Aufgabe zum gleichen Thema in der gleichen Form (sofort gemerkt, auch nach „Zur Übersicht“)
-    const zwilling = zieheAufgabe([a.thema], wahl.niveau, a.form, S.benutzt);
+    const zwilling = zieheAufgabe([a.thema], wahl.niveau, a.form, S.benutzt, false, schluessel(a));
     if(zwilling) r.liste[r.index] = zwilling;
     r.versuch = 2;
     $("btnWeiter").onclick = () => { zeigeAufgabe(); sage("zwilling"); };

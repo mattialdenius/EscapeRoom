@@ -361,7 +361,12 @@ K5.baukasten = {
       { grund: "eat",    rest: "your lunch", verbot: false }, { grund: "show", rest: "me your exercise book", verbot: false },
       { grund: "find",   rest: "your pencil case", verbot: false }, { grund: "dance", rest: "with me", verbot: false },
       { grund: "play",   rest: "football in the classroom", befehl: false }, { grund: "eat", rest: "chewing gum in the lesson", befehl: false },
-      { grund: "draw",   rest: "on the table", befehl: false }, { grund: "sing", rest: "in the cafeteria", befehl: false }
+      { grund: "draw",   rest: "on the table", befehl: false }, { grund: "sing", rest: "in the cafeteria", befehl: false },
+      // ab v0.9.9 (Paket 6): mehr Sätze, die als Befehl UND als Verbot passen
+      { grund: "close",  rest: "your bag" },           { grund: "close", rest: "your exercise book" },
+      { grund: "open",   rest: "your bag" },           { grund: "go",    rest: "to the board" },
+      { grund: "write",  rest: "on the board" },       { grund: "sit",   rest: "next to Tom" },
+      { grund: "take",   rest: "a photo" },            { grund: "look",  rest: "out of the window" }
     ],
     befehleExtra: [
       { grund: "eat", rest: "your banana", verbot: false }, { grund: "look", rest: "at the elephant" }, { grund: "play", rest: "with the ball" },
