@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.10 (Prototyp)
+  Version 0.9.11 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,10 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.11 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 7: Layout und Touch)
+    - Handy quer (Bildschirmhöhe bis 500 px): Die Kopfleiste scrollt mit, ist kompakter und verdeckt nichts mehr.
+    - Wortknöpfe und Kärtchen mindestens 52 px breit (auch „I“ und „a“ gut zu treffen).
+    - Ziehen: Immer nur ein Wort gleichzeitig – ein zweiter Finger auf einem anderen Wort wird ignoriert.
   v0.9.10 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 6b: Aufgabenpools Klasse 8)
     - Rund 280 neue Sätze für 8-G2 bis 8-G14 (ohne 8-G1/8-G9): jetzt pro Thema, Niveau und Form mindestens 25 Aufgaben.
     - Satz-Pool „Fehler finden“: Steht das Fehlerwort schon vor der Lücke („You aren't bored, aren't you?“), ist die
@@ -217,7 +221,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.10</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.11</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -396,7 +400,7 @@
   .luecke-satz input.falsch{border-color:var(--fehler);background:#fde3e1}
   .eingabe-zeile{display:flex;flex-direction:column;gap:.4rem;margin-top:.8rem}
   .eingabe-zeile input{width:100%;min-height:56px;padding:.3rem .7rem;font-size:1.3rem;border:3px solid var(--blau);border-radius:10px;background:#f3f6ff}
-  .chip{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.3rem .9rem;margin:.25rem;font-size:1.3rem;font-weight:700;
+  .chip{display:inline-flex;align-items:center;justify-content:center;min-height:52px;min-width:52px;padding:.3rem .9rem;margin:.25rem;font-size:1.3rem;font-weight:700;
     background:#fff;border:3px solid #000;border-radius:12px;box-shadow:0 3px 0 #000;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none}
   .chip.gewaehlt{background:var(--gelb);outline:3px dashed #000;outline-offset:2px}
   .chip.zieht{opacity:.35}
@@ -413,7 +417,7 @@
   .antwort-zeile .leer{color:#6b7a99;font-size:1rem;padding:.4rem}
   .endzeichen{font-size:1.6rem;font-weight:800;margin-left:.2rem}
   .satzwoerter{display:flex;flex-wrap:wrap;gap:.2rem;padding:.6rem;background:#fff;border:3px solid #000;border-radius:12px}
-  .satzwoerter button{min-height:52px;padding:.2rem .7rem;font-size:1.35rem;font-weight:600;background:#fff;box-shadow:0 3px 0 #000}
+  .satzwoerter button{min-height:52px;min-width:52px;padding:.2rem .7rem;font-size:1.35rem;font-weight:600;background:#fff;box-shadow:0 3px 0 #000}
   .satzwoerter button.gewaehlt{background:#fde3e1;border-color:var(--fehler);text-decoration:line-through}
   .fehler-vorher{margin:0 0 .4rem;font-size:1.2rem;font-weight:600;font-style:italic}
   .feedback{margin-top:1rem;padding:.9rem 1rem;border:3px solid #000;border-radius:14px;font-size:1.15rem}
@@ -487,6 +491,12 @@
     .sprechblase{font-size:1rem;margin:0;padding:.5rem .7rem}
     .kopf{padding-top:3.4rem}
     .aufgabe-text,.luecke-satz{font-size:1.25rem}
+  }
+  /* Handy quer (wenig Höhe): Kopfleiste scrollt mit, statt Frage, Uhr und Schloss zu verdecken (ab v0.9.11) */
+  @media (max-height:500px){
+    .kopf{position:relative;top:0;margin-bottom:.6rem;padding-top:.3rem;padding-bottom:.2rem}
+    .figur,.figur svg{width:52px} .figur figcaption{display:none}
+    .sprechblase{font-size:.95rem;padding:.4rem .6rem}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
@@ -627,7 +637,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.10</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.11</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -653,7 +663,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.10";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.11";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -667,7 +677,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.10"></script>
+<script src="daten/allgemein.js?v=0.9.11"></script>
 
 <script>
 /* #####################################################################
@@ -3275,15 +3285,17 @@ const RAETSEL = {
 /* ----- Drag & Drop mit Finger und Maus (Pointer Events) + Antippen als Alternative ----- */
 // Entfernt alle übrig gebliebenen Schatten-Wörter (Sicherheitsnetz, z. B. bei Bildschirmwechsel mitten im Ziehen)
 function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht")); }
+let ziehtGerade = null;   // nur EIN Wort gleichzeitig ziehen – ein zweiter Finger auf einem anderen Wort wird ignoriert (ab v0.9.11)
 function ziehbar(chip, ablegen, waehle){
   let start = null, klon = null, bewegt = false, ueber = null;
   const zoneBei = (x, y) => { const e = document.elementFromPoint(x, y); return e ? e.closest(".zone") : null; };
   let finger = null;   // nur EIN Finger zieht – ein zweiter Finger wird ignoriert
-  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; finger = null; };
+  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; finger = null; if(ziehtGerade === chip) ziehtGerade = null; };
   chip.addEventListener("pointerdown", e => {
     if(chip.disabled || (e.button && e.button !== 0)) return;
     if(start && finger !== e.pointerId) return;                 // zweiter Finger auf demselben Wort: ignorieren
-    aufraeumen(); kloneWeg();                                    // falls noch ein altes Schatten-Wort herumhängt
+    if(ziehtGerade && ziehtGerade !== chip && document.body.contains(ziehtGerade)) return;   // anderes Wort wird schon gezogen
+    aufraeumen(); kloneWeg(); ziehtGerade = chip;                                    // falls noch ein altes Schatten-Wort herumhängt
     start = { x: e.clientX, y: e.clientY }; bewegt = false; finger = e.pointerId; try { chip.setPointerCapture(e.pointerId); } catch(_){} });
   chip.addEventListener("pointermove", e => {
     if(!start || e.pointerId !== finger) return;
