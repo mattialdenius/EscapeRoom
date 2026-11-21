@@ -289,7 +289,7 @@ Object.assign(K9.minispiele.spiele, {
   },
   signal: {
     titel: "📡 Intercept the radio",
-    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave. Then tap „Lock signal“. Wrong lock = the enemy hears you.",
+    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave. Then tap “Lock signal”. Wrong lock = the enemy hears you.",
     ziel: 3,
     erfolg: "Three messages intercepted. HQ is impressed."
   }

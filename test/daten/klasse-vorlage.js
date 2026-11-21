@@ -31,6 +31,9 @@ const K0 = neueKlasse(0);   // ← Klassennummer eintragen, z. B. const K6 = neu
 // =====================================================================
 K0.welt = {
   name: "Name der Welt", emoji: "🏝️",
+  // sprache: "en",   // ab Klasse 8: ganze Bedienung (Knöpfe, Karte, Minispiele, Vorlesetexte) auf Englisch.
+                      // Zitate dann mit englischen Anführungszeichen schreiben: “…” (nicht „…“).
+                      // Weglassen = Deutsch (Klasse 5–7).
   figur: "Name der Begleitfigur",
   intro: "Kurze Rahmengeschichte: Warum müssen die Spieler entkommen? Wo sind die Ziffern versteckt?",
   raeume: [                                   // genau 4 Räume

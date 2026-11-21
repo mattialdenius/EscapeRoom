@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.8 (passt zu App-Version 0.9.12)
+   Version:  minispiele 0.9 (passt zu App-Version 0.9.13)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,9 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.9 (21.11.2026)  Vorlesetexte (für Screenreader) in der Sprache der Welt: Klasse 5–7 deutsch,
+                       ab Klasse 8 englisch (taschenlampe, seeloewe, obstkorb, schaukel, nachtflug,
+                       rutsche, codeknacker, lasergitter, kabel). Funkspruch mit englischen Anführungszeichen.
      0.8 (21.11.2026)  Kabel verbinden auch per Tastatur (Stecker wählen, dann Buchse).
      0.7 (20.11.2026)  Vier neue Spiele für die älteren Klassen: kabel (Kabel verbinden), andocken
                        (Andockmanöver), sequenz (Sicherheitssequenz merken), signal (Signal einstellen).
@@ -40,6 +43,7 @@
 // ---------- Hilfen ----------
 const wuerfle = l => l[Math.floor(Math.random() * l.length)];
 const mischen = l => { const a = l.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sp = (ctx, de, en) => ctx && ctx.sprache === "en" ? en : de;   // Text in der Sprache der Welt
 const el = (tag, klasse, text) => { const e = document.createElement(tag); if(klasse) e.className = klasse; if(text != null) e.textContent = text; return e; };
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const fuelle = (t, werte) => String(t).replace(/\{(\w+)\}/g, (m, k) => werte[k] != null ? werte[k] : m);
@@ -219,7 +223,7 @@ function fuettern(buehne, ctx){
 function taschenlampe(buehne, ctx){
   const D = ctx.daten, ziel = ctx.ziel, HALTEN = 0.5;   // so lange (Sekunden) muss das Licht auf dem Tier bleiben
   const dunkel = el("div", "ms-ta-dunkel"); buehne.appendChild(dunkel);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Taschenlampen-Suche") + ". Mit dem Finger oder den Pfeiltasten leuchten.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Taschenlampen-Suche", "Torch search")) + sp(ctx, ". Mit dem Finger oder den Pfeiltasten leuchten.", ". Shine the light with your finger or the arrow keys."));
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const plaetze = [];
   const frei = (x, y, d) => plaetze.every(p => Math.hypot(p.x - x, p.y - y) > d);
@@ -291,7 +295,7 @@ function seeloewe(buehne, ctx){
   const ball = el("div", "ms-ro-ball", D.ball || "🏐"), robbe = el("div", "ms-ro-robbe", D.robbe || "🦭"), boden = el("div", "ms-ro-boden"), meldung = el("div", "ms-ro-meldung");
   if(D.boden) boden.style.background = D.boden;   // eigener Boden (z. B. Raumstation statt Wasser)
   buehne.append(boden, robbe, ball, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Robben-Jonglage") + ". Figur mit dem Finger oder den Pfeiltasten bewegen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Robben-Jonglage", "Seal juggling")) + sp(ctx, ". Figur mit dem Finger oder den Pfeiltasten bewegen.", ". Move with your finger or the arrow keys."));
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const g = ctx.reduziert ? 520 : 820;            // Schwerkraft (Pixel pro Sekunde²) – bei „Bewegung reduzieren“ langsamer
   const RB = 22, RW = 70;                         // Ball-Radius, halbe Robbenbreite (Trefferzone)
@@ -338,7 +342,7 @@ function obstkorb(buehne, ctx){
   const D = ctx.daten, obst = D.obst || [{ emoji: "🍎", en: "apple", de: "Apfel" }], muell = D.muell || ["🪨"];
   const korb = el("div", "ms-ok-korb", "🧺"), meldung = el("div", "ms-ro-meldung"), boden = el("div", "ms-ok-boden");
   buehne.append(boden, korb, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Obstkorb") + ". Korb mit dem Finger oder den Pfeiltasten bewegen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Obstkorb", "Fruit basket")) + sp(ctx, ". Korb mit dem Finger oder den Pfeiltasten bewegen.", ". Move the basket with your finger or the arrow keys."));
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const KB = 46;                                   // halbe Korbbreite (Fangzone)
   const korbY = () => H() - 74;                    // Höhe des Korbrands
@@ -391,7 +395,7 @@ function schaukel(buehne, ctx){
   const D = ctx.daten;
   const welt = el("div", "ms-sc-welt"), affe = el("div", "ms-sc-affe", D.affe || "🐒"), ring = el("div", "ms-sc-ring"), netz = el("div", "ms-sc-netz"), meldung = el("div", "ms-ro-meldung");
   buehne.append(welt, netz, meldung); welt.append(affe); affe.appendChild(ring);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Affen-Schaukel") + ". Tippen oder Leertaste, wenn der Ring erscheint.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Affen-Schaukel", "Swing")) + sp(ctx, ". Tippen oder Leertaste, wenn der Ring erscheint.", ". Tap or press space when the ring appears."));
   const W = () => buehne.clientWidth, H = () => buehne.clientHeight;
   const ABSTAND = () => Math.min(W() * 0.55, 260), L = () => Math.min(H() * 0.48, 230), OBEN = 54;
   const A = 0.62, PERIODE = ctx.reduziert ? 2.3 : 1.7, w = 2 * Math.PI / PERIODE;
@@ -481,7 +485,7 @@ function nachtflug(buehne, ctx){
   const band = laufband(buehne, [{ zeichen: F.himmel || ["✨"], anzahl: 14, y: [0.06, 0.92], faktor: 0.25, groesse: "1.1rem", klasse: "hell" }], ctx.reduziert);
   const polly = el("div", "ms-nf-polly", F.figur || "🦜"), meldung = el("div", "ms-ro-meldung");
   buehne.append(polly, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Nachtflug") + ". Tippen oder Leertaste zum Fliegen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Nachtflug", "Night flight")) + sp(ctx, ". Tippen oder Leertaste zum Fliegen.", ". Tap or press space to fly."));
   const tempo = () => clamp(W() * 0.42, 120, 220) * (ctx.reduziert ? 0.7 : 1);   // Tempo passt zur Breite → im Hochformat gleich viel Vorlauf
   const g = ctx.reduziert ? 520 : 680, FLAP = ctx.reduziert ? -240 : -270, RP = 18, BB = 54;
   let px = W() * 0.25, py = H() * 0.45, vy = 0, schutz = 0, baeume = [], sterne = [], raf = 0, t0 = 0, erster = 1.0, mtimer = null;
@@ -549,7 +553,7 @@ function rutsche(buehne, ctx){
     { zeichen: ["❄️", "·", "❄️"], anzahl: 10, y: [0.05, 0.6], faktor: 0.45, groesse: "1rem", klasse: "hell" }], ctx.reduziert);
   const boden = el("div", "ms-ru-boden"), pingu = el("div", "ms-ru-pingu", R.figur || "🐧"), meldung = el("div", "ms-ro-meldung");
   buehne.append(boden, pingu, meldung);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || "Rutsche") + ". Tippen oder Leertaste zum Springen.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (ctx.titel || sp(ctx, "Rutsche", "Slide")) + sp(ctx, ". Tippen oder Leertaste zum Springen.", ". Tap or press space to jump."));
   const BH = 56, bodenY = () => H() - BH;                       // Oberkante des Eises
   const g = ctx.reduziert ? 1150 : 1500, sprungH = () => clamp(H() * 0.3, 105, 150);
   const grundTempo = () => clamp(W() * 0.45, 140, 240) * (ctx.reduziert ? 0.7 : 1);
@@ -620,22 +624,22 @@ function codeknacker(buehne, ctx){
   const verlauf = el("div", "ms-ck-verlauf"), reihe = el("div", "ms-ck-reihe"), tasten = el("div", "ms-ck-tasten"), meldung = el("p", "ms-ck-meldung", D.start || "Tap " + n + " digits.");
   verlauf.setAttribute("role", "log"); meldung.setAttribute("role", "status");
   wrap.append(legende, verlauf, reihe, meldung, tasten); buehne.appendChild(wrap);
-  const NAME = D.namen || { "●": "right place", "◐": "wrong place", "○": "not in the code" };
+  const NAME = D.namen || sp(ctx, { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" }, { "●": "right place", "◐": "wrong place", "○": "not in the code" });
   let timer = null, gesperrt = false, versuche = 0;
   const MAXV = Math.max(1, Math.round(D.versuche) || 6);   // so viele Versuche hat man
   if(ctx.herzenAus) ctx.herzenAus();                        // hier zählen Versuche statt Herzen
   function zeichneReihe(){
     reihe.replaceChildren();
-    for(let i = 0; i < n; i++){ const f = el("span", "ms-ck-feld" + (fest[i] ? " fest" : ""), fest[i] ? String(code[i]) : eingabe[i] == null ? "_" : String(eingabe[i])); if(fest[i]) f.setAttribute("aria-label", "position " + (i + 1) + ": " + code[i] + ", cracked"); reihe.appendChild(f); }
+    for(let i = 0; i < n; i++){ const f = el("span", "ms-ck-feld" + (fest[i] ? " fest" : ""), fest[i] ? String(code[i]) : eingabe[i] == null ? "_" : String(eingabe[i])); if(fest[i]) f.setAttribute("aria-label", sp(ctx, "Stelle ", "position ") + (i + 1) + ": " + code[i] + sp(ctx, ", geknackt", ", cracked")); reihe.appendChild(f); }
   }
   function zeichneTasten(){
     tasten.replaceChildren();
     for(let z = 1; z <= max; z++){
       const b = el("button", "ms-ck-taste" + (raus.has(z) ? " raus" : ""), String(z)); b.type = "button";
-      if(raus.has(z)) b.setAttribute("aria-label", z + ", not in the code");
+      if(raus.has(z)) b.setAttribute("aria-label", z + sp(ctx, ", nicht im Code", ", not in the code"));
       b.addEventListener("click", () => tippe(z)); tasten.appendChild(b);
     }
-    const loesch = el("button", "ms-ck-taste breit", "⌫"); loesch.type = "button"; loesch.setAttribute("aria-label", "delete"); loesch.addEventListener("click", zurueck); tasten.appendChild(loesch);
+    const loesch = el("button", "ms-ck-taste breit", "⌫"); loesch.type = "button"; loesch.setAttribute("aria-label", sp(ctx, "löschen", "delete")); loesch.addEventListener("click", zurueck); tasten.appendChild(loesch);
   }
   function zurueck(){ if(gesperrt) return; for(let i = n - 1; i >= 0; i--) if(!fest[i] && eingabe[i] != null){ eingabe[i] = null; break; } zeichneReihe(); }
   function tippe(z){
@@ -682,7 +686,7 @@ function lasergitter(buehne, ctx){
   const bahn = el("div", "ms-lg"), figur = el("div", "ms-lg-figur", D.figur || "🕵️"), strahl = el("div", "ms-lg-strahl"), schild = el("div", "ms-lg-schild"), tor = el("div", "ms-lg-tor", D.ziel || "🚪");
   const hinweis = el("p", "ms-lg-hinweis", D.hinweis || "Tap when the laser is OFF."), meldung = el("div", "ms-ro-meldung");
   bahn.append(hinweis, figur, strahl, schild, tor, meldung); buehne.appendChild(bahn);
-  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (D.hinweis || "Tap when the laser is OFF.") + " Enter = go.");
+  buehne.tabIndex = 0; buehne.setAttribute("aria-label", (D.hinweis || "Tap when the laser is OFF.") + sp(ctx, " Enter = loslaufen.", " Enter = go."));
   let an = true, rest = 0.8, runde = 0, sperre = 0, raf = 0, t0 = 0, mtimer = null, laeuftDurch = 0;
   const dauer = () => { const tempo = Math.max(0.6, 1 - runde * 0.05); return an ? (0.55 + Math.random() * 0.6) * tempo : (0.75 + Math.random() * 0.35) * (ctx.reduziert ? 1.4 : 1); };
   function zeige(text){ meldung.textContent = text; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 800); }
@@ -770,7 +774,7 @@ function kabel(buehne, ctx){
   }
   function knopf(i, art){
     const k = KABEL[i], b = el("button", "ms-kb-" + art, k.s); b.type = "button"; b.dataset.i = i;
-    b.style.background = k.c; b.setAttribute("aria-label", (art === "stecker" ? "cable " : "socket ") + k.n); return b;
+    b.style.background = k.c; b.setAttribute("aria-label", (art === "stecker" ? sp(ctx, "Kabel ", "cable ") : sp(ctx, "Buchse ", "socket ")) + k.n); return b;
   }
   const mitte = (e, rechtsSeite) => { const f = feld.getBoundingClientRect(), r = e.getBoundingClientRect(); return { x: (rechtsSeite ? r.left : r.right) - f.left, y: r.top + r.height / 2 - f.top }; };
   function linie(a, b, farbe, gestrichelt){
@@ -977,7 +981,7 @@ function signal(buehne, ctx){
   function pruefe(){
     if(sperre || !ctx.laeuft()) return;
     if(+rH.value === zh && +rW.value === zw){
-      sperre = true; ctx.ton("richtig"); funk.textContent = "📻 „" + funksprueche[nr % funksprueche.length] + "“"; nr++; ctx.punkt();
+      sperre = true; ctx.ton("richtig"); funk.textContent = "📻 “" + funksprueche[nr % funksprueche.length] + "”"; nr++; ctx.punkt();
       setTimeout(() => { sperre = false; if(ctx.laeuft()) neuesZiel(); }, 900);
     } else { ctx.ton("falsch"); zeige("📶 " + wuerfle(D.autsch || ["No signal. Keep tuning."])); if(ctx.fehler) ctx.fehler(); }
   }

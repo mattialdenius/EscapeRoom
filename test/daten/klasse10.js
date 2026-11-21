@@ -283,7 +283,7 @@ Object.assign(K10.minispiele.spiele, {
   },
   signal: {
     titel: "📡 Contact Earth",
-    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave from Earth. Then tap „Lock signal“. A wrong lock wastes energy.",
+    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave from Earth. Then tap “Lock signal”. A wrong lock wastes energy.",
     ziel: 3,
     erfolg: "Contact with Earth. Three messages received."
   }

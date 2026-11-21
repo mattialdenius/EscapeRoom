@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.12 (Prototyp)
+  Version 0.9.13 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,12 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.13 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 9: Sprache der Oberfläche)
+    - Ab Klasse 8 alles englisch: Ton-Knopf, Fußzeile „(prototype)“, Wörterhilfe („in German“), Karte und Minispiele (Vorlesetexte).
+    - Ab Klasse 8 englische Anführungszeichen “…” statt „…“ (Daten Klasse 8–10 und alle erzeugten Aufgaben).
+      Beim Vergleichen der Antworten ist die Art der Anführungszeichen egal.
+    - Klasse 5–7 alles deutsch: auch die Vorlesetexte in Code knacken und Lichtschranke.
+    - Die Karte heißt nach der Welt („Karte: Das Piratenschiff“, „Map: The Space Station“) statt immer „Zoo-Karte“ (karte.js 0.5, minispiele.js 0.9).
   v0.9.12 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 8: Barrierefreiheit)
     - Schloss-Lämpchen zeigen ✓ bzw. ✗ zusätzlich zur Farbe.
     - Richtig/falsch bei Kärtchen und Antwortknöpfen zusätzlich mit ✓/✗.
@@ -226,7 +232,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.12</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.13</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -648,7 +654,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.12</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.13</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -674,7 +680,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.12";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.13";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -688,7 +694,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.12"></script>
+<script src="daten/allgemein.js?v=0.9.13"></script>
 
 <script>
 /* #####################################################################
@@ -709,7 +715,7 @@ function wuerfle(a){ return a[Math.floor(Math.random() * a.length)]; }
 function gross(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 // Antworten vergleichen: Groß/klein egal, Apostroph-Varianten, Kurz- = Langform, Satzzeichen am Ende egal
 function norm(s){
-  return String(s).toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s+/g, " ").trim()
+  return String(s).toLowerCase().replace(/[’‘`´]/g, "'").replace(/[„“”]/g, '"').replace(/\s+/g, " ").trim()
     .replace(/\bcan't\b/g, "cannot").replace(/\bwon't\b/g, "will not").replace(/n't\b/g, " not")
     .replace(/\s+([.?!,])/g, "$1").replace(/[.?!]+$/, "").replace(/\s+/g, " ").trim()
     .replace(/[a-z]+/g, w => BE_AE[w] || w);
@@ -778,7 +784,7 @@ function mitNamenTausch(liste){
   liste.forEach(l => { out.push(l); out.push(String(l).replace(/\b([A-Z][a-z]+) and ([A-Z][a-z]+)\b/g, "$2 and $1")); });
   return out;
 }
-const ohneZeichen = w => w.replace(/[.,!?;:„“"]/g, "");
+const ohneZeichen = w => w.replace(/[.,!?;:„“”"]/g, "");
 const fehlerwortAnzahl = t => t.satz.split(" ").filter(x => ohneZeichen(x).toLowerCase() === t.fehlerwort.toLowerCase()).length;
 const themaVon = id => THEMEN.find(t => t.id === id);
 const reduziert = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2662,9 +2668,18 @@ function generiere(themaId, niveau, form){
     const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
     if(!t) return null;
     if(t.satz && t.fehlerwort && !t.fehlerStelle && fehlerwortAnzahl(t) > 1) continue;
+    if(spracheDerKlasse(themaId) === "en") englischeZeichen(t);
     return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
   }
   return null;
+}
+// Ab Klasse 8 (Welten mit sprache "en") stehen Zitate mit englischen Anführungszeichen: “…” statt „…“ (ab v0.9.13)
+function spracheDerKlasse(themaId){ const K = KLASSENDATEN[parseInt(themaId, 10)]; return K && K.welt && K.welt.sprache === "en" ? "en" : "de"; }
+function englischeZeichen(o, schon){
+  schon = schon || new Set(); if(schon.has(o)) return o; schon.add(o);
+  const um = x => typeof x === "string" ? x.replace(/„([^„“”]*)“/g, "“$1”") : (x && typeof x === "object" ? englischeZeichen(x, schon) : x);
+  if(Array.isArray(o)) o.forEach((x, i) => { o[i] = um(x); }); else if(o && typeof o === "object") Object.keys(o).forEach(k => { o[k] = um(o[k]); });
+  return o;
 }
 
 /* ===================== WÖRTERHILFE (antippbare Wörter) ===================== */
@@ -2684,7 +2699,7 @@ function textMitHilfe(text){
     const de = hilfeFuer(w); if(!de) return w;
     frag.appendChild(document.createTextNode(text.slice(zuletzt, i)));
     const s = el("span", "vok", w); s.tabIndex = 0; s.setAttribute("role", "button"); s.dataset.de = de;
-    s.setAttribute("aria-label", w + ", auf Deutsch: " + de);
+    s.setAttribute("aria-label", w + ui("aufDeutsch") + de);
     const umschalten = e => { e.stopPropagation(); document.querySelectorAll(".vok.offen").forEach(x => { if(x !== s) x.classList.remove("offen"); }); s.classList.toggle("offen"); };
     s.addEventListener("click", umschalten);
     s.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); umschalten(e); } });
@@ -2812,7 +2827,7 @@ const UI_TEXTE = {
         // Dialog und Fußzeile
         beenden: "Mission beenden", dialogTitel: "Mission wirklich beenden?", dialogText: "Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.",
         dialogNein: "Nein, weiterspielen", dialogJa: "Ja, beenden", datenschutz: "Es werden keine Daten gespeichert oder übertragen.", restzeit: "Restzeit",
-        fach: "Englisch", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
+        fach: "Englisch", prototyp: "(Prototyp)", aufDeutsch: ", auf Deutsch: ", tonEin: "Ton einschalten", tonAus: "Ton ausschalten", tonIstAn: "Ton ist an.", tonIstAus: "Ton ist aus.", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
   en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
         zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked.",
@@ -2855,7 +2870,7 @@ const UI_TEXTE = {
         komma: ".",
         beenden: "Quit the mission", dialogTitel: "Do you really want to quit?", dialogText: "Your progress in this round will be lost. Your choices in the start menu stay.",
         dialogNein: "No, keep playing", dialogJa: "Yes, quit", datenschutz: "No data is stored or sent.", restzeit: "Time left",
-        fach: "English", testmodus: "🧪 Test mode: {c} opens at once", testmodusNur: "🧪 Test mode: before the end only {c} opens." }
+        fach: "English", prototyp: "(prototype)", aufDeutsch: ", in German: ", tonEin: "Sound on", tonAus: "Sound off", tonIstAn: "Sound is on.", tonIstAus: "Sound is off.", testmodus: "🧪 Test mode: {c} opens at once", testmodusNur: "🧪 Test mode: before the end only {c} opens." }
 };
 const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
 const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w+)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
@@ -2870,6 +2885,7 @@ function uiTexteSetzen(){
   document.querySelectorAll("[data-ui-aria]").forEach(e => { const t = ui(e.dataset.uiAria); e.setAttribute("aria-label", t); if(e.title) e.title = t; });
   document.documentElement.lang = sprache();
   setze("btnMinispiel", "minispiel"); setze("btnZusatzZurueck", "zurUebersicht"); setze("btnGeschafftWeiter", "zurUebersicht");
+  try { tonSymbol(); } catch(e){}   // Ton-Knopf: Vorlesetext in der Sprache der Welt
   setze("btnRaumZurueck", "raumZurueck"); setze("btnZurKarte", "zurKarte"); setze("btnMsLos", "los"); setze("btnMsNein", "nein"); setze("btnMsWeiter", "weiter");
 }
 
@@ -3622,9 +3638,9 @@ function tonSymbol(){
   $("btnTon").innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/>' + (tonAn
     ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
     : '<path d="M15 9l6 6M21 9l-6 6" fill="none" stroke="#b3261e" stroke-width="2.4" stroke-linecap="round"/>') + '</svg>';
-  $("btnTon").setAttribute("aria-label", tonAn ? "Ton ausschalten" : "Ton einschalten");
+  $("btnTon").setAttribute("aria-label", ui(tonAn ? "tonAus" : "tonEin"));
 }
-$("btnTon").onclick = () => { tonAn = !tonAn; tonSymbol(); if(tonAn){ audio(); ton("richtig"); } ansage(tonAn ? "Ton ist an." : "Ton ist aus."); };
+$("btnTon").onclick = () => { tonAn = !tonAn; tonSymbol(); if(tonAn){ audio(); ton("richtig"); } ansage(ui(tonAn ? "tonIstAn" : "tonIstAus")); };
 tonSymbol();
 
 /* ===================== KONFETTI ===================== */

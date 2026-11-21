@@ -6,7 +6,7 @@
              und am Raum öffnet sich der gewohnte Aufgabenraum.
              Die Karte zeichnet und steuert nur. Aufgaben, Zeit, Ziffern
              und Zahlenschloss bleiben in index.html (über EscapeAPI).
-   Version:  karte 0.4  (passt zu App-Version 0.6.10)
+   Version:  karte 0.5  (passt zu App-Version 0.9.13)
    Aufbau:   Diese Datei ist der gemeinsame MOTOR für alle Welten:
              Kamera, Wegsuche, Eingabe, Figuren-Ablauf, Räume mit
              Zuständen, Ausgang mit Code-Tafel, Einbettung.
@@ -23,6 +23,9 @@
              Schriften oder Bilder. Alles wird gezeichnet.
 
    Änderungsliste:
+     0.5  (21.11.2026)  Vorlesetexte (Screenreader, Tastatur-Knöpfe) in der Sprache der
+          Welt: Klasse 5–7 deutsch, ab Klasse 8 englisch. Die Karte heißt nach der
+          Welt (z. B. „Karte: Das Piratenschiff“) statt immer „Zoo-Karte“.
      0.4  (15.11.2026)  Aus der Zoo-Karte wird ein Motor für alle Welten.
           Zoo-Aussehen herausgelöst nach stil-zoo.js (sieht aus wie
           vorher). Neu: Grundstil „neutral“, Stil-Dateien für Klasse 6–10,
@@ -54,7 +57,7 @@ if (!API || typeof API.karteAnmelden !== 'function') { if (window.console) conso
 const ORDNER = (() => { try { const src = document.currentScript && document.currentScript.src; return src ? src.replace(/[^\/]*$/, '') : 'welt/'; } catch (e) { return 'welt/'; } })();
 
 /* ============ 1. HILFEN UND ZUSTAND ============ */
-const VERSION = '0.4';
+const VERSION = '0.5';
 const TAU = Math.PI * 2;
 const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -279,7 +282,21 @@ function symbol(c, art, x, y, s) {
 }
 const SYMBOL = { gesperrt: 'schloss', offen: 'pfeil', begonnen: 'pfeil', geschafft: 'haken', unsicher: 'warnung' };
 const ZEICHEN = { gesperrt: '🔒', offen: '▶', begonnen: '▶', geschafft: '✅', unsicher: '⚠️' };
-const WORT = { gesperrt: 'gesperrt', offen: 'offen', begonnen: 'begonnen', geschafft: 'geschafft', unsicher: 'geschafft, Ziffer unsicher' };
+// Feste Vorlesetexte der Karte in beiden Sprachen (die Welt bestimmt mit welt.sprache, welche gilt)
+const KT = {
+  de: { gesperrt: 'gesperrt', offen: 'offen', begonnen: 'begonnen', geschafft: 'geschafft', unsicher: 'geschafft, Ziffer unsicher',
+        ziffer: ', Ziffer ', eineVon: ': eine von ', von: ' von ', hierWeiter: ' – hier geht es weiter', bereit: 'bereit: Zahlenschloss öffnen', zu: 'noch gesperrt',
+        codeBisher: '. Code bisher: ', codeOffen: 'offen', codeUnsicher: 'unsicher', regel: ': Regelkarte zeigen', wort: ': ein englisches Wort zeigen',
+        zusatzVonSelbst: 'kommt nach jedem Raum von selbst', karte: 'Karte', anleitung: '. Tippe auf einen Ort, dann läuft die Spielfigur hin. Mit der Tabulator-Taste erreichst du alle Orte als Knöpfe.',
+        orte: 'Orte auf der Karte', kaertchen: 'Kärtchen', schliessen: 'Schließen' },
+  en: { gesperrt: 'locked', offen: 'open', begonnen: 'started', geschafft: 'done', unsicher: 'done, digit not sure',
+        ziffer: ', digit ', eineVon: ': one of ', von: ' of ', hierWeiter: ' – go here next', bereit: 'ready: open the number lock', zu: 'still locked',
+        codeBisher: '. Code so far: ', codeOffen: 'open', codeUnsicher: 'not sure', regel: ': show the rule card', wort: ': show an English word',
+        zusatzVonSelbst: 'comes by itself after every room', karte: 'Map', anleitung: '. Tap a place and your figure walks there. Use the Tab key to reach every place as a button.',
+        orte: 'Places on the map', kaertchen: 'Card', schliessen: 'Close' }
+};
+const kt = k => (Z.en ? KT.en : KT.de)[k];
+const WORT = { get gesperrt() { return kt('gesperrt'); }, get offen() { return kt('offen'); }, get begonnen() { return kt('begonnen'); }, get geschafft() { return kt('geschafft'); }, get unsicher() { return kt('unsicher'); } };
 
 function raumStatus(i) { const s = Z.status && Z.status.raeume && Z.status.raeume[i]; return s || { nr: i, zustand: 'gesperrt', richtig: 0, von: 0, ziffer: null, kandidaten: null }; }
 function naechstes() { if (!Z.status) return -1; for (const r of Z.status.raeume) if (r.zustand === 'offen' || r.zustand === 'begonnen') return r.nr; return -1; }
@@ -843,16 +860,16 @@ function aktualisiereListe() {
   const eintraege = [];
   for (const g of Z.G) {
     const st = raumStatus(g.nr); let text = g.schild + ', ' + (WORT[st.zustand] || st.zustand);
-    if (st.zustand === 'geschafft' && st.ziffer != null) text += ', Ziffer ' + st.ziffer;
-    if (st.zustand === 'unsicher') text += ': eine von ' + (st.kandidaten || []).join(', ');
-    if (st.zustand === 'begonnen') text += ', ' + st.richtig + ' von ' + st.von;
-    if (g.nr === naechstes()) text += ' – hier geht es weiter';
+    if (st.zustand === 'geschafft' && st.ziffer != null) text += kt('ziffer') + st.ziffer;
+    if (st.zustand === 'unsicher') text += kt('eineVon') + (st.kandidaten || []).join(', ');
+    if (st.zustand === 'begonnen') text += ', ' + st.richtig + kt('von') + st.von;
+    if (g.nr === naechstes()) text += kt('hierWeiter');
     eintraege.push({ id: 'g' + g.nr, text });
   }
   const bereit = !!(Z.status && Z.status.torBereit);
-  eintraege.push({ id: 'tor', text: Z.tor.name + ', ' + (bereit ? 'bereit: Zahlenschloss öffnen' : 'noch gesperrt') + '. Code bisher: ' + codeZeichen().map(z => z === '_' ? 'offen' : z === '?' ? 'unsicher' : z).join(', ') });
-  for (const f of Z.figs) if (f.art === 'waerterin') eintraege.push({ id: f.id, text: f.name + ': Regelkarte zeigen' }); else if (f.art === 'tier') eintraege.push({ id: f.id, text: f.name + ': ein englisches Wort zeigen' });
-  eintraege.push({ id: 'raub', text: Z.raub.name + ': ' + (Z.texte.zusatzKurz || 'kommt nach jedem Raum von selbst') });
+  eintraege.push({ id: 'tor', text: Z.tor.name + ', ' + (bereit ? kt('bereit') : kt('zu')) + kt('codeBisher') + codeZeichen().map(z => z === '_' ? kt('codeOffen') : z === '?' ? kt('codeUnsicher') : z).join(', ') });
+  for (const f of Z.figs) if (f.art === 'waerterin') eintraege.push({ id: f.id, text: f.name + kt('regel') }); else if (f.art === 'tier') eintraege.push({ id: f.id, text: f.name + kt('wort') });
+  eintraege.push({ id: 'raub', text: Z.raub.name + ': ' + (Z.texte.zusatzKurz || kt('zusatzVonSelbst')) });
   const knoepfe = srListe.querySelectorAll('button');
   if (knoepfe.length !== eintraege.length) {
     srListe.textContent = '';
@@ -873,7 +890,7 @@ function zeigeRegel(nr) {
 function zeigeKarte(titel, text) {
   regelBox.querySelector('.zk-regel-titel').textContent = titel;
   regelBox.querySelector('.zk-regel-text').textContent = text;
-  const zuKnopf = regelBox.querySelector('.zk-zu'); if (zuKnopf) zuKnopf.textContent = Z.texte.schliessen || 'Schließen';
+  const zuKnopf = regelBox.querySelector('.zk-zu'); if (zuKnopf) zuKnopf.textContent = Z.texte.schliessen || kt('schliessen');
   regelBox.hidden = false; Z.tasten.clear();
   try { regelBox.querySelector('button').focus({ preventScroll: true }); } catch (e) {}
 }
@@ -897,7 +914,7 @@ function baueDom() {
   box = document.createElement('div'); box.className = 'zk'; box.id = 'zooKarte'; box.hidden = true;
   canvas = document.createElement('canvas'); canvas.tabIndex = 0; canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-label', 'Zoo-Karte. Tippe auf einen Ort, dann läuft die Spielfigur hin. Mit der Tabulator-Taste erreichst du alle Orte als Knöpfe.');
-  ctx = canvas.getContext('2d'); if (!ctx) throw new Error('Zoo-Karte: Zeichenfläche nicht verfügbar');
+  ctx = canvas.getContext('2d'); if (!ctx) throw new Error('Karte: Zeichenfläche nicht verfügbar');
   srListe = document.createElement('div'); srListe.className = 'zk-sr'; srListe.setAttribute('role', 'group'); srListe.setAttribute('aria-label', 'Orte auf der Zoo-Karte');
   srLive = document.createElement('div'); srLive.className = 'zk-sr'; srLive.setAttribute('role', 'status'); srLive.setAttribute('aria-live', 'polite');
   regelBox = document.createElement('div'); regelBox.className = 'zk-regel'; regelBox.hidden = true; regelBox.setAttribute('role', 'dialog'); regelBox.setAttribute('aria-label', 'Kärtchen');
@@ -906,7 +923,7 @@ function baueDom() {
   regelBox.append(h, p, zu);
   box.append(canvas, srListe, srLive, regelBox);
   const ueb = document.getElementById('uebersicht'), main = document.querySelector('main');
-  if (ueb && ueb.parentNode) ueb.parentNode.insertBefore(box, ueb.nextSibling); else if (main) main.appendChild(box); else throw new Error('Zoo-Karte: Platz in der Seite nicht gefunden');
+  if (ueb && ueb.parentNode) ueb.parentNode.insertBefore(box, ueb.nextSibling); else if (main) main.appendChild(box); else throw new Error('Karte: Platz in der Seite nicht gefunden');
   verdrahteEingabe();
 }
 // Die Karte füllt den Platz unter der Kopfleiste – hochkant wie quer, Handy wie iPad
@@ -930,7 +947,7 @@ function groesse() {
 function zeigen(status) {
   const welt = API.welt();
   if (!welt || !welt.karte || !Array.isArray(welt.raeume)) { angemeldet = false; throw new Error('Karte: Für diese Klasse gibt es keine Kartendaten (welt.karte).'); }
-  baueDom();
+  baueDom(); setzeSprache(welt);
   const name = stilName(welt.karte), da = !!(name && window.KartenStile[name]);
   const schluessel = welt.klasse + '|' + welt.name + '|' + (da ? name : '');
   if (Z.gebaut !== schluessel) { baue(welt); Z.gebaut = schluessel; Z.neueMission = true; srListe.textContent = ''; }
@@ -945,6 +962,16 @@ function zeigen(status) {
   Z.ruhe = 0;
   zeichne(ctx, Z.zeit);
   starteSchleife();
+}
+// Name und Vorlesetexte der Karte passend zur Welt (Nr. 25: „Karte: Das Piratenschiff“ statt „Zoo-Karte“)
+function setzeSprache(welt) {
+  Z.en = welt.sprache === 'en';
+  const name = kt('karte') + ': ' + (welt.name || '');
+  canvas.setAttribute('aria-label', name + kt('anleitung'));
+  srListe.setAttribute('aria-label', kt('orte') + ' – ' + (welt.name || ''));
+  regelBox.setAttribute('aria-label', kt('kaertchen'));
+  const zu = regelBox.querySelector('.zk-zu'); if (zu) zu.textContent = (Z.texte && Z.texte.schliessen) || kt('schliessen');
+  srListe.textContent = '';   // Knopfliste neu in der richtigen Sprache
 }
 function verbergen() {
   Z.sichtbar = false; stoppeSchleife();
