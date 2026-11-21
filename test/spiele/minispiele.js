@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.9 (passt zu App-Version 0.9.13)
+   Version:  minispiele 0.10 (passt zu App-Version 0.9.14)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,9 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.10 (21.11.2026) Fairer: Code knacken hat nur noch 4 Versuche (vorher 6), die Zahl steht schon
+                       beim Start da. Füttern: Ein falsches Tier kostet ein Herz und das Futter
+                       wechselt (das richtige Tier wird kurz gezeigt) – Durchprobieren geht nicht mehr.
      0.9 (21.11.2026)  Vorlesetexte (für Screenreader) in der Sprache der Welt: Klasse 5–7 deutsch,
                        ab Klasse 8 englisch (taschenlampe, seeloewe, obstkorb, schaukel, nachtflug,
                        rutsche, codeknacker, lasergitter, kabel). Funkspruch mit englischen Anführungszeichen.
@@ -186,9 +189,12 @@ function fuettern(buehne, ctx){
       ctx.ton("richtig"); ctx.punkt();
       timer = setTimeout(() => { if(ctx.laeuft()) neueRunde(); }, ctx.reduziert ? 450 : 650);
     } else {
-      knopf.classList.add("nein"); knopf.disabled = true; if(ctx.fehler) ctx.fehler(); 
+      // ab 0.10: kein Durchprobieren – Herz weg, richtiges Tier kurz zeigen, dann neues Futter
+      gesperrt = true; knopf.classList.add("nein"); if(ctx.fehler) ctx.fehler();
       blase.textContent = "✗ " + fuelle(t.witz || (EN ? "“{futter}? No, thanks!”" : "„{futter}? Nein danke!“"), { futter: name(F) }); blase.classList.add("an");
+      reihe.querySelectorAll(".ms-tier").forEach(b => { const x = tierVon(b.dataset.id); b.disabled = true; if(x && (F.haupt.includes(x.id) || (F.auch || []).includes(x.id))) b.classList.add("satt"); });
       ctx.ton("falsch");
+      timer = setTimeout(() => { if(ctx.laeuft()) neueRunde(); }, ctx.reduziert ? 1600 : 1300);
     }
   }
   // Ziehen mit dem Finger (Pointer Events), Loslassen über einem Tier = füttern
@@ -621,13 +627,14 @@ function codeknacker(buehne, ctx){
   const code = mischen(Array.from({ length: max }, (_, i) => i + 1)).slice(0, n);   // jede Ziffer höchstens einmal
   const fest = Array(n).fill(false), eingabe = Array(n).fill(null), raus = new Set();
   const wrap = el("div", "ms-ck"), legende = el("p", "ms-ck-legende", D.legende || "● right digit, right place · ◐ right digit, wrong place · ○ not in the code");
-  const verlauf = el("div", "ms-ck-verlauf"), reihe = el("div", "ms-ck-reihe"), tasten = el("div", "ms-ck-tasten"), meldung = el("p", "ms-ck-meldung", D.start || "Tap " + n + " digits.");
+  const verlauf = el("div", "ms-ck-verlauf"), reihe = el("div", "ms-ck-reihe"), tasten = el("div", "ms-ck-tasten"), meldung = el("p", "ms-ck-meldung", "");
   verlauf.setAttribute("role", "log"); meldung.setAttribute("role", "status");
   wrap.append(legende, verlauf, reihe, meldung, tasten); buehne.appendChild(wrap);
   const NAME = D.namen || sp(ctx, { "●": "richtiger Platz", "◐": "falscher Platz", "○": "nicht im Code" }, { "●": "right place", "◐": "wrong place", "○": "not in the code" });
   let timer = null, gesperrt = false, versuche = 0;
-  const MAXV = Math.max(1, Math.round(D.versuche) || 6);   // so viele Versuche hat man
+  const MAXV = Math.max(1, Math.round(D.versuche) || 4);   // so viele Versuche hat man (ab 0.10: 4 statt 6, damit Durchprobieren nicht reicht)
   if(ctx.herzenAus) ctx.herzenAus();                        // hier zählen Versuche statt Herzen
+  meldung.textContent = (D.start || "Tap " + n + " digits.") + " · " + (D.versuchText || "Tries left: {n}").replace("{n}", MAXV);
   function zeichneReihe(){
     reihe.replaceChildren();
     for(let i = 0; i < n; i++){ const f = el("span", "ms-ck-feld" + (fest[i] ? " fest" : ""), fest[i] ? String(code[i]) : eingabe[i] == null ? "_" : String(eingabe[i])); if(fest[i]) f.setAttribute("aria-label", sp(ctx, "Stelle ", "position ") + (i + 1) + ": " + code[i] + sp(ctx, ", geknackt", ", cracked")); reihe.appendChild(f); }
