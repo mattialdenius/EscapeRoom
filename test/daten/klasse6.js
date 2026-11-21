@@ -733,7 +733,7 @@ K6.aufgaben.push(
     erklaerung: "the most + langes Adjektiv. Beispiel: These jeans are the most comfortable jeans in the shop." },
   { thema: "6-G8", niveau: "rot", form: "fehler", satz: "Tom is the funnyest boy in our class.", fehlerwort: "funnyest", loesung: ["funniest"],
     erklaerung: "-y wird zu -iest: funny → the funniest. Beispiel: The big wheel is the scariest sight in London." },
-  { thema: "6-G8", niveau: "rot", form: "umformen", frage: "Use the superlative:  The castle is very old. (the oldest building in the town)", loesung: ["The castle is the oldest building in the town."],
+  { thema: "6-G8", niveau: "rot", form: "umformen", frage: "Use the superlative:  The castle is a very old building. (in the town)", loesung: ["The castle is the oldest building in the town."],
     erklaerung: "the + Adjektiv + -est. Beispiel: The clock tower is the tallest building in the town." },
 
   // ---------- 6-G9  some und any ----------
@@ -769,8 +769,8 @@ K6.aufgaben.push(
     erklaerung: "My grandma = she → Verb mit -s. Etwas passiert regelmäßig (usually). Beispiel: Tom usually eats cereal for breakfast." },
   { thema: "6-G11", niveau: "gruen", form: "quiz", frage: "Emma is allergic to nuts. She ___ eat cake with nuts.", optionen: ["doesn't", "don't", "isn't"], loesung: "doesn't",
     erklaerung: "Bei she: doesn't + Grundform. Beispiel: My brother doesn't like mushrooms." },
-  { thema: "6-G11", niveau: "gelb", form: "luecke", frage: "My dad ___ (wash) the dishes after dinner.", loesung: ["washes"],
-    erklaerung: "Nach -s, -sh, -ch, -x, -o kommt -es: wash → washes, watch → watches. Beispiel: Lily watches TV shows about food." },
+  { thema: "6-G11", niveau: "gelb", form: "luecke", frage: "My dad ___ (watch) TV after dinner.", loesung: ["watches"],
+    erklaerung: "Nach -s, -sh, -ch, -x, -o kommt -es: watch → watches, go → goes. Beispiel: Emma goes to the market on Saturdays." },
   { thema: "6-G11", niveau: "gelb", form: "satzbau", loesung: ["We don't eat pork at home."],
     erklaerung: "don't + Grundform; Orts- und Zeitangaben stehen am Ende. Beispiel: They don't go to the market on Sundays." },
   { thema: "6-G11", niveau: "rot", form: "fehler", satz: "Ben trys new recipes at the weekend.", fehlerwort: "trys", loesung: ["tries"],
@@ -797,7 +797,7 @@ K6.aufgaben.push(
     erklaerung: "won't (= will not) + Grundform. Beispiel: „This curry is very spicy.“ – „I won't eat it.“" },
   { thema: "6-G13", niveau: "rot", form: "fehler", satz: "„We're late!“ – „OK, we'll takes a taxi.“", fehlerwort: "takes", loesung: ["take"],
     erklaerung: "Nach will/'ll steht die Grundform ohne -s: we'll take. Beispiel: „It's raining.“ – „We'll take the bus.“" },
-  { thema: "6-G13", niveau: "rot", form: "umformen", frage: "React with „won't“ (eat / the soup):  „The soup is very salty.“", loesung: ["I won't eat the soup.", "I will not eat the soup."],
+  { thema: "6-G13", niveau: "rot", form: "umformen", frage: "React with „won't“ (eat / the soup):  „The soup is very cold.“", loesung: ["I won't eat the soup.", "I will not eat the soup."],
     erklaerung: "won't + Grundform. Beispiel: „The burger is very expensive.“ – „I won't buy it.“" }
 );
 
@@ -1057,7 +1057,7 @@ K6.aufgaben.push(
     erklaerung: "I hope … → will + Grundform. Beispiel: I think it will rain tomorrow." },
   { thema: "6-G19", niveau: "gruen", form: "quiz", frage: "I've already bought a new tent. I ___ sleep in it at camp.", optionen: ["am going to", "will", "am"], loesung: "am going to",
     erklaerung: "Das Zelt ist schon gekauft – es ist ein fester Plan → going to. Beispiel: We've bought the tickets. We're going to see the play." },
-  { thema: "6-G19", niveau: "gelb", form: "luecke", frage: "Maybe it ___ (snow) at Christmas this year.", loesung: ["will snow", "'ll snow"],
+  { thema: "6-G19", niveau: "gelb", form: "luecke", frage: "Maybe it ___ (rain) at the weekend.", loesung: ["will rain", "'ll rain"],
     erklaerung: "maybe = Vermutung → will + Grundform. Beispiel: Maybe Emma will win the quiz." },
   { thema: "6-G19", niveau: "rot", form: "fehler", satz: "I'm sure you will loves the scones.", fehlerwort: "loves", loesung: ["love"],
     erklaerung: "Nach will steht die Grundform ohne -s. Beispiel: I think you will like the muffins." },

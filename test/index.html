@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.5 (Prototyp)
+  Version 0.9.6 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,11 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.6 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 3: Inhalte Klasse 5 und 6)
+    - Erklärbeispiele verraten die Lösung nicht mehr (Plural: nie boy ↔ cowboy; Befehle: nie dieselbe Tätigkeit);
+      6-G8: Klammer ohne Lösung.
+    - Wortschatz K6: wash → watch (6-G11), salty → cold (6-G13), snow → rain (6-G19).
+    - K5: „Indian restaurant“ gestrichen; Plural-Beispiel day → key; baby, video, potato in der Wörterhilfe.
   v0.9.5 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 2: fachliche Fehler)
     - Titanic-Sätze ersetzt (Typ II jetzt in der Gegenwart: museum/café, bike; Steigerung: This ship, Today).
     - Fehler finden zeigt bei der indirekten Rede die direkte Rede darüber an (Feld „vorher“); 6-G16 mit
@@ -191,7 +196,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.5</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.6</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -601,7 +606,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.5</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.6</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -627,7 +632,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.5";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.6";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -641,7 +646,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.5"></script>
+<script src="daten/allgemein.js?v=0.9.6"></script>
 
 <script>
 /* #####################################################################
@@ -1140,7 +1145,8 @@ const ARTEN = {
     const rahmen = wuerfle(["There are {Z} ###.", "I have {Z} ###.", "Look! {ZG} ###!", "Here are {Z} ###."]);
     const satz = ein => gross(rahmen.replace("{ZG}", gross(zahl)).replace("{Z}", zahl).replace("###", ein));
     const falsch = (FALSCH[N.regel] || FALSCH.s)(N).filter(x => x !== N.pl);
-    const andere = bk.nomen.filter(n => n.regel === N.regel && n !== N);
+    // Beispiel nie mit dem Aufgabenwort darin (boy ↔ cowboy) – ab v0.9.6
+    const andere = bk.nomen.filter(n => n.regel === N.regel && n !== N && !n.sg.toLowerCase().includes(N.sg.toLowerCase()) && !N.sg.toLowerCase().includes(n.sg.toLowerCase()));
     const bsp = andere.length ? (() => { const n = wuerfle(andere); return n.sg + " → " + n.pl; })() : (bk.pluralBeispiele || {})[N.regel] || "";
     const erkl = erklaere(E[N.regel], { BEISPIEL: bsp });
     if(form === "quiz") return { frage: "one " + N.sg + " – " + zahl + " ___", optionen: mischen([N.pl].concat(falsch.slice(0, 2))), loesung: N.pl, erklaerung: erkl };
@@ -1180,7 +1186,10 @@ const ARTEN = {
     if(form === "satzbau" && !neg && (B.grund + " " + B.rest).split(" ").length < 3){ neg = true; B = wuerfle(verbote); }   // Satzbau braucht mindestens 3 Wörter
     const r = B.rest ? " " + B.rest : "", G = gross(B.grund);
     kern(B.grund + " " + B.rest);
-    const q = anders(neg ? verbote : befehle, B), qr = q.rest ? " " + q.rest : "";
+    // Beispiel nie mit derselben Tätigkeit (play football ↔ play football in the classroom) – ab v0.9.6
+    const ersteW = x => x.grund + " " + (x.rest || "").split(" ")[0];
+    const qListe = (neg ? verbote : befehle).filter(x => ersteW(x) !== ersteW(B));
+    const q = anders(qListe.length ? qListe : (neg ? verbote : befehle), B), qr = q.rest ? " " + q.rest : "";
     const erkl = neg ? erklaere(E.negativ, { BEISPIEL: "Don't " + q.grund + qr + "!" }) : erklaere(E.positiv, { BEISPIEL: gross(q.grund) + qr + ", please." });
     const name = wuerfle(bk.namen || ["Tom"]), vorne = Math.random() < 0.6;   // vorne = Befehl am Satzanfang
     if(form === "quiz") return neg

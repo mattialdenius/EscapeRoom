@@ -252,7 +252,7 @@ K5.baukasten = {
       { sg: "wolf", pl: "wolves", regel: "ves" }, { sg: "tomato", pl: "tomatoes", regel: "oes" }
     ],
     // Beispiele für die Erklärung, falls es nur EIN Wort mit dieser Regel gibt (dürfen bekannte Lehnwörter sein)
-    pluralBeispiele: { ies: "baby → babies", ys: "day → days", os: "video → videos", oes: "potato → potatoes" },
+    pluralBeispiele: { ies: "baby → babies", ys: "key → keys", os: "video → videos", oes: "potato → potatoes" },
     erklaerungen: {
       besitz: {
         einzahl:  "Ein Besitzer: Du hängst ’s an (Name oder Wort). Beispiel: {BEISPIEL}",
@@ -320,7 +320,7 @@ K5.baukasten = {
       { text: "animal", art: "an" }, { text: "e-mail", art: "an" }, { text: "alarm clock", art: "an" }, { text: "eraser", art: "an" },
       { text: "exercise book", art: "an" }, { text: "orange cap", art: "an" }, { text: "orange pen", art: "an" },
       { text: "interesting book", art: "an" }, { text: "easy question", art: "an" }, { text: "English teacher", art: "an" },
-      { text: "Indian restaurant", art: "an" }, { text: "Art lesson", art: "an" }, { text: "IT lesson", art: "an" },
+      { text: "Art lesson", art: "an" }, { text: "IT lesson", art: "an" },
       { text: "uniform", art: "a" }, { text: "red pen", art: "a" }, { text: "new bag", art: "a" }, { text: "pencil case", art: "a" },
       { text: "ruler", art: "a" }, { text: "boring lesson", art: "a" }, { text: "difficult question", art: "a" },
       { text: "German teacher", art: "a" }, { text: "Maths teacher", art: "a" }, { text: "funny joke", art: "a" },
@@ -838,7 +838,8 @@ K5.woerterhilfe = [
   { en: "baby", de: "Baby" }, { en: "hobby", de: "Hobby" }, { en: "party", de: "Party" }, { en: "pony", de: "Pony" },
   { en: "cowboy", de: "Cowboy" }, { en: "glass", de: "Glas" }, { en: "class", de: "Klasse" }, { en: "sandwich", de: "Sandwich" },
   { en: "wolf", de: "Wolf" }, { en: "tomato", de: "Tomate" }, { en: "apple", de: "Apfel" }, { en: "insect", de: "Insekt" },
-  { en: "octopus", de: "Krake" }, { en: "igloo", de: "Iglu" }, { en: "cola", de: "Cola" }, { en: "milk", de: "Milch" }
+  { en: "octopus", de: "Krake" }, { en: "igloo", de: "Iglu" }, { en: "cola", de: "Cola" }, { en: "milk", de: "Milch" },
+  { en: "baby", de: "Baby" }, { en: "video", de: "Video" }, { en: "potato", de: "Kartoffel" }
 ];
 
 // =====================================================================
