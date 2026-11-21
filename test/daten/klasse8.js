@@ -38,7 +38,7 @@ K8.welt = {
     zusatzStart:      ["The suspect is talking. Be quick – and precise."],
     zusatzGeschafft:  ["He told us everything. The digit is yours."],
     zusatzGescheitert:["He called his lawyer. One of these three digits is right."],
-    zeitWarnung:      ["Hurry up – the thief is leaving London!"],
+    zeitWarnung:      ["Quick – the thief is leaving London!"],
     torFalsch:        ["The safe stays shut. Check the lights: green is right, red is not yet."],
     zwilling:         ["Here's a similar one."],
     torBereit:        ["All rooms done. Enter the code at the safe."]
@@ -99,7 +99,7 @@ K8.welt.karte = {
     regelTitel:      "Case notes: {name}",
     keineRegel:      "No case notes for this room.",
     waerterinFertig: "All rooms done. The safe is over there.",
-    waechter:        "Hurry. The thief won't wait.",
+    waechter:        "Be quick. The thief won't wait.",
     waechterRuf:     ["Who's there? … Oh. Carry on.", "Evening. Working late?", "Thought I heard something."],
     pollyGeschafft:  ["First digit. A start.", "Two digits. Halfway.", "One room left.", "All four. To the safe."],
     pollyWarten:     ["Still thinking? Next: {name}.", "The clock is running. {name}."],
@@ -188,7 +188,7 @@ K8.baukasten = {
     verbenPast: [
       { grund: "visit",  s: "visits",  past: "visited",  rest: "Ellis Island" },
       { grund: "walk",   s: "walks",   past: "walked",   rest: "across the Brooklyn Bridge" },
-      { grund: "climb",  s: "climbs",  past: "climbed",  rest: "the stairs of the old tower" },
+      { grund: "climb",  s: "climbs",  past: "climbed",  rest: "the old tower" },
       { grund: "watch",  s: "watches", past: "watched",  rest: "a baseball game" },
       { grund: "try",    s: "tries",   past: "tried",    rest: "a bagel with cream cheese" },
       { grund: "stop",   s: "stops",   past: "stopped",  rest: "at a hot dog cart" },
@@ -245,10 +245,10 @@ K8.baukasten = {
       { e: "past",  t: "We ___ very tired because we had been in a traffic jam for two hours.", h: "be", r: ["were"], f: ["are", "was"], fehler: "are" },
       { e: "neg",   t: "Lily was nervous because she ___ the subway before.", h: "not / ride", r: ["hadn't ridden", "had not ridden"], f: ["hasn't ridden", "hadn't rode"], fehler: { ersatz: "hadn't rode", wort: "rode", loesung: ["ridden"] } },
       { e: "neg",   t: "We missed the start of the game because we ___ the subway map.", h: "not / check", r: ["hadn't checked", "had not checked"], f: ["haven't checked", "hadn't check"], fehler: { ersatz: "hadn't check", wort: "check", loesung: ["checked"] } },
-      { e: "neg",   t: "The tourists were disappointed because the gallery ___ yet.", h: "not / open", r: ["hadn't opened", "had not opened"], f: ["hasn't opened", "hadn't open"], fehler: { ersatz: "hasn't opened", wort: "hasn't", loesung: ["hadn't", "had not"] } },
+      { e: "neg",   t: "The tourists were sad because the gallery ___ yet.", h: "not / open", r: ["hadn't opened", "had not opened"], f: ["hasn't opened", "hadn't open"], fehler: { ersatz: "hasn't opened", wort: "hasn't", loesung: ["hadn't", "had not"] } },
       { e: "frage", t: "___ the ferry already left when you arrived?", h: "have", r: ["Had"], f: ["Has", "Did"], fehler: "Has" },
       { e: "frage", t: "Had your great-grandparents ___ in Italy before they came to America?", h: "live", r: ["lived"], f: ["live", "living"], fehler: "live" },
-      { k: "inspection", e: "frage", t: "How long ___ the immigrants waited before the inspection began?", h: "have", r: ["had"], f: ["have", "did"], fehler: "have" }
+      { k: "inspection", e: "frage", t: "How long ___ the immigrants waited before the inspection started?", h: "have", r: ["had"], f: ["have", "did"], fehler: "have" }
     ],
     umformen: [
       { k: "ferry-harbor", e: "pp", a: "Join the sentences with „after“:", von: "The ferry left. Then we got to the harbor.",
@@ -302,7 +302,7 @@ K8.baukasten = {
       { k: "drive", e: "futur",  t: "My sister is fifteen. Next year she ___ drive a car.", h: "can – future", r: ["will be able to", "'ll be able to"], f: ["will can", "cans"], fehler: { ersatz: "will can", wort: "can", loesung: ["be able to"] } },
       { e: "futur",  t: "There's a field trip tomorrow. We ___ be at school at seven o'clock.", h: "must – future", r: ["will have to", "'ll have to"], f: ["will must", "must will"], fehler: { ersatz: "will must", wort: "must", loesung: ["have to"] } },
       { k: "drive", e: "futur",  t: "When you are sixteen, you ___ drive a car in many US states.", h: "may – future", r: ["will be allowed to", "'ll be allowed to"], f: ["will may", "will can"], fehler: { ersatz: "will may", wort: "may", loesung: ["be allowed to"] } },
-      { e: "futur",  t: "It's vacation next week, so I ___ do any homework.", h: "not / have to – future", r: ["won't have to", "will not have to"], f: ["mustn't", "won't must"], fehler: { ersatz: "won't must", wort: "must", loesung: ["have to"] } },
+      { e: "futur",  t: "We're on vacation next week, so I ___ do any homework.", h: "not / have to – future", r: ["won't have to", "will not have to"], f: ["mustn't", "won't must"], fehler: { ersatz: "won't must", wort: "must", loesung: ["have to"] } },
       { e: "futur",  t: "If you study hard, you ___ get a good job.", h: "can – future", r: ["will be able to", "'ll be able to"], f: ["will can", "can will"], fehler: { ersatz: "will can", wort: "can", loesung: ["be able to"] } },
       { k: "locker3", e: "past",   t: "Yesterday I lost my key, so I ___ open my locker.", h: "not / can – past", r: ["couldn't", "could not", "wasn't able to", "was not able to"], f: ["didn't can", "can't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not", "wasn't able to", "was not able to"] } },
       { k: "detention", e: "past",   t: "Last week Jake ___ go to detention because he was late three times.", h: "must – past", r: ["had to"], f: ["musted", "must"], fehler: { ersatz: "must", wort: "must", loesung: ["had to"] } },
@@ -381,13 +381,13 @@ K8.baukasten = {
   // ---------- Klasse 8, Unit 2: Stützwort one / ones (G5) ----------
   "8-G5": {
     saetze: [
-      { e: "one",   t: "I don't like the red T-shirt. I prefer the blue ___.", r: ["one"], f: ["ones", "it"], fehler: "ones" },
+      { e: "one",   t: "I don't like the red T-shirt. I want the blue ___.", r: ["one"], f: ["ones", "it"], fehler: "ones" },
       { k: "phone", e: "one",   t: "My old phone is broken, so I need a new ___.", r: ["one"], f: ["ones", "it"], fehler: "ones" },
       { e: "one",   t: "This tray is dirty. Can I have a clean ___, please?", r: ["one"], f: ["ones", "it"], fehler: "ones" },
       { e: "one",   t: "I have two brothers. The older ___ is a freshman.", r: ["one"], f: ["ones", "it"], fehler: "ones" },
       { k: "bike", e: "one",   t: "My bike is too small for me. I want a bigger ___.", r: ["one"], f: ["ones", "it"], fehler: "ones" },
       { k: "shoes", e: "ones",  t: "These shoes are too small. Do you have any bigger ___?", r: ["ones"], f: ["one", "it"], fehler: "one" },
-      { e: "ones",  t: "The store had lots of caps, but the cheap ___ were all ugly.", r: ["ones"], f: ["one", "it"], fehler: "one" },
+      { e: "ones",  t: "The store had lots of caps, but the cheap ___ were all too small.", r: ["ones"], f: ["one", "it"], fehler: "one" },
       { e: "ones",  t: "Our new classes are great, but the old ___ were boring.", r: ["ones"], f: ["one", "it"], fehler: "one" },
       { e: "ones",  t: "These apples are bad. Let's buy some fresh ___.", r: ["ones"], f: ["one", "it"], fehler: "one" },
       { e: "ones",  t: "Do you need new pencils? – No, thanks. I have some new ___ in my bag.", r: ["ones"], f: ["one", "it"], fehler: "one" },
@@ -454,7 +454,7 @@ K8.aufgaben = [
     erklaerung: "The earlier action gets had + 3rd form (Vorvergangenheit). Example: When we got to the harbor, the ferry had left." },
   { thema: "8-G2", niveau: "rot", form: "fehler", satz: "After we had walked across the bridge, we taked a cab.", fehlerwort: "taked", loesung: ["took"],
     erklaerung: "The later action is in the simple past: we took a cab. Example: After Jake had bought a hot dog, he walked to the ice rink." },
-  { thema: "8-G3", niveau: "gruen", form: "quiz", frage: "Next week I ___ go to school because it's vacation.", optionen: ["won't have to", "won't must", "mustn't"], loesung: "won't have to",
+  { thema: "8-G3", niveau: "gruen", form: "quiz", frage: "Next week I ___ go to school because we're on vacation.", optionen: ["won't have to", "won't must", "mustn't"], loesung: "won't have to",
     erklaerung: "„will must“ doesn't exist. Future of must: will have to (won't have to = nicht müssen). Example: We'll have to get up early." },
   { thema: "8-G3", niveau: "gelb", form: "luecke", frage: "When I was ten, I ___ (not / may) stay up late.", loesung: ["wasn't allowed to", "was not allowed to"],
     erklaerung: "Past of may: was/were allowed to. Example: At my old school we weren't allowed to use our phones." },
@@ -519,7 +519,12 @@ K8.woerterhilfe.push(...[
   { en: "released", de: "veröffentlicht" }, { en: "banned", de: "verboten" }, { en: "fried", de: "frittiert" }, { en: "founded", de: "gegründet" },
   { en: "stall", de: "Stand" }, { en: "airboat", de: "Propellerboot" }, { en: "swamp", de: "Sumpf" }, { en: "trainer", de: "Trainer/in" },
   { en: "gumbo", de: "Gumbo (Eintopf aus Louisiana)" }, { en: "jazz", de: "Jazz" }, { en: "alligators", de: "Alligatoren" }, { en: "charts", de: "Hitparade" },
-  { en: "rice", de: "Reis" }, { en: "boycott", de: "Boykott" }
+  { en: "rice", de: "Reis" }, { en: "boycott", de: "Boykott" },
+  // ab v0.9.8: Kernwörter der Themen 8-G8, 8-G10 und 8-G12
+  { en: "desperate", de: "verzweifelt" }, { en: "final", de: "letzte/r/s, End-" }, { en: "energetic", de: "energiegeladen" },
+  { en: "energetically", de: "energiegeladen (Adverb)" }, { en: "smile", de: "lächeln" }, { en: "smiled", de: "lächelte" },
+  { en: "taste", de: "schmecken" }, { en: "lead", de: "führen, leiten" }, { en: "led", de: "führte, geführt" },
+  { en: "record", de: "Schallplatte; aufnehmen" }, { en: "recorded", de: "aufgenommen" }, { en: "snowman", de: "Schneemann" }
 ]);
 
 Object.assign(K8.baukasten, {
@@ -540,7 +545,7 @@ Object.assign(K8.baukasten, {
       { e: "aux", t: "Jake has finished his novel, ___ he?", r: ["hasn't"], f: ["isn't", "didn't"], fehler: "isn't" },
       { e: "neg", t: "You aren't bored, ___ you?", r: ["are"], f: ["aren't", "do"], fehler: "aren't" },
       { e: "neg", t: "Your brother didn't break the dishwasher, ___ he?", r: ["did"], f: ["didn't", "does"], fehler: "didn't" },
-      { e: "neg", t: "Zoe doesn't like horror movies, ___ she?", r: ["does"], f: ["doesn't", "is"], fehler: "doesn't" },
+      { e: "neg", t: "Zoe doesn't like scary movies, ___ she?", r: ["does"], f: ["doesn't", "is"], fehler: "doesn't" },
       { e: "neg", t: "Mia can't come to the movies, ___ she?", r: ["can"], f: ["can't", "does"], fehler: "can't" },
       { e: "neg", t: "It won't rain on Thanksgiving, ___ it?", r: ["will"], f: ["won't", "does"], fehler: "won't" },
       { e: "neg", t: "We haven't bought the turkey yet, ___ we?", r: ["have"], f: ["haven't", "did"], fehler: "did" }
@@ -609,7 +614,7 @@ Object.assign(K8.baukasten, {
       { e: "will",    a: "Ask a question with „Who“:", von: "Zoe will visit her grandma next week.", nach: ["Who will Zoe visit next week?", "Who will Zoe visit?"] },
       { e: "will",    a: "Ask a question with „Where“:", von: "We will meet at the bowling alley.", nach: ["Where will we meet?", "Where will you meet?"] },
       { e: "who",     a: "Ask a question with „Who“:", von: "Carlos called the police.", nach: ["Who called the police?"] },
-      { e: "who",     a: "Ask a question with „Who“:", von: "My grandma makes the best cookies.", nach: ["Who makes the best cookies?"] },
+      { e: "who",     a: "Ask a question with „Who“:", von: "My grandma makes the best pancakes.", nach: ["Who makes the best pancakes?"] },
       { e: "who",     a: "Ask a question with „Who“:", von: "A gang stole the bikes.", nach: ["Who stole the bikes?"] },
       { e: "jn",      a: "Ask a yes/no question:", von: "Mia's brother likes bowling.", nach: ["Does Mia's brother like bowling?"] },
       { e: "jn",      a: "Ask a yes/no question:", von: "The neighbors heard the doorbell.", nach: ["Did the neighbors hear the doorbell?"] },
@@ -656,7 +661,7 @@ Object.assign(K8.baukasten, {
     ],
     ifSaetze: [
       { w: "it snows tomorrow",   s2: "we",  e: "stay",  ing: "staying",  r2: "inside" },
-      { w: "you hurry",           s2: "you", e: "catch", ing: "catching", r2: "the bus" },
+      { w: "you run",             s2: "you", e: "catch", ing: "catching", r2: "the bus" },
       { w: "Mom cooks a turkey",  s2: "we",  e: "eat",   ing: "eating",   r2: "it all" },
       { w: "the fan breaks",      s2: "I",   e: "buy",   ing: "buying",   r2: "a new one" },
       { w: "you call me",         s2: "I",   e: "come",  ing: "coming",   r2: "over" }
@@ -784,7 +789,7 @@ Object.assign(K8.baukasten, {
       { e: "since", t: "Jake hasn't posted anything ___ Monday.", r: ["since"], f: ["for", "ago"], fehler: "for" },
       { e: "for",   t: "They have known each other ___ a long time.", r: ["for"], f: ["since", "ago"], fehler: "since" },
       { e: "for",   t: "The ghost town has been empty ___ more than 100 years.", r: ["for"], f: ["since", "ago"], fehler: "since" },
-      { e: "pp",    t: "Zoe ___ 1,000 new followers since last month.", h: "get", r: ["has got", "has gotten"], f: ["have got", "gets"], fehler: { ersatz: "have got", wort: "have", loesung: ["has"] } },
+      { e: "pp",    t: "Zoe ___ ten new videos since last month.", h: "post", r: ["has posted"], f: ["have posted", "posts"], fehler: { ersatz: "have posted", wort: "have", loesung: ["has"] } },
       { e: "pp",    t: "I ___ that tutorial three times so far.", h: "watch", r: ["have watched", "'ve watched"], f: ["has watched", "have watch"], fehler: { ersatz: "has watched", wort: "has", loesung: ["have"] } },
       { e: "pp",    t: "My grandma ___ a selfie yet.", h: "not / take", r: ["hasn't taken", "has not taken"], f: ["haven't taken", "hasn't took"], fehler: { ersatz: "hasn't took", wort: "took", loesung: ["taken"] } },
       { e: "pp",    t: "Have you ever ___ a podcast?", h: "make", r: ["made"], f: ["make", "maked"], fehler: "make" },
@@ -847,7 +852,7 @@ Object.assign(K8.baukasten, {
       { e: "past",  t: "The first copies of the record ___ in a small studio.", h: "make", r: ["were made"], f: ["was made", "were maked"], fehler: { ersatz: "was made", wort: "was", loesung: ["were"] } },
       { e: "past",  t: "The protesters ___ into the restaurant.", h: "not / allow", r: ["weren't allowed", "were not allowed"], f: ["wasn't allowed", "didn't allowed"], fehler: { ersatz: "wasn't allowed", wort: "wasn't", loesung: ["weren't", "were not"] } },
       { e: "by",    t: "The bus boycott was led ___ Martin Luther King.", r: ["by"], f: ["from", "of"], fehler: "from" },
-      { e: "by",    t: "This song was written ___ a famous musician from New Orleans.", r: ["by"], f: ["from", "of"], fehler: "from" },
+      { e: "by",    t: "This song was written ___ a famous singer from New Orleans.", r: ["by"], f: ["from", "of"], fehler: "from" },
       { e: "frage", t: "___ French spoken in Louisiana?", r: ["is"], f: ["does", "are"], fehler: "does" },
       { e: "frage", t: "When ___ the civil rights law signed?", r: ["was"], f: ["did", "were"], fehler: "did" }
     ],
@@ -908,7 +913,7 @@ Object.assign(K8.baukasten, {
       { e: "says",  a: "Report what they say:", von: "Mia: „I am hungry.“", nach: K8_REDE("Mia says that she is hungry.") },
       { e: "pron",  a: "Report what they say:", von: "Jake: „My brother plays in a band.“", nach: K8_REDE("Jake says that his brother plays in a band.") },
       { e: "pron",  a: "Report what they say:", von: "Zoe: „We are at the protest.“", nach: K8_REDE("Zoe says that they are at the protest.") },
-      { e: "says",  a: "Report what they say:", von: "Carlos: „I don't like the heat.“", nach: K8_REDE("Carlos says that he doesn't like the heat.", "Carlos says that he does not like the heat.") },
+      { e: "says",  a: "Report what they say:", von: "Carlos: „I don't like hot weather.“", nach: K8_REDE("Carlos says that he doesn't like hot weather.", "Carlos says that he does not like hot weather.") },
       { e: "says",  a: "Report what they say:", von: "The guide: „The swamp is dangerous.“", nach: K8_REDE("The guide says that the swamp is dangerous.") },
       { e: "says",  a: "Report what they say:", von: "Mom: „I love this song.“", nach: K8_REDE("Mom says that she loves this song.") },
       { e: "frage", a: "Report the question:", von: "Mia: „Do you know the song?“", nach: ["Mia asks if I know the song.", "Mia asks whether I know the song.", "Mia asks if we know the song.", "Mia asks whether we know the song."] },
@@ -959,7 +964,7 @@ Object.assign(K8.baukasten, {
     umformen: [
       { e: "shift", a: "Report it with „said“:", von: "Lily: „I am tired.“", nach: K8_REDE("Lily said that she was tired.") },
       { e: "shift", a: "Report it with „said“:", von: "Jake: „My parents live in Texas.“", nach: K8_REDE("Jake said that his parents lived in Texas.") },
-      { e: "shift", a: "Report it with „said“:", von: "Zoe: „I don't like the heat.“", nach: K8_REDE("Zoe said that she didn't like the heat.", "Zoe said that she did not like the heat.") },
+      { e: "shift", a: "Report it with „said“:", von: "Zoe: „I don't like hot weather.“", nach: K8_REDE("Zoe said that she didn't like hot weather.", "Zoe said that she did not like hot weather.") },
       { e: "shift", a: "Report it with „said“:", von: "Carlos: „We are at the port.“", nach: K8_REDE("Carlos said that they were at the port.") },
       { e: "shift", a: "Report it with „said“:", von: "Grandpa: „I play the guitar every day.“", nach: K8_REDE("Grandpa said that he played the guitar every day.") },
       { e: "shift", a: "Report it with „said“:", von: "The guide: „The trail is very long.“", nach: K8_REDE("The guide said that the trail was very long.") },
