@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.7 (passt zu App-Version 0.9.2)
+   Version:  minispiele 0.8 (passt zu App-Version 0.9.12)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,7 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.8 (21.11.2026)  Kabel verbinden auch per Tastatur (Stecker wählen, dann Buchse).
      0.7 (20.11.2026)  Vier neue Spiele für die älteren Klassen: kabel (Kabel verbinden), andocken
                        (Andockmanöver), sequenz (Sicherheitssequenz merken), signal (Signal einstellen).
      0.6 (16.11.2026)  Man kann scheitern: drei Herzen, jeder Fehler kostet eines (ctx.fehler).
@@ -808,10 +809,17 @@ function kabel(buehne, ctx){
     if(z && !fertig.has(+z.dataset.i)) verbinde(+z.dataset.i);
     else { zeiger = null; zeichne(); }   // Stecker bleibt gewählt: jetzt die Buchse antippen
   };
-  wrap.addEventListener("pointerdown", runter); wrap.addEventListener("pointermove", bewegt); wrap.addEventListener("pointerup", hoch);
+  // Tastatur (ab 0.8): Enter/Leertaste auf einem Stecker wählt ihn, dann Enter/Leertaste auf der Buchse verbindet
+  const taste = e => {
+    if(e.detail !== 0 || !ctx.laeuft() || sperre) return;
+    const s = e.target.closest(".ms-kb-stecker"), z = e.target.closest(".ms-kb-buchse");
+    if(s && !fertig.has(+s.dataset.i)){ aktiv = +s.dataset.i; zeiger = null; zeichne(); }
+    else if(z && aktiv != null && !fertig.has(+z.dataset.i)) verbinde(+z.dataset.i);
+  };
+  wrap.addEventListener("pointerdown", runter); wrap.addEventListener("pointermove", bewegt); wrap.addEventListener("pointerup", hoch); wrap.addEventListener("click", taste);
   const neu = () => zeichne(); window.addEventListener("resize", neu);
   neuerKasten();
-  return () => { clearTimeout(mtimer); clearTimeout(ntimer); window.removeEventListener("resize", neu); wrap.removeEventListener("pointerdown", runter); wrap.removeEventListener("pointermove", bewegt); wrap.removeEventListener("pointerup", hoch); };
+  return () => { clearTimeout(mtimer); clearTimeout(ntimer); window.removeEventListener("resize", neu); wrap.removeEventListener("pointerdown", runter); wrap.removeEventListener("pointermove", bewegt); wrap.removeEventListener("pointerup", hoch); wrap.removeEventListener("click", taste); };
 }
 
 // =====================================================================

@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.11 (Prototyp)
+  Version 0.9.12 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,11 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.12 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 8: Barrierefreiheit)
+    - Schloss-Lämpchen zeigen ✓ bzw. ✗ zusätzlich zur Farbe.
+    - Richtig/falsch bei Kärtchen und Antwortknöpfen zusätzlich mit ✓/✗.
+    - Zuordnen per Tastatur: Wort wählen (Enter), Feld mit Tab ansteuern, Enter legt hinein. Minispiel „Kabel“: Stecker und Buchse
+      auch per Tastatur/Klick verbindbar.
   v0.9.11 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 7: Layout und Touch)
     - Handy quer (Bildschirmhöhe bis 500 px): Die Kopfleiste scrollt mit, ist kompakter und verdeckt nichts mehr.
     - Wortknöpfe und Kärtchen mindestens 52 px breit (auch „I“ und „a“ gut zu treffen).
@@ -221,7 +226,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.11</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.12</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -375,6 +380,9 @@
   .torlampe{width:22px;height:22px;border-radius:50%;border:3px solid #000;background:#37474f}
   .torlampe.gruen{background:var(--gruen);box-shadow:0 0 10px var(--gruen)}
   .torlampe.rot{background:#ff3b30;box-shadow:0 0 10px #ff3b30}
+  /* ✓/✗ zusätzlich zur Farbe – auch bei Rot-Grün-Schwäche erkennbar (ab v0.9.12) */
+  .torlampe{display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;line-height:1}
+  .torlampe.gruen::after{content:"✓";color:#000} .torlampe.rot::after{content:"✗";color:#fff}
   #btnTor:disabled{opacity:.5}
   #codeMeldung{flex-basis:100%;text-align:center;font-weight:700;min-height:1.4em;margin:0}
   .zittern{animation:zittern .4s}
@@ -407,6 +415,9 @@
   .chip.klon{position:fixed;z-index:50;pointer-events:none;opacity:.95;transform:scale(1.08);box-shadow:0 10px 20px rgba(0,0,0,.4)}
   .chip.richtig{background:#d9f7e4;border-color:var(--ok)}
   .chip.falsch{background:#fde3e1;border-color:var(--fehler)}
+  .chip.richtig::after,.optionen button.richtig::after,.zr-optionen button.richtig::after{content:"✓";font-weight:900;margin-left:.3em}
+  .chip.falsch::after,.optionen button.falsch::after,.zr-optionen button.falsch::after{content:"✗";font-weight:900;margin-left:.3em}
+  .zone:focus-visible{outline:4px solid var(--gelb);outline-offset:2px}
   .vorrat{min-height:72px;padding:.4rem;background:#e9edf5;border:3px dashed #6b7a99;border-radius:12px;margin-bottom:.8rem}
   .zonen{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
   .zone{min-height:140px;padding:.5rem;background:#fff;border:3px solid #000;border-radius:14px}
@@ -637,7 +648,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.11</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.12</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -663,7 +674,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.11";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.12";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -677,7 +688,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.11"></script>
+<script src="daten/allgemein.js?v=0.9.12"></script>
 
 <script>
 /* #####################################################################
@@ -3270,9 +3281,12 @@ const RAETSEL = {
     const zonen = el("div", "zonen");
     const ziele = a.kategorien.map(k => { const z = el("div", "zone"); z.dataset.ziel = k; z.appendChild(el("span", "zonen-titel", k)); z.setAttribute("role", "group"); z.setAttribute("aria-label", ui("feld", { k })); zonen.appendChild(z); return z; });
     let ausgewaehlt = null;
-    const waehle = c => { ausgewaehlt = ausgewaehlt === c ? null : c; chips.forEach(x => x.classList.toggle("gewaehlt", x === ausgewaehlt)); };
-    const ablegen = (c, zone) => { zone.appendChild(c); ausgewaehlt = null; chips.forEach(x => x.classList.remove("gewaehlt")); };
+    const waehle = c => { ausgewaehlt = ausgewaehlt === c ? null : c; chips.forEach(x => { x.classList.toggle("gewaehlt", x === ausgewaehlt); x.setAttribute("aria-pressed", x === ausgewaehlt); }); };
+    const ablegen = (c, zone) => { zone.appendChild(c); ausgewaehlt = null; chips.forEach(x => { x.classList.remove("gewaehlt"); x.setAttribute("aria-pressed", "false"); }); };
     [vorrat, ...ziele].forEach(z => z.addEventListener("click", e => { if(e.target.closest(".chip") || !ausgewaehlt) return; ablegen(ausgewaehlt, z); }));
+    // Tastatur (ab v0.9.12): Wort mit Enter/Leertaste wählen, dann mit Tab zum Feld und Enter/Leertaste = hineinlegen
+    [vorrat, ...ziele].forEach(z => { z.tabIndex = 0; z.addEventListener("keydown", e => {
+      if((e.key === "Enter" || e.key === " ") && e.target === z && ausgewaehlt){ e.preventDefault(); const c = ausgewaehlt; ablegen(c, z); c.focus(); } }); });
     const chips = mischen(a.woerter).map(w => { const c = el("button", "chip", gross(w.text)); c.type = "button"; c.dataset.ziel = w.ziel;
       ziehbar(c, ablegen, waehle); vorrat.appendChild(c); return c; });
     box.append(vorrat, zonen, hilfeZeile(a.woerter.map(w => w.text).concat(a.kategorien)));
