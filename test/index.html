@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.4 (Prototyp)
+  Version 0.9.5 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,14 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v0.9.5 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 2: fachliche Fehler)
+    - Titanic-Sätze ersetzt (Typ II jetzt in der Gegenwart: museum/café, bike; Steigerung: This ship, Today).
+    - Fehler finden zeigt bei der indirekten Rede die direkte Rede darüber an (Feld „vorher“); 6-G16 mit
+      eindeutigem Fehlerwort (came → comes).
+    - Mehr richtige Varianten: mustn't/needn't, love/hate/like + to, „than yours“, „We have no tea bags“;
+      „more healthy“ nicht mehr als falsche Antwort (stattdessen „more healthier“).
+    - Kleinkorrekturen: type II auf Englisch, Big Ben = bell, Freiheitsstatue ohne Jahreszahl,
+      Ortsangabe-Erklärung (6-G11), Gerundium-Regel ergänzt; harbour/harbor in der Wörterhilfe (K7).
   v0.9.4 (20.11.2026)  – nur Testbereich (Generalcheck, Paket 1: Bewertung)
     - Fehler finden: Steht das Fehlerwort mehrmals im Satz, zählt nur die richtige Stelle (generierte Aufgaben
       mit doppeltem Fehlerwort werden neu gewürfelt; handgeschriebene brauchen dann „fehlerStelle“).
@@ -183,7 +191,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.4</title>
+<title>Grammatik-Escape-Room Englisch – v0.9.5</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -381,6 +389,7 @@
   .satzwoerter{display:flex;flex-wrap:wrap;gap:.2rem;padding:.6rem;background:#fff;border:3px solid #000;border-radius:12px}
   .satzwoerter button{min-height:52px;padding:.2rem .7rem;font-size:1.35rem;font-weight:600;background:#fff;box-shadow:0 3px 0 #000}
   .satzwoerter button.gewaehlt{background:#fde3e1;border-color:var(--fehler);text-decoration:line-through}
+  .fehler-vorher{margin:0 0 .4rem;font-size:1.2rem;font-weight:600;font-style:italic}
   .feedback{margin-top:1rem;padding:.9rem 1rem;border:3px solid #000;border-radius:14px;font-size:1.15rem}
   .feedback[hidden]{display:none}
   .feedback.ok{background:#d9f7e4}
@@ -592,7 +601,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.4</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 0.9.5</b> (Prototyp) · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -618,7 +627,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "0.9.5";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -632,7 +641,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.4"></script>
+<script src="daten/allgemein.js?v=0.9.5"></script>
 
 <script>
 /* #####################################################################
@@ -1449,8 +1458,8 @@ Object.assign(ARTEN, {
                  erklaerung: erklaere(E.can, { BEISPIEL: gross(q.text) + " can't " + F2 + "." }) };
       }
       const Sit = wuerfle(bk.situationen.filter(s => s.modal === "must")), wer = bk.personen.filter(p => !Sit.nurKind || p.kind), P = wuerfle(wer); kern(Sit.rest);
-      const q = anders(wer, P), S2 = anders(bk.situationen.filter(s => s.modal === "needn't"), Sit);
-      return { frage: "Make the sentence negative:  " + gross(P.text) + " must " + mitPoss(Sit.rest, P) + ".", loesung: altNeednt.map(m => gross(P.text) + " " + m + " " + mitPoss(Sit.rest, P) + "."),
+      const q = anders(wer, P), S2 = anders(bk.situationen.filter(s => s.modal === "needn't" && s.rest !== Sit.rest), Sit);   // Beispiel nie mit derselben Tätigkeit
+      return { frage: "Make the sentence negative:  " + gross(P.text) + " must " + mitPoss(Sit.rest, P) + ".", loesung: altNeednt.concat(["mustn't", "must not"]).map(m => gross(P.text) + " " + m + " " + mitPoss(Sit.rest, P) + "."),   // beides richtig (Entscheidung v0.9.5)
                erklaerung: erklaere(E.must, { BEISPIEL: (q2 => S2.vor + " " + gross(q2.text) + " needn't " + mitPoss(S2.rest, q2) + ".")(anders(bk.personen.filter(p => !S2.nurKind || p.kind), P)) }) };
     }
     if(tier){
@@ -1788,7 +1797,8 @@ function steigerungFalsch(A, sup){
   const ohneE = A.adj.replace(/e$/, "");
   if(A.typ === "unreg") return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
   if(A.typ === "lang")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
-  if(A.typ === "y")     return sup ? [A.adj + "est", "most " + A.adj] : [A.adj + "er", "more " + A.adj];
+  // „more healthy / most lonely“ ist nicht eindeutig falsch → als falsche Antwort den Doppelfehler „more healthier“ nehmen (ab v0.9.5)
+  if(A.typ === "y")     return sup ? [A.adj + "est", "most " + A.sup] : [A.adj + "er", "more " + A.komp];
   if(A.typ === "dopp")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
   if(A.typ === "e")     return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];
   return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];                    // kurz: tall
@@ -1835,7 +1845,8 @@ function steigerung(modus, bk, form, E){
   if(form === "umformen"){
     if(sup) return { frage: "Use the superlative:  " + R.a + " " + be + " " + (R.pl ? "very " + A.adj + " " + R.n : (/^[aeiou]/.test(A.adj) ? "an " : "a ") + A.adj + " " + R.n) + ". (" + R.ort + ")",
                      loesung: [richtig], erklaerung: erkl };
-    return { frage: "Compare with „than“ (" + A.adj + "):  " + R.a + " – " + R.b, loesung: [richtig], erklaerung: erkl };
+    // b2: Kurzform für den zweiten Teil, z. B. „your bag“ → „yours“ (ab v0.9.5)
+    return { frage: "Compare with „than“ (" + A.adj + "):  " + R.a + " – " + R.b, loesung: [richtig].concat(R.b2 ? [R.a + " " + be + " " + form_(A) + " than " + R.b2 + "."] : []), erklaerung: erkl };
   }
   return null;
 }
@@ -2358,10 +2369,12 @@ function gerund(bk, form, E){
   const bsp = bspOhne(() => { const a = anders(bk.aktivitaeten, A), v = anders(bk.gerundVerben, V), q = anders(bk.personen.filter(p => p.kind), P);
     return gross(q.text) + " " + (q.er ? v.s : v.e) + " " + a.ing + (a.rest ? " " + a.rest : "") + "."; }, richtig);
   const erkl = erklaere(E.verb, { BEISPIEL: bsp, V: V.e });
+  // Nach love, hate, like ist auch to + Grundform richtig (nach enjoy nicht) – ab v0.9.5
+  const auchTo = V.e !== "enjoy" ? ["to " + A.e] : [];
   if(form === "quiz") return { frage: satz("___"), optionen: mischen([A.ing, A.e, A.s]), loesung: A.ing, erklaerung: erkl };
-  if(form === "luecke") return { frage: satz("___ (" + A.e + ")"), loesung: [A.ing], erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + A.e + ")"), loesung: [A.ing].concat(auchTo), erklaerung: erkl };
   if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
-  if(form === "fehler") return { satz: satz(A.e), fehlerwort: A.e, loesung: [A.ing], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(A.e), fehlerwort: A.e, loesung: [A.ing].concat(auchTo), erklaerung: erkl };
   if(form === "zuordnen"){
     const mach = ok => () => { const a = wuerfle(bk.aktivitaeten), v = wuerfle(bk.gerundVerben), q = wuerfle(bk.personen.filter(p => p.kind)), re = a.rest ? " " + a.rest : "";
       const vb = q.er ? v.s : v.e;
@@ -2413,7 +2426,7 @@ function ifSatz2(bk, form, E){
   if(form === "fehler") return { satz: "If " + wenn + ", " + R.s2 + " would " + R.past2 + (R.r2 ? " " + R.r2 : "") + ".", fehlerwort: R.past2, loesung: [R.e], erklaerung: erklH };
   if(form === "umformen"){
     const r1 = wuerfle(bk.ifTausch); kern(r1.von);
-    return { frage: (E.tauschFrage || "Make it unreal (Typ II):") + "  " + r1.von, loesung: r1.nach, erklaerung: erklaere(E.tausch, { BEISPIEL: bsp }) };
+    return { frage: (E.tauschFrage || "Make it unreal (type II):") + "  " + r1.von, loesung: r1.nach, erklaerung: erklaere(E.tausch, { BEISPIEL: bsp }) };
   }
   return null;
 }
@@ -2559,7 +2572,7 @@ function satzpool(bk, form, E){
     const R = wuerfle(bk.saetze.filter(x => x.fehler)); if(!R) return satzpool(bk, "quiz", E);
     kern(R.k || R.t);
     const F = typeof R.fehler === "string" ? { ersatz: R.fehler, wort: R.fehler, loesung: R.r } : R.fehler;
-    return { satz: gross(voll(R, gr(R, F.ersatz))), fehlerwort: gr(R, F.wort), loesung: F.loesung || R.r, erklaerung: erkl(R, voll(R, R.r[0])) };
+    return { satz: gross(voll(R, gr(R, F.ersatz))), fehlerwort: gr(R, F.wort), loesung: F.loesung || R.r, vorher: R.q, erklaerung: erkl(R, voll(R, R.r[0])) };
   }
   const R = wuerfle(bk.saetze.filter(x => form !== "satzbau" || !x.keinSatzbau)); kern(R.k || R.t);
   const satz = gross(voll(R, gr(R, R.r[0]))), ek = erkl(R, satz);
@@ -3181,7 +3194,10 @@ const RAETSEL = {
     const z = el("label", "eingabe-zeile"); z.append(el("span", "", ui("soRichtig")));
     const inp = el("input"); inp.type = "text"; ["autocomplete","autocorrect","autocapitalize"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
-    z.appendChild(inp); box.append(w, hilfeZeile(woerter), z);
+    z.appendChild(inp);
+    // vorher: Zusatzzeile über dem Satz, z. B. die direkte Rede bei der indirekten Rede – sonst wäre der Fehler nicht eindeutig (ab v0.9.5)
+    if(a.vorher) box.append(el("p", "fehler-vorher", a.vorher));
+    box.append(w, hilfeZeile(woerter), z);
     return { pruefe(){ if(gewaehlt === null || !inp.value.trim()) return null;
         return gewaehlt === fehlerIndex && a.loesung.some(l => gleich(l, inp.value, a.genau)); },
       sperre(){ knoepfe.forEach(k => k.disabled = true); inp.disabled = true; },

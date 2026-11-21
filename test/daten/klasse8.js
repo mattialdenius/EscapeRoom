@@ -1019,7 +1019,7 @@ K8.aufgaben.push(
     erklaerung: "since + a point in time (Zeitpunkt). Example: Jake hasn't posted anything since Monday." },
   { thema: "8-G11", niveau: "rot", form: "fehler", satz: "Mia has lived in Boston since three years.", fehlerwort: "since", loesung: ["for"],
     erklaerung: "for + a period of time (Zeitraum): for three years. Example: They have known each other for a long time." },
-  { thema: "8-G12", niveau: "gruen", form: "quiz", frage: "The Statue of Liberty ___ by France in 1886.", optionen: ["was given", "gave", "was give"], loesung: "was given",
+  { thema: "8-G12", niveau: "gruen", form: "quiz", frage: "The Statue of Liberty ___ to the USA by France.", optionen: ["was given", "gave", "was give"], loesung: "was given",
     erklaerung: "Passive in the simple past: was/were + 3rd form. Example: New Orleans was founded by the French." },
   { thema: "8-G13", niveau: "gruen", form: "quiz", frage: "Zoe: „I like jazz.“  →  Zoe says that ___ likes jazz.", optionen: ["she", "I", "you"], loesung: "she",
     erklaerung: "Change the pronoun (Pronomen): I → she. Example: Jake: „I love jazz.“ → Jake says that he loves jazz." },

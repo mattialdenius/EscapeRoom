@@ -127,7 +127,7 @@ K7.themen = [
   { id: "7-G4",  klasse: 7, unit: 2, titel: "Adjektive und Adverbien", regel: "Adjektiv: Wie ist jemand oder etwas? → The test was easy. Adverb: Wie macht jemand etwas? → She climbed slowly. Adjektiv + -ly (slow → slowly), -y → -ily (easy → easily), -le → -ly (terrible → terribly). Sonderfälle: good → well, fast → fast, hard → hard." },
   { id: "7-G5",  klasse: 7, unit: 2, titel: "Das Perfekt", regel: "have/has + 3. Form → I have tried rafting. Tom has fallen off his skateboard. Unregelmäßig lernen: fall – fell – fallen, ride – rode – ridden. just, already, never, ever stehen vor der 3. Form. Verneinung: haven’t/hasn’t … yet." },
   { id: "7-G6",  klasse: 7, unit: 3, titel: "Relativsätze mit Relativpronomen", regel: "Relativsätze beschreiben ein Nomen genauer. Personen: who (oder that) → the inventor who invented the telephone. Dinge und Tiere: which (oder that) → a wheel which is made of rubber. „Dessen/deren“: whose → the girl whose brother is a vet." },
-  { id: "7-G7",  klasse: 7, unit: 3, titel: "Das Gerundium", regel: "Gerundium = Verb + -ing. Als Subjekt am Satzanfang → Hiking is fun. Nach enjoy, love, hate, like → I enjoy camping. Schreibung: swim → swimming, cycle → cycling." },
+  { id: "7-G7",  klasse: 7, unit: 3, titel: "Das Gerundium", regel: "Gerundium = Verb + -ing. Als Subjekt am Satzanfang → Hiking is fun. Nach enjoy, love, hate, like → I enjoy camping. (Nach love, hate und like geht auch to + Grundform: I like to swim.) Schreibung: swim → swimming, cycle → cycling." },
   { id: "7-G8",  klasse: 7, unit: 3, titel: "Die Zukunft mit will", regel: "Vorhersagen, Hoffnungen und Versprechen: will + Grundform → I think it will freeze tonight. I promise I’ll help you. Verneinung: won’t (= will not) → Tom won’t give up." },
   { id: "7-G9",  klasse: 7, unit: 3, titel: "Bedingungssätze Typ I", regel: "if + simple present, Hauptsatz: will + Grundform → If it is sunny, we’ll go cycling. Im if-Satz steht nie will. Steht der if-Satz hinten, fällt das Komma weg." },
   { id: "7-G10", klasse: 7, unit: 4, titel: "Bedingungssätze Typ II", regel: "Typ II (nur vorgestellt, unwahrscheinlich): if + simple past, Hauptsatz: would + Grundform → If I had more money, I would buy a caravan. If I were/was rich … Typ I (real möglich): if + simple present, will." },
@@ -155,7 +155,8 @@ K7.woerterhilfe = [
   { en: "material", de: "Material" }, { en: "hostel", de: "Hostel, Herberge" }, { en: "caravan", de: "Wohnwagen" }, { en: "buffet", de: "Buffet" },
   { en: "insect", de: "Insekt" }, { en: "radio", de: "Radio" }, { en: "mechanic", de: "Mechaniker/in" }, { en: "milkshake", de: "Milchshake" },
   { en: "musical", de: "Musical" }, { en: "orchestra", de: "Orchester" }, { en: "guitar", de: "Gitarre" }, { en: "shampoo", de: "Shampoo" },
-  { en: "kangaroo", de: "Känguru" }, { en: "tram", de: "Straßenbahn" }, { en: "ferry", de: "Fähre" }
+  { en: "kangaroo", de: "Känguru" }, { en: "tram", de: "Straßenbahn" }, { en: "ferry", de: "Fähre" },
+  { en: "harbour", de: "Hafen" }, { en: "harbor", de: "Hafen" }
 ];
 
 // =====================================================================
@@ -590,8 +591,8 @@ Object.assign(K7.baukasten, {
       },
       gerund: {
         subjekt: "Steht eine Tätigkeit am Satzanfang als Subjekt, nimmst du die -ing-Form. Beispiel: {BEISPIEL}",
-        verb:    "Nach {V} (und nach enjoy, love, hate, like) steht die -ing-Form. Beispiel: {BEISPIEL}",
-        zuordnen: "Richtig ist die -ing-Form: als Subjekt (Hiking is fun.) und nach enjoy, love, hate, like (I enjoy hiking.)."
+        verb:    "Nach {V} (und nach enjoy, love, hate, like) steht die -ing-Form. Nach love, hate und like geht auch to + Grundform (I like to swim). Beispiel: {BEISPIEL}",
+        zuordnen: "Richtig ist die -ing-Form: als Subjekt (Hiking is fun.) und nach enjoy, love, hate, like (I enjoy hiking.). Nach love, hate und like geht auch to + Grundform."
       },
       willvorhersage: {
         will:    "Vorhersagen, Hoffnungen und Versprechen (I think, I'm sure, maybe, I hope, I promise): will + Grundform. Beispiel: {BEISPIEL}",
@@ -623,7 +624,7 @@ Object.assign(K7.baukasten, {
       { w: "I {found} a gold coin",      grund: "find", wf: "find", s2: "I",    e: "buy",    past2: "bought",  r2: "a milkshake for everybody" },
       { w: "I {were} a vet", alt: "was", grund: "be", wf: "am", s2: "I", e: "help", past2: "helped", r2: "all the animals" },
       { w: "we {lived} by the sea", grund: "live", wf: "live", s2: "we", e: "go", past2: "went", r2: "swimming every day" },
-      { w: "the Titanic {had} more lifeboats", grund: "have", wf: "has", s2: "more people", e: "survive", past2: "survived", r2: "" }
+      { w: "the museum {had} a café", grund: "have", wf: "has", s2: "more people", e: "visit", past2: "visited", r2: "it" }
     ],
     // if-Sätze Typ I – für die Gegenüberstellung mit Typ II
     ifSaetze: [
@@ -660,18 +661,18 @@ Object.assign(K7.baukasten, {
       { a: "The hostel",       b: "the hotel",         w: ["cheap", "comfortable", "expensive", "old"] },
       { a: "My niece",         b: "my nephew",         w: ["tall", "old", "smart", "silly", "intelligent"] },
       { a: "This milkshake",   b: "that lemonade",     w: ["healthy", "expensive", "good", "bad", "big"] },
-      { a: "The Titanic",      b: "the other ships",   w: ["big", "large", "expensive"] },
+      { a: "This ship",        b: "the other ships",   w: ["big", "large", "expensive"] },
       { a: "A tissue",         b: "a coin",            w: ["useful", "cheap"] },
       { a: "Mineral water",    b: "lemonade",          w: ["healthy", "cheap", "good"] },
       { a: "This brand",       b: "the special offer", w: ["expensive", "cheap", "good", "bad"] }
     ],
     superRahmen: [
       { a: "This mural",     n: "mural",  ort: "in the city",   w: ["spectacular", "big", "old", "large", "horrible"] },
-      { a: "The Titanic",    n: "ship",   ort: "of its time",   w: ["big", "large", "expensive", "spectacular"] },
+      { a: "This ship",      n: "ship",   ort: "in the harbour", w: ["big", "large", "expensive", "spectacular"] },
       { a: "My niece",       n: "girl",   ort: "in her class",  w: ["tall", "smart", "silly", "intelligent"] },
       { a: "This milkshake", n: "drink",  ort: "on the menu",   w: ["healthy", "expensive", "good", "bad"] },
       { a: "This hostel",    n: "place",  ort: "in town",       w: ["cheap", "comfortable", "expensive"] },
-      { a: "That day",       n: "day",    ort: "of my life",    w: ["good", "bad", "lonely", "horrible"] }
+      { a: "Today",          n: "day",    ort: "of my life",    w: ["good", "bad", "lonely", "horrible"] }
     ],
     // some / any / no (G12)
     someRahmen: [
@@ -703,7 +704,7 @@ Object.assign(K7.baukasten, {
       { wort: "no",      von: "There isn't any milk in the fridge.",    nach: ["There is no milk in the fridge.", "There's no milk in the fridge."] },
       { wort: "nothing", von: "I didn't buy anything at the shop.",     nach: ["I bought nothing at the shop."] },
       { wort: "nobody",  von: "There isn't anybody in the gym.",        nach: ["There is nobody in the gym.", "There's nobody in the gym."] },
-      { wort: "no",      von: "We haven't got any tea bags.",           nach: ["We have got no tea bags.", "We've got no tea bags."] }
+      { wort: "no",      von: "We haven't got any tea bags.",           nach: ["We have got no tea bags.", "We've got no tea bags.", "We have no tea bags."] }
     ],
     // simple present ↔ present progressive (G13)
     verbenPP: [
@@ -838,7 +839,7 @@ K7.aufgaben.push(
     erklaerung: "Nach love steht die -ing-Form. Beispiel: I enjoy camping." },
   { thema: "7-G7", niveau: "gelb", form: "luecke", frage: "___ (swim) in a cold lake is not much fun.", loesung: ["Swimming", "swimming"],
     erklaerung: "Tätigkeit als Subjekt → -ing-Form (swim → swimming, m verdoppelt). Beispiel: Hiking is fun." },
-  { thema: "7-G7", niveau: "rot", form: "fehler", satz: "Ben hates sleep in a tent when it rains.", fehlerwort: "sleep", loesung: ["sleeping"],
+  { thema: "7-G7", niveau: "rot", form: "fehler", satz: "Ben hates sleep in a tent when it rains.", fehlerwort: "sleep", loesung: ["sleeping", "to sleep"],
     erklaerung: "Nach hate steht die -ing-Form. Beispiel: Lily hates getting up early." },
   { thema: "7-G8", niveau: "gruen", form: "quiz", frage: "I'm sure you ___ love the porridge here.", optionen: ["will", "are", "to"], loesung: "will",
     erklaerung: "Vorhersage mit I'm sure → will + Grundform. Beispiel: I think it will freeze tonight." },
@@ -850,9 +851,9 @@ K7.aufgaben.push(
     erklaerung: "Nach will/'ll steht die Grundform ohne -s. Beispiel: If we get cold, we'll make a fire." },
   { thema: "7-G10", niveau: "gruen", form: "quiz", frage: "If I were rich, I ___ buy a big house by the sea.", optionen: ["would", "will", "am"], loesung: "would",
     erklaerung: "Typ II (nur vorgestellt): if + simple past, Hauptsatz mit would. Beispiel: If I had more money, I would buy a caravan." },
-  { thema: "7-G10", niveau: "gelb", form: "luecke", frage: "If the crew ___ (see) the iceberg earlier, the Titanic ___ (not / sink).", loesung: [["saw"], ["wouldn't sink", "would not sink"]],
+  { thema: "7-G10", niveau: "gelb", form: "luecke", frage: "If I ___ (have) a bike, I ___ (not / walk) to school.", loesung: [["had"], ["wouldn't walk", "would not walk"]],
     erklaerung: "Typ II: simple past im if-Satz, would/wouldn't + Grundform im Hauptsatz. Beispiel: If I knew the answer, I would tell you." },
-  { thema: "7-G11", niveau: "gruen", form: "quiz", frage: "Mineral water is ___ than lemonade.", optionen: ["healthier", "more healthy", "healthyer"], loesung: "healthier",
+  { thema: "7-G11", niveau: "gruen", form: "quiz", frage: "Mineral water is ___ than lemonade.", optionen: ["healthier", "more healthier", "healthyer"], loesung: "healthier",
     erklaerung: "-y wird zu -ier: healthy → healthier. Beispiel: My niece is sillier than my nephew." },
   { thema: "7-G11", niveau: "gelb", form: "satzbau", loesung: ["The hostel is less expensive than the hotel."],
     erklaerung: "Weniger: less + Adjektiv + than. Beispiel: This brand is less expensive than the special offer." },
@@ -884,7 +885,7 @@ K7.zusatzfragen.push(
   { thema: "7-G9",  frage: "If it … sunny, we'll go cycling.", optionen: ["is", "will be", "be"], loesung: "is" },
   { thema: "7-G9",  frage: "If you give up, you …", optionen: ["will lose.", "lose yesterday.", "will loses."], loesung: "will lose." },
   { thema: "7-G10", frage: "If I had more money, I … buy a caravan.", optionen: ["would", "will", "did"], loesung: "would" },
-  { thema: "7-G10", frage: "Which sentence is Typ II?", optionen: ["If I knew the answer, I would tell you.", "If I know the answer, I will tell you.", "I know the answer."], loesung: "If I knew the answer, I would tell you." },
+  { thema: "7-G10", frage: "Which sentence is type II?", optionen: ["If I knew the answer, I would tell you.", "If I know the answer, I will tell you.", "I know the answer."], loesung: "If I knew the answer, I would tell you." },
   { thema: "7-G11", frage: "This is the … expensive brand in the shop.", optionen: ["least", "less", "lessest"], loesung: "least" },
   { thema: "7-G11", frage: "Which is correct?", optionen: ["the most spectacular", "the spectacularest", "the more spectacular"], loesung: "the most spectacular" },
   { thema: "7-G12", frage: "The fridge is empty. There is … milk.", optionen: ["no", "any", "some"], loesung: "no" },
