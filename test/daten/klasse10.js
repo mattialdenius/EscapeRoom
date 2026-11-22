@@ -2,7 +2,7 @@
    KLASSE 10  ·  alle Inhalte für Klasse 10
    ---------------------------------------------------------------------
    FERTIG: Welt (Geschichte, Räume, Figur, Karte, Minispiele) und alle Aufgaben (G1–G7).
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b, Unit 3 (G5–G7) ab 1.2.0-c.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b, Unit 3 (G5–G7) ab 1.2.0-c. Korrekturen nach dem Klasse-10-Check: 1.2.0-d.
    „Wiederholung bis Unit 3“ streut zusätzlich Aufgaben aus Klasse 9 ein (2 von 10 pro Raum, Einstellung wiederholungMitKlassen in allgemein.js). Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=10
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
@@ -156,7 +156,7 @@ K10.baukasten = {
       { e: "prog",     t: "These days the ice in the Arctic ___ faster and faster.", h: "melt", r: ["is melting"], f: ["melts", "is melt"], fehler: { ersatz: "is melt", wort: "melt", loesung: ["melting"] } },
       { e: "neg",      t: "Mia ___ TV right now. She is reading.", h: "not / watch", r: ["isn't watching", "is not watching"], f: ["doesn't watch", "isn't watch"], fehler: { ersatz: "doesn't watching", wort: "doesn't", loesung: ["isn't", "is not"] } },
       { e: "neg",      t: "My parents ___ meat. They are vegetarians.", h: "not / eat", r: ["don't eat", "do not eat"], f: ["aren't eating", "doesn't eat"], fehler: { ersatz: "doesn't eat", wort: "doesn't", loesung: ["don't", "do not"] } },
-      { e: "neg",      t: "Tom ___ on Sundays.", h: "not / train", r: ["doesn't train", "does not train"], f: ["isn't training", "don't train"], fehler: { ersatz: "don't train", wort: "don't", loesung: ["doesn't", "does not"] } },
+      { e: "neg",      t: "Tom usually ___ on Sundays.", h: "not / train", r: ["doesn't train", "does not train"], f: ["isn't training", "don't train"], fehler: { ersatz: "don't train", wort: "don't", loesung: ["doesn't", "does not"] } },
       { e: "neg",      t: "We ___ at the moment. We're having a break.", h: "not / work", r: ["aren't working", "are not working", "'re not working"], f: ["don't work", "aren't work"], fehler: { ersatz: "don't working", wort: "don't", loesung: ["aren't", "are not"] } },
       { e: "frage",    t: "___ you usually walk to school?", h: "do / be", r: ["Do"], f: ["Are", "Does"], fehler: "Are" },
       { e: "frage",    t: "What ___ you doing right now?", h: "do / be", r: ["are"], f: ["do", "is"], fehler: "do" },
@@ -190,7 +190,7 @@ K10.baukasten = {
       { e: "prog",     a: "Use the present progressive:", von: "It snows. (at the moment)", nach: ["It is snowing at the moment.", "It's snowing at the moment.", "At the moment, it is snowing.", "At the moment it is snowing.", "At the moment, it's snowing.", "At the moment it's snowing."] },
       { e: "simple",   a: "Use the simple present:", von: "I am cycling to school. (every day)", nach: ["I cycle to school every day.", "Every day, I cycle to school.", "Every day I cycle to school."] },
       { e: "simple",   a: "Use the simple present:", von: "Ethan is playing hockey. (on Saturdays)", nach: ["Ethan plays hockey on Saturdays.", "On Saturdays, Ethan plays hockey.", "On Saturdays Ethan plays hockey."] },
-      { e: "simple",   a: "Use the simple present:", von: "My mum is working late. (usually)", nach: ["My mum usually works late."] },
+      { e: "simple",   a: "Use the simple present:", von: "My mum is working late. (usually)", nach: ["My mum usually works late.", "Usually my mum works late.", "Usually, my mum works late."] },
       { e: "simple",   a: "Use the simple present:", von: "We are walking the dog. (twice a day)", nach: ["We walk the dog twice a day."] },
       { e: "simple",   a: "Use the simple present:", von: "The coach is shouting. (never)", nach: ["The coach never shouts."] },
       { e: "state",    a: "Correct the sentence (state verb):", von: "I am knowing the way.", nach: ["I know the way."] },
@@ -228,7 +228,7 @@ K10.baukasten = {
   "10-G2": {
     saetze: [
       { e: "sincefor", t: "Ethan has lived in Canada ___ 2019.", h: "since / for", r: ["since"], f: ["for", "ago"], fehler: "for" },
-      { e: "sincefor", t: "We have known each other ___ ten years.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
+      { e: "sincefor", t: "My parents have known each other ___ twenty years.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
       { e: "sincefor", t: "The explorers have been on the ice ___ three months.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
       { e: "sincefor", t: "My coach has worked here ___ last summer.", h: "since / for", r: ["since"], f: ["for", "ago"], fehler: "for" },
       { e: "sincefor", t: "I haven't seen a moose ___ a long time.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
@@ -247,7 +247,7 @@ K10.baukasten = {
       { e: "signal",   t: "I have ___ seen a polar bear. I'd love to see one!", h: "ever / never", r: ["never"], f: ["ever", "yet"], fehler: "ever" },
       { e: "signal",   t: "Look! The ice on the lake has ___ started to melt.", h: "already / yet", r: ["already", "just"], f: ["yet", "ever"], fehler: "yet" },
       { e: "progr",    t: "I ___ for the bus for twenty minutes.", h: "wait – present perfect progressive", r: ["have been waiting", "'ve been waiting"], f: ["have waiting", "has been waiting"], fehler: { ersatz: "have been wait", wort: "wait", loesung: ["waiting"] } },
-      { e: "progr",    t: "Ava ___ lacrosse since she was ten.", h: "play – present perfect progressive", r: ["has been playing", "'s been playing"], f: ["has playing", "have been playing"], fehler: { ersatz: "have been playing", wort: "have", loesung: ["has"] } },
+      { e: "progr",    t: "Lucy ___ lacrosse since she was ten.", h: "play – present perfect progressive", r: ["has been playing", "'s been playing"], f: ["has playing", "have been playing"], fehler: { ersatz: "have been playing", wort: "have", loesung: ["has"] } },
       { e: "progr",    t: "It ___ all day.", h: "snow – present perfect progressive", r: ["has been snowing", "'s been snowing"], f: ["has snowing", "is been snowing"], fehler: { ersatz: "is been snowing", wort: "is", loesung: ["has"] } },
       { e: "progr",    t: "The players ___ hard since eight o'clock.", h: "train – present perfect progressive", r: ["have been training", "'ve been training"], f: ["has been training", "have training"], fehler: { ersatz: "has been training", wort: "has", loesung: ["have"] } },
       { e: "progr",    t: "How long ___ you been learning English?", h: "have / are", r: ["have"], f: ["are", "did"], fehler: "are" },
@@ -258,17 +258,17 @@ K10.baukasten = {
     ],
     umformen: [
       { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "Ethan came to Canada in 2019. He still lives there.", nach: ["Ethan has lived in Canada since 2019.", "Ethan has been living in Canada since 2019.", "Ethan's lived in Canada since 2019."] },
-      { e: "sincefor", a: "Write one sentence with “for” (present perfect):", von: "We became friends ten years ago. We are still friends.", nach: ["We have been friends for ten years.", "We've been friends for ten years."] },
+      { e: "sincefor", a: "Write one sentence with “for” (present perfect):", von: "We became friends ten years ago. We are still friends.", nach: ["We have been friends for ten years.", "We've been friends for ten years.", "We have known each other for ten years.", "We've known each other for ten years."] },
       { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "Ava started lacrosse when she was six. She still plays.", nach: ["Ava has played lacrosse since she was six.", "Ava has been playing lacrosse since she was six.", "Ava's played lacrosse since she was six.", "Ava's been playing lacrosse since she was six."] },
       { e: "sincefor", a: "Write one sentence with “for” (present perfect):", von: "I got my dog three years ago. I still have it.", nach: ["I have had my dog for three years.", "I've had my dog for three years."] },
       { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "My coach started working here last summer. He still works here.", nach: ["My coach has worked here since last summer.", "My coach has been working here since last summer."] },
       { e: "progr",    a: "Use the present perfect progressive:", von: "I wait for the bus. (for twenty minutes)", nach: ["I have been waiting for the bus for twenty minutes.", "I've been waiting for the bus for twenty minutes."] },
       { e: "progr",    a: "Use the present perfect progressive:", von: "It snows. (all day)", nach: ["It has been snowing all day.", "It's been snowing all day."] },
-      { e: "progr",    a: "Use the present perfect progressive:", von: "The players train. (since eight o'clock)", nach: ["The players have been training since eight o'clock."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "The players train. (since eight o'clock)", nach: ["The players have been training since eight o'clock.", "Since eight o'clock, the players have been training.", "Since eight o'clock the players have been training."] },
       { e: "progr",    a: "Use the present perfect progressive:", von: "Liam works in the garden. (all afternoon)", nach: ["Liam has been working in the garden all afternoon.", "Liam's been working in the garden all afternoon."] },
       { e: "progr",    a: "Use the present perfect progressive:", von: "We talk about the trip. (for hours)", nach: ["We have been talking about the trip for hours.", "We've been talking about the trip for hours."] },
       { e: "frage",    a: "Ask a question with “How long”:", von: "Ava has been playing lacrosse.", nach: ["How long has Ava been playing lacrosse?"] },
-      { e: "frage",    a: "Ask a question with “How long”:", von: "They have lived in Canada.", nach: ["How long have they lived in Canada?"] },
+      { e: "frage",    a: "Ask a question with “How long”:", von: "They have lived in Canada.", nach: ["How long have they lived in Canada?", "How long have they been living in Canada?"] },
       { e: "frage",    a: "Ask a question with “How long”:", von: "You have been learning English.", nach: ["How long have you been learning English?"] },
       { e: "frage",    a: "Ask a question with “ever”:", von: "you / see a polar bear", nach: ["Have you ever seen a polar bear?"] },
       { e: "neg",      a: "Make the sentence negative with “yet”:", von: "I have finished my workout.", nach: ["I haven't finished my workout yet.", "I have not finished my workout yet."] },
@@ -395,7 +395,7 @@ Object.assign(K10.baukasten, {
       { e: "modal", a: "Write an if-sentence type II:", von: "(Rahul / speak Hindi) – (he / can talk to the people)", nach: K10_WENN("If Rahul spoke Hindi", "he could talk to the people") },
       { e: "were",  a: "Write an if-sentence type II:", von: "(I / be you) – (I / apply for the internship)", nach: K10_WENN(["If I were you", "If I was you"], "I would apply for the internship") },
       { e: "were",  a: "Write an if-sentence type II:", von: "(the wages / be better) – (more people / work here)", nach: K10_WENN("If the wages were better", "more people would work here") },
-      { e: "typ2",  a: "Write an if-sentence type II:", von: "(my parents / not live so far away) – (I / see them more often)", nach: K10_WENN("If my parents did not live so far away", "I would see them more often") },
+      { e: "typ2",  a: "Write an if-sentence type II:", von: "(my parents / not work so much) – (I / see them more often)", nach: K10_WENN("If my parents did not work so much", "I would see them more often") },
       { e: "were",  a: "Write an if-sentence type II:", von: "(it / be warmer) – (we / can swim in the lake)", nach: K10_WENN(["If it were warmer", "If it was warmer"], "we could swim in the lake") },
       { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If I have time, I will help you.", nach: K10_WENN("If I had time", "I would help you") },
       { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If we find the hotel, we will stay there.", nach: K10_WENN("If we found the hotel", "we would stay there") },
@@ -453,8 +453,8 @@ Object.assign(K10.baukasten, {
       { e: "past",    t: "The palace ___ for a king.", h: "design", r: ["was designed"], f: ["is designed", "was design"], fehler: { ersatz: "was design", wort: "design", loesung: ["designed"] } },
       { e: "by",      t: "The speech ___ by thousands of people.", h: "hear", r: ["was heard"], f: ["was heared", "were heard"], fehler: { ersatz: "was heared", wort: "heared", loesung: ["heard"] } },
       { e: "by",      t: "Yesterday the volunteers ___ by the children in the village.", h: "greet", r: ["were greeted"], f: ["was greeted", "were greet"], fehler: { ersatz: "were greet", wort: "greet", loesung: ["greeted"] } },
-      { e: "neg",     t: "The workers ___ enough money.", h: "not / pay", r: ["aren't paid", "are not paid"], f: ["don't paid", "isn't paid"], fehler: { ersatz: "don't paid", wort: "don't", loesung: ["aren't", "are not"] } },
-      { e: "neg",     t: "Plastic bags ___ in this shop.", h: "not / sell", r: ["aren't sold", "are not sold"], f: ["aren't sell", "don't sold"], fehler: { ersatz: "aren't sell", wort: "sell", loesung: ["sold"] } },
+      { e: "neg",     t: "The workers ___ enough money.", h: "not / pay – present", r: ["aren't paid", "are not paid"], f: ["don't paid", "isn't paid"], fehler: { ersatz: "don't paid", wort: "don't", loesung: ["aren't", "are not"] } },
+      { e: "neg",     t: "Plastic bags ___ in this shop.", h: "not / sell – present", r: ["aren't sold", "are not sold"], f: ["aren't sell", "don't sold"], fehler: { ersatz: "aren't sell", wort: "sell", loesung: ["sold"] } },
       { e: "neg",     t: "The letter ___ because the address was wrong.", h: "not / deliver", r: ["wasn't delivered", "was not delivered"], f: ["didn't delivered", "weren't delivered"], fehler: { ersatz: "didn't delivered", wort: "didn't", loesung: ["wasn't", "was not"] } },
       { e: "neg",     t: "The contracts ___ yesterday.", h: "not / sign", r: ["weren't signed", "were not signed"], f: ["wasn't signed", "weren't sign"], fehler: { ersatz: "weren't sign", wort: "sign", loesung: ["signed"] } },
       { e: "neg",     t: "This room ___ every day.", h: "not / clean", r: ["isn't cleaned", "is not cleaned"], f: ["doesn't cleaned", "aren't cleaned"], fehler: { ersatz: "doesn't cleaned", wort: "doesn't", loesung: ["isn't", "is not"] } },
@@ -664,7 +664,7 @@ Object.assign(K10.baukasten, {
       { e: "prog",     t: "Liam ___ on the beach when he saw the whale.", h: "sit", r: ["was sitting"], f: ["has sat", "was siting"], fehler: { ersatz: "was siting", wort: "siting", loesung: ["sitting"] } },
       { e: "prog",     t: "The children ___ in the garden when it started to rain.", h: "play", r: ["were playing"], f: ["have played", "had played"], fehler: { ersatz: "was playing", wort: "was", loesung: ["were"] } },
       { e: "prog",     t: "Mia ___ for the bus when she saw her ex-boyfriend.", h: "wait", r: ["was waiting"], f: ["has waited", "were waiting"], fehler: { ersatz: "were waiting", wort: "were", loesung: ["was"] } },
-      { e: "pperf",    t: "By the time the rescuers arrived, the water ___ to the first floor.", h: "rise", r: ["had risen"], f: ["has risen", "had rose"], fehler: { ersatz: "had rose", wort: "rose", loesung: ["risen"] } },
+      { e: "pperf",    t: "By the time the rescuers arrived, the water ___ to the first floor.", h: "rise", r: ["had risen", "had already risen"], f: ["has risen", "had rose"], fehler: { ersatz: "had rose", wort: "rose", loesung: ["risen"] } },
       { e: "pperf",    t: "By the time we got to the cinema, the film ___.", h: "start", r: ["had started", "had already started"], f: ["has started", "was starting"], fehler: { ersatz: "has started", wort: "has", loesung: ["had"] } },
       { e: "pperf",    t: "Before that day, I ___ a geyser.", h: "never / see", r: ["had never seen"], f: ["have never seen", "had never saw"], fehler: { ersatz: "had never saw", wort: "saw", loesung: ["seen"] } },
       { e: "pperf",    t: "When we arrived at the airport, our plane ___.", h: "already / leave", r: ["had already left"], f: ["has already left", "had already leaved"], fehler: { ersatz: "has already left", wort: "has", loesung: ["had"] } },
@@ -678,7 +678,7 @@ Object.assign(K10.baukasten, {
       { e: "sp",       t: "Last year my brother ___ an apprenticeship as a mechanic.", h: "begin", r: ["began"], f: ["has begun", "begun"], fehler: "begun" },
       { e: "sp",       t: "When ___ you move to Christchurch?", h: "do / have", r: ["did"], f: ["have", "had"], fehler: "have" },
       { e: "mix",      t: "When I got home, my sister ___ all the cake, so there was nothing left.", h: "eat", r: ["had eaten", "had already eaten"], f: ["has eaten", "was eating"], fehler: { ersatz: "had ate", wort: "ate", loesung: ["eaten"] } },
-      { e: "mix",      t: "The ground ___ for about a minute, and then everything was quiet.", h: "shake", r: ["shook"], f: ["had shaken", "has shaken"], fehler: { ersatz: "shaked", wort: "shaked", loesung: ["shook"] } },
+      { e: "mix",      t: "The ground ___ for about a minute, and then everything was quiet.", h: "shake – simple past", r: ["shook"], f: ["had shaken", "has shaken"], fehler: { ersatz: "shaked", wort: "shaked", loesung: ["shook"] } },
       { e: "mix",      t: "We ___ through the forest when we heard a strange noise.", h: "walk", r: ["were walking"], f: ["have walked", "had walked"], fehler: { ersatz: "were walk", wort: "walk", loesung: ["walking"] } }
     ],
     umformen: [
@@ -691,7 +691,7 @@ Object.assign(K10.baukasten, {
       { e: "pperf", a: "Use the past perfect (When we arrived at the airport, …):", von: "The plane left. Then we arrived at the airport.", nach: ["When we arrived at the airport, the plane had already left.", "When we arrived at the airport, the plane had left."] },
       { e: "pperf", a: "Use the past perfect (When I got home, …):", von: "My sister ate all the cake. Then I got home.", nach: ["When I got home, my sister had eaten all the cake.", "When I got home, my sister had already eaten all the cake."] },
       { e: "pperf", a: "Use the past perfect (By the next morning, …):", von: "The storm destroyed many houses during the night.", nach: ["By the next morning, the storm had destroyed many houses."] },
-      { e: "sp",    a: "Rewrite the sentence with “last summer”:", von: "We have visited a glacier.", nach: ["We visited a glacier last summer.", "Last summer, we visited a glacier.", "Last summer we visited a glacier."] },
+      { e: "sp",    a: "Rewrite the sentence with “last summer”:", von: "We have climbed a volcano.", nach: ["We climbed a volcano last summer.", "Last summer, we climbed a volcano.", "Last summer we climbed a volcano."] },
       { e: "sp",    a: "Rewrite the sentence with “in 2011”:", von: "A strong earthquake has hit Christchurch.", nach: ["A strong earthquake hit Christchurch in 2011.", "In 2011, a strong earthquake hit Christchurch.", "In 2011 a strong earthquake hit Christchurch."] },
       { e: "sp",    a: "Rewrite the sentence with “yesterday”:", von: "Ava has broken up with Jake.", nach: ["Ava broke up with Jake yesterday.", "Yesterday, Ava broke up with Jake.", "Yesterday Ava broke up with Jake."] },
       { e: "sp",    a: "Rewrite the sentence with “two years ago”:", von: "My brother has begun an apprenticeship.", nach: ["My brother began an apprenticeship two years ago.", "Two years ago, my brother began an apprenticeship.", "Two years ago my brother began an apprenticeship."] },
@@ -706,7 +706,7 @@ Object.assign(K10.baukasten, {
       { e: "mix",   a: "Put the verbs into the correct past tense:", von: "I (never / see) a geyser before I (go) to New Zealand.", nach: ["I had never seen a geyser before I went to New Zealand."] },
       { e: "mix",   a: "Put the verbs into the correct past tense:", von: "Liam (sit) on the beach when he (see) the whale.", nach: ["Liam was sitting on the beach when he saw the whale."] },
       { e: "mix",   a: "Put the verbs into the correct past tense:", von: "By the time we (arrive), the party (end).", nach: ["By the time we arrived, the party had ended.", "By the time we arrived, the party had already ended."] },
-      { e: "mix",   a: "Use the correct tenses:", von: "Two years ago my family (move) to Auckland, and we (live) there since then.", nach: ["Two years ago my family moved to Auckland, and we have lived there since then.", "Two years ago my family moved to Auckland, and we have been living there since then.", "Two years ago my family moved to Auckland, and we've lived there since then.", "Two years ago my family moved to Auckland, and we've been living there since then."] }
+      { e: "mix",   a: "Use the correct tenses:", von: "Two years ago my family (move) to Auckland, and we (live) there since then.", nach: ["Two years ago my family moved to Auckland, and we have lived there since then.", "Two years ago my family moved to Auckland, and we have been living there since then.", "Two years ago my family moved to Auckland, and we've lived there since then.", "Two years ago my family moved to Auckland, and we've been living there since then.", "Two years ago, my family moved to Auckland, and we have lived there since then.", "Two years ago, my family moved to Auckland, and we have been living there since then.", "Two years ago, my family moved to Auckland, and we've lived there since then.", "Two years ago, my family moved to Auckland, and we've been living there since then."] }
     ],
     zuordnen: {
       kategorien: ["simple past", "past progressive", "past perfect", "present perfect"],
@@ -764,9 +764,9 @@ Object.assign(K10.baukasten, {
       { e: "aussage", a: "Write an if-sentence type III:", von: "(we / leave earlier) – (we / catch the train)", nach: K10_WENN3("If we had left earlier", "we would have caught the train") },
       { e: "aussage", a: "Write an if-sentence type III:", von: "(I / know about the party) – (I / come)", nach: K10_WENN3("If I had known about the party", "I would have come") },
       { e: "neg",     a: "Write an if-sentence type III:", von: "(it / not rain) – (we / walk to the glacier)", nach: K10_WENN3("If it had not rained", "we would have walked to the glacier") },
-      { e: "neg",     a: "Write an if-sentence type III:", von: "(you / tell me the truth) – (I / not be angry)", nach: K10_WENN3("If you had told me the truth", "I would not have been angry") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(you / tell me earlier) – (I / not be so worried)", nach: K10_WENN3("If you had told me earlier", "I would not have been so worried") },
       { e: "neg",     a: "Write an if-sentence type III:", von: "(Liam / not fall) – (he / win the race)", nach: K10_WENN3("If Liam had not fallen", "he would have won the race") },
-      { e: "neg",     a: "Write an if-sentence type III:", von: "(the house / be stronger) – (it / not collapse)", nach: K10_WENN3("If the house had been stronger", "it would not have collapsed") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(the bridge / be stronger) – (it / not break)", nach: K10_WENN3("If the bridge had been stronger", "it would not have broken") },
       { e: "neg",     a: "Write an if-sentence type III:", von: "(Tom / wear his mask) – (he / not swallow so much water)", nach: K10_WENN3("If Tom had worn his mask", "he would not have swallowed so much water") },
       { e: "aussage", a: "Write an if-sentence type III:", von: "(they / hear the warning) – (they / leave the town)", nach: K10_WENN3("If they had heard the warning", "they would have left the town") },
       { e: "aussage", a: "Write a type III sentence about the past:", von: "We didn't leave early, so we missed the train.", nach: K10_WENN3("If we had left early", "we would not have missed the train").concat(K10_WENN3("If we had left early", "we would have caught the train")) },
@@ -821,7 +821,10 @@ K10.woerterhilfe.push(...[
   { en: "glacier", de: "Gletscher" }, { en: "glaciers", de: "Gletscher" }, { en: "stingray", de: "Stachelrochen" }, { en: "ex-boyfriend", de: "Ex-Freund" },
   { en: "risen", de: "gestiegen" }, { en: "swallowed", de: "geschluckt" }, { en: "collapsed", de: "eingestürzt" }, { en: "helmet", de: "Helm" },
   { en: "warning", de: "Warnung" }, { en: "fire brigade", de: "Feuerwehr" }, { en: "blocked", de: "gesperrt, blockiert" }, { en: "fridge", de: "Kühlschrank" },
-  { en: "crush", de: "Schwärmerei (have a crush on = verknallt sein in)" }, { en: "exams", de: "Prüfungen" }, { en: "calm", de: "ruhig" }, { en: "shook", de: "bebte, schüttelte (shake – shook – shaken)" }
+  { en: "crush", de: "Schwärmerei (have a crush on = verknallt sein in)" },
+  { en: "race", de: "Rennen, Wettlauf" }, { en: "twice", de: "zweimal" }, { en: "hurried", de: "beeilte sich" }, { en: "injure", de: "verletzen" },
+  { en: "injured", de: "verletzt" }, { en: "cycle", de: "Rad fahren" }, { en: "worried", de: "besorgt" }, { en: "volcano", de: "Vulkan" },
+  { en: "bridge", de: "Brücke" }, { en: "climbed", de: "bestiegen, kletterten" }, { en: "exams", de: "Prüfungen" }, { en: "calm", de: "ruhig" }, { en: "shook", de: "bebte, schüttelte (shake – shook – shaken)" }
 ]);
 
 // =====================================================================
