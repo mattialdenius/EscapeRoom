@@ -1,8 +1,8 @@
 /* =====================================================================
    KLASSE 10  ·  alle Inhalte für Klasse 10
    ---------------------------------------------------------------------
-   NOCH IN ARBEIT: Die Welt (Geschichte, Räume, Figur) ist fertig, die Aufgaben fehlen noch.
-   Solange Aufgaben fehlen, zeigt das Startmenü „Kommt bald!“.
+   IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=10
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -122,13 +122,240 @@ K10.welt.figurSvg =
 
 // 2) DIE THEMEN (laut „Themenuebersicht“)
 K10.themen = [
-  { id: "10-G1", klasse: 10, unit: 1, titelEn: "Present tenses", titel: "Gegenwartszeiten", regel: "" },
-  { id: "10-G2", klasse: 10, unit: 1, titelEn: "Present perfect", titel: "Das Perfekt", regel: "" },
+  { id: "10-G1", klasse: 10, unit: 1, titelEn: "Present tenses", titel: "Gegenwartszeiten", regel: "Simple present: habits and facts (I usually walk to school. Water freezes at 0 degrees.) – do / does in questions and negatives. Present progressive: am / is / are + verb-ing for now or a short time (Look! It is snowing. This week I'm working at home.). State verbs (know, want, need, belong, own, understand) → no -ing form." },
+  { id: "10-G2", klasse: 10, unit: 1, titelEn: "Present perfect", titel: "Das Perfekt", regel: "Present perfect: have / has + 3rd form – until now, no finished time (ever, never, already, just, yet). since + point in time, for + period of time. Present perfect progressive: have / has been + verb-ing – how long something has been going on (I have been waiting for an hour). Finished time (yesterday, last week, ago, in 2018) → simple past." },
   { id: "10-G3", klasse: 10, unit: 2, titelEn: "Conditional sentences type I and II", titel: "Bedingungssätze Typ I und II", regel: "" },
   { id: "10-G4", klasse: 10, unit: 2, titelEn: "The passive", titel: "Das Passiv", regel: "" },
   { id: "10-G5", klasse: 10, unit: 3, titelEn: "Reported speech (places, times, commands and requests)", titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "" },
   { id: "10-G6", klasse: 10, unit: 3, titelEn: "Past tenses", titel: "Vergangenheitszeiten", regel: "" },
   { id: "10-G7", klasse: 10, unit: 3, titelEn: "Conditional sentences type III", titel: "Bedingungssätze Typ III", regel: "" }
+];
+
+// =====================================================================
+// 3) DER SATZBAUKASTEN – Wortschatz: Klasse 5–9 komplett + Klasse 10 bis zur Unit
+//    Klasse 10: Erklärungen in einfachem Englisch, deutscher Fachbegriff in Klammern.
+//    Art „satzpool“ wie in Klasse 8 und 9 (Felder: siehe index.html, function satzpool).
+// =====================================================================
+K10.baukasten = {
+  // ---------- Klasse 10, Unit 1: Gegenwartszeiten (G1) ----------
+  //   simple present ↔ present progressive mit Zustandsverben, Fragen und Verneinung (Vorgaben der Lehrkraft)
+  "10-G1": {
+    saetze: [
+      { e: "simple",   t: "Polar bears usually ___ seals.", h: "hunt", r: ["hunt"], f: ["are hunting", "hunts"], fehler: "hunts" },
+      { e: "simple",   t: "In Canada, lots of children ___ ice hockey every winter.", h: "play", r: ["play"], f: ["are playing", "plays"], fehler: "plays" },
+      { e: "simple",   t: "My coach ___ to the gym three times a week.", h: "go", r: ["goes"], f: ["is going", "go"], fehler: { ersatz: "go", wort: "go", loesung: ["goes"] } },
+      { e: "simple",   t: "Water ___ at 0 degrees.", h: "freeze", r: ["freezes"], f: ["is freezing", "freeze"], fehler: "freeze" },
+      { e: "simple",   t: "Canada ___ a lot of oil every year.", h: "export", r: ["exports"], f: ["is exporting", "export"], fehler: "export" },
+      { e: "simple",   t: "Liam often ___ parkour in the park after school.", h: "do", r: ["does"], f: ["is doing", "do"], fehler: "do" },
+      { e: "prog",     t: "Look! The bear ___ the river.", h: "cross", r: ["is crossing"], f: ["crosses", "is crosing"], fehler: { ersatz: "crosses", wort: "crosses", loesung: ["is crossing"] } },
+      { e: "prog",     t: "Be quiet! The players ___ to the coach right now.", h: "listen", r: ["are listening"], f: ["listen", "is listening"], fehler: { ersatz: "listen", wort: "listen", loesung: ["are listening"] } },
+      { e: "prog",     t: "At the moment, Ava ___ for the lacrosse championship.", h: "train", r: ["is training"], f: ["trains", "is trainning"], fehler: { ersatz: "is trainning", wort: "trainning", loesung: ["training"] } },
+      { e: "prog",     t: "This week my brother ___ at a ski resort in the Rocky Mountains.", h: "work", r: ["is working"], f: ["works", "are working"], fehler: { ersatz: "are working", wort: "are", loesung: ["is"] } },
+      { e: "prog",     t: "Listen! Someone ___ outside.", h: "shout", r: ["is shouting"], f: ["shouts", "is shoutting"], fehler: { ersatz: "is shoutting", wort: "shoutting", loesung: ["shouting"] } },
+      { e: "prog",     t: "These days the ice in the Arctic ___ faster and faster.", h: "melt", r: ["is melting"], f: ["melts", "is melt"], fehler: { ersatz: "is melt", wort: "melt", loesung: ["melting"] } },
+      { e: "neg",      t: "Mia ___ TV right now. She is reading.", h: "not / watch", r: ["isn't watching", "is not watching"], f: ["doesn't watch", "isn't watch"], fehler: { ersatz: "doesn't watching", wort: "doesn't", loesung: ["isn't", "is not"] } },
+      { e: "neg",      t: "My parents ___ meat. They are vegetarians.", h: "not / eat", r: ["don't eat", "do not eat"], f: ["aren't eating", "doesn't eat"], fehler: { ersatz: "doesn't eat", wort: "doesn't", loesung: ["don't", "do not"] } },
+      { e: "neg",      t: "Tom ___ on Sundays.", h: "not / train", r: ["doesn't train", "does not train"], f: ["isn't training", "don't train"], fehler: { ersatz: "don't train", wort: "don't", loesung: ["doesn't", "does not"] } },
+      { e: "neg",      t: "We ___ at the moment. We're having a break.", h: "not / work", r: ["aren't working", "are not working", "'re not working"], f: ["don't work", "aren't work"], fehler: { ersatz: "don't working", wort: "don't", loesung: ["aren't", "are not"] } },
+      { e: "frage",    t: "___ you usually walk to school?", h: "do / be", r: ["Do"], f: ["Are", "Does"], fehler: "Are" },
+      { e: "frage",    t: "What ___ you doing right now?", h: "do / be", r: ["are"], f: ["do", "is"], fehler: "do" },
+      { e: "frage",    t: "How often ___ your sister go to the gym?", h: "do / be", r: ["does"], f: ["is", "do"], fehler: "is" },
+      { e: "frage",    t: "Why ___ Ethan wearing a jacket? It's hot today.", h: "do / be", r: ["is"], f: ["does", "are"], fehler: "does" },
+      { e: "state",    t: "Ethan ___ a new pair of skates.", h: "want", r: ["wants"], f: ["is wanting", "want"], fehler: "want" },
+      { e: "state",    t: "This old sledge ___ to my grandfather.", h: "belong", r: ["belongs"], f: ["is belonging", "belong"], fehler: "belong" },
+      { e: "state",    t: "Do you ___ what I mean?", h: "understand", r: ["understand"], f: ["understanding", "understands"], fehler: "understands" },
+      { e: "state",    t: "We ___ more time for the project.", h: "need", r: ["need"], f: ["are needing", "needs"], fehler: "needs" },
+      { e: "state",    t: "Sorry, I ___ the answer.", h: "not / know", r: ["don't know", "do not know"], f: ["am not knowing", "doesn't know"], fehler: { ersatz: "doesn't know", wort: "doesn't", loesung: ["don't", "do not"] } },
+      { e: "state",    t: "My cousin ___ a big house near Toronto.", h: "own", r: ["owns"], f: ["is owning", "own"], fehler: "own" },
+      { e: "kontrast", t: "Normally Liam ___ the bus, but today he is cycling.", h: "take", r: ["takes"], f: ["is taking", "take"], fehler: "take" },
+      { e: "kontrast", t: "Dad normally goes to the office, but this week he ___ from home.", h: "work", r: ["is working"], f: ["works", "is work"], fehler: { ersatz: "works", wort: "works", loesung: ["is working"] } },
+      { e: "kontrast", t: "I ___ a book about Canada at the moment, but I don't usually read much.", h: "read", r: ["am reading", "'m reading"], f: ["read", "reads"], fehler: { ersatz: "reads", wort: "reads", loesung: ["am reading"] } }
+    ],
+    umformen: [
+      { e: "neg",      a: "Make the sentence negative:", von: "Ava plays lacrosse.", nach: ["Ava doesn't play lacrosse.", "Ava does not play lacrosse."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "The children are skating.", nach: ["The children aren't skating.", "The children are not skating."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "I know the way.", nach: ["I don't know the way.", "I do not know the way."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "Liam is training today.", nach: ["Liam isn't training today.", "Liam is not training today.", "Liam's not training today."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "We need help.", nach: ["We don't need help.", "We do not need help."] },
+      { e: "frage",    a: "Ask a question:", von: "Ethan plays ice hockey.", nach: ["Does Ethan play ice hockey?"] },
+      { e: "frage",    a: "Ask a question:", von: "They are watching the game.", nach: ["Are they watching the game?"] },
+      { e: "frage",    a: "Ask a question:", von: "Mia wants a new phone.", nach: ["Does Mia want a new phone?"] },
+      { e: "frage",    a: "Ask a question with “what” (What …):", von: "She is doing something.", nach: ["What is she doing?", "What's she doing?"] },
+      { e: "frage",    a: "Ask a question with “where” (Where …):", von: "He works somewhere.", nach: ["Where does he work?"] },
+      { e: "prog",     a: "Use the present progressive:", von: "I read a book. (at the moment)", nach: ["I am reading a book at the moment.", "I'm reading a book at the moment.", "At the moment, I am reading a book.", "At the moment I am reading a book.", "At the moment, I'm reading a book.", "At the moment I'm reading a book."] },
+      { e: "prog",     a: "Use the present progressive:", von: "We play football. (right now)", nach: ["We are playing football right now.", "We're playing football right now.", "Right now, we are playing football.", "Right now we are playing football.", "Right now, we're playing football.", "Right now we're playing football."] },
+      { e: "prog",     a: "Use the present progressive:", von: "The bears eat fish. (Look!)", nach: ["Look! The bears are eating fish."] },
+      { e: "prog",     a: "Use the present progressive:", von: "Ava trains for the championship. (this week)", nach: ["Ava is training for the championship this week.", "Ava's training for the championship this week.", "This week, Ava is training for the championship.", "This week Ava is training for the championship."] },
+      { e: "prog",     a: "Use the present progressive:", von: "It snows. (at the moment)", nach: ["It is snowing at the moment.", "It's snowing at the moment.", "At the moment, it is snowing.", "At the moment it is snowing.", "At the moment, it's snowing.", "At the moment it's snowing."] },
+      { e: "simple",   a: "Use the simple present:", von: "I am cycling to school. (every day)", nach: ["I cycle to school every day.", "Every day, I cycle to school.", "Every day I cycle to school."] },
+      { e: "simple",   a: "Use the simple present:", von: "Ethan is playing hockey. (on Saturdays)", nach: ["Ethan plays hockey on Saturdays.", "On Saturdays, Ethan plays hockey.", "On Saturdays Ethan plays hockey."] },
+      { e: "simple",   a: "Use the simple present:", von: "My mum is working late. (usually)", nach: ["My mum usually works late."] },
+      { e: "simple",   a: "Use the simple present:", von: "We are walking the dog. (twice a day)", nach: ["We walk the dog twice a day."] },
+      { e: "simple",   a: "Use the simple present:", von: "The coach is shouting. (never)", nach: ["The coach never shouts."] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "I am knowing the way.", nach: ["I know the way."] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "She is wanting a hot drink.", nach: ["She wants a hot drink."] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "This bike is belonging to my brother.", nach: ["This bike belongs to my brother."] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "We are needing a bigger tent.", nach: ["We need a bigger tent."] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "Are you understanding the question?", nach: ["Do you understand the question?"] },
+      { e: "state",    a: "Correct the sentence (state verb):", von: "He is owning three dogs.", nach: ["He owns three dogs."] }
+    ],
+    zuordnen: {
+      kategorien: ["simple present", "present progressive"],
+      woerter: [
+        { text: "every day", ziel: "simple present" }, { text: "usually", ziel: "simple present" }, { text: "never", ziel: "simple present" },
+        { text: "on Mondays", ziel: "simple present" }, { text: "twice a week", ziel: "simple present" }, { text: "I know", ziel: "simple present" },
+        { text: "it belongs", ziel: "simple present" },
+        { text: "right now", ziel: "present progressive" }, { text: "at the moment", ziel: "present progressive" }, { text: "Look!", ziel: "present progressive" },
+        { text: "Listen!", ziel: "present progressive" }, { text: "this week", ziel: "present progressive" }, { text: "these days", ziel: "present progressive" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        simple:   "Simple present: habits and facts (Gewohnheiten, Tatsachen), often with always, usually, often, every day. he / she / it: verb + -s. Example: {BEISPIEL}",
+        prog:     "Present progressive (Verlaufsform): am / is / are + verb-ing for actions happening now or only for a short time (vorübergehend): now, at the moment, Look!, this week. Example: {BEISPIEL}",
+        neg:      "Negative (Verneinung): don't / doesn't + verb (simple present); am not / isn't / aren't + verb-ing (present progressive). Example: {BEISPIEL}",
+        frage:    "Questions: Do / Does + subject + verb …? (simple present) – Am / Is / Are + subject + verb-ing …? (present progressive). Example: {BEISPIEL}",
+        state:    "State verbs (Zustandsverben) like know, want, need, understand, belong and own are normally not used in the progressive form. Example: {BEISPIEL}",
+        kontrast: "The normal situation or a habit → simple present. Something different now or only this week → present progressive. Example: {BEISPIEL}",
+        zuordnen: "Signal words for the simple present: every day, usually, never, on Mondays. For the present progressive: now, at the moment, Look!, this week. State verbs (know, belong) → simple present."
+      }
+    }
+  },
+
+  // ---------- Klasse 10, Unit 1: Das Perfekt (G2) ----------
+  //   since / for, Gegenüberstellung simple past, present perfect progressive, Signalwörter (Vorgaben der Lehrkraft)
+  "10-G2": {
+    saetze: [
+      { e: "sincefor", t: "Ethan has lived in Canada ___ 2019.", h: "since / for", r: ["since"], f: ["for", "ago"], fehler: "for" },
+      { e: "sincefor", t: "We have known each other ___ ten years.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
+      { e: "sincefor", t: "The explorers have been on the ice ___ three months.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
+      { e: "sincefor", t: "My coach has worked here ___ last summer.", h: "since / for", r: ["since"], f: ["for", "ago"], fehler: "for" },
+      { e: "sincefor", t: "I haven't seen a moose ___ a long time.", h: "since / for", r: ["for"], f: ["since", "ago"], fehler: "since" },
+      { e: "sincefor", t: "Ava has played lacrosse ___ she was six.", h: "since / for", r: ["since"], f: ["for", "ago"], fehler: "for" },
+      { e: "kontrast", t: "The explorers ___ England in 1845.", h: "leave", r: ["left"], f: ["have left", "leaved"], fehler: "leaved" },
+      { e: "kontrast", t: "Ice hockey ___ popular in Canada since the 19th century.", h: "be", r: ["has been"], f: ["was", "is"], fehler: { ersatz: "have been", wort: "have", loesung: ["has"] } },
+      { e: "kontrast", t: "I ___ a grizzly bear last summer.", h: "see", r: ["saw"], f: ["have seen", "seed"], fehler: "seed" },
+      { e: "kontrast", t: "Liam ___ to the Rocky Mountains twice.", h: "be", r: ["has been"], f: ["was", "have been"], fehler: { ersatz: "have been", wort: "have", loesung: ["has"] } },
+      { e: "kontrast", t: "Two years ago my family ___ a house in Toronto.", h: "buy", r: ["bought"], f: ["has bought", "buyed"], fehler: "buyed" },
+      { e: "kontrast", t: "When ___ you start playing soccer?", h: "do / have", r: ["did"], f: ["have", "do"], fehler: "have" },
+      { e: "frage",    t: "___ you ever been to Canada?", h: "do / have", r: ["Have"], f: ["Did", "Were"], fehler: "Did" },
+      { e: "signal",   t: "I've ___ finished my workout. I'm going home now.", h: "just / yet", r: ["just", "already"], f: ["yet", "ever"], fehler: "yet" },
+      { e: "signal",   t: "The coach hasn't called ___.", h: "already / yet", r: ["yet"], f: ["already", "just"], fehler: "already" },
+      { e: "signal",   t: "We haven't finished the project ___.", h: "already / yet", r: ["yet"], f: ["already", "just"], fehler: "already" },
+      { e: "signal",   t: "Have you ___ tried parkour?", h: "ever / yet", r: ["ever"], f: ["yet", "since"], fehler: "yet" },
+      { e: "signal",   t: "I have ___ seen a polar bear. I'd love to see one!", h: "ever / never", r: ["never"], f: ["ever", "yet"], fehler: "ever" },
+      { e: "signal",   t: "Look! The ice on the lake has ___ started to melt.", h: "already / yet", r: ["already", "just"], f: ["yet", "ever"], fehler: "yet" },
+      { e: "progr",    t: "I ___ for the bus for twenty minutes.", h: "wait – present perfect progressive", r: ["have been waiting", "'ve been waiting"], f: ["have waiting", "has been waiting"], fehler: { ersatz: "have been wait", wort: "wait", loesung: ["waiting"] } },
+      { e: "progr",    t: "Ava ___ lacrosse since she was ten.", h: "play – present perfect progressive", r: ["has been playing", "'s been playing"], f: ["has playing", "have been playing"], fehler: { ersatz: "have been playing", wort: "have", loesung: ["has"] } },
+      { e: "progr",    t: "It ___ all day.", h: "snow – present perfect progressive", r: ["has been snowing", "'s been snowing"], f: ["has snowing", "is been snowing"], fehler: { ersatz: "is been snowing", wort: "is", loesung: ["has"] } },
+      { e: "progr",    t: "The players ___ hard since eight o'clock.", h: "train – present perfect progressive", r: ["have been training", "'ve been training"], f: ["has been training", "have training"], fehler: { ersatz: "has been training", wort: "has", loesung: ["have"] } },
+      { e: "progr",    t: "How long ___ you been learning English?", h: "have / are", r: ["have"], f: ["are", "did"], fehler: "are" },
+      { e: "progr",    t: "Liam is tired because he ___ all afternoon.", h: "work – present perfect progressive", r: ["has been working", "'s been working"], f: ["has working", "have been working"], fehler: { ersatz: "has been work", wort: "work", loesung: ["working"] } },
+      { e: "progr",    t: "We ___ about the pipeline for weeks.", h: "talk – present perfect progressive", r: ["have been talking", "'ve been talking"], f: ["have talking", "has been talking"], fehler: { ersatz: "has been talking", wort: "has", loesung: ["have"] } },
+      { e: "neg",      t: "I ___ my homework yet.", h: "not / finish", r: ["haven't finished", "have not finished"], f: ["hasn't finished", "haven't finish"], fehler: { ersatz: "haven't finish", wort: "finish", loesung: ["finished"] } },
+      { e: "neg",      t: "My brother ___ a moose before.", h: "never / see", r: ["has never seen"], f: ["have never seen", "has never saw"], fehler: { ersatz: "has never saw", wort: "saw", loesung: ["seen"] } }
+    ],
+    umformen: [
+      { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "Ethan came to Canada in 2019. He still lives there.", nach: ["Ethan has lived in Canada since 2019.", "Ethan has been living in Canada since 2019.", "Ethan's lived in Canada since 2019."] },
+      { e: "sincefor", a: "Write one sentence with “for” (present perfect):", von: "We became friends ten years ago. We are still friends.", nach: ["We have been friends for ten years.", "We've been friends for ten years."] },
+      { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "Ava started lacrosse when she was six. She still plays.", nach: ["Ava has played lacrosse since she was six.", "Ava has been playing lacrosse since she was six.", "Ava's played lacrosse since she was six.", "Ava's been playing lacrosse since she was six."] },
+      { e: "sincefor", a: "Write one sentence with “for” (present perfect):", von: "I got my dog three years ago. I still have it.", nach: ["I have had my dog for three years.", "I've had my dog for three years."] },
+      { e: "sincefor", a: "Write one sentence with “since” (present perfect):", von: "My coach started working here last summer. He still works here.", nach: ["My coach has worked here since last summer.", "My coach has been working here since last summer."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "I wait for the bus. (for twenty minutes)", nach: ["I have been waiting for the bus for twenty minutes.", "I've been waiting for the bus for twenty minutes."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "It snows. (all day)", nach: ["It has been snowing all day.", "It's been snowing all day."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "The players train. (since eight o'clock)", nach: ["The players have been training since eight o'clock."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "Liam works in the garden. (all afternoon)", nach: ["Liam has been working in the garden all afternoon.", "Liam's been working in the garden all afternoon."] },
+      { e: "progr",    a: "Use the present perfect progressive:", von: "We talk about the trip. (for hours)", nach: ["We have been talking about the trip for hours.", "We've been talking about the trip for hours."] },
+      { e: "frage",    a: "Ask a question with “How long”:", von: "Ava has been playing lacrosse.", nach: ["How long has Ava been playing lacrosse?"] },
+      { e: "frage",    a: "Ask a question with “How long”:", von: "They have lived in Canada.", nach: ["How long have they lived in Canada?"] },
+      { e: "frage",    a: "Ask a question with “How long”:", von: "You have been learning English.", nach: ["How long have you been learning English?"] },
+      { e: "frage",    a: "Ask a question with “ever”:", von: "you / see a polar bear", nach: ["Have you ever seen a polar bear?"] },
+      { e: "neg",      a: "Make the sentence negative with “yet”:", von: "I have finished my workout.", nach: ["I haven't finished my workout yet.", "I have not finished my workout yet."] },
+      { e: "neg",      a: "Make the sentence negative with “yet”:", von: "The coach has called.", nach: ["The coach hasn't called yet.", "The coach has not called yet."] },
+      { e: "kontrast", a: "Rewrite the sentence with “last summer”:", von: "I have seen a grizzly bear.", nach: ["I saw a grizzly bear last summer.", "Last summer, I saw a grizzly bear.", "Last summer I saw a grizzly bear."] },
+      { e: "kontrast", a: "Rewrite the sentence with “in 2018”:", von: "We have visited Toronto.", nach: ["We visited Toronto in 2018.", "In 2018, we visited Toronto.", "In 2018 we visited Toronto."] },
+      { e: "kontrast", a: "Rewrite the sentence with “yesterday”:", von: "Mia has bought new skates.", nach: ["Mia bought new skates yesterday.", "Yesterday, Mia bought new skates.", "Yesterday Mia bought new skates."] },
+      { e: "kontrast", a: "Rewrite the sentence with “two years ago”:", von: "My family has moved to Toronto.", nach: ["My family moved to Toronto two years ago.", "Two years ago, my family moved to Toronto.", "Two years ago my family moved to Toronto."] },
+      { e: "kontrast", a: "Ask a question with “when” (When …):", von: "You have started playing soccer.", nach: ["When did you start playing soccer?"] },
+      { e: "signal",   a: "Use the present perfect with “never” (I …):", von: "I / eat / moose meat", nach: ["I have never eaten moose meat.", "I've never eaten moose meat."] },
+      { e: "signal",   a: "Use the present perfect with “already”:", von: "The ice melted.", nach: ["The ice has already melted.", "The ice has melted already."] },
+      { e: "signal",   a: "Use the present perfect with “just”:", von: "The match started.", nach: ["The match has just started."] },
+      { e: "sincefor", a: "Use “since” instead of “for” (… since Monday):", von: "I haven't seen Liam for a week.", nach: ["I haven't seen Liam since Monday.", "I have not seen Liam since Monday."] }
+    ],
+    zuordnen: {
+      kategorien: ["since …", "for …", "simple past"],
+      woerter: [
+        { text: "2019", ziel: "since …" }, { text: "Monday", ziel: "since …" }, { text: "eight o'clock", ziel: "since …" },
+        { text: "Christmas", ziel: "since …" }, { text: "she was six", ziel: "since …" },
+        { text: "ten years", ziel: "for …" }, { text: "a week", ziel: "for …" }, { text: "three months", ziel: "for …" },
+        { text: "two hours", ziel: "for …" }, { text: "a long time", ziel: "for …" },
+        { text: "two years ago", ziel: "simple past" }, { text: "yesterday", ziel: "simple past" }, { text: "in 2018", ziel: "simple past" },
+        { text: "last week", ziel: "simple past" }, { text: "when I was six", ziel: "simple past" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        sincefor: "since + point in time (Zeitpunkt): since 2019, since Monday. for + period of time (Zeitraum): for ten years, for a week. Example: {BEISPIEL}",
+        kontrast: "Finished time in the past (yesterday, last summer, in 2018, ago) → simple past. Until now or no time given (ever, never, twice, since, for) → present perfect. Example: {BEISPIEL}",
+        frage:    "Questions in the present perfect: Have / Has + subject + 3rd form …? Example: {BEISPIEL}",
+        signal:   "Signal words (Signalwörter): already and just in positive sentences, yet in questions and negative sentences, ever in questions, never = not ever. Example: {BEISPIEL}",
+        progr:    "Present perfect progressive (Verlaufsform des Perfekts): have / has been + verb-ing. It shows how long an action has been going on until now. Example: {BEISPIEL}",
+        neg:      "Negative (Verneinung): haven't / hasn't + 3rd form. never comes between have / has and the 3rd form. Example: {BEISPIEL}",
+        zuordnen: "since + point in time (since 2019), for + period of time (for ten years). Finished past time (ago, yesterday, last week, in 2018) → simple past."
+      }
+    }
+  }
+};
+
+// =====================================================================
+// 4) WÖRTERHILFE: deutsche Bedeutung für erschließbare oder neue Wörter (Antippen zeigt die Bedeutung)
+// =====================================================================
+K10.woerterhilfe = [
+  { en: "seals", de: "Robben" }, { en: "freeze", de: "frieren, gefrieren" }, { en: "freezes", de: "gefriert" }, { en: "degrees", de: "Grad" },
+  { en: "ski resort", de: "Skigebiet" }, { en: "Rocky Mountains", de: "Rocky Mountains (Gebirge in Nordamerika)" }, { en: "Arctic", de: "Arktis" },
+  { en: "vegetarians", de: "Vegetarier/innen" }, { en: "skates", de: "Schlittschuhe" }, { en: "sledge", de: "Schlitten" }, { en: "own", de: "besitzen" },
+  { en: "owns", de: "besitzt" }, { en: "belong", de: "gehören" }, { en: "belongs", de: "gehört" }, { en: "Toronto", de: "Toronto (Stadt in Kanada)" },
+  { en: "lacrosse", de: "Lacrosse (Ballsportart)" }, { en: "parkour", de: "Parkour (Sportart)" }, { en: "moose", de: "Elch" }, { en: "grizzly bear", de: "Grizzlybär" },
+  { en: "polar bear", de: "Eisbär" }, { en: "workout", de: "Training" }, { en: "pipeline", de: "Pipeline (Rohrleitung)" }, { en: "explorers", de: "Entdecker/innen" },
+  { en: "championship", de: "Meisterschaft" }, { en: "gym", de: "Fitnessstudio, Turnhalle" }, { en: "tent", de: "Zelt" }, { en: "normally", de: "normalerweise" }
+];
+
+// =====================================================================
+// 5) GENERATOREN
+// =====================================================================
+K10.generatoren = {
+  "10-G1": { baukasten: "10-G1", art: "satzpool" },
+  "10-G2": { baukasten: "10-G2", art: "satzpool" }
+};
+
+// =====================================================================
+// 6) DIE AUFGABEN (handgeschriebener Pool)
+// =====================================================================
+K10.aufgaben = [
+  { thema: "10-G1", niveau: "gruen", form: "quiz", frage: "Listen! The baby ___.", optionen: ["is crying", "cries", "is cring"], loesung: "is crying",
+    erklaerung: "Listen! / Look! → something is happening now: present progressive (am / is / are + verb-ing). Example: Look! The bear is crossing the river." },
+  { thema: "10-G1", niveau: "gruen", form: "quiz", frage: "I ___ the answer to this question.", optionen: ["know", "am knowing", "knows"], loesung: "know",
+    erklaerung: "know is a state verb (Zustandsverb) – no -ing form. Example: We need more time." },
+  { thema: "10-G2", niveau: "gruen", form: "quiz", frage: "We have lived here ___ 2015.", optionen: ["since", "for", "ago"], loesung: "since",
+    erklaerung: "since + point in time (Zeitpunkt): since 2015. Example: Ethan has lived in Canada since 2019." },
+  { thema: "10-G2", niveau: "gelb", form: "luecke", frage: "Lucy ___ (swim – present perfect progressive) for an hour.", loesung: ["has been swimming", "'s been swimming"],
+    erklaerung: "Present perfect progressive: has / have been + verb-ing (swim → swimming). Example: It has been snowing all day." }
+];
+
+// =====================================================================
+// 7) ZUSATZFRAGEN für den Zusatzraum (Quiz mit 3 Antworten)
+// =====================================================================
+K10.zusatzfragen = [
+  { thema: "10-G1", frage: "Look! The bear … the river.", optionen: ["is crossing", "crosses", "cross"], loesung: "is crossing" },
+  { thema: "10-G1", frage: "Polar bears usually … seals.", optionen: ["hunt", "are hunting", "hunts"], loesung: "hunt" },
+  { thema: "10-G1", frage: "This sledge … to my grandpa.", optionen: ["belongs", "is belonging", "belong"], loesung: "belongs" },
+  { thema: "10-G1", frage: "What … you doing right now?", optionen: ["are", "do", "is"], loesung: "are" },
+  { thema: "10-G1", frage: "Tom … train on Sundays.", optionen: ["doesn't", "isn't", "don't"], loesung: "doesn't" },
+  { thema: "10-G2", frage: "We've known each other … ten years.", optionen: ["for", "since", "ago"], loesung: "for" },
+  { thema: "10-G2", frage: "I … a moose last summer.", optionen: ["saw", "have seen", "seed"], loesung: "saw" },
+  { thema: "10-G2", frage: "Have you … been to Canada?", optionen: ["ever", "yet", "since"], loesung: "ever" },
+  { thema: "10-G2", frage: "It … snowing all day.", optionen: ["has been", "is been", "has"], loesung: "has been" },
+  { thema: "10-G2", frage: "We haven't finished …", optionen: ["yet.", "already.", "just."], loesung: "yet." }
 ];
 
 // =====================================================================
