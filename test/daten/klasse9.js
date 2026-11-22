@@ -2,7 +2,7 @@
    KLASSE 9  ·  alle Inhalte für Klasse 9
    ---------------------------------------------------------------------
    IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a. Themen ohne Aufgaben zeigen „kommt bald“.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=9
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -126,8 +126,8 @@ K9.welt.figurSvg =
 K9.themen = [
   { id: "9-G1",  klasse: 9, unit: 1, titelEn: "Modal verbs and their substitutes", titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "Substitute forms (Ersatzformen): can → be able to, must → have to, may → be allowed to. Past: could / was able to, had to, was allowed to. Future: will be able to, will have to, will be allowed to. mustn't = not allowed (Verbot), needn't / don't have to = not necessary (nicht nötig). should = advice (Ratschlag): You should rest." },
   { id: "9-G2",  klasse: 9, unit: 1, titelEn: "Comparison of adjectives and adverbs", titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "Short adjectives: cheap – cheaper – the cheapest (big – bigger, easy – easier). Long adjectives: interesting – more interesting – the most interesting. Irregular (unregelmäßig): good – better – the best, bad – worse – the worst. Adverbs (Adverbien): fast – faster, carefully – more carefully, well – better, badly – worse. Comparison (Vergleich): bigger than, as big as, not as big as." },
-  { id: "9-G3",  klasse: 9, unit: 2, titelEn: "Relative clauses with and without relative pronouns", titel: "Relativsätze mit und ohne Relativpronomen", regel: "" },
-  { id: "9-G4",  klasse: 9, unit: 2, titelEn: "Past progressive", titel: "Die Verlaufsform der Vergangenheit", regel: "" },
+  { id: "9-G3",  klasse: 9, unit: 2, titelEn: "Relative clauses with and without relative pronouns", titel: "Relativsätze mit und ohne Relativpronomen", regel: "who / that → people (Personen), which / that → things and animals, whose → dessen/deren, after a preposition: whom (the woman to whom I spoke). Extra information between commas: who / which / whose, never that. The pronoun can be left out when a new subject follows: the hotel (that) we booked." },
+  { id: "9-G4",  klasse: 9, unit: 2, titelEn: "Past progressive", titel: "Die Verlaufsform der Vergangenheit", regel: "Past progressive: was / were + verb-ing (we were swimming). Negative: wasn't / weren't + verb-ing. Long action in the background → past progressive, short action that interrupts it → simple past: I was swimming when I saw a turtle. Two long actions at the same time: while … was/were -ing." },
   { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "" },
   { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "" },
   { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
@@ -327,6 +327,176 @@ K9.baukasten = {
       }
     }
   }
+
+  // ---------- Klasse 9, Unit 2: Relativsätze mit und ohne Relativpronomen (G3) ----------
+  //   who / which / that / whose / whom (nach Präposition), Weglassen des Pronomens (contact clauses),
+  //   nicht notwendige Relativsätze mit Komma (Vorgaben der Lehrkraft)
+  ,"9-G3": {
+    saetze: [
+      { e: "who",    t: "A musician is a person ___ makes music.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "who",    t: "The girl ___ sits next to me comes from Jamaica.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "who",    t: "Bob Marley was a singer ___ wrote lots of famous songs.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "who",    t: "My role model is a woman ___ helps poor children.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "who",    t: "The man ___ checked our passports was very friendly.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "who",    t: "The pilot ___ flew our plane said hello to everybody.", h: "who / which / whose", r: ["who", "that"], f: ["which", "whose"], fehler: "which" },
+      { e: "which",  t: "This is the ferry ___ goes to the island.", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "which",  t: "We stayed in a hostel ___ was right next to the beach.", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "which",  t: "The hurricane ___ hit the island last year was terrible.", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "which",  t: "Do you like the song ___ is playing on the radio?", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "which",  t: "We went on a boat ___ had a glass floor.", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "which",  t: "The storm ___ came last night was very loud.", h: "who / which / whose", r: ["which", "that"], f: ["who", "whose"], fehler: "who" },
+      { e: "whose",  t: "That's the boy ___ suitcase got lost at the airport.", h: "who / which / whose", r: ["whose"], f: ["who's", "who"], fehler: "who" },
+      { e: "whose",  t: "I have a friend ___ parents are musicians.", h: "who / which / whose", r: ["whose"], f: ["who's", "who"], fehler: "who" },
+      { e: "whose",  t: "We stayed with a family ___ house was near a volcano.", h: "who / which / whose", r: ["whose"], f: ["who's", "which"], fehler: "who" },
+      { e: "whose",  t: "The island ___ beaches are the most beautiful is Barbados.", h: "who / which / whose", r: ["whose"], f: ["which", "who's"], fehler: "which" },
+      { e: "whose",  t: "Is that the singer ___ lyrics you love?", h: "who / which / whose", r: ["whose"], f: ["who's", "who"], fehler: "who" },
+      { e: "whom",   t: "The woman to ___ I gave my ticket was very friendly.", h: "after a preposition", r: ["whom"], f: ["who", "which"], fehler: "who" },
+      { e: "whom",   t: "The people with ___ we went diving were from Canada.", h: "after a preposition", r: ["whom"], f: ["who", "which"], fehler: "which" },
+      { e: "whom",   t: "The man from ___ we rented the boat was very old.", h: "after a preposition", r: ["whom"], f: ["who", "which"], fehler: "who" },
+      { e: "whom",   t: "The friends with ___ I travelled were great.", h: "after a preposition", r: ["whom"], f: ["who", "whose"], fehler: "who" },
+      { e: "whom",   t: "My cousin, for ___ I bought this present, lives in Trinidad.", h: "after a preposition", r: ["whom"], f: ["who", "which"], fehler: "who" },
+      { e: "nondef", t: "Jamaica, ___ is in the Caribbean, is famous for its music.", h: "that / which / who", r: ["which"], f: ["that", "who"], fehler: "that" },
+      { e: "nondef", t: "Bob Marley, ___ was born in Jamaica, is still very famous.", h: "that / which / who", r: ["who"], f: ["that", "which"], fehler: "that" },
+      { e: "nondef", t: "My uncle, ___ lives in Barbados, is a musician.", h: "that / which / who", r: ["who"], f: ["that", "which"], fehler: "that" },
+      { e: "nondef", t: "The Sea View Hotel, ___ has a big pool, is right next to the beach.", h: "that / which / who", r: ["which"], f: ["that", "who"], fehler: "that" },
+      { e: "nondef", t: "Our guide, ___ name was Leroy, showed us the old fort.", h: "that / who / whose", r: ["whose"], f: ["who's", "that"], fehler: "who" },
+      { e: "nondef", t: "Grenada, ___ beaches are beautiful, is a small island.", h: "which / whose / that", r: ["whose"], f: ["which", "that"], fehler: "which" }
+    ],
+    umformen: [
+      { e: "who",    a: "Join the sentences with a relative pronoun:", von: "I have a friend. She lives in Jamaica.", nach: ["I have a friend who lives in Jamaica.", "I have a friend that lives in Jamaica."] },
+      { e: "which",  a: "Join the sentences with a relative pronoun:", von: "That's the ferry. It goes to the island.", nach: ["That's the ferry which goes to the island.", "That's the ferry that goes to the island."] },
+      { e: "who",    a: "Join the sentences with a relative pronoun:", von: "We met a musician. He plays in a band.", nach: ["We met a musician who plays in a band.", "We met a musician that plays in a band."] },
+      { e: "which",  a: "Join the sentences with a relative pronoun:", von: "We stayed in a hostel. It was very cheap.", nach: ["We stayed in a hostel which was very cheap.", "We stayed in a hostel that was very cheap."] },
+      { e: "which",  a: "Join the sentences with a relative pronoun:", von: "This is the beach. It is famous for its white sand.", nach: ["This is the beach which is famous for its white sand.", "This is the beach that is famous for its white sand."] },
+      { e: "whose",  a: "Join the sentences with “whose”:", von: "That's the girl. Her suitcase got lost.", nach: ["That's the girl whose suitcase got lost."] },
+      { e: "whose",  a: "Join the sentences with “whose”:", von: "I know a man. His boat is very old.", nach: ["I know a man whose boat is very old."] },
+      { e: "whose",  a: "Join the sentences with “whose”:", von: "We visited an island. Its beaches are beautiful.", nach: ["We visited an island whose beaches are beautiful."] },
+      { e: "whom",   a: "Join the sentences with a preposition and “whom”:", von: "That's the woman. I spoke to her.", nach: ["That's the woman to whom I spoke."] },
+      { e: "whom",   a: "Join the sentences with a preposition and “whom”:", von: "The people were friendly. We went diving with them.", nach: ["The people with whom we went diving were friendly."] },
+      { e: "whom",   a: "Join the sentences with a preposition and “whom”:", von: "The man was very kind. We rented the boat from him.", nach: ["The man from whom we rented the boat was very kind."] },
+      { e: "kontakt", a: "Leave out the relative pronoun:", von: "The hotel that we booked was great.", nach: ["The hotel we booked was great."] },
+      { e: "kontakt", a: "Leave out the relative pronoun:", von: "The song which you like is by Bob Marley.", nach: ["The song you like is by Bob Marley."] },
+      { e: "kontakt", a: "Leave out the relative pronoun:", von: "The man who we met on the ferry was a musician.", nach: ["The man we met on the ferry was a musician."] },
+      { e: "kontakt", a: "Leave out the relative pronoun:", von: "The seafood that we ate was delicious.", nach: ["The seafood we ate was delicious."] },
+      { e: "kontakt", a: "Leave out the relative pronoun:", von: "Is this the passport which you lost?", nach: ["Is this the passport you lost?"] },
+      { e: "kontakt", a: "Join the sentences without a relative pronoun:", von: "The beach was beautiful. We visited it.", nach: ["The beach we visited was beautiful."] },
+      { e: "kontakt", a: "Join the sentences without a relative pronoun:", von: "The film was boring. We watched it on the plane.", nach: ["The film we watched on the plane was boring."] },
+      { e: "kontakt", a: "Join the sentences without a relative pronoun:", von: "The girl is from Barbados. I met her at the hostel.", nach: ["The girl I met at the hostel is from Barbados."] },
+      { e: "nondef", a: "Join the sentences with commas and who or which:", von: "Jamaica is in the Caribbean. It is famous for reggae.", nach: ["Jamaica, which is in the Caribbean, is famous for reggae.", "Jamaica, which is famous for reggae, is in the Caribbean."] },
+      { e: "nondef", a: "Join the sentences with commas and who or which:", von: "My aunt lives in Trinidad. She is a nurse.", nach: ["My aunt, who lives in Trinidad, is a nurse.", "My aunt, who is a nurse, lives in Trinidad."] },
+      { e: "nondef", a: "Join the sentences with commas and who or which:", von: "Bob Marley was born in Jamaica. He was a famous singer.", nach: ["Bob Marley, who was born in Jamaica, was a famous singer.", "Bob Marley, who was a famous singer, was born in Jamaica."] },
+      { e: "nondef", a: "Join the sentences with commas and who or which:", von: "Our hotel had a big pool. It was next to the beach.", nach: ["Our hotel, which had a big pool, was next to the beach.", "Our hotel, which was next to the beach, had a big pool."] },
+      { e: "nondef", a: "Join the sentences with commas and “whose”:", von: "Barbados is a small island. Its beaches are famous.", nach: ["Barbados, whose beaches are famous, is a small island."] },
+      { e: "nondef", a: "Join the sentences with commas and who or which:", von: "Our guide showed us the volcano. He was very funny.", nach: ["Our guide, who was very funny, showed us the volcano."] }
+    ],
+    zuordnen: {
+      kategorien: ["can be left out (kann wegfallen)", "must stay (muss bleiben)"],
+      woerter: [
+        { text: "the song that I love", ziel: "can be left out (kann wegfallen)" }, { text: "the hotel which we booked", ziel: "can be left out (kann wegfallen)" },
+        { text: "the man who we met", ziel: "can be left out (kann wegfallen)" }, { text: "the seafood that we ate", ziel: "can be left out (kann wegfallen)" },
+        { text: "the beach which we visited", ziel: "can be left out (kann wegfallen)" }, { text: "the girl who I met", ziel: "can be left out (kann wegfallen)" },
+        { text: "the man who lives here", ziel: "must stay (muss bleiben)" }, { text: "the ferry which goes to Tobago", ziel: "must stay (muss bleiben)" },
+        { text: "the girl whose bag got lost", ziel: "must stay (muss bleiben)" }, { text: "Jamaica, which is in the Caribbean,", ziel: "must stay (muss bleiben)" },
+        { text: "the storm that hit the island", ziel: "must stay (muss bleiben)" }, { text: "the woman to whom I spoke", ziel: "must stay (muss bleiben)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        who:     "who (or that) is for people (Personen). Example: {BEISPIEL}",
+        which:   "which (or that) is for things and animals (Sachen und Tiere). Example: {BEISPIEL}",
+        whose:   "whose = dessen / deren. It shows who something belongs to. Don't mix it up with who's (= who is). Example: {BEISPIEL}",
+        whom:    "After a preposition (Präposition) like to, with, from or for we use whom for people – not who. Example: {BEISPIEL}",
+        nondef:  "Extra information between commas (nicht notwendiger Relativsatz): use who, which or whose – never that. Example: {BEISPIEL}",
+        kontakt: "You can leave out the relative pronoun (Relativpronomen) when a new subject follows (we, I, you …): the hotel (that) we booked. Example: {BEISPIEL}",
+        zuordnen: "The relative pronoun can be left out when a new subject follows: the song (that) I love. It must stay when a verb follows (the man who lives here), with whose, after a preposition and between commas."
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 2: past progressive (G4) ----------
+  //   Aussagen und Verneinung, keine Fragen; Gegenüberstellung mit dem simple past (when / while) – Vorgaben der Lehrkraft
+  "9-G4": {
+    saetze: [
+      { e: "aussage", t: "At ten o'clock last night we ___ on the beach.", h: "sit", r: ["were sitting"], f: ["was sitting", "were siting"], fehler: { ersatz: "was sitting", wort: "was", loesung: ["were"] } },
+      { e: "aussage", t: "Yesterday at five I ___ in the sea.", h: "swim", r: ["was swimming"], f: ["was swiming", "were swimming"], fehler: { ersatz: "was swiming", wort: "swiming", loesung: ["swimming"] } },
+      { e: "aussage", t: "At midnight the people at the party ___ to reggae music.", h: "dance", r: ["were dancing"], f: ["were danceing", "was dancing"], fehler: { ersatz: "were danceing", wort: "danceing", loesung: ["dancing"] } },
+      { e: "aussage", t: "This time last week my parents ___ to Tobago.", h: "travel", r: ["were travelling", "were traveling"], f: ["was travelling", "were travel"], fehler: { ersatz: "were travel", wort: "travel", loesung: ["travelling", "traveling"] } },
+      { e: "aussage", t: "At eight o'clock my brother ___ his luggage.", h: "pack", r: ["was packing"], f: ["were packing", "packing"], fehler: { ersatz: "were packing", wort: "were", loesung: ["was"] } },
+      { e: "aussage", t: "The sun ___ and the birds were singing.", h: "shine", r: ["was shining"], f: ["was shineing", "were shining"], fehler: { ersatz: "was shineing", wort: "shineing", loesung: ["shining"] } },
+      { e: "aussage", t: "It ___ when we arrived at the airport.", h: "rain", r: ["was raining"], f: ["were raining", "was rainning"], fehler: { ersatz: "were raining", wort: "were", loesung: ["was"] } },
+      { e: "aussage", t: "When I looked out of the window, the children ___ in the garden.", h: "play", r: ["were playing"], f: ["was playing", "were plaing"], fehler: { ersatz: "was playing", wort: "was", loesung: ["were"] } },
+      { e: "neg",     t: "I ___ when you called. I was only reading.", h: "not / sleep", r: ["wasn't sleeping", "was not sleeping"], f: ["didn't sleeping", "weren't sleeping"], fehler: { ersatz: "didn't sleeping", wort: "didn't", loesung: ["wasn't", "was not"] } },
+      { e: "neg",     t: "The tourists ___ on the beach because it was too windy.", h: "not / lie", r: ["weren't lying", "were not lying"], f: ["weren't lieing", "wasn't lying"], fehler: { ersatz: "weren't lieing", wort: "lieing", loesung: ["lying"] } },
+      { e: "neg",     t: "Luckily, we ___ in the sea when the storm started.", h: "not / swim", r: ["weren't swimming", "were not swimming"], f: ["wasn't swimming", "weren't swiming"], fehler: { ersatz: "wasn't swimming", wort: "wasn't", loesung: ["weren't", "were not"] } },
+      { e: "neg",     t: "Mia ___ attention, so she missed the gate number.", h: "not / pay", r: ["wasn't paying", "was not paying"], f: ["weren't paying", "didn't paying"], fehler: { ersatz: "didn't paying", wort: "didn't", loesung: ["wasn't", "was not"] } },
+      { e: "neg",     t: "My friends ___ to the guide. They were playing on their phones.", h: "not / listen", r: ["weren't listening", "were not listening"], f: ["wasn't listening", "weren't listen"], fehler: { ersatz: "weren't listen", wort: "listen", loesung: ["listening"] } },
+      { e: "neg",     t: "The ferry ___ because of the hurricane.", h: "not / run", r: ["wasn't running", "was not running"], f: ["wasn't runing", "weren't running"], fehler: { ersatz: "wasn't runing", wort: "runing", loesung: ["running"] } },
+      { e: "unterbr", t: "We ___ dinner when the lights went out.", h: "have", r: ["were having"], f: ["was having", "were haveing"], fehler: { ersatz: "were haveing", wort: "haveing", loesung: ["having"] } },
+      { e: "unterbr", t: "I ___ in the sea when I saw a turtle.", h: "swim", r: ["was swimming"], f: ["were swimming", "was swim"], fehler: { ersatz: "was swim", wort: "swim", loesung: ["swimming"] } },
+      { e: "unterbr", t: "While we ___ on the beach, it started to rain.", h: "walk", r: ["were walking"], f: ["was walking", "were walk"], fehler: { ersatz: "was walking", wort: "was", loesung: ["were"] } },
+      { e: "unterbr", t: "Dad ___ the car when he heard the thunder.", h: "drive", r: ["was driving"], f: ["were driving", "was driveing"], fehler: { ersatz: "was driveing", wort: "driveing", loesung: ["driving"] } },
+      { e: "unterbr", t: "The pirates ___ when the prisoner escaped.", h: "sleep", r: ["were sleeping"], f: ["was sleeping", "were sleep"], fehler: { ersatz: "was sleeping", wort: "was", loesung: ["were"] } },
+      { e: "kurz",    t: "I was waiting at the gate when I ___ that my passport was missing.", h: "realise", r: ["realised", "realized"], f: ["was realising", "realise"], fehler: { ersatz: "realise", wort: "realise", loesung: ["realised", "realized"] } },
+      { e: "kurz",    t: "We were swimming when a big wave ___ us.", h: "hit", r: ["hit"], f: ["was hitting", "hitted"], fehler: "hitted" },
+      { e: "kurz",    t: "While Tom was diving, he ___ an old shipwreck.", h: "find", r: ["found"], f: ["was finding", "finded"], fehler: "finded" },
+      { e: "kurz",    t: "The band was playing when it suddenly ___ to rain.", h: "start", r: ["started"], f: ["was starting", "starts"], fehler: { ersatz: "starts", wort: "starts", loesung: ["started"] } },
+      { e: "gleich",  t: "While Mum was cooking, Dad ___ a book.", h: "read", r: ["was reading"], f: ["were reading", "was readding"], fehler: { ersatz: "were reading", wort: "were", loesung: ["was"] } },
+      { e: "gleich",  t: "While I was packing, my sister ___ on the phone.", h: "talk", r: ["was talking"], f: ["were talking", "was talkking"], fehler: { ersatz: "were talking", wort: "were", loesung: ["was"] } },
+      { e: "gleich",  t: "While the children were playing in the sand, their parents ___ in the sun.", h: "lie", r: ["were lying"], f: ["were lieing", "was lying"], fehler: { ersatz: "were lieing", wort: "lieing", loesung: ["lying"] } },
+      { e: "folge",   t: "Yesterday I got up, ___ a shower and went to the beach.", h: "have", r: ["had"], f: ["was having", "haved"], fehler: "haved" },
+      { e: "folge",   t: "First we checked in, then we ___ to our room.", h: "go", r: ["went"], f: ["were going", "goed"], fehler: "goed" },
+      { e: "folge",   t: "Last summer we ___ to Jamaica for two weeks.", h: "fly", r: ["flew"], f: ["were flying", "flied"], fehler: "flied" }
+    ],
+    umformen: [
+      { e: "neg",     a: "Make the sentence negative:", von: "We were sleeping.", nach: ["We weren't sleeping.", "We were not sleeping."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "Tom was listening to the guide.", nach: ["Tom wasn't listening to the guide.", "Tom was not listening to the guide."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The sun was shining.", nach: ["The sun wasn't shining.", "The sun was not shining."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "My parents were watching TV.", nach: ["My parents weren't watching TV.", "My parents were not watching TV."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "I was waiting for the ferry.", nach: ["I wasn't waiting for the ferry.", "I was not waiting for the ferry."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The children were playing outside.", nach: ["The children weren't playing outside.", "The children were not playing outside."] },
+      { e: "aussage", a: "Use the past progressive:", von: "I play the guitar. (at six o'clock yesterday)", nach: ["I was playing the guitar at six o'clock yesterday."] },
+      { e: "aussage", a: "Use the past progressive:", von: "We swim in the sea. (at ten o'clock yesterday)", nach: ["We were swimming in the sea at ten o'clock yesterday."] },
+      { e: "aussage", a: "Use the past progressive:", von: "Mia reads a book. (at nine o'clock last night)", nach: ["Mia was reading a book at nine o'clock last night."] },
+      { e: "aussage", a: "Use the past progressive:", von: "They dance on the beach. (at midnight)", nach: ["They were dancing on the beach at midnight."] },
+      { e: "aussage", a: "Use the past progressive:", von: "My brother lies in the sun. (at three o'clock yesterday)", nach: ["My brother was lying in the sun at three o'clock yesterday."] },
+      { e: "aussage", a: "Use the past progressive:", von: "Leroy sings in a band. (at eight o'clock last night)", nach: ["Leroy was singing in a band at eight o'clock last night."] },
+      { e: "unterbr", a: "Join the sentences with “when”:", von: "I was having a shower. The phone rang.", nach: ["I was having a shower when the phone rang.", "When the phone rang, I was having a shower."] },
+      { e: "unterbr", a: "Join the sentences with “when”:", von: "We were swimming. We saw a turtle.", nach: ["We were swimming when we saw a turtle.", "When we saw a turtle, we were swimming."] },
+      { e: "unterbr", a: "Join the sentences with “when”:", von: "Dad was driving. The storm started.", nach: ["Dad was driving when the storm started.", "When the storm started, Dad was driving."] },
+      { e: "unterbr", a: "Join the sentences with “when”:", von: "The pirates were sleeping. The prisoner escaped.", nach: ["The pirates were sleeping when the prisoner escaped.", "When the prisoner escaped, the pirates were sleeping."] },
+      { e: "unterbr", a: "Join the sentences with “when”:", von: "I was packing my bag. My friend called.", nach: ["I was packing my bag when my friend called.", "When my friend called, I was packing my bag."] },
+      { e: "gleich",  a: "Join the sentences with “while”:", von: "Mum was cooking. Dad was reading.", nach: ["While Mum was cooking, Dad was reading.", "Mum was cooking while Dad was reading.", "Dad was reading while Mum was cooking.", "While Dad was reading, Mum was cooking."] },
+      { e: "gleich",  a: "Join the sentences with “while”:", von: "I was waiting at the gate. My sister was buying a drink.", nach: ["While I was waiting at the gate, my sister was buying a drink.", "I was waiting at the gate while my sister was buying a drink.", "My sister was buying a drink while I was waiting at the gate.", "While my sister was buying a drink, I was waiting at the gate."] },
+      { e: "unterbr", a: "Join the sentences with “while”:", von: "We were walking on the beach. It started to rain.", nach: ["While we were walking on the beach, it started to rain.", "It started to rain while we were walking on the beach."] },
+      { e: "unterbr", a: "Join the sentences with “while”:", von: "Tom was diving. He found an old shipwreck.", nach: ["While Tom was diving, he found an old shipwreck.", "Tom found an old shipwreck while he was diving."] },
+      { e: "unterbr", a: "Use the past progressive and the simple past:", von: "I (read) when the lights (go) out.", nach: ["I was reading when the lights went out."] },
+      { e: "unterbr", a: "Use the past progressive and the simple past:", von: "We (sit) on the beach when it (start) to rain.", nach: ["We were sitting on the beach when it started to rain."] },
+      { e: "unterbr", a: "Use the past progressive and the simple past:", von: "The thunder (wake) Zoe up while she (sleep).", nach: ["The thunder woke Zoe up while she was sleeping."] },
+      { e: "unterbr", a: "Use the past progressive and the simple past:", von: "Ben (fall) off his bike while he (ride) home.", nach: ["Ben fell off his bike while he was riding home."] },
+      { e: "unterbr", a: "Use the past progressive and the simple past:", von: "When I (arrive) at the hotel, my friends (wait) for me.", nach: ["When I arrived at the hotel, my friends were waiting for me.", "My friends were waiting for me when I arrived at the hotel."] }
+    ],
+    zuordnen: {
+      kategorien: ["past progressive (Verlaufsform)", "simple past"],
+      woerter: [
+        { text: "was swimming", ziel: "past progressive (Verlaufsform)" }, { text: "were dancing", ziel: "past progressive (Verlaufsform)" },
+        { text: "wasn't sleeping", ziel: "past progressive (Verlaufsform)" }, { text: "weren't listening", ziel: "past progressive (Verlaufsform)" },
+        { text: "was raining", ziel: "past progressive (Verlaufsform)" }, { text: "were lying", ziel: "past progressive (Verlaufsform)" },
+        { text: "swam", ziel: "simple past" }, { text: "danced", ziel: "simple past" }, { text: "didn't sleep", ziel: "simple past" },
+        { text: "found", ziel: "simple past" }, { text: "went", ziel: "simple past" }, { text: "didn't listen", ziel: "simple past" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        aussage: "Past progressive (Verlaufsform der Vergangenheit): was / were + verb-ing. It shows an action that was going on at a certain time. Spelling: swim → swimming, dance → dancing, lie → lying. Example: {BEISPIEL}",
+        neg:     "Negative (Verneinung): wasn't / weren't + verb-ing – not didn't. Example: {BEISPIEL}",
+        unterbr: "The longer action that was going on → past progressive. The short action that interrupts it (unterbricht) → simple past. Example: {BEISPIEL}",
+        kurz:    "The short action that happens suddenly (plötzlich) → simple past. The longer action in the background → past progressive. Example: {BEISPIEL}",
+        gleich:  "Two actions at the same time (gleichzeitig): while + past progressive, past progressive. Example: {BEISPIEL}",
+        folge:   "Actions one after the other (nacheinander) → simple past, not past progressive. Example: {BEISPIEL}",
+        zuordnen: "Past progressive = was / were (not) + verb-ing: was swimming. Simple past = 2nd form or didn't + verb: swam, didn't swim."
+      }
+    }
+  }
 };
 
 // =====================================================================
@@ -337,7 +507,10 @@ K9.woerterhilfe = [
   { en: "Uluru", de: "Uluru (großer Felsen in Australien)" }, { en: "outback", de: "Outback (Hinterland Australiens)" }, { en: "Aboriginal", de: "Ureinwohner Australiens" },
   { en: "coral", de: "Koralle" }, { en: "reef", de: "Riff" }, { en: "saltwater crocodiles", de: "Salzwasserkrokodile" }, { en: "apprenticeship", de: "Ausbildung, Lehre" },
   { en: "plumber", de: "Klempner/in" }, { en: "receptionist", de: "Empfangsmitarbeiter/in" }, { en: "courier", de: "Kurier/in" },
-  { en: "sharks", de: "Haie" }, { en: "hurry", de: "sich beeilen" }, { en: "Murray", de: "Murray (längster Fluss Australiens)" }, { en: "Nile", de: "Nil" }
+  { en: "sharks", de: "Haie" }, { en: "hurry", de: "sich beeilen" }, { en: "Murray", de: "Murray (längster Fluss Australiens)" }, { en: "Nile", de: "Nil" },
+  { en: "reggae", de: "Reggae (Musik aus Jamaika)" }, { en: "fort", de: "Festung" }, { en: "wave", de: "Welle" }, { en: "glass", de: "Glas" },
+  { en: "windy", de: "windig" }, { en: "Tobago", de: "Tobago (Insel in der Karibik)" },
+  { en: "escaped", de: "entkam, floh" }, { en: "rented", de: "mieteten, liehen" }, { en: "lying", de: "liegend (lie → lying)" }
 ];
 
 // =====================================================================
@@ -345,7 +518,9 @@ K9.woerterhilfe = [
 // =====================================================================
 K9.generatoren = {
   "9-G1": { baukasten: "9-G1", art: "satzpool" },
-  "9-G2": { baukasten: "9-G2", art: "satzpool" }
+  "9-G2": { baukasten: "9-G2", art: "satzpool" },
+  "9-G3": { baukasten: "9-G3", art: "satzpool" },
+  "9-G4": { baukasten: "9-G4", art: "satzpool" }
 };
 
 // =====================================================================
@@ -361,7 +536,15 @@ K9.aufgaben = [
   { thema: "9-G2", niveau: "gruen", form: "quiz", frage: "Sydney is ___ city in Australia.", optionen: ["the biggest", "the bigest", "the most big"], loesung: "the biggest",
     erklaerung: "Short adjectives: the + -est. big → the biggest (double g). Example: July is the coldest month in Sydney." },
   { thema: "9-G2", niveau: "gelb", form: "luecke", frage: "My sister drives ___ (carefully) than my brother.", loesung: ["more carefully"],
-    erklaerung: "Adverbs with -ly are compared with more (Steigerung): more carefully. Example: She speaks more politely than her friend." }
+    erklaerung: "Adverbs with -ly are compared with more (Steigerung): more carefully. Example: She speaks more politely than her friend." },
+  { thema: "9-G3", niveau: "gruen", form: "quiz", frage: "The boy ___ bag got lost is very sad.", optionen: ["whose", "who's", "which"], loesung: "whose",
+    erklaerung: "whose = dessen / deren (the bag belongs to the boy). who's = who is. Example: I have a friend whose parents are musicians." },
+  { thema: "9-G3", niveau: "rot", form: "fehler", satz: "Trinidad, that is near Tobago, has great beaches.", fehlerwort: "that", loesung: ["which"],
+    erklaerung: "Between commas (nicht notwendiger Relativsatz) we never use that – use who or which. Example: Jamaica, which is in the Caribbean, is famous for its music." },
+  { thema: "9-G4", niveau: "gruen", form: "quiz", frage: "I ___ on the beach when I saw the dolphins.", optionen: ["was lying", "were lying", "was lieing"], loesung: "was lying",
+    erklaerung: "Past progressive (Verlaufsform): I/he/she/it was + verb-ing. lie → lying. Example: The children were playing in the sand." },
+  { thema: "9-G4", niveau: "gelb", form: "luecke", frage: "We ___ (not / watch) TV when the storm started.", loesung: ["weren't watching", "were not watching"],
+    erklaerung: "Negative (Verneinung): weren't / wasn't + verb-ing. Example: Tom wasn't listening to the guide." }
 ];
 
 // =====================================================================
@@ -377,7 +560,16 @@ K9.zusatzfragen = [
   { thema: "9-G2", frage: "Uluru is … rock in Australia.", optionen: ["the most famous", "the famousest", "the more famous"], loesung: "the most famous" },
   { thema: "9-G2", frage: "Tom sings … than his brother.", optionen: ["better", "gooder", "more well"], loesung: "better" },
   { thema: "9-G2", frage: "A koala isn't … a kangaroo.", optionen: ["as fast as", "as faster as", "as fast than"], loesung: "as fast as" },
-  { thema: "9-G2", frage: "Zoe works … than the others.", optionen: ["more carefully", "carefuller", "more careful"], loesung: "more carefully" }
+  { thema: "9-G2", frage: "Zoe works … than the others.", optionen: ["more carefully", "carefuller", "more careful"], loesung: "more carefully" },
+  { thema: "9-G3", frage: "A musician is a person … makes music.", optionen: ["who", "which", "whose"], loesung: "who" },
+  { thema: "9-G3", frage: "This is the ferry … goes to Tobago.", optionen: ["which", "who", "whose"], loesung: "which" },
+  { thema: "9-G3", frage: "The woman to … I spoke was nice.", optionen: ["whom", "who", "which"], loesung: "whom" },
+  { thema: "9-G3", frage: "Jamaica, … is in the Caribbean, is sunny.", optionen: ["which", "that", "who"], loesung: "which" },
+  { thema: "9-G3", frage: "Which sentence is correct?", optionen: ["The hotel we booked was great.", "The hotel booked was great.", "The hotel we booked it was great."], loesung: "The hotel we booked was great." },
+  { thema: "9-G4", frage: "At ten o'clock we … on the beach.", optionen: ["were sitting", "was sitting", "were siting"], loesung: "were sitting" },
+  { thema: "9-G4", frage: "I was swimming when I … a turtle.", optionen: ["saw", "was seeing", "see"], loesung: "saw" },
+  { thema: "9-G4", frage: "Mia … listening. She was on her phone.", optionen: ["wasn't", "didn't", "weren't"], loesung: "wasn't" },
+  { thema: "9-G4", frage: "While Mum … cooking, Dad was reading.", optionen: ["was", "were", "did"], loesung: "was" }
 ];
 
 // =====================================================================
