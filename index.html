@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 0.9.1 (Prototyp)
+  Version 1.0.0 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,83 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.0.0 (22.11.2026)  – live geschaltet am 22.11.2026
+    - Erste fertige Version: Inhalt wie 1.0.0-rc2 (Generalcheck Pakete 1–11 abgeschlossen, Nachliste behoben).
+  v1.0.0-rc2 (22.11.2026)  – live geschaltet am 22.11.2026 (als 1.0.0)
+    - Nachliste Generalcheck: 6-G13 Zuordnen nimmt jeden Satz nur einmal (nicht mehr Lang- und Kurzform nebeneinander).
+    - Ziehen: Wechselt der Raum während des Ziehens, verschwindet die gelbe Feldmarkierung sofort.
+  v1.0.0-rc (21.11.2026) – nur Testbereich (Generalcheck, Paket 11: Abschluss-Generalcheck)
+    - Keine Änderung am Spiel: Alle Tests des Generalchecks wiederholt (Bericht im Projekt:
+      „Bericht_Abschluss-Generalcheck.md“). Kandidat für Version 1.0.0.
+  v0.9.14 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 10: Minispiele fair machen)
+    - Code knacken: nur noch 4 Versuche (vorher 6); die Zahl der Versuche steht schon beim Start da.
+    - Füttern: Ein falsches Tier kostet ein Herz, das richtige wird kurz gezeigt, dann kommt neues Futter.
+      Wer wahllos tippt, kann jetzt verlieren (minispiele.js 0.10).
+  v0.9.13 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 9: Sprache der Oberfläche)
+    - Ab Klasse 8 alles englisch: Ton-Knopf, Fußzeile „(prototype)“, Wörterhilfe („in German“), Karte und Minispiele (Vorlesetexte).
+    - Ab Klasse 8 englische Anführungszeichen “…” statt „…“ (Daten Klasse 8–10 und alle erzeugten Aufgaben).
+      Beim Vergleichen der Antworten ist die Art der Anführungszeichen egal.
+    - Klasse 5–7 alles deutsch: auch die Vorlesetexte in Code knacken und Lichtschranke.
+    - Die Karte heißt nach der Welt („Karte: Das Piratenschiff“, „Map: The Space Station“) statt immer „Zoo-Karte“ (karte.js 0.5, minispiele.js 0.9).
+  v0.9.12 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 8: Barrierefreiheit)
+    - Schloss-Lämpchen zeigen ✓ bzw. ✗ zusätzlich zur Farbe.
+    - Richtig/falsch bei Kärtchen und Antwortknöpfen zusätzlich mit ✓/✗.
+    - Zuordnen per Tastatur: Wort wählen (Enter), Feld mit Tab ansteuern, Enter legt hinein. Minispiel „Kabel“: Stecker und Buchse
+      auch per Tastatur/Klick verbindbar.
+  v0.9.11 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 7: Layout und Touch)
+    - Handy quer (Bildschirmhöhe bis 500 px): Die Kopfleiste scrollt mit, ist kompakter und verdeckt nichts mehr.
+    - Wortknöpfe und Kärtchen mindestens 52 px breit (auch „I“ und „a“ gut zu treffen).
+    - Ziehen: Immer nur ein Wort gleichzeitig – ein zweiter Finger auf einem anderen Wort wird ignoriert.
+  v0.9.10 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 6b: Aufgabenpools Klasse 8)
+    - Rund 280 neue Sätze für 8-G2 bis 8-G14 (ohne 8-G1/8-G9): jetzt pro Thema, Niveau und Form mindestens 25 Aufgaben.
+    - Satz-Pool „Fehler finden“: Steht das Fehlerwort schon vor der Lücke („You aren't bored, aren't you?“), ist die
+      Stelle in der Lücke gemeint (fehlerStelle automatisch) – diese Sätze gingen vorher für „Fehler finden“ verloren.
+    - 8-G13: auch die Pronomen-Sätze können jetzt bei „Fehler finden“ kommen (die direkte Rede steht darüber).
+  v0.9.9 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 6a: Aufgabenpools Klasse 5–7)
+    - Rund 150 neue Satzbausteine (5-G6, 6-G13, 6-G16, 6-G19, 7-G3, 7-G6, 7-G8, 7-G9, 7-G10, 7-G15): jetzt pro Thema,
+      Niveau und Form mindestens 25 verschiedene Aufgaben – die Zwillingsaufgabe bleibt in derselben Form.
+    - Quiz-Aufgaben mit gleichem Satz, aber anderer Lösung gelten nicht mehr als Wiederholung (Schlüssel inkl. Lösung).
+    - 7-G15 Umformen: Erklärbeispiel aus EINEM Satz (vorher konnten zwei Sätze vermischt werden).
+    - Zwillingsaufgabe: erst gleiche Form neu, dann gleiche Form (früher gesehen, nie die gerade falsche), erst danach andere Form.
+  v0.9.8 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 5: Inhalte Klasse 8)
+    - Wortschatz K8 an die Units angepasst: old tower, started, sad, want, too small, scary, pancakes, run,
+      singer, hot weather; Rahmengeschichte „Quick“ statt „Hurry“.
+    - Kernwörter von 8-G8/8-G10/8-G12 in der Wörterhilfe (desperate, final, energetic, smile, taste, lead/led, record, snowman).
+    - „we're on vacation“ (8-G3); 8-G11: „Zoe has posted ten new videos since last month.“
+  v0.9.7 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 4: Inhalte Klasse 7)
+    - Wortschatz K7 an die Units angepasst: sea, rock, castle, rules, animals, rained/stay at home, won a prize,
+      cousin, box, „It's boring here“, „We need to go shopping“, kitchen, guitar, pictures, answered our questions.
+    - promise und necessary bleiben (Kern der Grammatik), stehen jetzt in der Wörterhilfe.
+    - „on the camping trip“ (7-G3), „cough a lot“ statt „cough all night“ (7-G2).
+  v0.9.6 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 3: Inhalte Klasse 5 und 6)
+    - Erklärbeispiele verraten die Lösung nicht mehr (Plural: nie boy ↔ cowboy; Befehle: nie dieselbe Tätigkeit);
+      6-G8: Klammer ohne Lösung.
+    - Wortschatz K6: wash → watch (6-G11), salty → cold (6-G13), snow → rain (6-G19).
+    - K5: „Indian restaurant“ gestrichen; Plural-Beispiel day → key; baby, video, potato in der Wörterhilfe.
+  v0.9.5 (21.11.2026)  – nur Testbereich (Generalcheck, Paket 2: fachliche Fehler)
+    - Titanic-Sätze ersetzt (Typ II jetzt in der Gegenwart: museum/café, bike; Steigerung: This ship, Today).
+    - Fehler finden zeigt bei der indirekten Rede die direkte Rede darüber an (Feld „vorher“); 6-G16 mit
+      eindeutigem Fehlerwort (came → comes).
+    - Mehr richtige Varianten: mustn't/needn't, love/hate/like + to, „than yours“, „We have no tea bags“;
+      „more healthy“ nicht mehr als falsche Antwort (stattdessen „more healthier“).
+    - Kleinkorrekturen: type II auf Englisch, Big Ben = bell, Freiheitsstatue ohne Jahreszahl,
+      Ortsangabe-Erklärung (6-G11), Gerundium-Regel ergänzt; harbour/harbor in der Wörterhilfe (K7).
+  v0.9.4 (20.11.2026)  – nur Testbereich (Generalcheck, Paket 1: Bewertung)
+    - Fehler finden: Steht das Fehlerwort mehrmals im Satz, zählt nur die richtige Stelle (generierte Aufgaben
+      mit doppeltem Fehlerwort werden neu gewürfelt; handgeschriebene brauchen dann „fehlerStelle“).
+    - Kurz- und Langform gelten als gleich (I'm = I am, they've = they have, he's got = he has got, it's = it is …);
+      bei „Write the short form“ bleibt die Kurzform Pflicht (genau: true).
+    - Satzbau und Umformen: Die Zeitangabe darf auch am Satzanfang stehen (und umgekehrt), z. B. „At the moment …“.
+    - Weitere britisch/amerikanische Paare (learnt/learned, tyre/tire, burnt/burned …); angezeigte Lösung beim
+      Fehler finden am Satzanfang großgeschrieben.
+  v0.9.3 (20.11.2026)  – nur Testbereich
+    - Englische Bedienung ab Klasse 8 vollständig: Startmenü (ab Wahl der Klasse), Intro, Übersicht, Räume,
+      Rückmeldungen, Rätselformen, Zusatzraum, Zahlenschloss, Auswertung, Dialog und Fußzeile. Alle Texte stehen
+      in UI_TEXTE (de/en); feste Texte im HTML über data-ui / data-ui-aria. Englische Thementitel (titelEn)
+      und Niveaus (nameEn, textEn). Die deutsche Zeile unter der Arbeitsanweisung entfällt in Klasse 8–10.
+  v0.9.2 (20.11.2026)  – nur Testbereich
+    - Vier neue Minispiele (minispiele 0.7): Kabel verbinden, Andockmanöver, Sequenz merken, Signal einstellen.
+      Klasse 9 und 10 haben jetzt je 12 Spiele, Klasse 8 bekommt Kabel verbinden und Sequenz merken (10 Spiele).
   v0.9.1 (20.11.2026)  – live geschaltet am 20.11.2026
     - Klasse 8 komplett (Unit 3–5, G6–G14): question tags, Fragen, if Typ II, present ↔ progressive,
       Adjektiv/Adverb (auch nach look/sound/feel/taste), Perfekt mit since/for, Passiv, indirekte Rede.
@@ -167,7 +244,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v0.9.1</title>
+<title>Grammatik-Escape-Room Englisch – v1.0.0</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -321,6 +398,9 @@
   .torlampe{width:22px;height:22px;border-radius:50%;border:3px solid #000;background:#37474f}
   .torlampe.gruen{background:var(--gruen);box-shadow:0 0 10px var(--gruen)}
   .torlampe.rot{background:#ff3b30;box-shadow:0 0 10px #ff3b30}
+  /* ✓/✗ zusätzlich zur Farbe – auch bei Rot-Grün-Schwäche erkennbar (ab v0.9.12) */
+  .torlampe{display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;line-height:1}
+  .torlampe.gruen::after{content:"✓";color:#000} .torlampe.rot::after{content:"✗";color:#fff}
   #btnTor:disabled{opacity:.5}
   #codeMeldung{flex-basis:100%;text-align:center;font-weight:700;min-height:1.4em;margin:0}
   .zittern{animation:zittern .4s}
@@ -346,13 +426,16 @@
   .luecke-satz input.falsch{border-color:var(--fehler);background:#fde3e1}
   .eingabe-zeile{display:flex;flex-direction:column;gap:.4rem;margin-top:.8rem}
   .eingabe-zeile input{width:100%;min-height:56px;padding:.3rem .7rem;font-size:1.3rem;border:3px solid var(--blau);border-radius:10px;background:#f3f6ff}
-  .chip{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.3rem .9rem;margin:.25rem;font-size:1.3rem;font-weight:700;
+  .chip{display:inline-flex;align-items:center;justify-content:center;min-height:52px;min-width:52px;padding:.3rem .9rem;margin:.25rem;font-size:1.3rem;font-weight:700;
     background:#fff;border:3px solid #000;border-radius:12px;box-shadow:0 3px 0 #000;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none}
   .chip.gewaehlt{background:var(--gelb);outline:3px dashed #000;outline-offset:2px}
   .chip.zieht{opacity:.35}
   .chip.klon{position:fixed;z-index:50;pointer-events:none;opacity:.95;transform:scale(1.08);box-shadow:0 10px 20px rgba(0,0,0,.4)}
   .chip.richtig{background:#d9f7e4;border-color:var(--ok)}
   .chip.falsch{background:#fde3e1;border-color:var(--fehler)}
+  .chip.richtig::after,.optionen button.richtig::after,.zr-optionen button.richtig::after{content:"✓";font-weight:900;margin-left:.3em}
+  .chip.falsch::after,.optionen button.falsch::after,.zr-optionen button.falsch::after{content:"✗";font-weight:900;margin-left:.3em}
+  .zone:focus-visible{outline:4px solid var(--gelb);outline-offset:2px}
   .vorrat{min-height:72px;padding:.4rem;background:#e9edf5;border:3px dashed #6b7a99;border-radius:12px;margin-bottom:.8rem}
   .zonen{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
   .zone{min-height:140px;padding:.5rem;background:#fff;border:3px solid #000;border-radius:14px}
@@ -363,8 +446,9 @@
   .antwort-zeile .leer{color:#6b7a99;font-size:1rem;padding:.4rem}
   .endzeichen{font-size:1.6rem;font-weight:800;margin-left:.2rem}
   .satzwoerter{display:flex;flex-wrap:wrap;gap:.2rem;padding:.6rem;background:#fff;border:3px solid #000;border-radius:12px}
-  .satzwoerter button{min-height:52px;padding:.2rem .7rem;font-size:1.35rem;font-weight:600;background:#fff;box-shadow:0 3px 0 #000}
+  .satzwoerter button{min-height:52px;min-width:52px;padding:.2rem .7rem;font-size:1.35rem;font-weight:600;background:#fff;box-shadow:0 3px 0 #000}
   .satzwoerter button.gewaehlt{background:#fde3e1;border-color:var(--fehler);text-decoration:line-through}
+  .fehler-vorher{margin:0 0 .4rem;font-size:1.2rem;font-weight:600;font-style:italic}
   .feedback{margin-top:1rem;padding:.9rem 1rem;border:3px solid #000;border-radius:14px;font-size:1.15rem}
   .feedback[hidden]{display:none}
   .feedback.ok{background:#d9f7e4}
@@ -437,6 +521,12 @@
     .kopf{padding-top:3.4rem}
     .aufgabe-text,.luecke-satz{font-size:1.25rem}
   }
+  /* Handy quer (wenig Höhe): Kopfleiste scrollt mit, statt Frage, Uhr und Schloss zu verdecken (ab v0.9.11) */
+  @media (max-height:500px){
+    .kopf{position:relative;top:0;margin-bottom:.6rem;padding-top:.3rem;padding-bottom:.2rem}
+    .figur,.figur svg{width:52px} .figur figcaption{display:none}
+    .sprechblase{font-size:.95rem;padding:.4rem .6rem}
+  }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
   }
@@ -463,7 +553,7 @@
     </figure>
     <p id="sprechblase" class="sprechblase" role="status" aria-live="polite"></p>
     <div id="countdown" class="countdown" role="timer" hidden>⏱ <span id="countdownZeit"></span></div>
-    <div class="leiste"><button id="btnBeenden" aria-label="Mission beenden" title="Mission beenden">🏠</button><button id="btnTon" aria-label="Ton einschalten"></button></div>
+    <div class="leiste"><button id="btnBeenden" aria-label="Mission beenden" title="Mission beenden" data-ui-aria="beenden">🏠</button><button id="btnTon" aria-label="Ton einschalten"></button></div>
   </header>
 
   <!-- ===== STARTMENÜ (5 Schritte) ===== -->
@@ -473,7 +563,7 @@
     <div class="schritte" id="schrittAnzeige" aria-hidden="true"></div>
     <div id="setupInhalt"></div>
     <div class="nav">
-      <button id="btnSetupZurueck" class="zweit">← Zurück</button>
+      <button id="btnSetupZurueck" class="zweit" data-ui="zurueck">← Zurück</button>
       <button id="btnSetupWeiter">Weiter →</button>
     </div>
   </section>
@@ -484,21 +574,21 @@
     <h1 id="introTitel"></h1>
     <p id="introText"></p>
     <div id="introInfo"></div>
-    <button id="btnIntroLos" class="gruen" style="margin-top:1rem">Los geht's!</button>
+    <button id="btnIntroLos" class="gruen" style="margin-top:1rem" data-ui="introLos">Los geht's!</button>
   </section>
 
   <!-- ===== ÜBERSICHT ===== -->
   <section id="uebersicht" class="screen" aria-labelledby="uebTitel">
     <div class="karte nacht">
       <h2 id="uebTitel"></h2>
-      <p class="klein">Die Räume öffnen sich nacheinander. Jeder Raum verrät eine Ziffer für das Schloss am Ausgang.</p>
+      <p class="klein" data-ui="raeumeInfo">Die Räume öffnen sich nacheinander. Jeder Raum verrät eine Ziffer für das Schloss am Ausgang.</p>
       <div class="raeume" id="raeume"></div>
       <div class="monitor"><span id="ausgangName"></span><div class="ziffern" id="monitor"></div></div>
     </div>
-    <div class="schloss" role="group" aria-label="Zahlenschloss am Ausgang">
+    <div class="schloss" role="group" aria-label="Zahlenschloss am Ausgang" data-ui-aria="schlossGruppe">
       <div class="titel" id="schlossTitel"></div>
       <div class="raeder" id="raeder"></div>
-      <button id="btnTor">Öffnen</button>
+      <button id="btnTor" data-ui="oeffnen">Öffnen</button>
       <p id="codeMeldung" role="status"></p>
     </div>
     <button id="btnZurKarte" class="zweit" hidden>🗺️ Zurück zur Karte</button>
@@ -514,8 +604,8 @@
     <div id="aufgabe"></div>
     <div id="feedback" class="feedback" hidden></div>
     <div class="aktionen">
-      <button id="btnHilfe" class="zweit">💡 Hilfekarte</button>
-      <button id="btnPruefen">Prüfen</button>
+      <button id="btnHilfe" class="zweit" data-ui="hilfekarte">💡 Hilfekarte</button>
+      <button id="btnPruefen" data-ui="pruefen">Prüfen</button>
       <button id="btnWeiter" hidden>Weiter →</button>
     </div>
     <div id="hilfekarte" class="hilfekarte" hidden></div>
@@ -551,7 +641,7 @@
     <p id="msMeldung" class="ms-meldung" role="status"></p>
     <div id="msFeld" class="ms-feld" hidden>
       <div id="msBuehne" class="ms-buehne"></div>
-      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msHerzen" class="ms-herzen" role="status"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit"></span></div>
+      <div class="ms-hud" aria-hidden="false"><span id="msPunkte" class="ms-punkte"></span><span id="msHerzen" class="ms-herzen" role="status"></span><span id="msUhr" class="ms-uhr" role="timer" aria-label="Restzeit" data-ui-aria="restzeit"></span></div>
     </div>
     <div id="msStart" class="knopfreihe"><button id="btnMsLos" class="gruen">▶ Los!</button><button id="btnMsNein" class="zweit">Lieber nicht</button></div>
     <div id="msErgebnis" class="ms-ergebnis" hidden><p id="msErgebnisText" role="status"></p><button id="btnMsWeiter" class="gruen">Weiter</button></div>
@@ -560,31 +650,31 @@
   <!-- ===== FINALE ===== -->
   <section id="finale" class="screen karte">
     <div class="tuerbuehne" id="tuerbuehne" aria-hidden="true"><div class="licht">🌅</div><div class="halb links"></div><div class="halb rechts"></div></div>
-    <h1 class="gross">🎉 Mission geschafft! 🎉</h1>
+    <h1 class="gross" data-ui="finaleTitel">🎉 Mission geschafft! 🎉</h1>
     <p id="finaleText"></p>
     <div id="finaleRueck"></div>
-    <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Noch eine Runde</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
+    <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="nochmal">Noch eine Runde</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
     <img class="logo-finale" src="bild/logo-64.png" alt="" width="40" height="40">
   </section>
 
   <!-- ===== MISSION GESCHEITERT (Zeit abgelaufen) ===== -->
   <section id="gescheitert" class="screen karte">
     <div style="font-size:4rem" aria-hidden="true" id="gescheitertEmoji">⏰</div>
-    <h1>Mission gescheitert!</h1>
+    <h1 data-ui="gescheitertTitel">Mission gescheitert!</h1>
     <p id="gescheitertText"></p>
     <div id="gescheitertRueck"></div>
-    <div class="knopfreihe"><button class="gruen" data-aktion="nochmal">Neuer Versuch</button><button class="zweit" data-aktion="start">Zum Startmenü</button></div>
+    <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room Englisch · <b>Version 0.9.1</b> (Prototyp) · Es werden keine Daten gespeichert oder übertragen.</footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.0.0</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
   <div class="dialog-karte">
     <div style="font-size:3rem" aria-hidden="true">🏠</div>
-    <h2 id="dialogTitel">Mission wirklich beenden?</h2>
-    <p>Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.</p>
-    <div class="knopfreihe"><button id="btnDialogNein" class="gruen">Nein, weiterspielen</button><button id="btnDialogJa" class="zweit">Ja, beenden</button></div>
+    <h2 id="dialogTitel" data-ui="dialogTitel">Mission wirklich beenden?</h2>
+    <p data-ui="dialogText">Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.</p>
+    <div class="knopfreihe"><button id="btnDialogNein" class="gruen" data-ui="dialogNein">Nein, weiterspielen</button><button id="btnDialogJa" class="zweit" data-ui="dialogJa">Ja, beenden</button></div>
   </div>
 </div>
 <noscript><p style="margin:1rem;padding:1rem;background:#fff">Dieses Spiel braucht JavaScript. Bitte JavaScript im Browser aktivieren.</p></noscript>
@@ -602,7 +692,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "0.9.1";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.0.0";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -616,7 +706,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=0.9.1"></script>
+<script src="daten/allgemein.js?v=1.0.0"></script>
 
 <script>
 /* #####################################################################
@@ -637,10 +727,52 @@ function wuerfle(a){ return a[Math.floor(Math.random() * a.length)]; }
 function gross(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 // Antworten vergleichen: Groß/klein egal, Apostroph-Varianten, Kurz- = Langform, Satzzeichen am Ende egal
 function norm(s){
-  return String(s).toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s+/g, " ").trim()
+  return String(s).toLowerCase().replace(/[’‘`´]/g, "'").replace(/[„“”]/g, '"').replace(/\s+/g, " ").trim()
     .replace(/\bcan't\b/g, "cannot").replace(/\bwon't\b/g, "will not").replace(/n't\b/g, " not")
     .replace(/\s+([.?!,])/g, "$1").replace(/[.?!]+$/, "").replace(/\s+/g, " ").trim()
     .replace(/[a-z]+/g, w => BE_AE[w] || w);
+}
+// Wie norm(), aber Kurz- und Langform gelten zusätzlich als gleich (ab v0.9.4):
+// 'm = am, 're = are, 've = have, 'll = will. Bei 's und 'd nur nach Pronomen u. Ä. (nicht nach Namen,
+// damit „Tom's bike“ unberührt bleibt) und je nach folgendem Wort eindeutig: he's got/been/seen = he has,
+// sonst he is; I'd seen/been = I had, sonst I would. So wird „He is got“ NICHT als richtig gewertet.
+const KURZ_VOR = "i|you|he|she|it|we|they|that|there|here|what|who|where|how|when|why|this|everything|nothing|something|somebody|someone|nobody|everybody|everyone";
+const PART_UNREG = new Set(("been got gotten gone done had seen made taken given eaten written known flown driven ridden broken spoken stolen " +
+  "chosen forgotten fallen frozen hidden thrown worn torn grown drawn shown sung swum drunk begun run come become " +
+  "bought brought caught taught thought fought found heard held kept left lost met paid read said sent sold slept " +
+  "spent stood told understood won built felt fed hurt put cut let hit shut lent laid led sat").split(" "));
+const ADJ_ED = new Set(("tired bored interested excited scared worried surprised called named married supposed used allowed " +
+  "disappointed annoyed frightened pleased amazed shocked closed locked crowded talented").split(" "));
+const partizip = w => PART_UNREG.has(w) || (/ed$/.test(w) && !ADJ_ED.has(w));
+function normLang(s){
+  let n = norm(s).replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will");
+  n = n.replace(new RegExp("\\b(" + KURZ_VOR + ")'(s|d)(?= (\\w+)|$)", "g"), (m, wer, art, nach) => {
+    const p = nach && (partizip(nach) || nach === "better");
+    return wer + " " + (art === "s" ? (p && nach !== "better" ? "has" : "is") : (p ? "had" : "would"));
+  });
+  return n.replace(/\s+/g, " ").trim();
+}
+// Vergleich für eingetippte Antworten; genau = true schaltet die Kurzform-Gleichsetzung aus
+// (z. B. bei „Write the short form“, wo gerade die Kurzform verlangt ist).
+const gleich = (a, b, genau) => genau ? norm(a) === norm(b) : normLang(a) === normLang(b);
+// Zeitangabe am Satzende darf auch vorne stehen und umgekehrt (ab v0.9.4): „My brother is sitting … at the moment.“
+// = „At the moment my brother is sitting …“. Nur bei einfachen Aussagesätzen (kein Komma, kein if/when/who …); Wörter wie yet/already/just/ever/never
+// gehören absichtlich NICHT dazu, weil sie nicht an den Satzanfang dürfen.
+const ZEIT_MUSTER = "(?:at the moment|right now|now|today|tonight|tomorrow|yesterday|after school|at breakfast|" +
+  "at (?:the )?weekends?|at \\w+ o'clock|every (?:day|week|month|year|morning|afternoon|evening|night|weekend|summer|winter)|" +
+  "(?:last|next|this) (?:week|weekend|month|year|summer|winter|spring|autumn|morning|afternoon|evening|night|monday|tuesday|wednesday|thursday|friday|saturday|sunday)|on (?:mon|tues|wednes|thurs|fri|satur|sun)days?|" +
+  "in the (?:morning|afternoon|evening)s?|in (?:the )?(?:winter|summer|spring|autumn|fall)(?: holidays)?|" +
+  "(?:once|twice|three times) a (?:day|week|month|year)|(?:a|one|two|three|four|five|ten|\\w+) (?:days|weeks|months|years) ago|(?:a|one) (?:day|week|month|year) ago)";
+const ZEIT_HINTEN = new RegExp("^(.+\\S) (" + ZEIT_MUSTER + ")$", "i"), ZEIT_VORN = new RegExp("^(" + ZEIT_MUSTER + ") (.+)$", "i");
+function mitZeitTausch(liste){
+  const out = [];
+  liste.forEach(l => { l = String(l); out.push(l);
+    const m0 = l.match(/^(.*?)([.]?)$/), kern_ = m0[1], ende = m0[2];
+    if(/[?!,]/.test(kern_) || /\b(if|when|because|while|before|after|until|unless|that|who|which|whose|where)\b/i.test(kern_)) return;   // nur einfache Hauptsätze
+    let m = kern_.match(ZEIT_HINTEN); if(m) out.push(gross(m[2]) + " " + m[1] + ende);
+    m = kern_.match(ZEIT_VORN); if(m) out.push(gross(m[2]) + " " + m[1].toLowerCase() + ende);
+  });
+  return out;
 }
 // Britische und amerikanische Schreibung gelten beide als richtig (colour = color, centre = center …)
 const BE_AE = { colour: "color", colours: "colors", centre: "center", centres: "centers", favourite: "favorite", favourites: "favorites",
@@ -648,14 +780,24 @@ const BE_AE = { colour: "color", colours: "colors", centre: "center", centres: "
   travelled: "traveled", travelling: "traveling", cancelled: "canceled", grey: "gray", programme: "program", programmes: "programs",
   licence: "license", metre: "meter", metres: "meters", kilometre: "kilometer", kilometres: "kilometers", organise: "organize",
   organised: "organized", realise: "realize", realised: "realized", apologise: "apologize", favour: "favor", behaviour: "behavior",
-  labour: "labor", humour: "humor", flavour: "flavor", jewellery: "jewelry", practise: "practice", practised: "practiced", mum: "mom", mums: "moms" };
+  labour: "labor", humour: "humor", flavour: "flavor", jewellery: "jewelry", practise: "practice", practised: "practiced", mum: "mom", mums: "moms",
+  // ab v0.9.4 ergänzt
+  learnt: "learned", burnt: "burned", dreamt: "dreamed", spelt: "spelled", smelt: "smelled", spoilt: "spoiled", leant: "leaned", leapt: "leaped",
+  tyre: "tire", tyres: "tires", pyjamas: "pajamas", aeroplane: "airplane", aeroplanes: "airplanes", defence: "defense", offence: "offense",
+  analyse: "analyze", traveller: "traveler", travellers: "travelers", cancelling: "canceling", labelled: "labeled", modelling: "modeling",
+  catalogue: "catalog", colourful: "colorful", neighbourhood: "neighborhood", neighbourhoods: "neighborhoods", centimetre: "centimeter",
+  centimetres: "centimeters", litre: "liter", litres: "liters", organisation: "organization", recognise: "recognize", recognised: "recognized",
+  memorise: "memorize", apologised: "apologized", practising: "practicing", realising: "realizing", organising: "organizing",
+  doughnut: "donut", doughnuts: "donuts", maths: "math", greys: "grays", harbours: "harbors",
+  behaviours: "behaviors", flavours: "flavors", honours: "honors" };
 // Namenspaare dürfen in beliebiger Reihenfolge stehen: „Tom and Emma“ = „Emma and Tom“
 function mitNamenTausch(liste){
   const out = [];
   liste.forEach(l => { out.push(l); out.push(String(l).replace(/\b([A-Z][a-z]+) and ([A-Z][a-z]+)\b/g, "$2 and $1")); });
   return out;
 }
-const ohneZeichen = w => w.replace(/[.,!?;:„“"]/g, "");
+const ohneZeichen = w => w.replace(/[.,!?;:„“”"]/g, "");
+const fehlerwortAnzahl = t => t.satz.split(" ").filter(x => ohneZeichen(x).toLowerCase() === t.fehlerwort.toLowerCase()).length;
 const themaVon = id => THEMEN.find(t => t.id === id);
 const reduziert = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 function ansage(text){ const a = $("ansage"); a.textContent = ""; setTimeout(() => { a.textContent = text; }, 60); }
@@ -762,7 +904,8 @@ function pruefeKlasse(K, datei){
         else if(mehr ? a.loesung.length !== luecken : luecken !== 1) f.push(n + "Anzahl der Lücken (" + luecken + ") passt nicht zur Anzahl der Lösungen."); }
       if(a.form === "satzbau" && (!liste(a.loesung) || a.loesung[0].split(" ").length < 3)) f.push(n + "Satzbau braucht in „loesung“ mindestens einen Satz mit 3 Wörtern.");
       if(a.form === "fehler"){ if(!txt(a.satz) || !txt(a.fehlerwort) || !liste(a.loesung)) f.push(n + "Fehler finden braucht „satz“, „fehlerwort“ und „loesung“.");
-        else if(!a.satz.split(" ").some(w => ohneZeichen(w).toLowerCase() === a.fehlerwort.toLowerCase())) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ kommt im Satz nicht vor."); }
+        else if(!a.satz.split(" ").some(w => ohneZeichen(w).toLowerCase() === a.fehlerwort.toLowerCase())) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ kommt im Satz nicht vor.");
+        else if(fehlerwortAnzahl(a) > 1 && !(a.fehlerStelle >= 1 && a.fehlerStelle <= fehlerwortAnzahl(a))) f.push(n + "Das fehlerwort „" + a.fehlerwort + "“ steht mehrmals im Satz. Bitte mit fehlerStelle angeben, welches gemeint ist (1 = erstes)."); }
       if(a.form === "umformen" && (!txt(a.frage) || !liste(a.loesung))) f.push(n + "Umformen braucht „frage“ und „loesung“.");
     });
     if(Array.isArray(zusatz)) zusatz.forEach((z, i) => { const n = P + "zusatzfragen Nr. " + (i+1) + ": ";
@@ -962,7 +1105,7 @@ const ARTEN = {
     if(form === "umformen"){
       if(kurzVon(P) && Math.random() < 0.5){
         const q = anders(bk.personen.filter(x => kurzVon(x)), P), c = anders(ergFuer(bk, q), C);
-        return { frage: "Write the short form:  " + beSatz(P, C), loesung: [gross(kurzVon(P)) + " " + C.text + "."],
+        return { frage: "Write the short form:  " + beSatz(P, C), loesung: [gross(kurzVon(P)) + " " + C.text + "."], genau: true,
                  erklaerung: erklaere(E.kurz, { BEISPIEL: beSatz(q, c) + " → " + gross(kurzVon(q)) + " " + c.text + "." }) };
       }
       const P2 = istDing(P) ? wuerfle(alleSubjekte(bk).ds.filter(q => q.be !== P.be && C.text.indexOf(q.text.split(" ").pop().replace(/s$/, "")) < 0))
@@ -1062,7 +1205,8 @@ const ARTEN = {
     const rahmen = wuerfle(["There are {Z} ###.", "I have {Z} ###.", "Look! {ZG} ###!", "Here are {Z} ###."]);
     const satz = ein => gross(rahmen.replace("{ZG}", gross(zahl)).replace("{Z}", zahl).replace("###", ein));
     const falsch = (FALSCH[N.regel] || FALSCH.s)(N).filter(x => x !== N.pl);
-    const andere = bk.nomen.filter(n => n.regel === N.regel && n !== N);
+    // Beispiel nie mit dem Aufgabenwort darin (boy ↔ cowboy) – ab v0.9.6
+    const andere = bk.nomen.filter(n => n.regel === N.regel && n !== N && !n.sg.toLowerCase().includes(N.sg.toLowerCase()) && !N.sg.toLowerCase().includes(n.sg.toLowerCase()));
     const bsp = andere.length ? (() => { const n = wuerfle(andere); return n.sg + " → " + n.pl; })() : (bk.pluralBeispiele || {})[N.regel] || "";
     const erkl = erklaere(E[N.regel], { BEISPIEL: bsp });
     if(form === "quiz") return { frage: "one " + N.sg + " – " + zahl + " ___", optionen: mischen([N.pl].concat(falsch.slice(0, 2))), loesung: N.pl, erklaerung: erkl };
@@ -1102,7 +1246,10 @@ const ARTEN = {
     if(form === "satzbau" && !neg && (B.grund + " " + B.rest).split(" ").length < 3){ neg = true; B = wuerfle(verbote); }   // Satzbau braucht mindestens 3 Wörter
     const r = B.rest ? " " + B.rest : "", G = gross(B.grund);
     kern(B.grund + " " + B.rest);
-    const q = anders(neg ? verbote : befehle, B), qr = q.rest ? " " + q.rest : "";
+    // Beispiel nie mit derselben Tätigkeit (play football ↔ play football in the classroom) – ab v0.9.6
+    const ersteW = x => x.grund + " " + (x.rest || "").split(" ")[0];
+    const qListe = (neg ? verbote : befehle).filter(x => ersteW(x) !== ersteW(B));
+    const q = anders(qListe.length ? qListe : (neg ? verbote : befehle), B), qr = q.rest ? " " + q.rest : "";
     const erkl = neg ? erklaere(E.negativ, { BEISPIEL: "Don't " + q.grund + qr + "!" }) : erklaere(E.positiv, { BEISPIEL: gross(q.grund) + qr + ", please." });
     const name = wuerfle(bk.namen || ["Tom"]), vorne = Math.random() < 0.6;   // vorne = Befehl am Satzanfang
     if(form === "quiz") return neg
@@ -1380,8 +1527,8 @@ Object.assign(ARTEN, {
                  erklaerung: erklaere(E.can, { BEISPIEL: gross(q.text) + " can't " + F2 + "." }) };
       }
       const Sit = wuerfle(bk.situationen.filter(s => s.modal === "must")), wer = bk.personen.filter(p => !Sit.nurKind || p.kind), P = wuerfle(wer); kern(Sit.rest);
-      const q = anders(wer, P), S2 = anders(bk.situationen.filter(s => s.modal === "needn't"), Sit);
-      return { frage: "Make the sentence negative:  " + gross(P.text) + " must " + mitPoss(Sit.rest, P) + ".", loesung: altNeednt.map(m => gross(P.text) + " " + m + " " + mitPoss(Sit.rest, P) + "."),
+      const q = anders(wer, P), S2 = anders(bk.situationen.filter(s => s.modal === "needn't" && s.rest !== Sit.rest), Sit);   // Beispiel nie mit derselben Tätigkeit
+      return { frage: "Make the sentence negative:  " + gross(P.text) + " must " + mitPoss(Sit.rest, P) + ".", loesung: altNeednt.concat(["mustn't", "must not"]).map(m => gross(P.text) + " " + m + " " + mitPoss(Sit.rest, P) + "."),   // beides richtig (Entscheidung v0.9.5)
                erklaerung: erklaere(E.must, { BEISPIEL: (q2 => S2.vor + " " + gross(q2.text) + " needn't " + mitPoss(S2.rest, q2) + ".")(anders(bk.personen.filter(p => !S2.nurKind || p.kind), P)) }) };
     }
     if(tier){
@@ -1719,7 +1866,8 @@ function steigerungFalsch(A, sup){
   const ohneE = A.adj.replace(/e$/, "");
   if(A.typ === "unreg") return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
   if(A.typ === "lang")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
-  if(A.typ === "y")     return sup ? [A.adj + "est", "most " + A.adj] : [A.adj + "er", "more " + A.adj];
+  // „more healthy / most lonely“ ist nicht eindeutig falsch → als falsche Antwort den Doppelfehler „more healthier“ nehmen (ab v0.9.5)
+  if(A.typ === "y")     return sup ? [A.adj + "est", "most " + A.sup] : [A.adj + "er", "more " + A.komp];
   if(A.typ === "dopp")  return sup ? [A.adj + "est", A.komp] : [A.adj + "er", A.sup];
   if(A.typ === "e")     return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];
   return sup ? ["most " + A.adj, A.komp] : ["more " + A.adj, A.sup];                    // kurz: tall
@@ -1766,7 +1914,8 @@ function steigerung(modus, bk, form, E){
   if(form === "umformen"){
     if(sup) return { frage: "Use the superlative:  " + R.a + " " + be + " " + (R.pl ? "very " + A.adj + " " + R.n : (/^[aeiou]/.test(A.adj) ? "an " : "a ") + A.adj + " " + R.n) + ". (" + R.ort + ")",
                      loesung: [richtig], erklaerung: erkl };
-    return { frage: "Compare with „than“ (" + A.adj + "):  " + R.a + " – " + R.b, loesung: [richtig], erklaerung: erkl };
+    // b2: Kurzform für den zweiten Teil, z. B. „your bag“ → „yours“ (ab v0.9.5)
+    return { frage: "Compare with „than“ (" + A.adj + "):  " + R.a + " – " + R.b, loesung: [richtig].concat(R.b2 ? [R.a + " " + be + " " + form_(A) + " than " + R.b2 + "."] : []), erklaerung: erkl };
   }
   return null;
 }
@@ -1871,7 +2020,10 @@ function willEntscheidung(bk, form, E){
   if(form === "fehler") return { satz: zit(S + (neg ? " won't " : "'ll ") + R.s + rest + "."), fehlerwort: R.s, loesung: [R.e], erklaerung: erkl };
   if(form === "umformen") return { frage: "React with „" + (neg ? "won't" : "will") + "“ (" + R.e + rest + "):  „" + R.sit + "“", loesung: richtig, erklaerung: erkl };
   if(form === "zuordnen"){
-    const mach = ok => () => { const r = wuerfle(bk.entscheidungen), s = gross(r.sub), re = r.rest ? " " + r.rest : "";
+    // Jeder Satz höchstens einmal pro Aufgabe (sonst stünde z. B. „We won't …“ und „We will not …“ nebeneinander)
+    const schon = new Set();
+    const neuR = () => { const frei = bk.entscheidungen.filter(x => !schon.has(x)); const r = wuerfle(frei.length ? frei : bk.entscheidungen); schon.add(r); return r; };
+    const mach = ok => () => { const r = neuR(), s = gross(r.sub), re = r.rest ? " " + r.rest : "";
       if(ok) return antw(r, Math.random() < 0.6);
       return wuerfle([s + (r.neg ? " won't " : "'ll ") + r.s + re + ".", s + (r.neg ? " won't to " : " will to ") + r.e + re + ".",
                       s + " " + (r.sub === "I" ? "am" : "are") + (r.neg ? " not " : " ") + r.e + re + "."]); };
@@ -2289,10 +2441,12 @@ function gerund(bk, form, E){
   const bsp = bspOhne(() => { const a = anders(bk.aktivitaeten, A), v = anders(bk.gerundVerben, V), q = anders(bk.personen.filter(p => p.kind), P);
     return gross(q.text) + " " + (q.er ? v.s : v.e) + " " + a.ing + (a.rest ? " " + a.rest : "") + "."; }, richtig);
   const erkl = erklaere(E.verb, { BEISPIEL: bsp, V: V.e });
+  // Nach love, hate, like ist auch to + Grundform richtig (nach enjoy nicht) – ab v0.9.5
+  const auchTo = V.e !== "enjoy" ? ["to " + A.e] : [];
   if(form === "quiz") return { frage: satz("___"), optionen: mischen([A.ing, A.e, A.s]), loesung: A.ing, erklaerung: erkl };
-  if(form === "luecke") return { frage: satz("___ (" + A.e + ")"), loesung: [A.ing], erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (" + A.e + ")"), loesung: [A.ing].concat(auchTo), erklaerung: erkl };
   if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
-  if(form === "fehler") return { satz: satz(A.e), fehlerwort: A.e, loesung: [A.ing], erklaerung: erkl };
+  if(form === "fehler") return { satz: satz(A.e), fehlerwort: A.e, loesung: [A.ing].concat(auchTo), erklaerung: erkl };
   if(form === "zuordnen"){
     const mach = ok => () => { const a = wuerfle(bk.aktivitaeten), v = wuerfle(bk.gerundVerben), q = wuerfle(bk.personen.filter(p => p.kind)), re = a.rest ? " " + a.rest : "";
       const vb = q.er ? v.s : v.e;
@@ -2344,7 +2498,7 @@ function ifSatz2(bk, form, E){
   if(form === "fehler") return { satz: "If " + wenn + ", " + R.s2 + " would " + R.past2 + (R.r2 ? " " + R.r2 : "") + ".", fehlerwort: R.past2, loesung: [R.e], erklaerung: erklH };
   if(form === "umformen"){
     const r1 = wuerfle(bk.ifTausch); kern(r1.von);
-    return { frage: (E.tauschFrage || "Make it unreal (Typ II):") + "  " + r1.von, loesung: r1.nach, erklaerung: erklaere(E.tausch, { BEISPIEL: bsp }) };
+    return { frage: (E.tauschFrage || "Make it unreal (type II):") + "  " + r1.von, loesung: r1.nach, erklaerung: erklaere(E.tausch, { BEISPIEL: bsp }) };
   }
   return null;
 }
@@ -2419,7 +2573,8 @@ function modalK7(bk, form, E){
   }
   if(form === "umformen"){
     const R = wuerfle(bk.modalSaetze.filter(r => r.imp)); kern(R.t);
-    return { frage: "Say it with a modal verb (" + R.r[0] + "):  " + R.imp, loesung: R.um, erklaerung: erklaere(E[R.bed], { BEISPIEL: anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).t.replace("___", anders(bk.modalSaetze.filter(x => x.bed === R.bed), R).r[0]) }) };
+    const b = anders(bk.modalSaetze.filter(x => x.bed === R.bed), R);   // ein Beispielsatz (vorher zwei verschiedene gemischt) – v0.9.9
+    return { frage: "Say it with a modal verb (" + R.r[0] + "):  " + R.imp, loesung: R.um, erklaerung: erklaere(E[R.bed], { BEISPIEL: gross(b.t.replace("___", b.r[0])) }) };
   }
   const R = wuerfle(bk.modalSaetze.filter(r => form !== "fehler" || !r.keinFehler)); kern(R.t);
   const b = anders(bk.modalSaetze.filter(x => x.bed === R.bed), R);
@@ -2490,7 +2645,11 @@ function satzpool(bk, form, E){
     const R = wuerfle(bk.saetze.filter(x => x.fehler)); if(!R) return satzpool(bk, "quiz", E);
     kern(R.k || R.t);
     const F = typeof R.fehler === "string" ? { ersatz: R.fehler, wort: R.fehler, loesung: R.r } : R.fehler;
-    return { satz: gross(voll(R, gr(R, F.ersatz))), fehlerwort: gr(R, F.wort), loesung: F.loesung || R.r, erklaerung: erkl(R, voll(R, R.r[0])) };
+    // Steht das Fehlerwort auch schon vor der Lücke („You aren't bored, aren't you?“), ist die Stelle in der Lücke gemeint (ab v0.9.10)
+    const gleichW = w => ohneZeichen(w).toLowerCase() === String(F.wort).toLowerCase();
+    const davor = gross(R.t.split("___")[0]).split(" ").filter(gleichW).length;
+    return { satz: gross(voll(R, gr(R, F.ersatz))), fehlerwort: gr(R, F.wort), loesung: F.loesung || R.r, vorher: R.q, erklaerung: erkl(R, voll(R, R.r[0])),
+             fehlerStelle: davor ? davor + 1 : undefined };
   }
   const R = wuerfle(bk.saetze.filter(x => form !== "satzbau" || !x.keinSatzbau)); kern(R.k || R.t);
   const satz = gross(voll(R, gr(R, R.r[0]))), ek = erkl(R, satz);
@@ -2518,10 +2677,24 @@ function mitExtras(name){
 function generiere(themaId, niveau, form){
   const g = GENERATOREN[themaId]; if(!g || !ARTEN[g.art]) return null;
   const bk = mitExtras(g.baukasten);
-  aktuellerKern = null;
-  const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
-  if(!t) return null;
-  return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
+  // „Fehler finden“: Steht das Fehlerwort mehrmals im Satz, wäre unklar, welches gemeint ist → neu würfeln (ab v0.9.4)
+  for(let versuch = 0; versuch < 25; versuch++){
+    aktuellerKern = null;
+    const t = ARTEN[g.art](bk, form, (bk.erklaerungen || {})[g.art] || {});
+    if(!t) return null;
+    if(t.satz && t.fehlerwort && !t.fehlerStelle && fehlerwortAnzahl(t) > 1) continue;
+    if(spracheDerKlasse(themaId) === "en") englischeZeichen(t);
+    return Object.assign(t, { thema: themaId, niveau, form, generiert: true, kern: aktuellerKern });
+  }
+  return null;
+}
+// Ab Klasse 8 (Welten mit sprache "en") stehen Zitate mit englischen Anführungszeichen: “…” statt „…“ (ab v0.9.13)
+function spracheDerKlasse(themaId){ const K = KLASSENDATEN[parseInt(themaId, 10)]; return K && K.welt && K.welt.sprache === "en" ? "en" : "de"; }
+function englischeZeichen(o, schon){
+  schon = schon || new Set(); if(schon.has(o)) return o; schon.add(o);
+  const um = x => typeof x === "string" ? x.replace(/„([^„“”]*)“/g, "“$1”") : (x && typeof x === "object" ? englischeZeichen(x, schon) : x);
+  if(Array.isArray(o)) o.forEach((x, i) => { o[i] = um(x); }); else if(o && typeof o === "object") Object.keys(o).forEach(k => { o[k] = um(o[k]); });
+  return o;
 }
 
 /* ===================== WÖRTERHILFE (antippbare Wörter) ===================== */
@@ -2541,7 +2714,7 @@ function textMitHilfe(text){
     const de = hilfeFuer(w); if(!de) return w;
     frag.appendChild(document.createTextNode(text.slice(zuletzt, i)));
     const s = el("span", "vok", w); s.tabIndex = 0; s.setAttribute("role", "button"); s.dataset.de = de;
-    s.setAttribute("aria-label", w + ", auf Deutsch: " + de);
+    s.setAttribute("aria-label", w + ui("aufDeutsch") + de);
     const umschalten = e => { e.stopPropagation(); document.querySelectorAll(".vok.offen").forEach(x => { if(x !== s) x.classList.remove("offen"); }); s.classList.toggle("offen"); };
     s.addEventListener("click", umschalten);
     s.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); umschalten(e); } });
@@ -2565,17 +2738,22 @@ function hilfeZeile(woerter){
 
 /* ===================== AUFGABEN ZIEHEN (ohne Doppelungen) ===================== */
 function schluessel(a){
-  return a.form + "|" + (a.frage || a.satz || "") + "|" + (a.form === "satzbau" ? a.loesung[0] : "") +
+  // Quiz: Lösung gehört zum Schlüssel – sonst gelten „the ___ building“ mit old/tall/famous als dieselbe Aufgabe (v0.9.9)
+  return a.form + "|" + (a.frage || a.satz || "") + "|" + (a.form === "satzbau" ? a.loesung[0] : a.form === "quiz" ? a.loesung : "") +
          (a.form === "zuordnen" ? a.kategorien.join("/") + ":" + a.woerter.map(w => w.text).join(",") : "");
 }
 const hatInhalt = id => AUFGABEN.some(a => a.thema === id) || !!GENERATOREN[id];
-function zieheAufgabe(themen, niveau, form, benutzt, nurNeu){
+// ohne = Schlüssel der gerade falsch gelösten Aufgabe (nur bei der Zwillingsaufgabe). Dann gilt (ab v0.9.9):
+// gleiche Form neu → gleiche Form, schon früher gesehen (aber nie die gerade falsche) → erst dann eine andere Form.
+function zieheAufgabe(themen, niveau, form, benutzt, nurNeu, ohne){
   const formen = EINSTELLUNGEN.formenNachNiveau[niveau];
-  const versuche = [{ form, neu: true }, { form: null, neu: true }, { form, neu: false }, { form: null, neu: false }];
+  const versuche = ohne ? [{ form, neu: true }, { form, neu: false }, { form: null, neu: true }, { form: null, neu: false }]
+                        : [{ form, neu: true }, { form: null, neu: true }, { form, neu: false }, { form: null, neu: false }];
+  const erlaubt = a => !ohne || schluessel(a) !== ohne;
   for(const v of versuche){
     if(nurNeu && !v.neu) continue;   // lieber ein anderes Thema als eine Wiederholung
     const passt = a => themen.includes(a.thema) && a.niveau === niveau && (v.form ? a.form === v.form : formen.includes(a.form));
-    const hand = mischen(AUFGABEN.filter(a => passt(a) && (!v.neu || !benutzt.has(schluessel(a)))));
+    const hand = mischen(AUFGABEN.filter(a => passt(a) && erlaubt(a) && (!v.neu || !benutzt.has(schluessel(a)))));
     const genThemen = themen.filter(id => GENERATOREN[id]);
     // bunt mischen: mal handgeschrieben, mal aus dem Baukasten
     const zuerstHand = hand.length && (!genThemen.length || Math.random() < 0.45);
@@ -2584,7 +2762,7 @@ function zieheAufgabe(themen, niveau, form, benutzt, nurNeu){
       for(let i = 0; i < 80; i++){
         const a = generiere(wuerfle(genThemen), niveau, v.form || wuerfle(formen));
         const kernFrei = !a || !a.kern || !letzteKerne.includes(a.kern) || i >= 60;   // erst nach 60 Versuchen Baustein-Regel lockern (nur bei sehr kleinen Listen)
-        if(a && kernFrei && (!v.neu || !benutzt.has(schluessel(a)))){
+        if(a && kernFrei && erlaubt(a) && (!v.neu || !benutzt.has(schluessel(a)))){
           benutzt.add(schluessel(a));
           if(a.kern){ letzteKerne.push(a.kern); if(letzteKerne.length > KERN_ABSTAND()) letzteKerne.shift(); }
           return a;
@@ -2618,16 +2796,111 @@ const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => 
 const UI_TEXTE = {
   de: { minispiel: "🎁 Minispiel?", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
         los: "▶ Los!", nein: "Lieber nicht", weiter: "Weiter", ziel: "Ziel: {z} in {s} Sekunden.", geschafft: "⭐ Geschafft! ",
-        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!", gameOver: "Game over! Drei Fehler – das Spiel ist vorbei.", gesperrt: "Keine Versuche mehr – das Schloss ist gesperrt." },
+        zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!", gameOver: "Game over! Drei Fehler – das Spiel ist vorbei.", gesperrt: "Keine Versuche mehr – das Schloss ist gesperrt.",
+        // Startmenü
+        zurueck: "← Zurück", setupWeiter: "Weiter →", setupStart: "🚀 Mission starten",
+        s1: "1. In welche Klasse gehst du? Stelle das Zahlenschloss ein.", klasseWaehlen: "Klasse wählen", klasseKleiner: "Klasse kleiner", klasseGroesser: "Klasse größer",
+        klasse: "Klasse {k}", laedt: "⏳ wird geladen …", keineAufgaben: "🚧 Für Klasse {k} gibt es noch keine Aufgaben. Kommt bald!",
+        s2: "2. Was möchtest du üben?", artThema: "Ein Thema", artThemaText: "Du bereitest dich auf ein Grammatikthema vor.",
+        artUnit: "Eine Unit", artUnitText: "Du übst alle Themen einer Unit, z. B. vor der Klassenarbeit.", artWdh: "Wiederholung", artWdhText: "Bunt gemischt: alle Themen bis zu einer Unit.",
+        s3Thema: "3. Welches Thema?", s3Unit: "3. Welche Unit?", s3Wdh: "3. Wiederholen bis einschließlich …", bald: "🚧 kommt bald", bisUnit: "bis Unit {u}", themenAnzahl: "{n} Themen",
+        s4: "4. Wie schwer soll es sein?", s5: "5. Mit oder ohne Zeitlimit?", mitZeit: "Mit Zeitlimit", mitZeitText: "{m} Minuten. Ist die Zeit um, ist die Mission gescheitert.",
+        ohneZeit: "Ohne Zeitlimit", ohneZeitText: "In Ruhe üben.", thema: "Thema: {t}", wdhBis: "Wiederholung bis Unit {u}", minuten: "{m} Minuten", ohneLimit: "ohne Zeitlimit",
+        // Intro und Übersicht
+        introLos: "Los geht's!", niveau: "Niveau: {n}", hallo: "Hallo! Ich bin {f}. Lest euch die Geschichte durch und dann los!",
+        raeumeInfo: "Die Räume öffnen sich nacheinander. Jeder Raum verrät eine Ziffer für das Schloss am Ausgang.",
+        dreiZiffern: "⚠️ 3 Ziffern", ziffer: "✅ Ziffer: {z}", verschlossen: "🔒 verschlossen", offen: "▶ offen",
+        gefunden: "Gefundene Ziffern: ", eineVon: "eine von ", nochOffen: "offen",
+        // Raum und Aufgaben
+        mix: "🔀 Mix aus {n} Themen", jetzt: " · jetzt: ", schluesselteile: "{r} von {n} Schlüsselteilen", hilfekarte: "💡 Hilfekarte", pruefen: "Prüfen",
+        zwilling: "🔁 Zwillingsaufgabe: gleiche Regel, neuer Satz", nochNicht: "✋ Noch nicht fertig",
+        richtig: "✅ Richtig! Du bekommst ein Schlüsselteil.", richtigAnsage: "Richtig. {r} von {n} Schlüsselteilen.",
+        falsch1: "❌ Leider falsch. Lies dir die Regel durch:", falsch1Ansage: "Leider falsch. ", zumZwilling: "Verstanden – zur Zwillingsaufgabe",
+        falsch2: "❌ Wieder falsch. So ist es richtig:", falsch2Ansage: "Wieder falsch. Richtig ist: {l}. Gleich kommt eine neue Aufgabe.", neueAufgabe: "Weiter → (neue Aufgabe)",
+        raumGeschafft: "{n} geschafft!", zusatzInfo: "Alle Schlüsselteile gesammelt! Die Ziffer liegt im {z}. {t} Ihr habt {s} Sekunden.", betreten: "{e} {z} betreten",
+        raumZiffer: "Die Ziffer dieses Raums lautet: {z}",
+        tippeAntwort: "Tippe eine Antwort an.", luecke: "Lücke {i}", lueckenFuellen: "Fülle zuerst alle Lücken aus.",
+        woerterAntippen: "Tippe die Wörter unten in der richtigen Reihenfolge an …", deinSatz: "Dein Satz", woerter: "Wörter", oder: "  oder  ", alleWoerter: "Benutze alle Wörter.",
+        soRichtig: "So ist es richtig:", fehlerLoesung: "„{f}“ ist falsch – richtig ist „{r}“.", fehlerUnvollst: "Tippe das falsche Wort an UND schreibe die Verbesserung in das Feld.",
+        deinSatzDoppel: "Dein Satz:", satzSchreiben: "Schreibe zuerst einen Satz.", verteilen: "Wörter zum Verteilen", feld: "Feld {k}", alleInFeld: "Lege zuerst alle Wörter in ein Feld.",
+        // Zahlenschloss, Ende
+        oeffnen: "Öffnen", codeEingeben: "Code eingeben · Versuche: ", erstNach: "🔒 erst nach allen 4 Räumen bedienbar", schlossGruppe: "Zahlenschloss am Ausgang",
+        zifferVon: "Ziffer {i} von 4", zifferPlus: "Ziffer {i} erhöhen", zifferMinus: "Ziffer {i} verringern",
+        ausgangOffen: "Der Ausgang ist offen! Mission geschafft.", blockiert: "🚨 Falscher Code! Das Schloss ist blockiert.", blockiertAnsage: "Falscher Code. Das Schloss ist blockiert.",
+        falscherCode: "❌ Falscher Code! Noch {n} {v}. Grünes Lämpchen = Ziffer stimmt, rotes = Ziffer falsch.", versuch1: "Versuch", versuchN: "Versuche",
+        falscherCodeAnsage: "Falscher Code. ", zifferStimmt: "Ziffer {i} stimmt", zifferFalsch: "Ziffer {i} ist falsch", nochVersuche: ". Noch {n} Versuche.",
+        auswertung: "📋 Deine Auswertung", nichtsGeloest: "Noch keine Aufgaben gelöst.", sitzt: "Das sitzt!", schonGut: "Schon gut, ein bisschen üben schadet nicht.", ueben: "Übe dieses Thema noch einmal.",
+        statZeile: "{t}: {e} von {g} Aufgaben beim ersten Versuch richtig. ",
+        finaleTitel: "🎉 Mission geschafft! 🎉", nochmal: "Noch eine Runde", zumStart: "Zum Startmenü", gescheitertTitel: "Mission gescheitert!", neuerVersuch: "Neuer Versuch",
+        schlossBlockiert: "Das Schloss ist blockiert.", geschaffteRaeume: " (Geschaffte Räume: {n} von 4)",
+        gescheitertTorAnsage: "Das Schloss ist blockiert. Mission gescheitert.", gescheitertZeitAnsage: "Die Zeit ist abgelaufen. Mission gescheitert.",
+        zweiMinuten: "Noch zwei Minuten.", eineMinute: "Noch eine Minute.",
+        // Zusatzraum
+        falscheAntwort: "Falsche Antwort!", zeitAbgelaufen: "Zeit abgelaufen!", zusatzGeschafft: "✅ Geschafft! Die Ziffer lautet: {z}", zusatzGeschafftAnsage: "Geschafft! Die Ziffer lautet {z}.",
+        rausgeworfen: "💥 {g} Ihr werdet hinausgeworfen … Eine der Ziffern {k} ist richtig.", rausgeworfenAnsage: "{g} Eine der Ziffern {k} ist richtig.", duHast: "{n}. Du hast {s} Sekunden. ",
+        komma: ",",
+        // Dialog und Fußzeile
+        beenden: "Mission beenden", dialogTitel: "Mission wirklich beenden?", dialogText: "Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.",
+        dialogNein: "Nein, weiterspielen", dialogJa: "Ja, beenden", datenschutz: "Es werden keine Daten gespeichert oder übertragen.", restzeit: "Restzeit",
+        fach: "Englisch", prototyp: "(Prototyp)", aufDeutsch: ", auf Deutsch: ", tonEin: "Ton einschalten", tonAus: "Ton ausschalten", tonIstAn: "Ton ist an.", tonIstAus: "Ton ist aus.", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
   en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
-        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked." }
+        zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked.",
+        zurueck: "← Back", setupWeiter: "Next →", setupStart: "🚀 Start the mission",
+        s1: "1. Which year are you in? Set the number lock.", klasseWaehlen: "Choose your year", klasseKleiner: "Year down", klasseGroesser: "Year up",
+        klasse: "Year {k}", laedt: "⏳ loading …", keineAufgaben: "🚧 There are no tasks for year {k} yet. Coming soon!",
+        s2: "2. What do you want to practise?", artThema: "One topic", artThemaText: "Get ready for one grammar topic.",
+        artUnit: "One unit", artUnitText: "Practise all the topics of a unit, e.g. before a test.", artWdh: "Revision", artWdhText: "All mixed up: every topic up to a unit.",
+        s3Thema: "3. Which topic?", s3Unit: "3. Which unit?", s3Wdh: "3. Revise up to and including …", bald: "🚧 coming soon", bisUnit: "up to Unit {u}", themenAnzahl: "{n} topics",
+        s4: "4. How difficult?", s5: "5. With or without a time limit?", mitZeit: "With a time limit", mitZeitText: "{m} minutes. When the time is up, the mission has failed.",
+        ohneZeit: "No time limit", ohneZeitText: "Practise at your own speed.", thema: "Topic: {t}", wdhBis: "Revision up to Unit {u}", minuten: "{m} minutes", ohneLimit: "no time limit",
+        introLos: "Let's go!", niveau: "Level: {n}", hallo: "Hi! I'm {f}. Read the story – and then let's go!",
+        raeumeInfo: "The rooms open one after another. Every room gives you one digit for the lock at the exit.",
+        dreiZiffern: "⚠️ 3 digits", ziffer: "✅ Digit: {z}", verschlossen: "🔒 locked", offen: "▶ open",
+        gefunden: "Digits found: ", eineVon: "one of ", nochOffen: "open",
+        mix: "🔀 Mix of {n} topics", jetzt: " · now: ", schluesselteile: "{r} of {n} key parts", hilfekarte: "💡 Help card", pruefen: "Check",
+        zwilling: "🔁 Twin task: same rule, new sentence", nochNicht: "✋ Not finished yet",
+        richtig: "✅ Correct! You get a key part.", richtigAnsage: "Correct. {r} of {n} key parts.",
+        falsch1: "❌ Sorry, that's wrong. Read the rule:", falsch1Ansage: "Sorry, that's wrong. ", zumZwilling: "Got it – on to the twin task",
+        falsch2: "❌ Wrong again. This is correct:", falsch2Ansage: "Wrong again. The correct answer is: {l}. A new task is coming.", neueAufgabe: "Next → (new task)",
+        raumGeschafft: "{n} done!", zusatzInfo: "All key parts collected! The digit is in the {z}. {t} You have {s} seconds.", betreten: "{e} Enter the {z}",
+        raumZiffer: "The digit of this room is: {z}",
+        tippeAntwort: "Tap an answer.", luecke: "Gap {i}", lueckenFuellen: "Fill in all the gaps first.",
+        woerterAntippen: "Tap the words below in the right order …", deinSatz: "Your sentence", woerter: "Words", oder: "  or  ", alleWoerter: "Use all the words.",
+        soRichtig: "Correct version:", fehlerLoesung: "“{f}” is wrong – correct: “{r}”.", fehlerUnvollst: "Tap the wrong word AND write the correction in the box.",
+        deinSatzDoppel: "Your sentence:", satzSchreiben: "Write a sentence first.", verteilen: "Words to sort", feld: "Box {k}", alleInFeld: "Put all the words into a box first.",
+        oeffnen: "Open", codeEingeben: "Enter the code · Tries: ", erstNach: "🔒 only after all 4 rooms", schlossGruppe: "Number lock at the exit",
+        zifferVon: "Digit {i} of 4", zifferPlus: "Digit {i} up", zifferMinus: "Digit {i} down",
+        ausgangOffen: "The exit is open! Mission complete.", blockiert: "🚨 Wrong code! The lock is blocked.", blockiertAnsage: "Wrong code. The lock is blocked.",
+        falscherCode: "❌ Wrong code! {n} {v} left. Green light = digit correct, red light = digit wrong.", versuch1: "try", versuchN: "tries",
+        falscherCodeAnsage: "Wrong code. ", zifferStimmt: "digit {i} is correct", zifferFalsch: "digit {i} is wrong", nochVersuche: ". {n} tries left.",
+        auswertung: "📋 Your results", nichtsGeloest: "No tasks solved yet.", sitzt: "You've got it!", schonGut: "Good – a little more practice won't hurt.", ueben: "Practise this topic again.",
+        statZeile: "{t}: {e} of {g} tasks right at the first try. ",
+        finaleTitel: "🎉 Mission complete! 🎉", nochmal: "Play again", zumStart: "Back to the start", gescheitertTitel: "Mission failed!", neuerVersuch: "Try again",
+        schlossBlockiert: "The lock is blocked.", geschaffteRaeume: " (Rooms done: {n} of 4)",
+        gescheitertTorAnsage: "The lock is blocked. Mission failed.", gescheitertZeitAnsage: "Time is up. Mission failed.",
+        zweiMinuten: "Two minutes left.", eineMinute: "One minute left.",
+        falscheAntwort: "Wrong answer!", zeitAbgelaufen: "Time's up!", zusatzGeschafft: "✅ Done! The digit is: {z}", zusatzGeschafftAnsage: "Done! The digit is {z}.",
+        rausgeworfen: "💥 {g} You're thrown out … One of the digits {k} is correct.", rausgeworfenAnsage: "{g} One of the digits {k} is correct.", duHast: "{n}. You have {s} seconds. ",
+        komma: ".",
+        beenden: "Quit the mission", dialogTitel: "Do you really want to quit?", dialogText: "Your progress in this round will be lost. Your choices in the start menu stay.",
+        dialogNein: "No, keep playing", dialogJa: "Yes, quit", datenschutz: "No data is stored or sent.", restzeit: "Time left",
+        fach: "English", prototyp: "(prototype)", aufDeutsch: ", in German: ", tonEin: "Sound on", tonAus: "Sound off", tonIstAn: "Sound is on.", tonIstAus: "Sound is off.", testmodus: "🧪 Test mode: {c} opens at once", testmodusNur: "🧪 Test mode: before the end only {c} opens." }
 };
 const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
-const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
+const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w+)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
+// Titel eines Themas in der Sprache der Welt (themen: titelEn = englischer Titel, sonst der deutsche)
+const themaTitel = id => { const t = themaVon(id); return t ? (sprache() === "en" && t.titelEn ? t.titelEn : t.titel) : ""; };
+// Name und Text der Niveaus in der Sprache der Welt (NIVEAUS: nameEn, textEn in daten/allgemein.js)
+const niveauName = k => sprache() === "en" && NIVEAUS[k].nameEn ? NIVEAUS[k].nameEn : NIVEAUS[k].name;
+const niveauText = k => sprache() === "en" && NIVEAUS[k].textEn ? NIVEAUS[k].textEn : NIVEAUS[k].text;
 function uiTexteSetzen(){
   const setze = (id, k) => { const e = $(id); if(e) e.textContent = ui(k); };
+  document.querySelectorAll("[data-ui]").forEach(e => { e.textContent = ui(e.dataset.ui); });
+  document.querySelectorAll("[data-ui-aria]").forEach(e => { const t = ui(e.dataset.uiAria); e.setAttribute("aria-label", t); if(e.title) e.title = t; });
+  document.documentElement.lang = sprache();
   setze("btnMinispiel", "minispiel"); setze("btnZusatzZurueck", "zurUebersicht"); setze("btnGeschafftWeiter", "zurUebersicht");
+  try { tonSymbol(); } catch(e){}   // Ton-Knopf: Vorlesetext in der Sprache der Welt
   setze("btnRaumZurueck", "raumZurueck"); setze("btnZurKarte", "zurKarte"); setze("btnMsLos", "los"); setze("btnMsNein", "nein"); setze("btnMsWeiter", "weiter");
 }
 
@@ -2672,7 +2945,8 @@ function setupZeigen(){
   const box = $("setupInhalt"); box.innerHTML = "";
   $("schrittAnzeige").innerHTML = Array.from({ length: SCHRITTE }, (_, i) => '<span class="' + (i <= schritt ? "an" : "") + '"></span>').join("");
   $("btnSetupZurueck").style.visibility = schritt === 0 ? "hidden" : "visible";
-  $("btnSetupWeiter").textContent = schritt === SCHRITTE - 1 ? "🚀 Mission starten" : "Weiter →";
+  uiTexteSetzen();
+  $("btnSetupWeiter").textContent = schritt === SCHRITTE - 1 ? ui("setupStart") : ui("setupWeiter");
   let bereit = false;
   const titel = t => box.appendChild(el("p", "frage-titel", t));
   const knopf = (eltern, inhalt, gewaehlt, onclick, deaktiviert) => {
@@ -2684,33 +2958,33 @@ function setupZeigen(){
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
 
   if(schritt === 0){
-    titel("1. In welche Klasse gehst du? Stelle das Zahlenschloss ein.");
-    const s = el("div", "klassen-schloss"); s.setAttribute("role", "group"); s.setAttribute("aria-label", "Klasse wählen");
+    titel(ui("s1"));
+    const s = el("div", "klassen-schloss"); s.setAttribute("role", "group"); s.setAttribute("aria-label", ui("klasseWaehlen"));
     const reihe = el("div", "reihe");
     const minus = el("button", "rad-btn", "−"), plus = el("button", "rad-btn", "+");
-    minus.setAttribute("aria-label", "Klasse kleiner"); plus.setAttribute("aria-label", "Klasse größer");
+    minus.setAttribute("aria-label", ui("klasseKleiner")); plus.setAttribute("aria-label", ui("klasseGroesser"));
     const anz = el("div", "klassen-anzeige"); anz.setAttribute("role", "status");
-    anz.setAttribute("aria-label", "Klasse " + wahl.klasse);
+    anz.setAttribute("aria-label", ui("klasse", { k: wahl.klasse }));
     anz.innerHTML = String(wahl.klasse).split("").map(c => siebenSegment(+c)).join("");
     const wechsel = d => { const i = KLASSEN.indexOf(wahl.klasse); wahl.klasse = KLASSEN[(i + d + KLASSEN.length) % KLASSEN.length];
-      wahl.art = null; wahl.auswahl = null; setupZeigen(); ansage("Klasse " + wahl.klasse + (welt() ? ": " + welt().name : "")); };
+      wahl.art = null; wahl.auswahl = null; setupZeigen(); ansage(ui("klasse", { k: wahl.klasse }) + (welt() ? ": " + welt().name : "")); };
     minus.onclick = () => wechsel(-1); plus.onclick = () => wechsel(1);
     reihe.append(minus, anz, plus);
     // Die Datei der eingestellten Klasse wird jetzt (einmalig) geladen; danach baut sich der Schritt neu auf
     const k = wahl.klasse, W = welt();
     if(!W && KLASSEN_DATEIEN[k]) ladeKlasse(k).then(ok => { if(ok && schritt === 0 && wahl.klasse === k) setupZeigen(); });
     const name = el("div", "welt-name");
-    name.innerHTML = (W ? W.emoji + " " + esc(W.name) : KLASSEN_DATEIEN[k] ? "⏳ wird geladen …" : "🚧") + "<small>Klasse " + k + "</small>";
+    name.innerHTML = (W ? W.emoji + " " + esc(W.name) : KLASSEN_DATEIEN[k] ? ui("laedt") : "🚧") + "<small>" + ui("klasse", { k }) + "</small>";
     s.append(reihe, name); box.appendChild(s);
     bereit = !!W && klasseBereit(k);
-    if(!bereit && (W || !KLASSEN_DATEIEN[k])){ const h = el("p", "hinweis-bald", "🚧 Für Klasse " + k + " gibt es noch keine Aufgaben. Kommt bald!"); box.appendChild(h); }
+    if(!bereit && (W || !KLASSEN_DATEIEN[k])){ const h = el("p", "hinweis-bald", ui("keineAufgaben", { k })); box.appendChild(h); }
   }
   if(schritt === 1){
-    titel("2. Was möchtest du üben?");
+    titel(ui("s2"));
     const w = el("div", "wahl");
-    [["thema", "🎯", "Ein Thema", "Du bereitest dich auf ein Grammatikthema vor."],
-     ["unit",  "📘", "Eine Unit", "Du übst alle Themen einer Unit, z. B. vor der Klassenarbeit."],
-     ["wdh",   "🔁", "Wiederholung", "Bunt gemischt: alle Themen bis zu einer Unit."]].forEach(([k, e, n, t]) =>
+    [["thema", "🎯", ui("artThema"), ui("artThemaText")],
+     ["unit",  "📘", ui("artUnit"), ui("artUnitText")],
+     ["wdh",   "🔁", ui("artWdh"), ui("artWdhText")]].forEach(([k, e, n, t]) =>
       knopf(w, '<span class="gross-emoji">' + e + '</span>' + n + '<small>' + t + '</small>', wahl.art === k, () => { if(wahl.art !== k) wahl.auswahl = null; wahl.art = k; setupZeigen(); }));
     box.appendChild(w); bereit = !!wahl.art;
   }
@@ -2719,40 +2993,40 @@ function setupZeigen(){
     const units = [...new Set(themen.map(t => t.unit))].sort((a, b) => a - b);
     const w = el("div", "wahl");
     if(wahl.art === "thema"){
-      titel("3. Welches Thema?");
+      titel(ui("s3Thema"));
       units.forEach(u => { w.appendChild(el("h3", "unit-kopf", "Unit " + u));
         themen.filter(t => t.unit === u).forEach(t => { const ok = hatInhalt(t.id);
-          knopf(w, esc(t.titel) + (ok ? "" : "<small>🚧 kommt bald</small>"), wahl.auswahl === t.id, () => { wahl.auswahl = t.id; setupZeigen(); }, !ok); }); });
+          knopf(w, esc(themaTitel(t.id)) + (ok ? "" : "<small>" + ui("bald") + "</small>"), wahl.auswahl === t.id, () => { wahl.auswahl = t.id; setupZeigen(); }, !ok); }); });
     }
     if(wahl.art === "unit"){
-      titel("3. Welche Unit?");
+      titel(ui("s3Unit"));
       units.forEach(u => { const ts = themen.filter(t => t.unit === u), ok = ts.some(t => hatInhalt(t.id));
-        knopf(w, "📘 Unit " + u + "<small>" + ts.map(t => esc(t.titel)).join(" · ") + (ok ? "" : "<br>🚧 kommt bald") + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
+        knopf(w, "📘 Unit " + u + "<small>" + ts.map(t => esc(themaTitel(t.id))).join(" · ") + (ok ? "" : "<br>" + ui("bald")) + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
     }
     if(wahl.art === "wdh"){
-      titel("3. Wiederholen bis einschließlich …");
+      titel(ui("s3Wdh"));
       units.forEach(u => { const ok = themen.some(t => t.unit <= u && hatInhalt(t.id));
-        knopf(w, "🔁 bis Unit " + u + "<small>" + themen.filter(t => t.unit <= u).length + " Themen" + (ok ? "" : " · 🚧 kommt bald") + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
+        knopf(w, "🔁 " + ui("bisUnit", { u }) + "<small>" + ui("themenAnzahl", { n: themen.filter(t => t.unit <= u).length }) + (ok ? "" : " · " + ui("bald")) + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
     }
     box.appendChild(w); bereit = wahl.auswahl != null;
   }
   if(schritt === 3){
-    titel("4. Wie schwer soll es sein?");
+    titel(ui("s4"));
     const w = el("div", "ampel");
     Object.entries(NIVEAUS).forEach(([k, n]) =>
-      knopf(w, '<span class="licht" style="background:' + n.farbe + '"></span>' + n.name + '<small>' + esc(n.text) + '</small>', wahl.niveau === k, () => { wahl.niveau = k; setupZeigen(); }));
+      knopf(w, '<span class="licht" style="background:' + n.farbe + '"></span>' + niveauName(k) + '<small>' + esc(niveauText(k)) + '</small>', wahl.niveau === k, () => { wahl.niveau = k; setupZeigen(); }));
     box.appendChild(w); bereit = !!wahl.niveau;
   }
   if(schritt === 4){
-    titel("5. Mit oder ohne Zeitlimit?");
+    titel(ui("s5"));
     const w = el("div", "wahl"), min = EINSTELLUNGEN.zeitlimitMinuten[wahl.niveau];
-    knopf(w, '<span class="gross-emoji">⏱</span>Mit Zeitlimit<small>' + min + ' Minuten. Ist die Zeit um, ist die Mission gescheitert.</small>', wahl.zeit === "mit", () => { wahl.zeit = "mit"; setupZeigen(); });
-    knopf(w, '<span class="gross-emoji">♾️</span>Ohne Zeitlimit<small>In Ruhe üben.</small>', wahl.zeit === "ohne", () => { wahl.zeit = "ohne"; setupZeigen(); });
+    knopf(w, '<span class="gross-emoji">⏱</span>' + ui("mitZeit") + '<small>' + ui("mitZeitText", { m: min }) + '</small>', wahl.zeit === "mit", () => { wahl.zeit = "mit"; setupZeigen(); });
+    knopf(w, '<span class="gross-emoji">♾️</span>' + ui("ohneZeit") + '<small>' + ui("ohneZeitText") + '</small>', wahl.zeit === "ohne", () => { wahl.zeit = "ohne"; setupZeigen(); });
     box.appendChild(w); bereit = !!wahl.zeit;
     if(bereit){
       const z = el("div", "zusammenfassung");
-      const was = wahl.art === "thema" ? "Thema: " + themaVon(wahl.auswahl).titel : wahl.art === "unit" ? "Unit " + wahl.auswahl : "Wiederholung bis Unit " + wahl.auswahl;
-      z.textContent = "Klasse " + wahl.klasse + " · " + was + " · " + NIVEAUS[wahl.niveau].name + " · " + (wahl.zeit === "mit" ? min + " Minuten" : "ohne Zeitlimit");
+      const was = wahl.art === "thema" ? ui("thema", { t: themaTitel(wahl.auswahl) }) : wahl.art === "unit" ? "Unit " + wahl.auswahl : ui("wdhBis", { u: wahl.auswahl });
+      z.textContent = ui("klasse", { k: wahl.klasse }) + " · " + was + " · " + niveauName(wahl.niveau) + " · " + (wahl.zeit === "mit" ? ui("minuten", { m: min }) : ui("ohneLimit"));
       box.appendChild(z);
     }
   }
@@ -2810,10 +3084,10 @@ function starteMission(){
   figurBildSetzen(); uiTexteSetzen();
   $("introEmoji").textContent = welt().emoji; $("introTitel").textContent = welt().name; $("introText").textContent = welt().intro;
   const info = $("introInfo"); info.innerHTML = "";
-  const was = wahl.art === "thema" ? themaVon(wahl.auswahl).titel : wahl.art === "unit" ? "Unit " + wahl.auswahl : "Wiederholung bis Unit " + wahl.auswahl;
-  [was, "Niveau: " + NIVEAUS[wahl.niveau].name, wahl.zeit === "mit" ? "⏱ " + EINSTELLUNGEN.zeitlimitMinuten[wahl.niveau] + " Minuten" : "♾️ ohne Zeitlimit"]
+  const was = wahl.art === "thema" ? themaTitel(wahl.auswahl) : wahl.art === "unit" ? "Unit " + wahl.auswahl : ui("wdhBis", { u: wahl.auswahl });
+  [was, ui("niveau", { n: niveauName(wahl.niveau) }), wahl.zeit === "mit" ? "⏱ " + ui("minuten", { m: EINSTELLUNGEN.zeitlimitMinuten[wahl.niveau] }) : "♾️ " + ui("ohneLimit")]
     .forEach(t => info.appendChild(el("span", "info-zeile", t)));
-  figurSagt("Hallo! Ich bin " + welt().figur + ". Lest euch die Geschichte durch und dann los!");
+  figurSagt(ui("hallo", { f: welt().figur }));
   baueRaeder(); $("codeMeldung").textContent = "";
   zeige("intro"); $("btnIntroLos").focus();
 }
@@ -2832,8 +3106,8 @@ function baueUebersicht(){
     const offen = raumOffen(i);
     b.disabled = !offen || r.geschafft;
     if(r.geschafft) b.classList.add("fertig"); if(r.kandidaten) b.classList.add("unsicher");
-    const status = r.geschafft ? (r.kandidaten ? "⚠️ 3 Ziffern" : "✅ Ziffer: " + r.ziffer) : !offen ? "🔒 verschlossen" : r.richtig ? "🔑 " + r.richtig + "/" + EINSTELLUNGEN.aufgabenProRaum : "▶ offen";
-    const themaText = r.themen.length > 1 ? "Mix" : themaVon(r.themen[0]).titel;
+    const status = r.geschafft ? (r.kandidaten ? ui("dreiZiffern") : ui("ziffer", { z: r.ziffer })) : !offen ? ui("verschlossen") : r.richtig ? "🔑 " + r.richtig + "/" + EINSTELLUNGEN.aufgabenProRaum : ui("offen");
+    const themaText = r.themen.length > 1 ? "Mix" : themaTitel(r.themen[0]);
     b.append(el("span", "tier", r.emoji), el("span", "name", r.name), el("span", "thema-klein", themaText), el("span", "status", status));
     b.setAttribute("aria-label", r.name + ", " + themaText + ": " + status);
     b.onclick = () => oeffneRaum(i);
@@ -2850,7 +3124,7 @@ function baueUebersicht(){
     if(i === S.neu) d.classList.add("neu");
     mon.appendChild(d);
   });
-  mon.setAttribute("aria-label", "Gefundene Ziffern: " + S.raeume.map((r, i) => r.ziffer != null ? r.ziffer : r.kandidaten ? "eine von " + r.kandidaten.join(", ") : "offen").join("; "));
+  mon.setAttribute("aria-label", ui("gefunden") + S.raeume.map((r, i) => r.ziffer != null ? r.ziffer : r.kandidaten ? ui("eineVon") + r.kandidaten.join(", ") : ui("nochOffen")).join("; "));
   if(S.neu >= 0){ const rn = S.raeume[S.neu]; melde("ziffer", { raum: rn.nr, ziffer: rn.ziffer, kandidaten: rn.kandidaten ? rn.kandidaten.slice() : null }); }
   S.neu = -1;
   torStatus();
@@ -2861,14 +3135,14 @@ function baueUebersicht(){
 function oeffneRaum(i){
   S.aktuell = i; const r = S.raeume[i];
   $("raumTitel").textContent = r.emoji + " " + r.name;
-  $("raumThema").textContent = r.themen.length > 2 ? "🔀 Mix aus " + r.themen.length + " Themen" : r.themen.map(id => themaVon(id).titel).join(" · ");
+  $("raumThema").textContent = r.themen.length > 2 ? ui("mix", { n: r.themen.length }) : r.themen.map(themaTitel).join(" · ");
   zeige("raum");
   if(r.aufgabeErledigt) weiter(); else zeigeAufgabe();   // wer mitten im Raum rausging, macht korrekt weiter
 }
 function zeichneSchluessel(){
   const r = S.raeume[S.aktuell], n = EINSTELLUNGEN.aufgabenProRaum, box = $("schluessel"); box.innerHTML = "";
   for(let i = 0; i < n; i++){ const s = el("span", i < r.richtig ? "an" : "", i < r.richtig ? "🔑" : ""); box.appendChild(s); }
-  box.setAttribute("aria-label", r.richtig + " von " + n + " Schlüsselteilen");
+  box.setAttribute("aria-label", ui("schluesselteile", { r: r.richtig, n }));
 }
 function zeigeAufgabe(){
   kloneWeg();
@@ -2876,12 +3150,12 @@ function zeigeAufgabe(){
   zeichneSchluessel();
   $("feedback").hidden = true; $("btnWeiter").hidden = true; $("btnPruefen").hidden = false; $("btnPruefen").disabled = false;
   const regel = themaVon(a.thema).regel;
-  if(r.themen.length > 2) $("raumThema").textContent = "🔀 Mix aus " + r.themen.length + " Themen · jetzt: " + themaVon(a.thema).titel;
+  if(r.themen.length > 2) $("raumThema").textContent = ui("mix", { n: r.themen.length }) + ui("jetzt") + themaTitel(a.thema);
   $("btnHilfe").hidden = !(wahl.niveau === "gruen" && regel); $("hilfekarte").hidden = true; $("hilfekarte").textContent = "💡 " + regel;
   const box = $("aufgabe"); box.innerHTML = "";
-  if(r.versuch === 2) box.appendChild(el("p", "zwilling", "🔁 Zwillingsaufgabe: gleiche Regel, neuer Satz"));
+  if(r.versuch === 2) box.appendChild(el("p", "zwilling", ui("zwilling")));
   const anw = ANWEISUNGEN[a.form];
-  box.append(el("p", "anweisung", anw.en), el("p", "anweisung-de", anw.de));
+  box.appendChild(el("p", "anweisung", anw.en)); if(sprache() !== "en") box.appendChild(el("p", "anweisung-de", anw.de));   // ab Klasse 8 nur Englisch
   const inhalt = el("div"); box.appendChild(inhalt);
   S.kontrolle = RAETSEL[a.form](a, inhalt);
   if(a.form === "quiz") $("btnPruefen").hidden = true;   // beim Quiz prüft schon das Antippen
@@ -2897,20 +3171,20 @@ function statistik(a, ersterVersuch){
 function pruefen(){
   const r = S.raeume[S.aktuell], a = r.liste[r.index], fb = $("feedback");
   const ok = S.kontrolle.pruefe();
-  if(ok === null){ fb.className = "feedback info"; fb.hidden = false; fb.innerHTML = "<b>✋ Noch nicht fertig</b>" + S.kontrolle.unvollstaendig; return; }
+  if(ok === null){ fb.className = "feedback info"; fb.hidden = false; fb.innerHTML = ""; fb.append(el("b", "", ui("nochNicht")), document.createTextNode(S.kontrolle.unvollstaendig)); return; }
   S.kontrolle.sperre(ok);
   $("btnPruefen").hidden = true; fb.hidden = false; fb.innerHTML = "";
   if(ok){
     statistik(a, r.versuch === 1); r.richtig++; r.aufgabeErledigt = true; zeichneSchluessel();
-    fb.className = "feedback ok"; fb.appendChild(el("b", "", "✅ Richtig! Du bekommst ein Schlüsselteil."));
-    ton("richtig"); sage("richtig"); ansage("Richtig. " + r.richtig + " von " + EINSTELLUNGEN.aufgabenProRaum + " Schlüsselteilen.");
-    $("btnWeiter").hidden = false; $("btnWeiter").textContent = "Weiter →"; $("btnWeiter").onclick = weiter;
+    fb.className = "feedback ok"; fb.appendChild(el("b", "", ui("richtig")));
+    ton("richtig"); sage("richtig"); ansage(ui("richtigAnsage", { r: r.richtig, n: EINSTELLUNGEN.aufgabenProRaum }));
+    $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("setupWeiter"); $("btnWeiter").onclick = weiter;
   } else if(r.versuch === 1){
-    fb.className = "feedback fehler"; fb.append(el("b", "", "❌ Leider falsch. Lies dir die Regel durch:"), el("span", "", a.erklaerung));
-    ton("falsch"); sage("falsch"); ansage("Leider falsch. " + a.erklaerung);
-    $("btnWeiter").hidden = false; $("btnWeiter").textContent = "Verstanden – zur Zwillingsaufgabe";
+    fb.className = "feedback fehler"; fb.append(el("b", "", ui("falsch1")), el("span", "", a.erklaerung));
+    ton("falsch"); sage("falsch"); ansage(ui("falsch1Ansage") + a.erklaerung);
+    $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("zumZwilling");
     // Zwillingsaufgabe: neue Aufgabe zum gleichen Thema in der gleichen Form (sofort gemerkt, auch nach „Zur Übersicht“)
-    const zwilling = zieheAufgabe([a.thema], wahl.niveau, a.form, S.benutzt);
+    const zwilling = zieheAufgabe([a.thema], wahl.niveau, a.form, S.benutzt, false, schluessel(a));
     if(zwilling) r.liste[r.index] = zwilling;
     r.versuch = 2;
     $("btnWeiter").onclick = () => { zeigeAufgabe(); sage("zwilling"); };
@@ -2918,9 +3192,9 @@ function pruefen(){
     statistik(a, false); r.aufgabeErledigt = true;
     const ersatz = zieheFuerRaum(r); if(ersatz) r.liste.push(ersatz);
     fb.className = "feedback fehler";
-    fb.append(el("b", "", "❌ Wieder falsch. So ist es richtig:"), el("span", "loesung", S.kontrolle.loesung), el("span", "", a.erklaerung));
-    ton("falsch"); sage("loesung"); ansage("Wieder falsch. Richtig ist: " + S.kontrolle.loesung + ". Gleich kommt eine neue Aufgabe.");
-    $("btnWeiter").hidden = false; $("btnWeiter").textContent = "Weiter → (neue Aufgabe)"; $("btnWeiter").onclick = weiter;
+    fb.append(el("b", "", ui("falsch2")), el("span", "loesung", S.kontrolle.loesung), el("span", "", a.erklaerung));
+    ton("falsch"); sage("loesung"); ansage(ui("falsch2Ansage", { l: S.kontrolle.loesung }));
+    $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("neueAufgabe"); $("btnWeiter").onclick = weiter;
   }
   $("btnWeiter").focus({ preventScroll: true });
   fb.scrollIntoView({ block: "nearest", behavior: reduziert() ? "auto" : "smooth" });
@@ -2934,16 +3208,15 @@ function weiter(){
 }
 function raumGeschafft(){
   const r = S.raeume[S.aktuell], w = welt();
-  $("geschafftEmoji").textContent = r.emoji; $("geschafftTitel").textContent = r.name + " geschafft!";
+  $("geschafftEmoji").textContent = r.emoji; $("geschafftTitel").textContent = ui("raumGeschafft", { n: r.name });
   ton("jingle"); sage("raumGeschafft");
   if(EINSTELLUNGEN.zusatzraumAktiv){
-    $("geschafftText").textContent = "Alle Schlüsselteile gesammelt! Die Ziffer liegt im " + w.zusatzraum.name + ". " + w.zusatzraum.text +
-      " Ihr habt " + EINSTELLUNGEN.zusatzraumSekunden[wahl.niveau] + " Sekunden.";
-    $("btnZusatz").hidden = false; $("btnZusatz").textContent = w.zusatzraum.emoji + " " + w.zusatzraum.name + " betreten";
+    $("geschafftText").textContent = ui("zusatzInfo", { z: w.zusatzraum.name, t: w.zusatzraum.text, s: EINSTELLUNGEN.zusatzraumSekunden[wahl.niveau] });
+    $("btnZusatz").hidden = false; $("btnZusatz").textContent = ui("betreten", { e: w.zusatzraum.emoji, z: w.zusatzraum.name });
     $("btnGeschafftWeiter").hidden = true;
   } else {
     r.geschafft = true; r.ziffer = S.code[r.nr]; S.neu = r.nr;
-    $("geschafftText").textContent = "Die Ziffer dieses Raums lautet: " + r.ziffer;
+    $("geschafftText").textContent = ui("raumZiffer", { z: r.ziffer });
     $("btnZusatz").hidden = true; $("btnGeschafftWeiter").hidden = false;
   }
   zeige("geschafft"); (EINSTELLUNGEN.zusatzraumAktiv ? $("btnZusatz") : $("btnGeschafftWeiter")).focus();
@@ -2963,7 +3236,7 @@ const RAETSEL = {
     box.append(o, hilfeZeile(a.optionen));
     return { pruefe: () => gewaehlt === null ? null : norm(gewaehlt) === norm(a.loesung),
       sperre: ok => knoepfe.forEach(k => { k.disabled = true; if(k.textContent === gewaehlt) k.classList.add(ok ? "richtig" : "falsch"); }),
-      loesung: a.loesung, unvollstaendig: "Tippe eine Antwort an." };
+      loesung: a.loesung, unvollstaendig: ui("tippeAntwort") };
   },
 
   luecke(a, box){
@@ -2972,93 +3245,107 @@ const RAETSEL = {
     teile.forEach((t, i) => { p.appendChild(textMitHilfe(t));
       if(i < teile.length - 1){ const inp = el("input"); inp.type = "text";
         ["autocomplete","autocorrect","autocapitalize"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
-        inp.setAttribute("aria-label", "Lücke " + (i + 1));
+        inp.setAttribute("aria-label", ui("luecke", { i: i + 1 }));
         inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
         felder.push(inp); p.appendChild(inp); } });
     box.appendChild(p);
     let loesungsText = ""; teile.forEach((t, i) => { loesungsText += t + (i < teile.length - 1 ? loes[i][0] : ""); });
     return { pruefe(){ if(felder.some(f => !f.value.trim())) return null;
-        return felder.every((f, i) => loes[i].some(l => norm(l) === norm(f.value))); },
-      sperre(){ felder.forEach((f, i) => { f.disabled = true; f.classList.add(loes[i].some(l => norm(l) === norm(f.value)) ? "richtig" : "falsch"); }); },
-      loesung: loesungsText, unvollstaendig: "Fülle zuerst alle Lücken aus." };
+        return felder.every((f, i) => loes[i].some(l => gleich(l, f.value, a.genau))); },
+      sperre(){ felder.forEach((f, i) => { f.disabled = true; f.classList.add(loes[i].some(l => gleich(l, f.value, a.genau)) ? "richtig" : "falsch"); }); },
+      loesung: loesungsText, unvollstaendig: ui("lueckenFuellen") };
   },
 
   satzbau(a, box){
     const satz = a.loesung[0], ende = /[.?!]$/.test(satz) ? satz.slice(-1) : "";
     const woerter = (ende ? satz.slice(0, -1) : satz).split(" ");
     let gemischt = mischen(woerter); for(let i = 0; i < 10 && gemischt.join(" ") === woerter.join(" "); i++) gemischt = mischen(woerter);
-    const zeile = el("div", "antwort-zeile"), leer = el("span", "leer", "Tippe die Wörter unten in der richtigen Reihenfolge an …"), endz = el("span", "endzeichen", ende);
-    zeile.setAttribute("aria-label", "Dein Satz"); zeile.append(leer, endz);
-    const vorrat = el("div", "vorrat"); vorrat.setAttribute("aria-label", "Wörter");
+    const zeile = el("div", "antwort-zeile"), leer = el("span", "leer", ui("woerterAntippen")), endz = el("span", "endzeichen", ende);
+    zeile.setAttribute("aria-label", ui("deinSatz")); zeile.append(leer, endz);
+    const vorrat = el("div", "vorrat"); vorrat.setAttribute("aria-label", ui("woerter"));
     const chips = gemischt.map(w => { const c = el("button", "chip", w); c.type = "button"; c.style.touchAction = "manipulation";
       c.onclick = () => { if(c.parentElement === vorrat) zeile.insertBefore(c, endz); else vorrat.appendChild(c); leer.hidden = zeile.querySelectorAll(".chip").length > 0; };
       vorrat.appendChild(c); return c; });
     box.append(zeile, vorrat, hilfeZeile(woerter));
     const gebaut = () => [...zeile.querySelectorAll(".chip")].map(c => c.textContent).join(" ") + ende;
-    return { pruefe(){ if(vorrat.querySelectorAll(".chip").length) return null; return mitNamenTausch(a.loesung).some(l => norm(l) === norm(gebaut())); },
+    return { pruefe(){ if(vorrat.querySelectorAll(".chip").length) return null; return mitZeitTausch(mitNamenTausch(a.loesung)).some(l => gleich(l, gebaut(), a.genau)); },
       sperre(ok){ chips.forEach(c => { c.disabled = true; c.classList.add(ok ? "richtig" : "falsch"); }); },
-      loesung: a.loesung.join("  oder  "), unvollstaendig: "Benutze alle Wörter." };
+      loesung: a.loesung.join(ui("oder")), unvollstaendig: ui("alleWoerter") };
   },
 
   fehler(a, box){
     const w = el("div", "satzwoerter"); let gewaehlt = null;
     const woerter = a.satz.split(" ");
+    // Stelle(n) des Fehlerworts; steht es mehrmals im Satz, zählt nur die Stelle aus „fehlerStelle“ (1 = erstes Vorkommen)
+    const stellen = woerter.map((x, i) => ohneZeichen(x).toLowerCase() === a.fehlerwort.toLowerCase() ? i : -1).filter(i => i >= 0);
+    const fehlerIndex = stellen[(a.fehlerStelle || 1) - 1];
+    const amAnfang = fehlerIndex === 0;
     const knoepfe = woerter.map((wort, i) => { const b = el("button", "", wort); b.type = "button"; b.setAttribute("aria-pressed", "false");
       b.onclick = () => { gewaehlt = gewaehlt === i ? null : i; knoepfe.forEach((k, j) => { k.classList.toggle("gewaehlt", j === gewaehlt); k.setAttribute("aria-pressed", j === gewaehlt); }); if(gewaehlt !== null) inp.focus({ preventScroll: true }); };
       w.appendChild(b); return b; });
-    const z = el("label", "eingabe-zeile"); z.append(el("span", "", "So ist es richtig:"));
+    const z = el("label", "eingabe-zeile"); z.append(el("span", "", ui("soRichtig")));
     const inp = el("input"); inp.type = "text"; ["autocomplete","autocorrect","autocapitalize"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
-    z.appendChild(inp); box.append(w, hilfeZeile(woerter), z);
+    z.appendChild(inp);
+    // vorher: Zusatzzeile über dem Satz, z. B. die direkte Rede bei der indirekten Rede – sonst wäre der Fehler nicht eindeutig (ab v0.9.5)
+    if(a.vorher) box.append(el("p", "fehler-vorher", a.vorher));
+    box.append(w, hilfeZeile(woerter), z);
     return { pruefe(){ if(gewaehlt === null || !inp.value.trim()) return null;
-        return ohneZeichen(woerter[gewaehlt]).toLowerCase() === a.fehlerwort.toLowerCase() && a.loesung.some(l => norm(l) === norm(inp.value)); },
+        return gewaehlt === fehlerIndex && a.loesung.some(l => gleich(l, inp.value, a.genau)); },
       sperre(){ knoepfe.forEach(k => k.disabled = true); inp.disabled = true; },
-      loesung: "„" + a.fehlerwort + "“ ist falsch – richtig ist „" + a.loesung[0] + "“.",
-      unvollstaendig: "Tippe das falsche Wort an UND schreibe die Verbesserung in das Feld." };
+      loesung: ui("fehlerLoesung", { f: a.fehlerwort, r: amAnfang ? gross(a.loesung[0]) : a.loesung[0] }),
+      unvollstaendig: ui("fehlerUnvollst") };
   },
 
   umformen(a, box){
     const ft = el("p", "aufgabe-text"); ft.appendChild(textMitHilfe(a.frage)); box.appendChild(ft);
-    const z = el("label", "eingabe-zeile"); z.append(el("span", "", "Dein Satz:"));
+    const z = el("label", "eingabe-zeile"); z.append(el("span", "", ui("deinSatzDoppel")));
     const inp = el("input"); inp.type = "text"; ["autocomplete","autocorrect"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
     z.appendChild(inp); box.appendChild(z);
-    return { pruefe: () => !inp.value.trim() ? null : mitNamenTausch(a.loesung).some(l => norm(l) === norm(inp.value)),
-      sperre(){ inp.disabled = true; }, loesung: a.loesung.join("  oder  "), unvollstaendig: "Schreibe zuerst einen Satz." };
+    return { pruefe: () => !inp.value.trim() ? null : mitZeitTausch(mitNamenTausch(a.loesung)).some(l => gleich(l, inp.value, a.genau)),
+      sperre(){ inp.disabled = true; }, loesung: a.loesung.join(ui("oder")), unvollstaendig: ui("satzSchreiben") };
   },
 
   zuordnen(a, box){
-    const vorrat = el("div", "vorrat zone"); vorrat.dataset.ziel = ""; vorrat.setAttribute("aria-label", "Wörter zum Verteilen");
+    const vorrat = el("div", "vorrat zone"); vorrat.dataset.ziel = ""; vorrat.setAttribute("aria-label", ui("verteilen"));
     const zonen = el("div", "zonen");
-    const ziele = a.kategorien.map(k => { const z = el("div", "zone"); z.dataset.ziel = k; z.appendChild(el("span", "zonen-titel", k)); z.setAttribute("role", "group"); z.setAttribute("aria-label", "Feld " + k); zonen.appendChild(z); return z; });
+    const ziele = a.kategorien.map(k => { const z = el("div", "zone"); z.dataset.ziel = k; z.appendChild(el("span", "zonen-titel", k)); z.setAttribute("role", "group"); z.setAttribute("aria-label", ui("feld", { k })); zonen.appendChild(z); return z; });
     let ausgewaehlt = null;
-    const waehle = c => { ausgewaehlt = ausgewaehlt === c ? null : c; chips.forEach(x => x.classList.toggle("gewaehlt", x === ausgewaehlt)); };
-    const ablegen = (c, zone) => { zone.appendChild(c); ausgewaehlt = null; chips.forEach(x => x.classList.remove("gewaehlt")); };
+    const waehle = c => { ausgewaehlt = ausgewaehlt === c ? null : c; chips.forEach(x => { x.classList.toggle("gewaehlt", x === ausgewaehlt); x.setAttribute("aria-pressed", x === ausgewaehlt); }); };
+    const ablegen = (c, zone) => { zone.appendChild(c); ausgewaehlt = null; chips.forEach(x => { x.classList.remove("gewaehlt"); x.setAttribute("aria-pressed", "false"); }); };
     [vorrat, ...ziele].forEach(z => z.addEventListener("click", e => { if(e.target.closest(".chip") || !ausgewaehlt) return; ablegen(ausgewaehlt, z); }));
+    // Tastatur (ab v0.9.12): Wort mit Enter/Leertaste wählen, dann mit Tab zum Feld und Enter/Leertaste = hineinlegen
+    [vorrat, ...ziele].forEach(z => { z.tabIndex = 0; z.addEventListener("keydown", e => {
+      if((e.key === "Enter" || e.key === " ") && e.target === z && ausgewaehlt){ e.preventDefault(); const c = ausgewaehlt; ablegen(c, z); c.focus(); } }); });
     const chips = mischen(a.woerter).map(w => { const c = el("button", "chip", gross(w.text)); c.type = "button"; c.dataset.ziel = w.ziel;
       ziehbar(c, ablegen, waehle); vorrat.appendChild(c); return c; });
     box.append(vorrat, zonen, hilfeZeile(a.woerter.map(w => w.text).concat(a.kategorien)));
     return { pruefe(){ if(chips.some(c => c.parentElement === vorrat)) return null; return chips.every(c => c.parentElement.dataset.ziel === c.dataset.ziel); },
       sperre(){ chips.forEach(c => { c.disabled = true; c.classList.add(c.parentElement.dataset.ziel === c.dataset.ziel ? "richtig" : "falsch"); }); },
-      loesung: a.woerter.map(w => gross(w.text) + " → " + w.ziel).join(" · "), unvollstaendig: "Lege zuerst alle Wörter in ein Feld." };
+      loesung: a.woerter.map(w => gross(w.text) + " → " + w.ziel).join(" · "), unvollstaendig: ui("alleInFeld") };
   }
 };
 
 /* ----- Drag & Drop mit Finger und Maus (Pointer Events) + Antippen als Alternative ----- */
 // Entfernt alle übrig gebliebenen Schatten-Wörter (Sicherheitsnetz, z. B. bei Bildschirmwechsel mitten im Ziehen)
-function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht")); }
+function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht"));
+  document.querySelectorAll(".zone.ueber").forEach(z => z.classList.remove("ueber")); }   // auch die gelbe Markierung entfernen (ab 1.0.0-rc2)
+let ziehtGerade = null;   // nur EIN Wort gleichzeitig ziehen – ein zweiter Finger auf einem anderen Wort wird ignoriert (ab v0.9.11)
 function ziehbar(chip, ablegen, waehle){
   let start = null, klon = null, bewegt = false, ueber = null;
   const zoneBei = (x, y) => { const e = document.elementFromPoint(x, y); return e ? e.closest(".zone") : null; };
   let finger = null;   // nur EIN Finger zieht – ein zweiter Finger wird ignoriert
-  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; finger = null; };
+  const aufraeumen = () => { if(klon) klon.remove(); klon = null; chip.classList.remove("zieht"); if(ueber) ueber.classList.remove("ueber"); ueber = null; start = null; finger = null; if(ziehtGerade === chip) ziehtGerade = null; };
   chip.addEventListener("pointerdown", e => {
     if(chip.disabled || (e.button && e.button !== 0)) return;
     if(start && finger !== e.pointerId) return;                 // zweiter Finger auf demselben Wort: ignorieren
-    aufraeumen(); kloneWeg();                                    // falls noch ein altes Schatten-Wort herumhängt
+    if(ziehtGerade && ziehtGerade !== chip && document.body.contains(ziehtGerade)) return;   // anderes Wort wird schon gezogen
+    aufraeumen(); kloneWeg(); ziehtGerade = chip;                                    // falls noch ein altes Schatten-Wort herumhängt
     start = { x: e.clientX, y: e.clientY }; bewegt = false; finger = e.pointerId; try { chip.setPointerCapture(e.pointerId); } catch(_){} });
   chip.addEventListener("pointermove", e => {
     if(!start || e.pointerId !== finger) return;
+    if(!document.body.contains(chip)){ aufraeumen(); return; }   // Raum gewechselt, während noch gezogen wurde
     if(!bewegt && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8){
       bewegt = true; const r = chip.getBoundingClientRect();
       klon = chip.cloneNode(true); klon.classList.add("klon"); klon.style.width = r.width + "px";
@@ -3092,16 +3379,16 @@ function radSetzen(i, w){
 function torStatus(){
   const alle = S.raeume.every(r => r.geschafft), n = S.torVersuche, max = EINSTELLUNGEN.torVersuche;
   $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – " +
-    (alle ? "Code eingeben · Versuche: " + "●".repeat(n) + "○".repeat(Math.max(0, max - n)) : "🔒 erst nach allen 4 Räumen bedienbar");
+    (alle ? ui("codeEingeben") + "●".repeat(n) + "○".repeat(Math.max(0, max - n)) : ui("erstNach"));
   $("btnTor").disabled = !(alle || TESTMODUS) || n <= 0;
-  if(TESTMODUS && !alle) $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – 🧪 Testmodus: " + EINSTELLUNGEN.testCode + " öffnet sofort";
+  if(TESTMODUS && !alle) $("schlossTitel").textContent = welt().ausgang.emoji + " " + welt().ausgang.name + " – " + ui("testmodus", { c: EINSTELLUNGEN.testCode });
 }
 function baueRaeder(){
   const box = $("raeder"); box.innerHTML = "";
   werte.forEach((_, i) => {
     const rad = el("div", "rad");
-    const knopf = (z, t, s) => { const b = el("button", "rad-btn", z); b.type = "button"; b.setAttribute("aria-label", "Ziffer " + (i+1) + " " + t); b.tabIndex = -1; b.onclick = () => radSetzen(i, werte[i] + s); return b; };
-    const a = el("div", "anzeige"); a.tabIndex = 0; a.setAttribute("role", "spinbutton"); a.setAttribute("aria-label", "Ziffer " + (i+1) + " von 4");
+    const knopf = (z, t, s) => { const b = el("button", "rad-btn", z); b.type = "button"; b.setAttribute("aria-label", ui(t, { i: i + 1 })); b.tabIndex = -1; b.onclick = () => radSetzen(i, werte[i] + s); return b; };
+    const a = el("div", "anzeige"); a.tabIndex = 0; a.setAttribute("role", "spinbutton"); a.setAttribute("aria-label", ui("zifferVon", { i: i + 1 }));
     a.setAttribute("aria-valuemin", "0"); a.setAttribute("aria-valuemax", "9");
     a.addEventListener("keydown", e => { const alle = box.querySelectorAll(".anzeige");
       if(/^[0-9]$/.test(e.key)){ radSetzen(i, +e.key); if(alle[i+1]) alle[i+1].focus(); e.preventDefault(); }
@@ -3109,7 +3396,7 @@ function baueRaeder(){
       else if(e.key === "ArrowDown"){ radSetzen(i, werte[i] - 1); e.preventDefault(); }
       else if(e.key === "Enter") $("btnTor").click(); });
     const lampe = el("span", "torlampe"); lampe.setAttribute("aria-hidden", "true");
-    rad.append(lampe, knopf("+", "erhöhen", 1), a, knopf("−", "verringern", -1)); box.appendChild(rad);
+    rad.append(lampe, knopf("+", "zifferPlus", 1), a, knopf("−", "zifferMinus", -1)); box.appendChild(rad);
     radSetzen(i, 0);
   });
 }
@@ -3122,14 +3409,14 @@ function siegBildSetzen(){
 $("btnTor").onclick = () => {
   const alle = S.raeume.every(r => r.geschafft), testCode = TESTMODUS && werte.join("") === String(EINSTELLUNGEN.testCode);
   if(!testCode && (!alle || S.torVersuche <= 0)){
-    if(TESTMODUS && !alle) $("codeMeldung").textContent = "🧪 Testmodus: Vor dem Ende öffnet nur " + EINSTELLUNGEN.testCode + ".";
+    if(TESTMODUS && !alle) $("codeMeldung").textContent = ui("testmodusNur", { c: EINSTELLUNGEN.testCode });
     return;
   }
   if(testCode || werte.join("") === S.code.join("")){
     countdownStop(); zeige("finale"); starteKonfetti(); ton("jingle");
     $("finaleText").textContent = welt().finale;
     $("finaleRueck").innerHTML = ""; $("finaleRueck").appendChild(rueckmeldung());
-    ansage("Der Ausgang ist offen! Mission geschafft.");
+    ansage(ui("ausgangOffen"));
     siegBildSetzen();
     const tb = $("tuerbuehne"); tb.classList.remove("auf"); void tb.offsetWidth; setTimeout(() => tb.classList.add("auf"), 400);
   } else {
@@ -3139,26 +3426,26 @@ $("btnTor").onclick = () => {
     $("raeder").classList.add("zittern"); setTimeout(() => $("raeder").classList.remove("zittern"), 450);
     torStatus();
     if(S.torVersuche <= 0){
-      m.textContent = "🚨 Falscher Code! Das Schloss ist blockiert.";
-      ansage("Falscher Code. Das Schloss ist blockiert.");
+      m.textContent = ui("blockiert");
+      ansage(ui("blockiertAnsage"));
       setTimeout(() => missionGescheitert("tor"), 1800);
     } else {
-      m.textContent = "❌ Falscher Code! Noch " + S.torVersuche + (S.torVersuche === 1 ? " Versuch." : " Versuche.") + " Grünes Lämpchen = Ziffer stimmt, rotes = Ziffer falsch.";
+      m.textContent = ui("falscherCode", { n: S.torVersuche, v: ui(S.torVersuche === 1 ? "versuch1" : "versuchN") });
       sage("torFalsch");
-      ansage("Falscher Code. " + werte.map((w, i) => "Ziffer " + (i+1) + (w === S.code[i] ? " stimmt" : " ist falsch")).join(", ") + ". Noch " + S.torVersuche + " Versuche.");
+      ansage(ui("falscherCodeAnsage") + werte.map((w, i) => ui(w === S.code[i] ? "zifferStimmt" : "zifferFalsch", { i: i + 1 })).join(", ") + ui("nochVersuche", { n: S.torVersuche }));
     }
   }
 };
 
 /* ===================== RÜCKMELDUNG (nur auf dem Bildschirm) ===================== */
 function rueckmeldung(){
-  const box = el("div", "rueck"); box.appendChild(el("h3", "", "📋 Deine Auswertung"));
+  const box = el("div", "rueck"); box.appendChild(el("h3", "", ui("auswertung")));
   const ul = el("ul"), ids = Object.keys(S.stats);
-  if(!ids.length) ul.appendChild(el("li", "", "Noch keine Aufgaben gelöst."));
+  if(!ids.length) ul.appendChild(el("li", "", ui("nichtsGeloest")));
   ids.forEach(id => { const s = S.stats[id], q = s.erster / s.gesamt;
     const icon = q >= 0.8 ? "🌟" : q >= 0.5 ? "👍" : "💪";
-    const tipp = q >= 0.8 ? "Das sitzt!" : q >= 0.5 ? "Schon gut, ein bisschen üben schadet nicht." : "Übe dieses Thema noch einmal.";
-    ul.appendChild(el("li", "", icon + " " + themaVon(id).titel + ": " + s.erster + " von " + s.gesamt + " Aufgaben beim ersten Versuch richtig. " + tipp)); });
+    const tipp = ui(q >= 0.8 ? "sitzt" : q >= 0.5 ? "schonGut" : "ueben");
+    ul.appendChild(el("li", "", icon + " " + ui("statZeile", { t: themaTitel(id), e: s.erster, g: s.gesamt }) + tipp)); });
   box.appendChild(ul); return box;
 }
 document.querySelectorAll("[data-aktion]").forEach(b => b.onclick = () => {
@@ -3185,18 +3472,18 @@ function countdownLaufen(sek){
   rest = sek; $("countdown").hidden = false; $("kopf").classList.add("mit-zeit"); zeitZeigen(); clearInterval(zaehler);
   zaehler = setInterval(() => {
     rest--; zeitZeigen();
-    if(rest === 120){ sage("zeitWarnung"); ansage("Noch zwei Minuten."); melde("zeitWarnung", { restSekunden: rest }); }
-    if(rest === 60) ansage("Noch eine Minute.");
+    if(rest === 120){ sage("zeitWarnung"); ansage(ui("zweiMinuten")); melde("zeitWarnung", { restSekunden: rest }); }
+    if(rest === 60) ansage(ui("eineMinute"));
     if(rest <= 0){ countdownStop(); missionGescheitert(); }
   }, 1000);
 }
 function missionGescheitert(grund){
   zusatzAbbrechen(); countdownStop(); ton("falsch");
   $("gescheitertEmoji").textContent = grund === "tor" ? "🚨" : "⏰";
-  $("gescheitertText").textContent = grund === "tor" ? (welt().gescheitertTor || "Das Schloss ist blockiert.")
-    : welt().gescheitert + " (Geschaffte Räume: " + S.raeume.filter(r => r.geschafft).length + " von 4)";
+  $("gescheitertText").textContent = grund === "tor" ? (welt().gescheitertTor || ui("schlossBlockiert"))
+    : welt().gescheitert + ui("geschaffteRaeume", { n: S.raeume.filter(r => r.geschafft).length });
   $("gescheitertRueck").innerHTML = ""; $("gescheitertRueck").appendChild(rueckmeldung());
-  zeige("gescheitert"); ansage(grund === "tor" ? "Das Schloss ist blockiert. Mission gescheitert." : "Die Zeit ist abgelaufen. Mission gescheitert.");
+  zeige("gescheitert"); ansage(ui(grund === "tor" ? "gescheitertTorAnsage" : "gescheitertZeitAnsage"));
 }
 
 /* ===================== ZUSATZRAUM ===================== */
@@ -3211,23 +3498,23 @@ function zusatzBetreten(){
   mischen(f.optionen).forEach(o => { const b = el("button", "", o); b.type = "button"; b.dataset.wert = o;
     b.onclick = () => { if(!zr.laeuft) return;
       if(o === f.loesung) zusatzEnde(true, "");
-      else if(EINSTELLUNGEN.zusatzraumFalscheAntwortBeendet){ b.classList.add("falsch"); zusatzEnde(false, "Falsche Antwort!"); }
+      else if(EINSTELLUNGEN.zusatzraumFalscheAntwortBeendet){ b.classList.add("falsch"); zusatzEnde(false, ui("falscheAntwort")); }
       else { b.classList.add("falsch"); b.disabled = true; ton("falsch"); } };
     box.appendChild(b); });
   const alteZeile = $("zrWoerter"); if(alteZeile) alteZeile.remove();
   const zeile = hilfeZeile(f.optionen); if(zeile.nodeType === 1){ zeile.id = "zrWoerter"; box.after(zeile); }
-  zeige("zusatz"); sage("zusatzStart"); ansage(w.zusatzraum.name + ". Du hast " + sek + " Sekunden. " + f.frage);
+  zeige("zusatz"); sage("zusatzStart"); ansage(ui("duHast", { n: w.zusatzraum.name, s: sek }) + f.frage);
   geigerStart(sek);
-  zr.timeout = setTimeout(() => { if(zr.laeuft) zusatzEnde(false, "Zeit abgelaufen!"); }, sek * 1000 + 50);
+  zr.timeout = setTimeout(() => { if(zr.laeuft) zusatzEnde(false, ui("zeitAbgelaufen")); }, sek * 1000 + 50);
   tick();
 }
 function tick(){
   if(!zr.laeuft) return;
   const r = Math.max(0, zr.ende - performance.now());
-  $("zrZeit").textContent = (r / 1000).toFixed(1).replace(".", ",") + " s";
+  $("zrZeit").textContent = (r / 1000).toFixed(1).replace(".", ui("komma")) + " s";
   $("zrBalken").style.width = (r / (zr.sek * 1000) * 100) + "%";
   $("zusatz").classList.toggle("knapp", r <= 5000);
-  if(r <= 0) return zusatzEnde(false, "Zeit abgelaufen!");
+  if(r <= 0) return zusatzEnde(false, ui("zeitAbgelaufen"));
   zr.raf = requestAnimationFrame(tick);
 }
 function zusatzEnde(erfolg, grund){
@@ -3238,14 +3525,14 @@ function zusatzEnde(erfolg, grund){
   r.geschafft = true; S.neu = r.nr;
   if(erfolg){
     r.ziffer = S.code[r.nr];
-    $("zrMeldung").textContent = "✅ Geschafft! Die Ziffer lautet: " + r.ziffer;
+    $("zrMeldung").textContent = ui("zusatzGeschafft", { z: r.ziffer });
     $("btnZusatzZurueck").hidden = false; $("btnMinispiel").hidden = !minispielVerfuegbar(); $("btnZusatzZurueck").focus();
-    sage("zusatzGeschafft"); ton("jingle"); ansage("Geschafft! Die Ziffer lautet " + r.ziffer + ".");
+    sage("zusatzGeschafft"); ton("jingle"); ansage(ui("zusatzGeschafftAnsage", { z: r.ziffer }));
   } else {
     const richtig = S.code[r.nr], pool = mischen([0,1,2,3,4,5,6,7,8,9].filter(z => z !== richtig));
     r.kandidaten = [richtig, pool[0], pool[1]].sort((a, b) => a - b);
-    $("zrMeldung").textContent = "💥 " + grund + " Ihr werdet hinausgeworfen … Eine der Ziffern " + r.kandidaten.join(", ") + " ist richtig.";
-    sage("zusatzGescheitert"); ton("falsch"); ansage(grund + " Eine der Ziffern " + r.kandidaten.join(", ") + " ist richtig.");
+    $("zrMeldung").textContent = ui("rausgeworfen", { g: grund, k: r.kandidaten.join(", ") });
+    sage("zusatzGescheitert"); ton("falsch"); ansage(ui("rausgeworfenAnsage", { g: grund, k: r.kandidaten.join(", ") }));
     zr.weg = setTimeout(() => { if(!reduziert()) $("zusatz").classList.add("fliegt"); zr.weg = setTimeout(zusatzVerlassen, reduziert() ? 0 : 1000); }, reduziert() ? 2500 : 1800);
   }
 }
@@ -3368,9 +3655,9 @@ function tonSymbol(){
   $("btnTon").innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/>' + (tonAn
     ? '<path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
     : '<path d="M15 9l6 6M21 9l-6 6" fill="none" stroke="#b3261e" stroke-width="2.4" stroke-linecap="round"/>') + '</svg>';
-  $("btnTon").setAttribute("aria-label", tonAn ? "Ton ausschalten" : "Ton einschalten");
+  $("btnTon").setAttribute("aria-label", ui(tonAn ? "tonAus" : "tonEin"));
 }
-$("btnTon").onclick = () => { tonAn = !tonAn; tonSymbol(); if(tonAn){ audio(); ton("richtig"); } ansage(tonAn ? "Ton ist an." : "Ton ist aus."); };
+$("btnTon").onclick = () => { tonAn = !tonAn; tonSymbol(); if(tonAn){ audio(); ton("richtig"); } ansage(ui(tonAn ? "tonIstAn" : "tonIstAus")); };
 tonSymbol();
 
 /* ===================== KONFETTI ===================== */
@@ -3431,7 +3718,7 @@ const EscapeAPI = {
   status: () => {
     if(!S) return null;
     return {
-      raeume: S.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji, thema: r.themen.map(id => themaVon(id).titel).join(" · "),
+      raeume: S.raeume.map((r, i) => ({ nr: i, name: r.name, emoji: r.emoji, thema: r.themen.map(themaTitel).join(" · "),
         zustand: raumZustand(r, i), richtig: r.richtig, von: EINSTELLUNGEN.aufgabenProRaum,
         ziffer: r.ziffer, kandidaten: r.kandidaten ? r.kandidaten.slice() : null })),
       torBereit: S.raeume.every(r => r.geschafft) || TESTMODUS, torVersuche: S.torVersuche,

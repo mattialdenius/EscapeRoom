@@ -31,6 +31,9 @@ const K0 = neueKlasse(0);   // ← Klassennummer eintragen, z. B. const K6 = neu
 // =====================================================================
 K0.welt = {
   name: "Name der Welt", emoji: "🏝️",
+  // sprache: "en",   // ab Klasse 8: ganze Bedienung (Knöpfe, Karte, Minispiele, Vorlesetexte) auf Englisch.
+                      // Zitate dann mit englischen Anführungszeichen schreiben: “…” (nicht „…“).
+                      // Weglassen = Deutsch (Klasse 5–7).
   figur: "Name der Begleitfigur",
   intro: "Kurze Rahmengeschichte: Warum müssen die Spieler entkommen? Wo sind die Ziffern versteckt?",
   raeume: [                                   // genau 4 Räume
@@ -99,8 +102,12 @@ K0.generatoren = {
 // =====================================================================
 // 6) DIE AUFGABEN (handgeschriebener Pool)
 //    Jede Aufgabe: thema, niveau ("gruen"/"gelb"/"rot"), form, Inhalt und erklaerung.
-//    loesung: ALLE richtigen Varianten. Kurz- und Langform (doesn't / does not)
-//    erkennt das Spiel automatisch als gleich.
+//    loesung: ALLE richtigen Varianten. Kurz- und Langform (doesn't / does not,
+//    I'm / I am, they've / they have, she's got / she has got …) erkennt das Spiel
+//    automatisch als gleich, ebenso britische/amerikanische Schreibung und eine
+//    Zeitangabe am Satzanfang statt am Ende (beim Satzbau und Umformen).
+//    Fehler finden: Steht das fehlerwort mehrmals im Satz, mit fehlerStelle
+//    angeben, welches gemeint ist (1 = erstes, 2 = zweites …).
 //    Erklärungen: Klasse 5–7 auf Deutsch, ab Klasse 8 einfaches Englisch
 //    mit deutschem Fachbegriff in Klammern. 1–2 Sätze plus Beispiel.
 //    Ein Muster für jede Form:

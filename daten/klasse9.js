@@ -11,7 +11,7 @@ const K9 = neueKlasse(9);   // bitte nicht ändern
 
 // 1) DIE WELT
 K9.welt = {
-  name: "Die Agentenzentrale", emoji: "🔐",
+  name: "Agent Headquarters", emoji: "🔐",
   sprache: "en",   // Bedienung rund um Minispiel, Zusatzraum und Karte auf Englisch
   figur: "Agent Nova",
   intro: "Nova here, on the radio. Bad news: our headquarters is in lockdown and you're inside. " +
@@ -124,17 +124,17 @@ K9.welt.figurSvg =
 
 // 2) DIE THEMEN (laut „Themenuebersicht“)
 K9.themen = [
-  { id: "9-G1",  klasse: 9, unit: 1, titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "" },
-  { id: "9-G2",  klasse: 9, unit: 1, titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "" },
-  { id: "9-G3",  klasse: 9, unit: 2, titel: "Relativsätze mit und ohne Relativpronomen", regel: "" },
-  { id: "9-G4",  klasse: 9, unit: 2, titel: "Die Verlaufsform der Vergangenheit", regel: "" },
-  { id: "9-G5",  klasse: 9, unit: 3, titel: "Das Partizip Präsens", regel: "" },
-  { id: "9-G6",  klasse: 9, unit: 3, titel: "Die Vorvergangenheit", regel: "" },
-  { id: "9-G7",  klasse: 9, unit: 3, titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
-  { id: "9-G8",  klasse: 9, unit: 4, titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
-  { id: "9-G9",  klasse: 9, unit: 4, titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
-  { id: "9-G10", klasse: 9, unit: 4, titel: "Zukunftszeiten (will und going to)", regel: "" },
-  { id: "9-G11", klasse: 9, unit: 4, titel: "Zukunftszeiten (simple present und present progressive)", regel: "" }
+  { id: "9-G1",  klasse: 9, unit: 1, titelEn: "Modal verbs and their substitutes", titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "" },
+  { id: "9-G2",  klasse: 9, unit: 1, titelEn: "Comparison of adjectives and adverbs", titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "" },
+  { id: "9-G3",  klasse: 9, unit: 2, titelEn: "Relative clauses with and without relative pronouns", titel: "Relativsätze mit und ohne Relativpronomen", regel: "" },
+  { id: "9-G4",  klasse: 9, unit: 2, titelEn: "Past progressive", titel: "Die Verlaufsform der Vergangenheit", regel: "" },
+  { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "" },
+  { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "" },
+  { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
+  { id: "9-G8",  klasse: 9, unit: 4, titelEn: "Reported speech I (change of tense → simple past)", titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
+  { id: "9-G9",  klasse: 9, unit: 4, titelEn: "Reported speech II (change of tense → past perfect)", titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
+  { id: "9-G10", klasse: 9, unit: 4, titelEn: "Future: will and going to", titel: "Zukunftszeiten (will und going to)", regel: "" },
+  { id: "9-G11", klasse: 9, unit: 4, titelEn: "Future: simple present and present progressive", titel: "Zukunftszeiten (simple present und present progressive)", regel: "" }
 ];
 
 // =====================================================================
@@ -265,4 +265,41 @@ Object.assign(K9.minispiele, {
     { emoji: "🪤", text: "Snap! A trap!" },
     { emoji: "🕷️", text: "A spider! Eek!" }
   ]
+});
+
+// ---------- Four more mini games for older students (from version 0.9.2): twelve games ----------
+Object.assign(K9.minispiele.spiele, {
+  kabel: {
+    titel: "🔌 Rewire the server",
+    anleitung: "The server is down. Drag each cable to the socket with the same colour and symbol – or tap the cable, then the socket. Wrong socket = sparks!",
+    ziel: 3,
+    erfolg: "Server online. Nova: “Not bad for a human.”"
+  },
+  andocken: {
+    titel: "🛸 Drone landing",
+    anleitung: "Hold your finger where the drone should fly – it pushes towards your finger. Let go and it drifts. Fly into the hangar SLOWLY and avoid the birds.",
+    ziel: 3,
+    erfolg: "Three perfect landings. The drone pilot badge is yours."
+  },
+  sequenz: {
+    titel: "🧠 Lab access code",
+    anleitung: "The lab door shows its access code for a moment. Watch the buttons light up, then tap them in the same order. It gets longer every time.",
+    ziel: 4,
+    erfolg: "Access granted. Your memory is a secret weapon."
+  },
+  signal: {
+    titel: "📡 Intercept the radio",
+    anleitung: "Turn the two dials until your wave lies exactly on the dashed wave. Then tap “Lock signal”. Wrong lock = the enemy hears you.",
+    ziel: 3,
+    erfolg: "Three messages intercepted. HQ is impressed."
+  }
+});
+Object.assign(K9.minispiele, {
+  kabel: { kasten: "Server", hinweis: "Same colour, same symbol.", fertig: ["Server back online!", "Connection stable!"], autsch: ["Sparks! Wrong socket.", "Bzzzt! That's the wrong one."] },
+  andocken: { figur: "🛸", dock: "HANGAR", truemmer: ["🐦", "🎈", "🪁"], limit: 95, hinweis: "Hold = push towards your finger. Land slowly!",
+              gelandet: ["Landed!", "Smooth landing!", "Perfect!"], zuSchnell: "Too fast! Crash landing.", autsch: ["Ouch! Watch out for the birds.", "Bump! Fly around it."] },
+  sequenz: { zeichen: ["1", "2", "3", "4", "5", "6", "7", "8", "9"], schau: "Watch", du: "Your turn", gut: ["Correct!", "Access level up!", "Exactly!"], autsch: ["Wrong code. Watch again.", "Access denied. Watch again."] },
+  signal: { hoehe: "Height", wellen: "Waves", lock: "Lock signal", ziel: "target", du: "you", autsch: ["No signal. Keep tuning.", "Static … that's not it."],
+            funk: ["Agent Fox to base: The package is in the red car.", "The meeting is at midnight. Don't be late.", "Nobody must know about the plan.",
+                   "The code word is “blue moon”.", "Leave the building through the back door.", "The target has just left the hotel."] }
 });

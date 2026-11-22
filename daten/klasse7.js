@@ -127,7 +127,7 @@ K7.themen = [
   { id: "7-G4",  klasse: 7, unit: 2, titel: "Adjektive und Adverbien", regel: "Adjektiv: Wie ist jemand oder etwas? → The test was easy. Adverb: Wie macht jemand etwas? → She climbed slowly. Adjektiv + -ly (slow → slowly), -y → -ily (easy → easily), -le → -ly (terrible → terribly). Sonderfälle: good → well, fast → fast, hard → hard." },
   { id: "7-G5",  klasse: 7, unit: 2, titel: "Das Perfekt", regel: "have/has + 3. Form → I have tried rafting. Tom has fallen off his skateboard. Unregelmäßig lernen: fall – fell – fallen, ride – rode – ridden. just, already, never, ever stehen vor der 3. Form. Verneinung: haven’t/hasn’t … yet." },
   { id: "7-G6",  klasse: 7, unit: 3, titel: "Relativsätze mit Relativpronomen", regel: "Relativsätze beschreiben ein Nomen genauer. Personen: who (oder that) → the inventor who invented the telephone. Dinge und Tiere: which (oder that) → a wheel which is made of rubber. „Dessen/deren“: whose → the girl whose brother is a vet." },
-  { id: "7-G7",  klasse: 7, unit: 3, titel: "Das Gerundium", regel: "Gerundium = Verb + -ing. Als Subjekt am Satzanfang → Hiking is fun. Nach enjoy, love, hate, like → I enjoy camping. Schreibung: swim → swimming, cycle → cycling." },
+  { id: "7-G7",  klasse: 7, unit: 3, titel: "Das Gerundium", regel: "Gerundium = Verb + -ing. Als Subjekt am Satzanfang → Hiking is fun. Nach enjoy, love, hate, like → I enjoy camping. (Nach love, hate und like geht auch to + Grundform: I like to swim.) Schreibung: swim → swimming, cycle → cycling." },
   { id: "7-G8",  klasse: 7, unit: 3, titel: "Die Zukunft mit will", regel: "Vorhersagen, Hoffnungen und Versprechen: will + Grundform → I think it will freeze tonight. I promise I’ll help you. Verneinung: won’t (= will not) → Tom won’t give up." },
   { id: "7-G9",  klasse: 7, unit: 3, titel: "Bedingungssätze Typ I", regel: "if + simple present, Hauptsatz: will + Grundform → If it is sunny, we’ll go cycling. Im if-Satz steht nie will. Steht der if-Satz hinten, fällt das Komma weg." },
   { id: "7-G10", klasse: 7, unit: 4, titel: "Bedingungssätze Typ II", regel: "Typ II (nur vorgestellt, unwahrscheinlich): if + simple past, Hauptsatz: would + Grundform → If I had more money, I would buy a caravan. If I were/was rich … Typ I (real möglich): if + simple present, will." },
@@ -155,7 +155,8 @@ K7.woerterhilfe = [
   { en: "material", de: "Material" }, { en: "hostel", de: "Hostel, Herberge" }, { en: "caravan", de: "Wohnwagen" }, { en: "buffet", de: "Buffet" },
   { en: "insect", de: "Insekt" }, { en: "radio", de: "Radio" }, { en: "mechanic", de: "Mechaniker/in" }, { en: "milkshake", de: "Milchshake" },
   { en: "musical", de: "Musical" }, { en: "orchestra", de: "Orchester" }, { en: "guitar", de: "Gitarre" }, { en: "shampoo", de: "Shampoo" },
-  { en: "kangaroo", de: "Känguru" }, { en: "tram", de: "Straßenbahn" }, { en: "ferry", de: "Fähre" }
+  { en: "kangaroo", de: "Känguru" }, { en: "tram", de: "Straßenbahn" }, { en: "ferry", de: "Fähre" },
+  { en: "harbour", de: "Hafen" }, { en: "harbor", de: "Hafen" }, { en: "promise", de: "versprechen" }, { en: "necessary", de: "nötig" }
 ];
 
 // =====================================================================
@@ -207,7 +208,7 @@ K7.baukasten = {
       { grund: "visit",  s: "visits",  past: "visited",  rest: "the old coal mine" },
       { grund: "cross",  s: "crosses", past: "crossed",  rest: "the old bridge" },
       { grund: "notice", s: "notices", past: "noticed",  rest: "a strange smell" },
-      { grund: "cough",  s: "coughs",  past: "coughed",  rest: "all night", zeit: ["last week", "yesterday"] },
+      { grund: "cough",  s: "coughs",  past: "coughed",  rest: "a lot", zeit: ["last week", "yesterday"] },
       { grund: "touch",  s: "touches", past: "touched",  rest: "the old stones" },
       { grund: "scream", s: "screams", past: "screamed", rest: "in the dark tunnel" },
       { grund: "call",   s: "calls",   past: "called",   rest: "{POSS} grandma" },
@@ -280,7 +281,7 @@ K7.baukasten = {
     personen: K7_PERSONEN,
     // Reflexivpronomen (G3): {P} = Person, {R} = Reflexivpronomen, {POSS} = my/his …
     reflRahmen: [
-      { t: "{P} cut {R} on a sharp rock." },
+      { t: "{P} cut {R} on a rock." },
       { t: "{P} burnt {R} in the kitchen." },
       { t: "{P} enjoyed {R} at the activity centre." },
       { t: "{P} made {R} a sandwich." },
@@ -295,11 +296,27 @@ K7.baukasten = {
       { a: "my brother", b: "my sister", e: "call",  s: "calls",  rest: "every weekend" },
       { a: "Emma",       b: "Lily",      e: "know",  s: "knows",  rest: "very well" },
       { a: "Ben",        b: "Tom",       e: "like",  s: "likes",  rest: "" },
-      { a: "the knight", b: "the king", e: "help", s: "helps", rest: "in the battle" },
+      { a: "the knight", b: "the king", e: "help", s: "helps", rest: "in the castle" },
       { a: "Emma",       b: "Tom",       e: "visit", s: "visits", rest: "every summer" },
       { a: "my mum",     b: "my dad",    e: "help",  s: "helps",  rest: "in the kitchen" },
       { a: "Lily",       b: "Emma",      e: "call",  s: "calls",  rest: "every evening" },
-      { a: "Ben",        b: "Lily",      e: "text",  s: "texts",  rest: "after school" }
+      { a: "Ben",        b: "Lily",      e: "text",  s: "texts",  rest: "after school" },
+      // ab v0.9.9 (Paket 6)
+      { a: "Mia",        b: "Lily",      e: "see",        s: "sees",        rest: "every day" },
+      { a: "Tom",        b: "Ben",       e: "meet",       s: "meets",       rest: "after school" },
+      { a: "my mum",     b: "my aunt",   e: "phone",      s: "phones",      rest: "every Sunday" },
+      { a: "Emma",       b: "Ben",       e: "write to",   s: "writes to",   rest: "in the holidays" },
+      { a: "Lily",       b: "Tom",       e: "talk to",    s: "talks to",    rest: "on the bus" },
+      { a: "my sister",  b: "my cousin", e: "send",       s: "sends",       rest: "photos" },
+      { a: "Ben",        b: "Emma",      e: "help",       s: "helps",       rest: "with the homework" },
+      { a: "my grandma", b: "my grandpa", e: "love",      s: "loves",       rest: "very much" },
+      { a: "Ben",        b: "Mia",       e: "give",       s: "gives",       rest: "presents at Christmas" },
+      { a: "Lily",       b: "Mia",       e: "understand", s: "understands", rest: "very well" },
+      { a: "my dad",     b: "my uncle",  e: "visit",      s: "visits",      rest: "every month" },
+      { a: "Tom",        b: "Mia",       e: "listen to",  s: "listens to",  rest: "carefully" },
+      { a: "Ben",        b: "Tom",       e: "call",       s: "calls",       rest: "after the rugby training" },
+      { a: "Lily",       b: "Ben",       e: "help",       s: "helps",       rest: "at the activity centre" },
+      { a: "Emma",       b: "Mia",       e: "meet",       s: "meets",       rest: "at the station" }
     ],
     // „Fallen“: im Deutschen mit „sich“, im Englischen OHNE Reflexivpronomen
     reflFallen: [
@@ -347,7 +364,7 @@ K7.baukasten = {
       { grund: "finish", s: "finishes", past: "finished", part: "finished", rest: "{POSS} project",        typ: "erledigt", nurKind: true },
       { grund: "write",  s: "writes",  past: "wrote",    part: "written",  rest: "the brochure",           typ: "erledigt", unreg: true },
       { grund: "buy",    s: "buys",    past: "bought",   part: "bought",   rest: "the tickets",            typ: "erledigt", unreg: true },
-      { grund: "read",   s: "reads",   past: "read",     part: "read",     rest: "the safety rules",       typ: "erledigt", unreg: true },
+      { grund: "read",   s: "reads",   past: "read",     part: "read",     rest: "the rules",              typ: "erledigt", unreg: true },
       { grund: "put",    s: "puts",    past: "put",      part: "put",      rest: "on {POSS} helmet",       typ: "erledigt", unreg: true, einzeln: true },
       { grund: "take",   s: "takes",   past: "took",     part: "taken",    rest: "{POSS} medicine",        typ: "erledigt", unreg: true, einzeln: true },
       { grund: "eat",    s: "eats",    past: "ate",      part: "eaten",    rest: "{POSS} lunch",           typ: "erledigt", unreg: true },
@@ -404,7 +421,7 @@ K7.generatoren = {
 // =====================================================================
 K7.aufgaben = [
   // ---------- 7-G1  simple present ----------
-  { thema: "7-G1", niveau: "gruen", form: "quiz", frage: "My grandma ___ in a tiny village near the coast.", optionen: ["lives", "live", "living"], loesung: "lives",
+  { thema: "7-G1", niveau: "gruen", form: "quiz", frage: "My grandma ___ in a tiny village near the sea.", optionen: ["lives", "live", "living"], loesung: "lives",
     erklaerung: "My grandma = she → Verb mit -s. Beispiel: My uncle works in a factory." },
   { thema: "7-G1", niveau: "gelb", form: "luecke", frage: "___ your brother ___ (take) public transport to school?", loesung: [["Does"], ["take"]],
     erklaerung: "Frage mit he/she: Does + Person + Grundform. Beispiel: Does Lily go to the library on Fridays?" },
@@ -434,18 +451,18 @@ K7.aufgaben = [
     erklaerung: "you (eine Person) → yourself. Beispiel: I made myself a sandwich." },
   { thema: "7-G3", niveau: "gruen", form: "quiz", frage: "Emma and Lily ___ at the activity centre every Saturday.", optionen: ["meet", "meet themselves", "meet each others"], loesung: "meet",
     erklaerung: "„sich treffen“ heißt einfach meet – ohne themselves. Beispiel: We met at the station." },
-  { thema: "7-G3", niveau: "gelb", form: "luecke", frage: "The children enjoyed ___ (they) at the camping trip.", loesung: ["themselves"],
+  { thema: "7-G3", niveau: "gelb", form: "luecke", frage: "The children enjoyed ___ (they) on the camping trip.", loesung: ["themselves"],
     erklaerung: "they → themselves. Beispiel: My parents enjoyed themselves at the party." },
   { thema: "7-G3", niveau: "gelb", form: "satzbau", loesung: ["Tom and Lily help each other with their homework."],
     erklaerung: "Gegenseitig = each other. Beispiel: My brother and my sister call each other every weekend." },
-  { thema: "7-G3", niveau: "rot", form: "fehler", satz: "My little brother cut hisself on a sharp rock.", fehlerwort: "hisself", loesung: ["himself"],
+  { thema: "7-G3", niveau: "rot", form: "fehler", satz: "My little brother cut hisself on a rock.", fehlerwort: "hisself", loesung: ["himself"],
     erklaerung: "Es heißt himself (nicht hisself). Beispiel: Tom bought himself a skateboard." },
   { thema: "7-G3", niveau: "rot", form: "umformen", frage: "Use „each other“:  Emma likes Ben. Ben likes Emma.", loesung: ["Emma and Ben like each other.", "Ben and Emma like each other."],
     erklaerung: "Gegenseitig = each other. Beispiel: Lily and Ben text each other every day." },
 
   // ---------- 7-G4  Adjektive und Adverbien ----------
-  { thema: "7-G4", niveau: "gruen", form: "quiz", frage: "The instructor explained the rules very ___.", optionen: ["patiently", "patient"], loesung: "patiently",
-    erklaerung: "Wie erklärte er? → Adverb: patient → patiently. Beispiel: Tom waited patiently for the bus." },
+  { thema: "7-G4", niveau: "gruen", form: "quiz", frage: "The instructor answered our questions very ___.", optionen: ["patiently", "patient"], loesung: "patiently",
+    erklaerung: "Wie antwortete er? → Adverb: patient → patiently. Beispiel: Tom waited patiently for the bus." },
   { thema: "7-G4", niveau: "gelb", form: "luecke", frage: "Our team played ___ (terrible) yesterday.", loesung: ["terribly"],
     erklaerung: "-le wird zu -ly: terrible → terribly. Beispiel: My sister sang terribly." },
   { thema: "7-G4", niveau: "gelb", form: "satzbau", loesung: ["The zip line was very dangerous."],
@@ -531,7 +548,20 @@ Object.assign(K7.baukasten, {
       { art: "whose", t: "That's the girl ___ brother is a vet.",                  r: ["whose"],         s1: "That's the girl.",     s2: "Her brother is a vet." },
       { art: "whose", t: "Bell was an inventor ___ mother was deaf.",              r: ["whose"],         s1: "Bell was an inventor.", s2: "His mother was deaf." },
       { art: "whose", t: "I know a boy ___ dad is a mechanic.",                    r: ["whose"],         s1: "I know a boy.",        s2: "His dad is a mechanic." },
-      { art: "whose", t: "This is the man ___ caravan is in our garden.",          r: ["whose"],         s1: "This is the man.", s2: "His caravan is in our garden." }
+      { art: "whose", t: "This is the man ___ caravan is in our garden.",          r: ["whose"],         s1: "This is the man.", s2: "His caravan is in our garden." },
+      // ab v0.9.9 (Paket 6)
+      { art: "who",   t: "This is the boy ___ won the quiz.",                     r: ["who", "that"],   s1: "This is the boy.",     s2: "He won the quiz." },
+      { art: "who",   t: "The woman ___ lives next door is a doctor.",            r: ["who", "that"],   s1: "The woman is a doctor.", s2: "She lives next door." },
+      { art: "who",   t: "We have a teacher ___ plays the guitar.",               r: ["who", "that"],   s1: "We have a teacher.",   s2: "She plays the guitar." },
+      { art: "who",   t: "I have a cousin ___ works at the zoo.",                 r: ["who", "that"],   s1: "I have a cousin.",     s2: "He works at the zoo." },
+      { art: "which", t: "I have a phone ___ takes great photos.",                r: ["which", "that"], s1: "I have a phone.",      s2: "It takes great photos." },
+      { art: "which", t: "We visited a castle ___ is 800 years old.",             r: ["which", "that"], s1: "We visited a castle.", s2: "It is 800 years old." },
+      { art: "which", t: "The bus ___ goes to the city centre is always late.",   r: ["which", "that"], s1: "The bus is always late.", s2: "It goes to the city centre." },
+      { art: "which", t: "This is a machine ___ makes ice cream.",                r: ["which", "that"], s1: "This is a machine.",   s2: "It makes ice cream." },
+      { art: "whose", t: "That's the boy ___ sister is in my class.",             r: ["whose"],         s1: "That's the boy.",      s2: "His sister is in my class." },
+      { art: "whose", t: "I have a friend ___ parents have a farm.",              r: ["whose"],         s1: "I have a friend.",     s2: "Her parents have a farm." },
+      { art: "whose", t: "This is the teacher ___ car is red.",                   r: ["whose"],         s1: "This is the teacher.", s2: "Her car is red." },
+      { art: "whose", t: "We met an inventor ___ machine can make pizza.",        r: ["whose"],         s1: "We met an inventor.",  s2: "His machine can make pizza." }
     ],
     relPersonen: ["the inventor", "the queen", "the soldier", "the vet", "the mechanic", "the leader", "my neighbour"],
     relDinge:    ["the steam engine", "the light bulb", "the tyre", "the radio", "the caravan", "the wind turbine", "the telephone"],
@@ -555,7 +585,7 @@ Object.assign(K7.baukasten, {
     willSaetze: [
       { pre: "I think",   sub: "it",           e: "freeze", r: "tonight" },
       { pre: "I'm sure",  sub: "you",          e: "like",   r: "the hostel" },
-      { pre: "Maybe",     sub: "we",           e: "see",    r: "some wild animals on our hiking trip" },
+      { pre: "Maybe",     sub: "we",           e: "see",    r: "some animals on our hiking trip" },
       { pre: "I hope",    sub: "the campsite", e: "be",     r: "nice" },
       { pre: "I promise", sub: "I",            e: "help",   r: "you with the project" },
       { pre: "I think",   sub: "people",       e: "use",    r: "more wind turbines in the future" },
@@ -564,7 +594,23 @@ Object.assign(K7.baukasten, {
       { pre: "I'm sure",  sub: "Tom",          e: "give",   r: "up", neg: true },
       { pre: "I think",   sub: "the monster",  e: "come",   r: "back", neg: true },
       { pre: "I'm sure",  sub: "you",          e: "get",    r: "cold in the caravan", neg: true },
-      { pre: "I promise", sub: "I",            e: "forget", r: "your birthday", neg: true }
+      { pre: "I promise", sub: "I",            e: "forget", r: "your birthday", neg: true },
+      // ab v0.9.9 (Paket 6)
+      { pre: "I think",   sub: "it",           e: "rain",   r: "tomorrow" },
+      { pre: "I'm sure",  sub: "we",           e: "have",   r: "a great time at the activity centre" },
+      { pre: "Maybe",     sub: "Lily",         e: "come",   r: "to the campsite too" },
+      { pre: "I hope",    sub: "the weather",  e: "be",     r: "good on our trip" },
+      { pre: "I promise", sub: "I",            e: "call",   r: "you every day" },
+      { pre: "I think",   sub: "machines",     e: "do",     r: "a lot of jobs in the future" },
+      { pre: "I'm sure",  sub: "you",          e: "win",    r: "the quiz" },
+      { pre: "Maybe",     sub: "we",           e: "find",   r: "a nice place for our tent" },
+      { pre: "I hope",    sub: "my parents",   e: "like",   r: "my new hobby" },
+      { pre: "I promise", sub: "I",            e: "clean",  r: "my room" },
+      { pre: "I'm sure",  sub: "it",           e: "take",   r: "long", neg: true },
+      { pre: "I think",   sub: "Ben",          e: "come",   r: "to the party", neg: true },
+      { pre: "I promise", sub: "I",            e: "be",     r: "late again", neg: true },
+      { pre: "Maybe",     sub: "we",           e: "need",   r: "our jackets", neg: true },
+      { pre: "I hope",    sub: "the bus",      e: "be",     r: "late", neg: true }
     ],
     // if-Sätze Typ I (G9)
     ifSaetze: [
@@ -579,7 +625,22 @@ Object.assign(K7.baukasten, {
       { w: "you {connect} the wire",      grund: "connect", wf: "connects",  s2: "it",  e: "work",  ing: "working",  r2: "again" },
       { w: "the campsite {is} full",      grund: "be",      wf: "are",       s2: "we",  e: "stay",  ing: "staying",  r2: "in a caravan" },
       { w: "you {eat} porridge for breakfast", grund: "eat", wf: "eats",     s2: "you", e: "feel",  ing: "feeling",  r2: "strong all day" },
-      { w: "you {touch} the spider web",  grund: "touch",   wf: "touches",   s2: "the spider", e: "be", ing: "being", r2: "happy", neg: true }
+      { w: "you {touch} the spider web",  grund: "touch",   wf: "touches",   s2: "the spider", e: "be", ing: "being", r2: "happy", neg: true },
+      // ab v0.9.9 (Paket 6)
+      { w: "we {leave} early",            grund: "leave",   wf: "leaves",    s2: "we",  e: "see",   ing: "seeing",   r2: "everything" },
+      { w: "the weather {is} bad",        grund: "be",      wf: "are",       s2: "we",  e: "stay",  ing: "staying",  r2: "in the tent" },
+      { w: "you {try} hard",              grund: "try",     wf: "tries",     s2: "you", e: "get",   ing: "getting",  r2: "better" },
+      { w: "Ben {forgets} his jacket", wer: "Ben", grund: "forget", wf: "forget", s2: "he", e: "be", ing: "being", r2: "cold at night" },
+      { w: "we {miss} the train",         grund: "miss",    wf: "misses",    s2: "we",  e: "take",  ing: "taking",   r2: "the next one" },
+      { w: "Emma {invents} a new machine", wer: "Emma", grund: "invent", wf: "invent", s2: "she", e: "become", ing: "becoming", r2: "famous" },
+      { w: "you {need} help",             grund: "need",    wf: "needs",     s2: "I",   e: "help",  ing: "helping",  r2: "you" },
+      { w: "the lake {is} warm",          grund: "be",      wf: "are",       s2: "we",  e: "go",    ing: "going",    r2: "swimming" },
+      { w: "Mia {comes} with us", wer: "Mia", grund: "come", wf: "come",    s2: "she", e: "love",  ing: "loving",   r2: "the zip line" },
+      { w: "we {build} a fire",           grund: "build",   wf: "builds",    s2: "we",  e: "be",    ing: "being",    r2: "warm" },
+      { w: "you {walk} too fast",         grund: "walk",    wf: "walks",     s2: "I",   e: "get",   ing: "getting",  r2: "tired" },
+      { w: "my parents {say} yes",        grund: "say",     wf: "says",      s2: "I",   e: "go",    ing: "going",    r2: "to the activity centre" },
+      { w: "you {forget} your phone",     grund: "forget",  wf: "forgets",   s2: "we",  e: "find",  ing: "finding",  r2: "the way", neg: true },
+      { w: "it {is} foggy",               grund: "be",      wf: "are",       s2: "we",  e: "see",   ing: "seeing",   r2: "the mountains", neg: true }
     ],
     erklaerungen: {
       relativ: {
@@ -590,8 +651,8 @@ Object.assign(K7.baukasten, {
       },
       gerund: {
         subjekt: "Steht eine Tätigkeit am Satzanfang als Subjekt, nimmst du die -ing-Form. Beispiel: {BEISPIEL}",
-        verb:    "Nach {V} (und nach enjoy, love, hate, like) steht die -ing-Form. Beispiel: {BEISPIEL}",
-        zuordnen: "Richtig ist die -ing-Form: als Subjekt (Hiking is fun.) und nach enjoy, love, hate, like (I enjoy hiking.)."
+        verb:    "Nach {V} (und nach enjoy, love, hate, like) steht die -ing-Form. Nach love, hate und like geht auch to + Grundform (I like to swim). Beispiel: {BEISPIEL}",
+        zuordnen: "Richtig ist die -ing-Form: als Subjekt (Hiking is fun.) und nach enjoy, love, hate, like (I enjoy hiking.). Nach love, hate und like geht auch to + Grundform."
       },
       willvorhersage: {
         will:    "Vorhersagen, Hoffnungen und Versprechen (I think, I'm sure, maybe, I hope, I promise): will + Grundform. Beispiel: {BEISPIEL}",
@@ -619,11 +680,26 @@ Object.assign(K7.baukasten, {
       { w: "you {were} more confident",  grund: "be", wf: "are",  s2: "you",  e: "find",   past2: "found",   r2: "lots of new friends" },
       { w: "I {lived} in London",        grund: "live", wf: "live", s2: "I",    e: "go",     past2: "went",    r2: "to the theatre every week" },
       { w: "my sister {were} here",      wer: "my sister", alt: "was", grund: "be", wf: "is", s2: "she", e: "help", past2: "helped", r2: "me" },
-      { w: "it {snowed} today",          grund: "snow", wf: "snows", s2: "we",  e: "build",  past2: "built",   r2: "a snowman" },
-      { w: "I {found} a gold coin",      grund: "find", wf: "find", s2: "I",    e: "buy",    past2: "bought",  r2: "a milkshake for everybody" },
+      { w: "it {rained} today",          grund: "rain", wf: "rains", s2: "we",  e: "stay",   past2: "stayed",  r2: "at home" },
+      { w: "I {won} a prize",            grund: "win",  wf: "win",  s2: "I",    e: "buy",    past2: "bought",  r2: "a milkshake for everybody" },
       { w: "I {were} a vet", alt: "was", grund: "be", wf: "am", s2: "I", e: "help", past2: "helped", r2: "all the animals" },
       { w: "we {lived} by the sea", grund: "live", wf: "live", s2: "we", e: "go", past2: "went", r2: "swimming every day" },
-      { w: "the Titanic {had} more lifeboats", grund: "have", wf: "has", s2: "more people", e: "survive", past2: "survived", r2: "" }
+      { w: "the museum {had} a café", grund: "have", wf: "has", s2: "more people", e: "visit", past2: "visited", r2: "it" },
+      // ab v0.9.9 (Paket 6)
+      { w: "I {had} a dog",              grund: "have", wf: "have", s2: "I",    e: "take",   past2: "took",    r2: "it for a walk every day" },
+      { w: "we {lived} in the country",  grund: "live", wf: "live", s2: "we",   e: "have",   past2: "had",     r2: "lots of animals" },
+      { w: "Lily {had} more time", wer: "Lily", grund: "have", wf: "has", s2: "she", e: "learn", past2: "learned", r2: "the guitar" },
+      { w: "you {were} the teacher",     grund: "be",   wf: "are",  s2: "you",  e: "give",   past2: "gave",    r2: "us less homework" },
+      { w: "it {was} warmer", alt: "were", grund: "be", wf: "is",  s2: "we",   e: "go",     past2: "went",    r2: "to the beach" },
+      { w: "my parents {said} yes",      grund: "say",  wf: "say",  s2: "I",    e: "get",    past2: "got",     r2: "a cat" },
+      { w: "we {won} the game",          grund: "win",  wf: "win",  s2: "we",   e: "be",     past2: "were",    r2: "very happy" },
+      { w: "Ben {lived} near the school", wer: "Ben", grund: "live", wf: "lives", s2: "he", e: "walk", past2: "walked", r2: "there every day" },
+      { w: "I {knew} her number",        grund: "know", wf: "know", s2: "I",    e: "call",   past2: "called",  r2: "her" },
+      { w: "we {had} a car",             grund: "have", wf: "have", s2: "we",   e: "drive",  past2: "drove",   r2: "to the sea" },
+      { w: "you {came} with us",         grund: "come", wf: "come", s2: "you",  e: "have",   past2: "had",     r2: "a great time" },
+      { w: "the weather {was} better", alt: "were", grund: "be", wf: "is", s2: "we", e: "play", past2: "played", r2: "outside" },
+      { w: "Emma {had} a phone", wer: "Emma", grund: "have", wf: "has", s2: "she", e: "text", past2: "texted", r2: "us" },
+      { w: "I {were} you", alt: "was",  grund: "be",   wf: "am",   s2: "I",    e: "ask",    past2: "asked",   r2: "the teacher" }
     ],
     // if-Sätze Typ I – für die Gegenüberstellung mit Typ II
     ifSaetze: [
@@ -638,7 +714,29 @@ Object.assign(K7.baukasten, {
       { von: "If I have time, I will help you.",        nach: ["If I had time, I would help you.", "If I had time, I'd help you."] },
       { von: "If we win, we will be very happy.",       nach: ["If we won, we would be very happy.", "If we won, we'd be very happy."] },
       { von: "If it is sunny, we will go to the beach.", nach: ["If it was sunny, we would go to the beach.", "If it were sunny, we would go to the beach.", "If it was sunny, we'd go to the beach.", "If it were sunny, we'd go to the beach."] },
-      { von: "If you ask Emma, she will help you.",     nach: ["If you asked Emma, she would help you.", "If you asked Emma, she'd help you."] }
+      { von: "If you ask Emma, she will help you.",     nach: ["If you asked Emma, she would help you.", "If you asked Emma, she'd help you."] },
+      // ab v0.9.9 (Paket 6)
+      { von: "If I have a bike, I will ride to school.",          nach: ["If I had a bike, I would ride to school.", "If I had a bike, I'd ride to school."] },
+      { von: "If you help me, I will finish the project today.",  nach: ["If you helped me, I would finish the project today.", "If you helped me, I'd finish the project today."] },
+      { von: "If we leave now, we will be on time.",              nach: ["If we left now, we would be on time.", "If we left now, we'd be on time."] },
+      { von: "If Tom calls, I will tell him the news.",           nach: ["If Tom called, I would tell him the news.", "If Tom called, I'd tell him the news."] },
+      { von: "If it rains, we will play inside.",                  nach: ["If it rained, we would play inside.", "If it rained, we'd play inside."] },
+      { von: "If my parents say yes, I will go to the party.",     nach: ["If my parents said yes, I would go to the party.", "If my parents said yes, I'd go to the party."] },
+      { von: "If Lily comes, she will bring her guitar.",         nach: ["If Lily came, she would bring her guitar.", "If Lily came, she'd bring her guitar."] },
+      { von: "If I know the answer, I will tell you.",            nach: ["If I knew the answer, I would tell you.", "If I knew the answer, I'd tell you."] },
+      { von: "If we win the game, we will have a party.",         nach: ["If we won the game, we would have a party.", "If we won the game, we'd have a party."] },
+      { von: "If you go to bed early, you will feel better.",     nach: ["If you went to bed early, you would feel better.", "If you went to bed early, you'd feel better."] },
+      { von: "If I find your key, I will give it to you.",        nach: ["If I found your key, I would give it to you.", "If I found your key, I'd give it to you."] },
+      { von: "If Ben learns the words, he will pass the test.",   nach: ["If Ben learned the words, he would pass the test.", "If Ben learned the words, he'd pass the test."] },
+      { von: "If the shop is open, I will buy some bread.",       nach: ["If the shop was open, I would buy some bread.", "If the shop were open, I would buy some bread.", "If the shop was open, I'd buy some bread.", "If the shop were open, I'd buy some bread."] },
+      { von: "If we have time, we will visit the museum.",        nach: ["If we had time, we would visit the museum.", "If we had time, we'd visit the museum."] },
+      { von: "If you ask nicely, Mum will help you.",             nach: ["If you asked nicely, Mum would help you."] },
+      { von: "If it is warm, we will go swimming.",               nach: ["If it was warm, we would go swimming.", "If it were warm, we would go swimming.", "If it was warm, we'd go swimming.", "If it were warm, we'd go swimming."] },
+      { von: "If I see Emma, I will invite her to the party.",    nach: ["If I saw Emma, I would invite her to the party.", "If I saw Emma, I'd invite her to the party."] },
+      { von: "If they work hard, they will get better.",          nach: ["If they worked hard, they would get better.", "If they worked hard, they'd get better."] },
+      { von: "If the bus is late, we won't get there on time.",   nach: ["If the bus was late, we wouldn't get there on time.", "If the bus were late, we wouldn't get there on time."] },
+      { von: "If Mia doesn't come, I will be sad.",               nach: ["If Mia didn't come, I would be sad.", "If Mia didn't come, I'd be sad."] },
+      { von: "If I am tired, I will go to bed.",                  nach: ["If I was tired, I would go to bed.", "If I were tired, I would go to bed.", "If I was tired, I'd go to bed.", "If I were tired, I'd go to bed."] }
     ],
     // Steigerung (G11) – mit less / the least
     adjektive: [
@@ -658,25 +756,25 @@ Object.assign(K7.baukasten, {
     vergleiche: [
       { a: "This mural",       b: "that mural",        w: ["spectacular", "big", "old", "large"] },
       { a: "The hostel",       b: "the hotel",         w: ["cheap", "comfortable", "expensive", "old"] },
-      { a: "My niece",         b: "my nephew",         w: ["tall", "old", "smart", "silly", "intelligent"] },
+      { a: "My niece",         b: "my cousin",         w: ["tall", "old", "smart", "silly", "intelligent"] },
       { a: "This milkshake",   b: "that lemonade",     w: ["healthy", "expensive", "good", "bad", "big"] },
-      { a: "The Titanic",      b: "the other ships",   w: ["big", "large", "expensive"] },
+      { a: "This ship",        b: "the other ships",   w: ["big", "large", "expensive"] },
       { a: "A tissue",         b: "a coin",            w: ["useful", "cheap"] },
       { a: "Mineral water",    b: "lemonade",          w: ["healthy", "cheap", "good"] },
       { a: "This brand",       b: "the special offer", w: ["expensive", "cheap", "good", "bad"] }
     ],
     superRahmen: [
       { a: "This mural",     n: "mural",  ort: "in the city",   w: ["spectacular", "big", "old", "large", "horrible"] },
-      { a: "The Titanic",    n: "ship",   ort: "of its time",   w: ["big", "large", "expensive", "spectacular"] },
+      { a: "This ship",      n: "ship",   ort: "in the harbour", w: ["big", "large", "expensive", "spectacular"] },
       { a: "My niece",       n: "girl",   ort: "in her class",  w: ["tall", "smart", "silly", "intelligent"] },
       { a: "This milkshake", n: "drink",  ort: "on the menu",   w: ["healthy", "expensive", "good", "bad"] },
       { a: "This hostel",    n: "place",  ort: "in town",       w: ["cheap", "comfortable", "expensive"] },
-      { a: "That day",       n: "day",    ort: "of my life",    w: ["good", "bad", "lonely", "horrible"] }
+      { a: "Today",          n: "day",    ort: "of my life",    w: ["good", "bad", "lonely", "horrible"] }
     ],
     // some / any / no (G12)
     someRahmen: [
       { w: "", nur: "U", pos: "There is ___ {N} on the table.",     neg: "There isn't ___ {N} on the table.",     frage: "Is there ___ {N} on the table?", umformen: true },
-      { w: "", nur: "C", pos: "There are ___ {N} in the cupboard.", neg: "There aren't ___ {N} in the cupboard.", frage: "Are there ___ {N} in the cupboard?", umformen: true },
+      { w: "", nur: "C", pos: "There are ___ {N} in the box.", neg: "There aren't ___ {N} in the box.", frage: "Are there ___ {N} in the box?", umformen: true },
       { w: "",           pos: "We need ___ {N} from the shop.",     neg: "We don't need ___ {N} from the shop.",  frage: "Do we need ___ {N} from the shop?", umformen: true },
       { w: "",           pos: "My mum bought ___ {N}.",             neg: "My mum didn't buy ___ {N}.",            frage: "Did your mum buy ___ {N}?" },
       { w: "thing",      pos: "I'd like to buy ___ for my niece.",  neg: "I don't want to buy ___ for my niece.", frage: "Do you want to buy ___ for your niece?" },
@@ -687,8 +785,8 @@ Object.assign(K7.baukasten, {
     nomenC: ["eggs", "tea bags", "tissues", "stamps", "coins", "raspberries", "jars of jam"],
     // no / nobody / nothing / nowhere: Satz mit klarem Hinweis
     noSaetze: [
-      { t: "The fridge is empty. There is ___ milk.",                 r: ["no"],      f: ["any", "some"],         hinweis: "no / any / some" },
-      { t: "I'm bored. There's ___ to do here.",                      r: ["nothing"], f: ["anything", "something"], hinweis: "nothing / anything" },
+      { t: "We need to go shopping. There is ___ milk.",           r: ["no"],      f: ["any", "some"],         hinweis: "no / any / some" },
+      { t: "It's boring here. There's ___ to do.",                   r: ["nothing"], f: ["anything", "something"], hinweis: "nothing / anything" },
       { t: "Hello? … There's no answer. ___ is at home.",             r: ["Nobody"],  f: ["Anybody", "Somebody"], hinweis: "nobody / anybody" },
       { t: "All the hotels were full. There was ___ to sleep.",       r: ["nowhere"], f: ["anywhere", "somewhere"], hinweis: "nowhere / anywhere" },
       { t: "Sorry, we have ___ stamps left. Come back tomorrow.",     r: ["no"],      f: ["any", "some"],         hinweis: "no / any" }
@@ -700,10 +798,10 @@ Object.assign(K7.baukasten, {
       { t: "Would you like ___ juice with your sandwich?", r: ["some"], f: ["any", "no"] }
     ],
     noTausch: [
-      { wort: "no",      von: "There isn't any milk in the fridge.",    nach: ["There is no milk in the fridge.", "There's no milk in the fridge."] },
+      { wort: "no",      von: "There isn't any milk in the kitchen.",   nach: ["There is no milk in the kitchen.", "There's no milk in the kitchen."] },
       { wort: "nothing", von: "I didn't buy anything at the shop.",     nach: ["I bought nothing at the shop."] },
       { wort: "nobody",  von: "There isn't anybody in the gym.",        nach: ["There is nobody in the gym.", "There's nobody in the gym."] },
-      { wort: "no",      von: "We haven't got any tea bags.",           nach: ["We have got no tea bags.", "We've got no tea bags."] }
+      { wort: "no",      von: "We haven't got any tea bags.",           nach: ["We have got no tea bags.", "We've got no tea bags.", "We have no tea bags."] }
     ],
     // simple present ↔ present progressive (G13)
     verbenPP: [
@@ -770,8 +868,8 @@ Object.assign(K7.baukasten, {
     // Modalverben (G15). bed = Bedeutung; r = richtige Wörter; f = falsche Auswahl; lang = weitere richtige Langformen
     // imp/um = Aufforderung → Satz mit Modalverb (für „Umformen“)
     modalSaetze: [
-      { bed: "verbot",   t: "Museum rules: You ___ touch the paintings.",          r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
-        imp: "Don't touch the paintings!", um: ["You mustn't touch the paintings.", "You must not touch the paintings.", "You may not touch the paintings."] },
+      { bed: "verbot",   t: "Museum rules: You ___ touch the pictures.",          r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't touch the pictures!", um: ["You mustn't touch the pictures.", "You must not touch the pictures.", "You may not touch the pictures."] },
       { bed: "verbot",   t: "Tram rules: You ___ eat or drink on the tram.",       r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
         imp: "Don't eat or drink on the tram!", um: ["You mustn't eat or drink on the tram.", "You must not eat or drink on the tram.", "You may not eat or drink on the tram."] },
       { bed: "verbot",   t: "School rules: You ___ use your mobile in class.",     r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
@@ -792,7 +890,42 @@ Object.assign(K7.baukasten, {
       { bed: "faehig",   t: "Lily ___ play the clarinet. She practises every day.", r: ["can"], f: ["mustn't", "needn't"] },
       { bed: "faehig",   t: "Kangaroos ___ jump very far.",                         r: ["can"], f: ["mustn't", "needn't"] },
       { bed: "nichtfaehig", t: "My grandpa ___ hear very well. He is a bit deaf.", r: ["can't"], lang: ["cannot", "can not"], f: ["mustn't", "needn't"] },
-      { bed: "nichtfaehig", t: "I ___ swim. I have never learned it.",             r: ["can't"], lang: ["cannot", "can not"], f: ["mustn't", "needn't"] }
+      { bed: "nichtfaehig", t: "I ___ swim. I have never learned it.",             r: ["can't"], lang: ["cannot", "can not"], f: ["mustn't", "needn't"] },
+      // ab v0.9.9 (Paket 6): mehr Sätze, auch zum Umformen (imp/um)
+      { bed: "verbot",   t: "Library rules: You ___ talk loudly.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't talk loudly!", um: ["You mustn't talk loudly.", "You must not talk loudly.", "You may not talk loudly."] },
+      { bed: "verbot",   t: "Pool rules: You ___ run next to the pool.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't run next to the pool!", um: ["You mustn't run next to the pool.", "You must not run next to the pool.", "You may not run next to the pool."] },
+      { bed: "verbot",   t: "Hostel rules: You ___ play music after ten o'clock.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't play music after ten o'clock!", um: ["You mustn't play music after ten o'clock.", "You must not play music after ten o'clock.", "You may not play music after ten o'clock."] },
+      { bed: "verbot",   t: "Zoo rules: You ___ feed the animals.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't feed the animals!", um: ["You mustn't feed the animals.", "You must not feed the animals.", "You may not feed the animals."] },
+      { bed: "verbot",   t: "Campsite rules: You ___ make a fire in the forest.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't make a fire in the forest!", um: ["You mustn't make a fire in the forest.", "You must not make a fire in the forest.", "You may not make a fire in the forest."] },
+      { bed: "verbot",   t: "School rules: You ___ leave the school in the breaks.", r: ["mustn't", "may not"], lang: ["must not"], f: ["must", "needn't"],
+        imp: "Don't leave the school in the breaks!", um: ["You mustn't leave the school in the breaks.", "You must not leave the school in the breaks.", "You may not leave the school in the breaks."] },
+      { bed: "pflicht",  t: "Pool rules: You ___ take a shower before you swim.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Take a shower before you swim!", um: ["You must take a shower before you swim."] },
+      { bed: "pflicht",  t: "School rules: You ___ be on time for your lessons.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Be on time for your lessons!", um: ["You must be on time for your lessons."] },
+      { bed: "pflicht",  t: "Hostel rules: You ___ make your bed in the morning.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Make your bed in the morning!", um: ["You must make your bed in the morning."] },
+      { bed: "pflicht",  t: "Library rules: You ___ bring the books back after two weeks.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Bring the books back after two weeks!", um: ["You must bring the books back after two weeks."] },
+      { bed: "pflicht",  t: "Campsite rules: You ___ keep the campsite clean.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Keep the campsite clean!", um: ["You must keep the campsite clean."] },
+      { bed: "pflicht",  t: "Museum rules: You ___ be quiet.", r: ["must"], f: ["mustn't", "needn't"],
+        imp: "Be quiet!", um: ["You must be quiet."] },
+      { bed: "unnoetig", t: "The tram is free today. You ___ buy a ticket.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "The tram is free today. It isn't necessary to buy a ticket.", um: ["You needn't buy a ticket.", "You need not buy a ticket.", "The tram is free today. You needn't buy a ticket.", "The tram is free today. You need not buy a ticket."] },
+      { bed: "unnoetig", t: "We have lots of food. You ___ bring sandwiches.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "We have lots of food. It isn't necessary to bring sandwiches.", um: ["You needn't bring sandwiches.", "You need not bring sandwiches.", "We have lots of food. You needn't bring sandwiches.", "We have lots of food. You need not bring sandwiches."] },
+      { bed: "unnoetig", t: "It's warm in the hostel. You ___ take a jacket.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "It's warm in the hostel. It isn't necessary to take a jacket.", um: ["You needn't take a jacket.", "You need not take a jacket.", "It's warm in the hostel. You needn't take a jacket.", "It's warm in the hostel. You need not take a jacket."] },
+      { bed: "unnoetig", t: "The trip starts at eleven. You ___ get up early.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "The trip starts at eleven. It isn't necessary to get up early.", um: ["You needn't get up early.", "You need not get up early.", "The trip starts at eleven. You needn't get up early.", "The trip starts at eleven. You need not get up early."] },
+      { bed: "unnoetig", t: "Your room is clean. You ___ clean it today.", r: ["needn't"], lang: ["need not"], f: ["must", "mustn't"],
+        imp: "It isn't necessary to clean your room today.", um: ["You needn't clean your room today.", "You need not clean your room today."] }
     ],
     erklaerungen: {
       posspron: {
@@ -838,7 +971,7 @@ K7.aufgaben.push(
     erklaerung: "Nach love steht die -ing-Form. Beispiel: I enjoy camping." },
   { thema: "7-G7", niveau: "gelb", form: "luecke", frage: "___ (swim) in a cold lake is not much fun.", loesung: ["Swimming", "swimming"],
     erklaerung: "Tätigkeit als Subjekt → -ing-Form (swim → swimming, m verdoppelt). Beispiel: Hiking is fun." },
-  { thema: "7-G7", niveau: "rot", form: "fehler", satz: "Ben hates sleep in a tent when it rains.", fehlerwort: "sleep", loesung: ["sleeping"],
+  { thema: "7-G7", niveau: "rot", form: "fehler", satz: "Ben hates sleep in a tent when it rains.", fehlerwort: "sleep", loesung: ["sleeping", "to sleep"],
     erklaerung: "Nach hate steht die -ing-Form. Beispiel: Lily hates getting up early." },
   { thema: "7-G8", niveau: "gruen", form: "quiz", frage: "I'm sure you ___ love the porridge here.", optionen: ["will", "are", "to"], loesung: "will",
     erklaerung: "Vorhersage mit I'm sure → will + Grundform. Beispiel: I think it will freeze tonight." },
@@ -850,17 +983,17 @@ K7.aufgaben.push(
     erklaerung: "Nach will/'ll steht die Grundform ohne -s. Beispiel: If we get cold, we'll make a fire." },
   { thema: "7-G10", niveau: "gruen", form: "quiz", frage: "If I were rich, I ___ buy a big house by the sea.", optionen: ["would", "will", "am"], loesung: "would",
     erklaerung: "Typ II (nur vorgestellt): if + simple past, Hauptsatz mit would. Beispiel: If I had more money, I would buy a caravan." },
-  { thema: "7-G10", niveau: "gelb", form: "luecke", frage: "If the crew ___ (see) the iceberg earlier, the Titanic ___ (not / sink).", loesung: [["saw"], ["wouldn't sink", "would not sink"]],
+  { thema: "7-G10", niveau: "gelb", form: "luecke", frage: "If I ___ (have) a bike, I ___ (not / walk) to school.", loesung: [["had"], ["wouldn't walk", "would not walk"]],
     erklaerung: "Typ II: simple past im if-Satz, would/wouldn't + Grundform im Hauptsatz. Beispiel: If I knew the answer, I would tell you." },
-  { thema: "7-G11", niveau: "gruen", form: "quiz", frage: "Mineral water is ___ than lemonade.", optionen: ["healthier", "more healthy", "healthyer"], loesung: "healthier",
-    erklaerung: "-y wird zu -ier: healthy → healthier. Beispiel: My niece is sillier than my nephew." },
+  { thema: "7-G11", niveau: "gruen", form: "quiz", frage: "Mineral water is ___ than lemonade.", optionen: ["healthier", "more healthier", "healthyer"], loesung: "healthier",
+    erklaerung: "-y wird zu -ier: healthy → healthier. Beispiel: My niece is sillier than my cousin." },
   { thema: "7-G11", niveau: "gelb", form: "satzbau", loesung: ["The hostel is less expensive than the hotel."],
     erklaerung: "Weniger: less + Adjektiv + than. Beispiel: This brand is less expensive than the special offer." },
   { thema: "7-G12", niveau: "gruen", form: "quiz", frage: "Would you like ___ pancakes?", optionen: ["some", "any", "no"], loesung: "some",
     erklaerung: "Bei Angeboten (Would you like …?) steht some. Beispiel: Can I have some jam, please?" },
   { thema: "7-G12", niveau: "rot", form: "umformen", frage: "Use „nothing“:  We didn't find anything in the shipyard.", loesung: ["We found nothing in the shipyard."],
     erklaerung: "nothing steht ohne not: didn't find anything = found nothing. Beispiel: I bought nothing at the shop." },
-  { thema: "7-G13", niveau: "gruen", form: "quiz", frage: "Listen! My sister ___ the clarinet.", optionen: ["is playing", "plays", "is play"], loesung: "is playing",
+  { thema: "7-G13", niveau: "gruen", form: "quiz", frage: "Listen! My sister ___ the guitar.", optionen: ["is playing", "plays", "is play"], loesung: "is playing",
     erklaerung: "Listen! = gerade jetzt → is + -ing. Beispiel: Look! Tom is walking the dog." },
   { thema: "7-G13", niveau: "gelb", form: "luecke", frage: "We usually ___ (have) cereal for breakfast.", loesung: ["have"],
     erklaerung: "usually = regelmäßig → simple present. Beispiel: My dad always cooks dinner." },
@@ -871,7 +1004,7 @@ K7.aufgaben.push(
   { thema: "7-G15", niveau: "gruen", form: "quiz", frage: "You ___ bring food. There's a buffet at the party.", optionen: ["needn't", "mustn't", "must"], loesung: "needn't",
     erklaerung: "Es ist nicht nötig → needn't. Beispiel: The museum is free. You needn't pay." },
   { thema: "7-G15", niveau: "rot", form: "fehler", satz: "You needn't cross the street when the light is red.", fehlerwort: "needn't", loesung: ["mustn't", "must not", "may not"],
-    erklaerung: "Es ist verboten → mustn't. Beispiel: You mustn't touch the paintings." }
+    erklaerung: "Es ist verboten → mustn't. Beispiel: You mustn't touch the pictures." }
 );
 
 K7.zusatzfragen.push(
@@ -884,10 +1017,10 @@ K7.zusatzfragen.push(
   { thema: "7-G9",  frage: "If it … sunny, we'll go cycling.", optionen: ["is", "will be", "be"], loesung: "is" },
   { thema: "7-G9",  frage: "If you give up, you …", optionen: ["will lose.", "lose yesterday.", "will loses."], loesung: "will lose." },
   { thema: "7-G10", frage: "If I had more money, I … buy a caravan.", optionen: ["would", "will", "did"], loesung: "would" },
-  { thema: "7-G10", frage: "Which sentence is Typ II?", optionen: ["If I knew the answer, I would tell you.", "If I know the answer, I will tell you.", "I know the answer."], loesung: "If I knew the answer, I would tell you." },
+  { thema: "7-G10", frage: "Which sentence is type II?", optionen: ["If I knew the answer, I would tell you.", "If I know the answer, I will tell you.", "I know the answer."], loesung: "If I knew the answer, I would tell you." },
   { thema: "7-G11", frage: "This is the … expensive brand in the shop.", optionen: ["least", "less", "lessest"], loesung: "least" },
   { thema: "7-G11", frage: "Which is correct?", optionen: ["the most spectacular", "the spectacularest", "the more spectacular"], loesung: "the most spectacular" },
-  { thema: "7-G12", frage: "The fridge is empty. There is … milk.", optionen: ["no", "any", "some"], loesung: "no" },
+  { thema: "7-G12", frage: "We need to go shopping. There is … milk.", optionen: ["no", "any", "some"], loesung: "no" },
   { thema: "7-G12", frage: "Would you like … tea?", optionen: ["some", "any", "no"], loesung: "some" },
   { thema: "7-G13", frage: "Look! The dog … in the lake.", optionen: ["is swimming", "swims", "swim"], loesung: "is swimming" },
   { thema: "7-G13", frage: "My dad … to the gym every Monday.", optionen: ["goes", "is going", "go"], loesung: "goes" },

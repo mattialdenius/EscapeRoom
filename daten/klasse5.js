@@ -252,7 +252,7 @@ K5.baukasten = {
       { sg: "wolf", pl: "wolves", regel: "ves" }, { sg: "tomato", pl: "tomatoes", regel: "oes" }
     ],
     // Beispiele für die Erklärung, falls es nur EIN Wort mit dieser Regel gibt (dürfen bekannte Lehnwörter sein)
-    pluralBeispiele: { ies: "baby → babies", ys: "day → days", os: "video → videos", oes: "potato → potatoes" },
+    pluralBeispiele: { ies: "baby → babies", ys: "key → keys", os: "video → videos", oes: "potato → potatoes" },
     erklaerungen: {
       besitz: {
         einzahl:  "Ein Besitzer: Du hängst ’s an (Name oder Wort). Beispiel: {BEISPIEL}",
@@ -320,7 +320,7 @@ K5.baukasten = {
       { text: "animal", art: "an" }, { text: "e-mail", art: "an" }, { text: "alarm clock", art: "an" }, { text: "eraser", art: "an" },
       { text: "exercise book", art: "an" }, { text: "orange cap", art: "an" }, { text: "orange pen", art: "an" },
       { text: "interesting book", art: "an" }, { text: "easy question", art: "an" }, { text: "English teacher", art: "an" },
-      { text: "Indian restaurant", art: "an" }, { text: "Art lesson", art: "an" }, { text: "IT lesson", art: "an" },
+      { text: "Art lesson", art: "an" }, { text: "IT lesson", art: "an" },
       { text: "uniform", art: "a" }, { text: "red pen", art: "a" }, { text: "new bag", art: "a" }, { text: "pencil case", art: "a" },
       { text: "ruler", art: "a" }, { text: "boring lesson", art: "a" }, { text: "difficult question", art: "a" },
       { text: "German teacher", art: "a" }, { text: "Maths teacher", art: "a" }, { text: "funny joke", art: "a" },
@@ -361,7 +361,12 @@ K5.baukasten = {
       { grund: "eat",    rest: "your lunch", verbot: false }, { grund: "show", rest: "me your exercise book", verbot: false },
       { grund: "find",   rest: "your pencil case", verbot: false }, { grund: "dance", rest: "with me", verbot: false },
       { grund: "play",   rest: "football in the classroom", befehl: false }, { grund: "eat", rest: "chewing gum in the lesson", befehl: false },
-      { grund: "draw",   rest: "on the table", befehl: false }, { grund: "sing", rest: "in the cafeteria", befehl: false }
+      { grund: "draw",   rest: "on the table", befehl: false }, { grund: "sing", rest: "in the cafeteria", befehl: false },
+      // ab v0.9.9 (Paket 6): mehr Sätze, die als Befehl UND als Verbot passen
+      { grund: "close",  rest: "your bag" },           { grund: "close", rest: "your exercise book" },
+      { grund: "open",   rest: "your bag" },           { grund: "go",    rest: "to the board" },
+      { grund: "write",  rest: "on the board" },       { grund: "sit",   rest: "next to Tom" },
+      { grund: "take",   rest: "a photo" },            { grund: "look",  rest: "out of the window" }
     ],
     befehleExtra: [
       { grund: "eat", rest: "your banana", verbot: false }, { grund: "look", rest: "at the elephant" }, { grund: "play", rest: "with the ball" },
@@ -838,7 +843,8 @@ K5.woerterhilfe = [
   { en: "baby", de: "Baby" }, { en: "hobby", de: "Hobby" }, { en: "party", de: "Party" }, { en: "pony", de: "Pony" },
   { en: "cowboy", de: "Cowboy" }, { en: "glass", de: "Glas" }, { en: "class", de: "Klasse" }, { en: "sandwich", de: "Sandwich" },
   { en: "wolf", de: "Wolf" }, { en: "tomato", de: "Tomate" }, { en: "apple", de: "Apfel" }, { en: "insect", de: "Insekt" },
-  { en: "octopus", de: "Krake" }, { en: "igloo", de: "Iglu" }, { en: "cola", de: "Cola" }, { en: "milk", de: "Milch" }
+  { en: "octopus", de: "Krake" }, { en: "igloo", de: "Iglu" }, { en: "cola", de: "Cola" }, { en: "milk", de: "Milch" },
+  { en: "baby", de: "Baby" }, { en: "video", de: "Video" }, { en: "potato", de: "Kartoffel" }
 ];
 
 // =====================================================================
@@ -1031,7 +1037,7 @@ K5.aufgaben = [
     erklaerung: "Wem gehört es? they → their. Beispiel: My parents have a cat. Their cat is black." },
   { thema: "5-G11", niveau: "rot", form: "fehler", satz: "Emma and Lily are my friends. I like they very much.", fehlerwort: "they", loesung: ["them"],
     erklaerung: "Nach einem Verb steht die Objektform: they → them. Beispiel: My cousins are funny. I like them." },
-  { thema: "5-G11", niveau: "rot", form: "umformen", frage: "Use him, her, it or them:  I give the present to my sister.", loesung: ["I give the present to her."],
+  { thema: "5-G11", niveau: "rot", form: "umformen", frage: "Use him, her, it or them:  I give the present to my sister.", loesung: ["I give the present to her.", "I give her the present."],
     erklaerung: "my sister → she → her (Objektform nach to). Beispiel: I give the card to my dad. → I give the card to him." },
 
   // ---------- 5-G12  Wortstellung ----------
