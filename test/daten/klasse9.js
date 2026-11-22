@@ -2,7 +2,7 @@
    KLASSE 9  ·  alle Inhalte für Klasse 9
    ---------------------------------------------------------------------
    FERTIG: Welt (Geschichte, Räume, Figur, Karte, Minispiele) und alle Aufgaben (G1–G11).
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b, Unit 3 (G5–G7) ab 1.1.0-c, Unit 4 (G8–G11) ab 1.1.0-d. Korrekturen nach dem Klasse-9-Check: 1.1.0-e. Themen ohne Aufgaben zeigen „kommt bald“.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b, Unit 3 (G5–G7) ab 1.1.0-c, Unit 4 (G8–G11) ab 1.1.0-d. Korrekturen nach dem Klasse-9-Check: 1.1.0-e. Live seit 1.1.0. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=9
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */

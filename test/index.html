@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.1.0-e (Prototyp)
+  Version 1.1.0 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,26 +11,28 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
-  v1.1.0-e (22.11.2026)  – nur Testbereich
+  v1.1.0 (22.11.2026)  – live geschaltet am 22.11.2026
+    - Klasse 9 komplett (G1–G11), Inhalt wie 1.1.0-e (Klasse-9-Check abgeschlossen).
+  v1.1.0-e (22.11.2026)  – live geschaltet am 22.11.2026 (als 1.1.0)
     - Klasse 9: Funde aus dem Klasse-9-Check behoben (B1–B11, C1–C9; nur daten/klasse9.js geändert):
       indirekte Rede ohne allgemeingültige Aussagen, „asked me / asked us …“ als richtige Variante, Zeitangabe vorn
       bei 9-G4, eindeutigere Hinweise („– past progressive“), Sprecherwechsel mit „–“ (ohne Satzbau), Zuordnen 9-G3
       und 9-G1 bereinigt, Sydney-Sätze ersetzt, Uhrzeiten ohne „a.m./p.m.“ am Satzende, Wörterhilfe ergänzt.
-  v1.1.0-d (22.11.2026)  – nur Testbereich
+  v1.1.0-d (22.11.2026)  – Testbereich, live mit 1.1.0
     - Klasse 9, Unit 4 spielbar – damit ist Klasse 9 komplett (G1–G11):
       G8 indirekte Rede I (simple present → simple past, Fragen, Aufforderungen; ohne Orts-/Zeitangaben),
       G9 indirekte Rede II (simple past / present perfect → past perfect, auch Fragen; ohne would),
       G10 will ↔ going to (Plan, Anzeichen, spontane Entscheidung, Vermutung),
       G11 simple present (Fahrpläne) ↔ present progressive (feste Verabredungen).
-  v1.1.0-c (22.11.2026)  – nur Testbereich
+  v1.1.0-c (22.11.2026)  – Testbereich, live mit 1.1.0
     - Klasse 9, Unit 3 spielbar: G5 Partizip Präsens (nach Verben der Wahrnehmung, -ing/-ed-Adjektive, Satzverkürzung),
       G6 past perfect (Aussagen, Verneinung, Fragen, Gegenüberstellung simple past, Signalwörter) und
       G7 Passiv im simple past (mit/ohne by, Verneinung, Fragen, Vergleich mit dem simple present).
-  v1.1.0-b (22.11.2026)  – nur Testbereich
+  v1.1.0-b (22.11.2026)  – Testbereich, live mit 1.1.0
     - Klasse 9, Unit 2 spielbar: G3 Relativsätze (who/which/that/whose, whom nach Präposition, Weglassen des
       Relativpronomens, nicht notwendige Relativsätze mit Komma) und G4 past progressive (Aussagen, Verneinung,
       Gegenüberstellung mit dem simple past: when/while; keine Fragen).
-  v1.1.0-a (22.11.2026)  – nur Testbereich
+  v1.1.0-a (22.11.2026)  – Testbereich, live mit 1.1.0
     - Klasse 9, Unit 1 spielbar: G1 Modalverben und Ersatzformen (mit Vergangenheit, will, mustn't ↔ needn't/don't have to,
       should, Fragen) und G2 Steigerung/Vergleich von Adjektiven und Adverbien (unregelmäßig, (not) as … as, ohne the … the).
     - Alle sechs Rätselformen, Erklärungen auf Englisch mit deutschem Fachbegriff, Wörterhilfe, Zusatzfragen.
@@ -267,7 +269,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.1.0-e</title>
+<title>Grammatik-Escape-Room Englisch – v1.1.0</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -689,7 +691,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.1.0-e</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.1.0</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -715,7 +717,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.1.0-e";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.1.0";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -729,7 +731,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.1.0-e"></script>
+<script src="daten/allgemein.js?v=1.1.0"></script>
 
 <script>
 /* #####################################################################
