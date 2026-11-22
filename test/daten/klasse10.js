@@ -3,7 +3,7 @@
    ---------------------------------------------------------------------
    FERTIG: Welt (Geschichte, Räume, Figur, Karte, Minispiele) und alle Aufgaben (G1–G7).
    Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b, Unit 3 (G5–G7) ab 1.2.0-c.
-   „Wiederholung bis Unit 3“ enthält zusätzlich alle Themen aus Klasse 9 (Einstellung wiederholungMitKlassen in allgemein.js). Themen ohne Aufgaben zeigen „kommt bald“.
+   „Wiederholung bis Unit 3“ streut zusätzlich Aufgaben aus Klasse 9 ein (2 von 10 pro Raum, Einstellung wiederholungMitKlassen in allgemein.js). Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=10
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */

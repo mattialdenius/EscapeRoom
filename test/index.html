@@ -15,8 +15,9 @@
     - Klasse 10, Unit 3 spielbar – damit ist Klasse 10 komplett (G1–G7): G5 indirekte Rede (Orts- und Zeitangaben,
       will → would, Fragen, Aufforderungen/Bitten, alle Zeitverschiebungen), G6 Vergangenheitszeiten (simple past,
       past progressive, past perfect ↔ present perfect), G7 if-Sätze Typ III (Kurzformen, gemischt mit Typ I/II).
-    - Neu (Technik): „Wiederholung“ kann Themen früherer Klassen einschließen (Einstellung wiederholungMitKlassen in
-      daten/allgemein.js). Klasse 10 „bis Unit 3“ enthält alle Themen aus Klasse 9; das Menü zeigt „+ all topics from Year 9“.
+    - Neu (Technik): „Wiederholung“ kann Themen früherer Klassen einstreuen (Einstellung wiederholungMitKlassen in
+      daten/allgemein.js). Klasse 10 „bis Unit 3“: Schwerpunkt Klasse 10, dazu 2 von 10 Aufgaben pro Raum aus Klasse 9
+      (anteil 0.2); das Menü zeigt „+ some tasks from Year 9“.
   v1.2.0-b (22.11.2026)  – nur Testbereich
     - Klasse 10, Unit 2 spielbar: G3 if-Sätze Typ I und II (gemischt, beide Satzstellungen, If I were/was, could/should)
       und G4 Passiv (simple present und simple past, mit by, Fragen, Verneinung, Aktiv ↔ Passiv).
@@ -2840,7 +2841,7 @@ const UI_TEXTE = {
         klasse: "Klasse {k}", laedt: "⏳ wird geladen …", keineAufgaben: "🚧 Für Klasse {k} gibt es noch keine Aufgaben. Kommt bald!",
         s2: "2. Was möchtest du üben?", artThema: "Ein Thema", artThemaText: "Du bereitest dich auf ein Grammatikthema vor.",
         artUnit: "Eine Unit", artUnitText: "Du übst alle Themen einer Unit, z. B. vor der Klassenarbeit.", artWdh: "Wiederholung", artWdhText: "Bunt gemischt: alle Themen bis zu einer Unit.",
-        s3Thema: "3. Welches Thema?", s3Unit: "3. Welche Unit?", s3Wdh: "3. Wiederholen bis einschließlich …", bald: "🚧 kommt bald", bisUnit: "bis Unit {u}", themenAnzahl: "{n} Themen", plusKlasse: "+ alle Themen aus Klasse {k}",
+        s3Thema: "3. Welches Thema?", s3Unit: "3. Welche Unit?", s3Wdh: "3. Wiederholen bis einschließlich …", bald: "🚧 kommt bald", bisUnit: "bis Unit {u}", themenAnzahl: "{n} Themen", plusKlasse: "+ einige Aufgaben aus Klasse {k}",
         s4: "4. Wie schwer soll es sein?", s5: "5. Mit oder ohne Zeitlimit?", mitZeit: "Mit Zeitlimit", mitZeitText: "{m} Minuten. Ist die Zeit um, ist die Mission gescheitert.",
         ohneZeit: "Ohne Zeitlimit", ohneZeitText: "In Ruhe üben.", thema: "Thema: {t}", wdhBis: "Wiederholung bis Unit {u}", minuten: "{m} Minuten", ohneLimit: "ohne Zeitlimit",
         // Intro und Übersicht
@@ -2888,7 +2889,7 @@ const UI_TEXTE = {
         klasse: "Year {k}", laedt: "⏳ loading …", keineAufgaben: "🚧 There are no tasks for year {k} yet. Coming soon!",
         s2: "2. What do you want to practise?", artThema: "One topic", artThemaText: "Get ready for one grammar topic.",
         artUnit: "One unit", artUnitText: "Practise all the topics of a unit, e.g. before a test.", artWdh: "Revision", artWdhText: "All mixed up: every topic up to a unit.",
-        s3Thema: "3. Which topic?", s3Unit: "3. Which unit?", s3Wdh: "3. Revise up to and including …", bald: "🚧 coming soon", bisUnit: "up to Unit {u}", themenAnzahl: "{n} topics", plusKlasse: "+ all topics from Year {k}",
+        s3Thema: "3. Which topic?", s3Unit: "3. Which unit?", s3Wdh: "3. Revise up to and including …", bald: "🚧 coming soon", bisUnit: "up to Unit {u}", themenAnzahl: "{n} topics", plusKlasse: "+ some tasks from Year {k}",
         s4: "4. How difficult?", s5: "5. With or without a time limit?", mitZeit: "With a time limit", mitZeitText: "{m} minutes. When the time is up, the mission has failed.",
         ohneZeit: "No time limit", ohneZeitText: "Practise at your own speed.", thema: "Topic: {t}", wdhBis: "Revision up to Unit {u}", minuten: "{m} minutes", ohneLimit: "no time limit",
         introLos: "Let's go!", niveau: "Level: {n}", hallo: "Hi! I'm {f}. Read the story – and then let's go!",
@@ -3097,11 +3098,12 @@ function verteileThemen(ts, max){
 }
 function themenMitInhalt(filter){ return THEMEN.filter(t => t.klasse === wahl.klasse && filter(t) && hatInhalt(t.id)).map(t => t.id); }
 // Wiederholung mit früheren Klassen (Einstellung wiederholungMitKlassen in daten/allgemein.js), z. B. Klasse 10 ab Unit 3 + alle Themen aus Klasse 9
-function wdhZusatz(k){ const e = (EINSTELLUNGEN.wiederholungMitKlassen || {})[k]; return e && Array.isArray(e.klassen) ? { abUnit: e.abUnit || 1, klassen: e.klassen } : { abUnit: 99, klassen: [] }; }
+function wdhZusatz(k){ const e = (EINSTELLUNGEN.wiederholungMitKlassen || {})[k];
+  return e && Array.isArray(e.klassen) ? { abUnit: e.abUnit || 1, klassen: e.klassen, anteil: Math.min(1, Math.max(0, e.anteil != null ? +e.anteil : 0.2)) } : { abUnit: 99, klassen: [], anteil: 0 }; }
 function starteMission(){
   stopKonfetti(); zusatzAbbrechen(); countdownStop();
   const formen = EINSTELLUNGEN.formenNachNiveau[wahl.niveau];
-  let raumThemen, raumFormen = [null, null, null, null];
+  let raumThemen, raumFormen = [null, null, null, null], extra = [], extraAnzahl = 0;   // extra: eingestreute Themen früherer Klassen (nur „Wiederholung“)
   if(wahl.art === "thema"){ raumThemen = [0,1,2,3].map(() => [wahl.auswahl]); raumFormen = [0,1,2,3].map(i => formen[i % formen.length]); }
   if(wahl.art === "unit"){
     const ts = mischen(themenMitInhalt(t => t.unit === wahl.auswahl)).sort((a, b) => themaVon(a).id.localeCompare(themaVon(b).id, undefined, { numeric: true }));
@@ -3111,8 +3113,10 @@ function starteMission(){
     else raumThemen = verteileThemen(ts, 99);
   }
   if(wahl.art === "wdh"){
-    const z = wdhZusatz(wahl.klasse), extra = wahl.auswahl >= z.abUnit ? THEMEN.filter(t => z.klassen.includes(t.klasse) && hatInhalt(t.id)).map(t => t.id) : [];
-    const alle = mischen(themenMitInhalt(t => t.unit <= wahl.auswahl).concat(extra));
+    const z = wdhZusatz(wahl.klasse);
+    extra = wahl.auswahl >= z.abUnit ? mischen(THEMEN.filter(t => z.klassen.includes(t.klasse) && hatInhalt(t.id)).map(t => t.id)) : [];
+    extraAnzahl = extra.length ? Math.round(z.anteil * EINSTELLUNGEN.aufgabenProRaum) : 0;
+    const alle = mischen(themenMitInhalt(t => t.unit <= wahl.auswahl));
     const max = Math.max(1, Math.floor(EINSTELLUNGEN.wiederholungThemenProRaum) || 5);
     raumThemen = alle.length < 4 ? [0,1,2,3].map(i => [alle[i % alle.length]]) : verteileThemen(alle, max);
   }
@@ -3122,7 +3126,17 @@ function starteMission(){
       versuch: 1, geschafft: false, ziffer: null, kandidaten: null })),
     stats: {}, neu: -1, aktuell: 0, kontrolle: null, torVersuche: EINSTELLUNGEN.torVersuche
   };
-  S.raeume.forEach(r => { for(let i = 0; i < EINSTELLUNGEN.aufgabenProRaum; i++){ const a = zieheFuerRaum(r); if(a) r.liste.push(a); } });
+  let ei = 0;
+  S.raeume.forEach(r => {
+    // Auf zufälligen Plätzen ein Thema der früheren Klasse einstreuen (z. B. 2 von 10), sonst wie gewohnt aus den Raum-Themen ziehen
+    const plaetze = new Set(mischen([...Array(EINSTELLUNGEN.aufgabenProRaum).keys()]).slice(0, extraAnzahl));
+    for(let i = 0; i < EINSTELLUNGEN.aufgabenProRaum; i++){
+      let a = null;
+      if(plaetze.has(i)) for(let v = 0; v < extra.length && !a; v++) a = zieheAufgabe([extra[ei++ % extra.length]], wahl.niveau, r.form, S.benutzt, true);
+      if(!a) a = zieheFuerRaum(r);
+      if(a) r.liste.push(a);
+    }
+  });
   // Kopf + Intro
   $("figurName").textContent = welt().figur;
   figurBildSetzen(); uiTexteSetzen();
