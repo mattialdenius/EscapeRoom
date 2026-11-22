@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.2
+  Version 1.2.3
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,18 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.2.3 (22.11.2026)  – live geschaltet am 22.11.2026
+    - Inhalt wie 1.2.3-a: Funde aus dem Generalcheck vor der Veröffentlichung behoben.
+  v1.2.3-a (22.11.2026)  – Testbereich, live mit 1.2.3 (Funde aus dem Generalcheck vor der Veröffentlichung)
+    - Klasse 7, G2 Lückentext mit used to: Klammer eindeutig „(used to + live)“ – „lived“ war vorher auch richtig.
+    - Klasse 7, G15: Satz „Hostel rules: You ___ check in before ten“ (mehrdeutig) ersetzt durch „… be quiet after ten“.
+    - Erklärungsbeispiele: bspOhne meidet jetzt auch fast gleiche Sätze (≥ 70 % gleiche Wörter) und nimmt das
+      unähnlichste von bis zu 12 Beispielen (betraf v. a. 9-G5, 9-G7, 10-G6, 10-G7, 8-G7); 5-G4 Kurzantwort-Beispiel
+      nie mehr mit derselben Frage.
+    - Zurück-Taste / Zurück-Wischen während einer Mission öffnet „Mission beenden?“ statt die Seite zu verlassen
+      (history.pushState, es wird nichts gespeichert).
+    - Klasse 8–10: im Themenmenü steht der deutsche Titel klein in Klammern unter dem englischen.
+    - Klasse 10, G5: „Last week Ben said that he ___ find his phone.“ (Zeitverschiebung eindeutig).
   v1.2.2 (22.11.2026)  – live geschaltet am 22.11.2026
     - Fußzeile mit Autor: „von M. Aldenius“ (ab Klasse 8: „by M. Aldenius“).
   v1.2.1 (22.11.2026)  – live geschaltet am 22.11.2026
@@ -295,7 +307,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.2</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.3</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -717,7 +729,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.2</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.3</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -743,7 +755,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -757,7 +769,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.2"></script>
+<script src="daten/allgemein.js?v=1.2.3"></script>
 
 <script>
 /* #####################################################################
@@ -1190,7 +1202,7 @@ const ARTEN = {
     if(form === "zuordnen") return { kategorien: ["Is …?", "Are …?"], woerter: mehrere(ps, 5).map(p => ({ text: p.text, ziel: p.be === "is" ? "Is …?" : "Are …?" })), erklaerung: E.zuordnen };
     if(form === "luecke"){
       if(Math.random() < 0.4) return { frage: "___ " + P.text + " " + C.text + "?", loesung: [Be], erklaerung: erkl(P) };
-      const ja = Math.random() < 0.5, q = anders(ps, P), c = wuerfle(ergFuer(bk, q));
+      const ja = Math.random() < 0.5, pf = ps.filter(x => x.text !== P.text), q = pf.length ? wuerfle(pf) : anders(ps, P), c = anders(ergFuer(bk, q), C);
       return { frage: frage(P, C) + "  – " + (ja ? "Yes" : "No") + ", ___.", loesung: kurzantworten(P, ja),
                erklaerung: erklaere(ja ? E.kurzJa : E.kurzNein, { BEISPIEL: frage(q, c) + " – " + (ja ? "Yes, " : "No, ") + kurzantworten(q, ja)[0] + "." }) };
     }
@@ -1693,10 +1705,17 @@ function perfVarianten(satz){
 }
 // Personenfilter wie in Klasse 5: nurKind (z. B. Hausaufgaben), einzeln (z. B. „his mobile“ nicht bei mehreren)
 // Beispiel für die Erklärung, das NICHT die Lösung verrät (bis zu 8 Versuche)
+// Beispiel für die Erklärung: darf die Lösung nicht verraten. Ab v1.2.3 wird auch ein „fast gleicher“ Satz
+// (≥ 70 % gleiche Wörter, z. B. nur ein Wort anders) vermieden; es wird das unähnlichste von bis zu 12 Beispielen genommen.
 function bspOhne(mach, loesung){
   const kernVon = x => String(x).replace(/^(Tom and Emma|Emma and Tom) /, "").replace(/[.?!]$/, "").toLowerCase();
-  let b = mach(); for(let i = 0; i < 8 && kernVon(b).includes(kernVon(loesung)) ; i++) b = mach();
-  return b;
+  const woerter = x => { try { return new Set(normLang(String(x).split("→").pop()).replace(/[^a-z0-9' ]/g, " ").split(/\s+/).filter(Boolean)); } catch(e){ return new Set(); } };
+  const L = woerter(loesung);
+  const aehnlich = x => { if(kernVon(x).includes(kernVon(loesung))) return 2;
+    const W = woerter(x); let g = 0; W.forEach(w => { if(L.has(w)) g++; }); return g / Math.max(1, W.size + L.size - g); };
+  let best = null, bestW = 9;
+  for(let i = 0; i < 12; i++){ const b = mach(), w = aehnlich(b); if(w < bestW){ best = b; bestW = w; } if(w < 0.7) break; }
+  return best;
 }
 const passtPerson = (v, p) => (!v.nurKind || p.kind) && (!v.einzeln || p.er || p.text === "I" || p.text === "you");
 const personenFuer = (liste, v) => { const l = liste.filter(p => passtPerson(v, p)); return l.length ? l : liste; };
@@ -2371,7 +2390,7 @@ function usedTo(bk, form, E){
   const bsp = bspOhne(() => { const r = anders(bk.usedTo, R); return satz("used to " + r.e, r); }, richtig);
   const erkl = erklaere(E.regel, { BEISPIEL: bsp });
   if(form === "quiz") return { frage: satz("___"), optionen: mischen(["used to " + R.e, "use to " + R.e, "used to " + R.past]), loesung: "used to " + R.e, erklaerung: erkl };
-  if(form === "luecke") return { frage: satz("___ (" + R.e + ")"), loesung: ["used to " + R.e], erklaerung: erkl };
+  if(form === "luecke") return { frage: satz("___ (used to + " + R.e + ")"), loesung: ["used to " + R.e], erklaerung: erkl };
   if(form === "satzbau") return { loesung: [richtig], erklaerung: erkl };
   if(form === "fehler"){
     if(Math.random() < 0.5 && R.past !== R.e) return { satz: satz("used to " + R.past), fehlerwort: R.past, loesung: [R.e], erklaerung: erkl };
@@ -3059,7 +3078,7 @@ function setupZeigen(){
       titel(ui("s3Thema"));
       units.forEach(u => { w.appendChild(el("h3", "unit-kopf", "Unit " + u));
         themen.filter(t => t.unit === u).forEach(t => { const ok = hatInhalt(t.id);
-          knopf(w, esc(themaTitel(t.id)) + (ok ? "" : "<small>" + ui("bald") + "</small>"), wahl.auswahl === t.id, () => { wahl.auswahl = t.id; setupZeigen(); }, !ok); }); });
+          knopf(w, esc(themaTitel(t.id)) + (sprache() === "en" && t.titelEn ? "<small>(" + esc(t.titel) + ")</small>" : "") + (ok ? "" : "<small>" + ui("bald") + "</small>"), wahl.auswahl === t.id, () => { wahl.auswahl = t.id; setupZeigen(); }, !ok); }); });
     }
     if(wahl.art === "unit"){
       titel(ui("s3Unit"));
@@ -3124,6 +3143,7 @@ function themenMitInhalt(filter){ return THEMEN.filter(t => t.klasse === wahl.kl
 function wdhZusatz(k){ const e = (EINSTELLUNGEN.wiederholungMitKlassen || {})[k];
   return e && Array.isArray(e.klassen) ? { abUnit: e.abUnit || 1, klassen: e.klassen, anteil: Math.min(1, Math.max(0, e.anteil != null ? +e.anteil : 0.2)) } : { abUnit: 99, klassen: [], anteil: 0 }; }
 function starteMission(){
+  verlaufSichern();
   stopKonfetti(); zusatzAbbrechen(); countdownStop();
   const formen = EINSTELLUNGEN.formenNachNiveau[wahl.niveau];
   let raumThemen, raumFormen = [null, null, null, null], extra = [], extraAnzahl = 0;   // extra: eingestreute Themen früherer Klassen (nur „Wiederholung“)
@@ -3542,6 +3562,19 @@ $("btnBeenden").onclick = () => { dialogPause = !!zaehler; countdownPause(); $("
 $("btnDialogNein").onclick = dialogZu;
 $("btnDialogJa").onclick = () => { $("dialog").hidden = true; dialogPause = false; zusatzAbbrechen(); minispielSchliessen(); countdownStop(); stopKonfetti(); schritt = 0; setupZeigen(); zeige("setup"); };
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("dialog").hidden) dialogZu(); });
+
+/* ===================== ZURÜCK-TASTE / ZURÜCK-WISCHEN (ab v1.2.3) =====================
+   Während einer Mission legt die App einen Eintrag im Browserverlauf an. So verlässt „Zurück“
+   (oder das Wischen vom Bildschirmrand auf dem iPad) die Seite nicht sofort, sondern fragt
+   „Mission beenden?“. Es wird dabei nichts gespeichert. */
+function verlaufSichern(){ try { if(!(history.state && history.state.escapeRoom)) history.pushState({ escapeRoom: true }, ""); } catch(e){} }
+window.addEventListener("popstate", () => {
+  if(aktiverBildschirm === "setup") return;                          // Startmenü: ganz normal zurück
+  verlaufSichern();                                                   // Eintrag wieder anlegen, Seite bleibt offen
+  if(!$("dialog").hidden || $("btnBeenden").hidden) return;           // Dialog schon offen / Zusatzraum / Minispiel
+  if(["finale", "gescheitert"].includes(aktiverBildschirm)) return;   // dort gibt es eigene Knöpfe
+  $("btnBeenden").onclick();
+});
 
 /* ===================== COUNTDOWN ===================== */
 let rest = 0, zaehler = null, pausiert = false;
