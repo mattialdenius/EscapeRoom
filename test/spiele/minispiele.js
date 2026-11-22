@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.10 (passt zu App-Version 0.9.14 bis 1.2.0-b)
+   Version:  minispiele 0.10 (passt zu App-Version 0.9.14 bis 1.2.0-c)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem

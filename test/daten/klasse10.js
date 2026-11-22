@@ -1,8 +1,9 @@
 /* =====================================================================
    KLASSE 10  ·  alle Inhalte für Klasse 10
    ---------------------------------------------------------------------
-   IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b. Themen ohne Aufgaben zeigen „kommt bald“.
+   FERTIG: Welt (Geschichte, Räume, Figur, Karte, Minispiele) und alle Aufgaben (G1–G7).
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b, Unit 3 (G5–G7) ab 1.2.0-c.
+   „Wiederholung bis Unit 3“ enthält zusätzlich alle Themen aus Klasse 9 (Einstellung wiederholungMitKlassen in allgemein.js). Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=10
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -126,9 +127,9 @@ K10.themen = [
   { id: "10-G2", klasse: 10, unit: 1, titelEn: "Present perfect", titel: "Das Perfekt", regel: "Present perfect: have / has + 3rd form – until now, no finished time (ever, never, already, just, yet). since + point in time, for + period of time. Present perfect progressive: have / has been + verb-ing – how long something has been going on (I have been waiting for an hour). Finished time (yesterday, last week, ago, in 2018) → simple past." },
   { id: "10-G3", klasse: 10, unit: 2, titelEn: "Conditional sentences type I and II", titel: "Bedingungssätze Typ I und II", regel: "Type I (possible): if + simple present, will / should + verb: If it rains, we will stay at home. Type II (unreal): if + simple past, would / could + verb: If I had more money, I would travel. If I were / was you … No will / would in the if-clause. The if-clause can come first (with comma) or second." },
   { id: "10-G4", klasse: 10, unit: 2, titelEn: "The passive", titel: "Das Passiv", regel: "Passive (Passiv): simple present: am / is / are + 3rd form (Tea is grown in India). Simple past: was / were + 3rd form (The Taj Mahal was built in the 17th century). Who did it? → by … Negative: isn't / wasn't + 3rd form. Question: Is / Was … + 3rd form?" },
-  { id: "10-G5", klasse: 10, unit: 3, titelEn: "Reported speech (places, times, commands and requests)", titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "" },
-  { id: "10-G6", klasse: 10, unit: 3, titelEn: "Past tenses", titel: "Vergangenheitszeiten", regel: "" },
-  { id: "10-G7", klasse: 10, unit: 3, titelEn: "Conditional sentences type III", titel: "Bedingungssätze Typ III", regel: "" }
+  { id: "10-G5", klasse: 10, unit: 3, titelEn: "Reported speech (places, times, commands and requests)", titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "Reported speech (indirekte Rede): time and place words change: now → then, today → that day, tomorrow → the next day, yesterday → the day before, next week → the following week, ago → before, here → there, this → that. will → would. Questions: asked if / where … Commands and requests: told / asked me (not) to …" },
+  { id: "10-G6", klasse: 10, unit: 3, titelEn: "Past tenses", titel: "Vergangenheitszeiten", regel: "Simple past: finished time (yesterday, in 2011, two years ago). Past progressive: was / were + -ing – an action going on when something happened (I was sleeping when the earthquake started). Past perfect: had + 3rd form – an earlier action (By the time we arrived, the film had started). Present perfect: until now (ever, never, yet, since, for)." },
+  { id: "10-G7", klasse: 10, unit: 3, titelEn: "Conditional sentences type III", titel: "Bedingungssätze Typ III", regel: "Type III (about the past): if + had + 3rd form, would have + 3rd form: If we had left earlier, we would have caught the train. Negative: hadn't / wouldn't have. Short forms: If I'd known, I'd have come. Compare type I (if + present, will) and type II (if + past, would)." }
 ];
 
 // =====================================================================
@@ -534,6 +535,296 @@ K10.woerterhilfe.push(...[
 ]);
 
 // =====================================================================
+// Klasse 10, Unit 3 (G5–G7)
+// =====================================================================
+// Hilfen für die indirekte Rede: K10_REDE – mit und ohne „that“, mit Kurzformen;
+// K10_FRAGE – „X asked if …“ gilt auch als „X asked me / us if …“.
+const K10_REDE = (...saetze) => {
+  const out = [];
+  const kurz = x => x.replace(/\b(he|she|it) is\b/g, "$1's").replace(/\bI am\b/g, "I'm").replace(/\b(we|you|they) are\b/g, "$1're")
+                     .replace(/\b(he|she|it|I|we|you|they) would\b/g, "$1'd").replace(/\bwould not\b/g, "wouldn't").replace(/\bdid not\b/g, "didn't")
+                     .replace(/\bwas not\b/g, "wasn't").replace(/\bcould not\b/g, "couldn't");
+  saetze.forEach(x => [x, x.replace(" that ", " ")].forEach(y => [y, kurz(y)].forEach(z => { if(!out.includes(z)) out.push(z); })));
+  return out;
+};
+const K10_FRAGE = (...saetze) => {
+  const out = [];
+  saetze.forEach(x => {
+    if(!out.includes(x)) out.push(x);
+    const m = x.match(/^(.+? asked) (if|whether|where|why|what|how|who|when) (.*)$/);
+    if(m){ const p = /\b(we|us|our)\b/.test(m[3]) ? "us" : "me", y = m[1] + " " + p + " " + m[2] + " " + m[3]; if(!out.includes(y)) out.push(y); }
+  });
+  return out;
+};
+// if-Sätze Typ III: wie K10_WENN, zusätzlich „would've“ und „hadn't“
+const K10_WENN3 = (ifTeile, haupt) => {
+  const v = K10_WENN([].concat(ifTeile).flatMap(i => [i, i.replace(/\bhad not\b/g, "hadn't")]), haupt);
+  v.slice().forEach(z => { const w = z.replace(/\bwould have\b/g, "would've").replace(/\bWould have\b/g, "Would've"); if(!v.includes(w)) v.push(w); });
+  return v;
+};
+
+Object.assign(K10.baukasten, {
+  // ---------- Klasse 10, Unit 3: indirekte Rede – Orts- und Zeitangaben, Aufforderungen und Bitten (G5) ----------
+  //   mit will → would, Fragen und allen Zeitverschiebungen aus Klasse 8/9 (Vorgaben der Lehrkraft)
+  "10-G5": {
+    saetze: [
+      { e: "zeit",   q: "Mia: “I'll call you tomorrow.”",                       t: "Mia said that she would call me ___.", r: ["the next day", "the following day"], f: ["tomorrow", "the day before"], fehler: { ersatz: "tomorrow", wort: "tomorrow", loesung: ["the next day", "the following day"] } },
+      { e: "zeit",   q: "Tom: “I saw a geyser yesterday.”",                     t: "Tom said that he had seen a geyser ___.", r: ["the day before", "the previous day"], f: ["yesterday", "the next day"], fehler: { ersatz: "yesterday", wort: "yesterday", loesung: ["the day before", "the previous day"] } },
+      { e: "zeit",   q: "Lena: “I'm busy now.”",                                t: "Lena said that she was busy ___.", r: ["then", "at that time", "at that moment"], f: ["now", "there"], fehler: "now" },
+      { e: "zeit",   q: "The guide: “The earthquake happened ten years ago.”",  t: "The guide said that the earthquake had happened ten years ___.", r: ["before", "earlier"], f: ["ago", "later"], fehler: "ago" },
+      { e: "zeit",   q: "Ben: “I'm going to Wellington next week.”",            t: "Ben said that he was going to Wellington ___.", r: ["the following week", "the next week", "the week after"], f: ["next week", "the week before"], fehler: { ersatz: "next week", wort: "next", loesung: ["the following", "the next"] } },
+      { e: "zeit",   q: "Zoe: “I met my boyfriend last week.”",                 t: "Zoe said that she had met her boyfriend ___.", r: ["the week before", "the previous week"], f: ["last week", "the next week"], fehler: { ersatz: "last week", wort: "last", loesung: ["the previous"] } },
+      { e: "zeit",   q: "Dad: “The rescue team is coming today.”",              t: "Dad said that the rescue team was coming ___.", r: ["that day"], f: ["today", "this day"], fehler: "today" },
+      { e: "ort",    q: "The firefighter: “It's not safe here.”",               t: "The firefighter said that it wasn't safe ___.", r: ["there"], f: ["here", "where"], fehler: "here" },
+      { e: "ort",    q: "Ava: “I love this town.”",                             t: "Ava said that she loved ___ town.", r: ["that", "the"], f: ["this", "these"], fehler: "this" },
+      { e: "ort",    q: "Liam: “These shoes are new.”",                         t: "Liam said that ___ shoes were new.", r: ["those", "the"], f: ["these", "this"], fehler: "these" },
+      { e: "ort",    q: "The owner: “Nobody lives in this house any more.”",    t: "The owner said that nobody lived in ___ house any more.", r: ["that", "the"], f: ["this", "these"], fehler: "this" },
+      { e: "would",  q: "Mia: “I will help with the clean-up.”",                t: "Mia said that she ___ help with the clean-up.", r: ["would"], f: ["will", "wills"], fehler: "will" },
+      { e: "would",  q: "The pilot: “We will land in Christchurch.”",           t: "The pilot said that they ___ in Christchurch.", r: ["would land"], f: ["will land", "would landed"], fehler: { ersatz: "will land", wort: "will", loesung: ["would"] } },
+      { e: "would",  q: "Tom: “I won't tell anyone.”",                          t: "Tom promised that he ___ tell anyone.", r: ["wouldn't", "would not"], f: ["won't", "didn't"], fehler: { ersatz: "won't", wort: "won't", loesung: ["wouldn't", "would not"] } },
+      { e: "would",  q: "Lena: “It will rain tomorrow.”",                       t: "Lena said that it ___ rain the next day.", r: ["would"], f: ["will", "is"], fehler: "will" },
+      { e: "mix",    q: "Ben: “I can't find my phone.”",                        t: "Ben said that he ___ find his phone.", r: ["couldn't", "could not"], f: ["can't", "didn't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not"] } },
+      { e: "mix",    q: "Ava: “I have broken up with Jake.”",                   t: "Ava said that she ___ up with Jake.", r: ["had broken"], f: ["has broken", "had broke"], fehler: { ersatz: "had broke", wort: "broke", loesung: ["broken"] } },
+      { e: "mix",    q: "Liam: “I lost my mask in the sea.”",                   t: "Liam said that he ___ his mask in the sea.", r: ["had lost"], f: ["has lost", "had losed"], fehler: { ersatz: "has lost", wort: "has", loesung: ["had"] } },
+      { e: "mix",    q: "Zoe: “I'm studying for my exams.”",                    t: "Zoe said that she ___ for her exams.", r: ["was studying"], f: ["is studying", "were studying"], fehler: { ersatz: "is studying", wort: "is", loesung: ["was"] } },
+      { e: "frage",  q: "Mia: “Will you come to the party?”",                   t: "Mia asked if I ___ come to the party.", r: ["would"], f: ["will", "did"], fehler: "will" },
+      { e: "frage",  q: "The teacher: “Where were you yesterday?”",             t: "The teacher asked where I had been ___.", r: ["the day before", "the previous day"], f: ["yesterday", "the next day"], fehler: { ersatz: "yesterday", wort: "yesterday", loesung: ["the day before", "the previous day"] } },
+      { e: "frage",  q: "Tom: “Do you have a crush on Ben?”",                   t: "Tom asked ___ I had a crush on Ben.", r: ["if", "whether"], f: ["that", "do"], fehler: "that" },
+      { e: "frage",  q: "Dad: “What are you doing here?”",                      t: "Dad asked what I was doing ___.", r: ["there"], f: ["here", "now"], fehler: "here" },
+      { e: "frage",  q: "Lena: “Why did you break up?”",                        t: "Lena asked why we ___ up.", r: ["had broken"], f: ["have broken", "did break"], fehler: { ersatz: "have broken", wort: "have", loesung: ["had"] } },
+      { e: "befehl", q: "The firefighter: “Leave the building!”",               t: "The firefighter told us ___ the building.", r: ["to leave"], f: ["leave", "leaving"], fehler: { ersatz: "leaving", wort: "leaving", loesung: ["to leave"] } },
+      { e: "befehl", q: "Mum: “Don't be late tonight!”",                        t: "Mum told me ___ late that night.", r: ["not to be"], f: ["don't be", "not be"], fehler: { ersatz: "don't be", wort: "don't", loesung: ["not to"] } },
+      { e: "befehl", q: "The rescuer: “Please stay calm.”",                     t: "The rescuer asked us ___ calm.", r: ["to stay"], f: ["stay", "staying"], fehler: { ersatz: "staying", wort: "staying", loesung: ["to stay"] } },
+      { e: "befehl", q: "Ava: “Please don't tell my parents.”",                 t: "Ava asked me ___ her parents.", r: ["not to tell"], f: ["don't tell", "not tell"], fehler: { ersatz: "don't tell", wort: "don't", loesung: ["not to"] } },
+      { e: "befehl", q: "The coach: “Come here tomorrow at eight!”",            t: "The coach told us to come ___ the next day at eight.", r: ["there"], f: ["here", "where"], fehler: "here" },
+      { e: "befehl", q: "The agony aunt: “Talk to your parents.”",              t: "The agony aunt advised me ___ to my parents.", r: ["to talk"], f: ["talk", "talking"], fehler: { ersatz: "talking", wort: "talking", loesung: ["to talk"] } }
+    ],
+    umformen: [
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Mia: “I'll call you tomorrow.”", nach: K10_REDE("Mia said that she would call me the next day.", "Mia said that she would call me the following day.") },
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Tom: “I saw a geyser yesterday.”", nach: K10_REDE("Tom said that he had seen a geyser the day before.", "Tom said that he had seen a geyser the previous day.") },
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Ben: “I'm going to Wellington next week.”", nach: K10_REDE("Ben said that he was going to Wellington the following week.", "Ben said that he was going to Wellington the next week.", "Ben said that he was going to Wellington the week after.") },
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Lena: “I'm tired now.”", nach: K10_REDE("Lena said that she was tired then.", "Lena said that she was tired at that time.", "Lena said that she was tired at that moment.") },
+      { e: "ort",   a: "Report with “said” (change the time and place words):", von: "The firefighter: “It isn't safe here.”", nach: K10_REDE("The firefighter said that it wasn't safe there.", "The firefighter said that it was not safe there.") },
+      { e: "ort",   a: "Report with “said” (change the time and place words):", von: "Ava: “I love this place.”", nach: K10_REDE("Ava said that she loved that place.", "Ava said that she loved the place.") },
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Zoe: “I met Jake two weeks ago.”", nach: K10_REDE("Zoe said that she had met Jake two weeks before.", "Zoe said that she had met Jake two weeks earlier.") },
+      { e: "would", a: "Report with “said” (change the time and place words):", von: "Dad: “We will leave today.”", nach: K10_REDE("Dad said that they would leave that day.", "Dad said that we would leave that day.") },
+      { e: "zeit",  a: "Report with “said” (change the time and place words):", von: "Liam: “I have finished the project this week.”", nach: K10_REDE("Liam said that he had finished the project that week.") },
+      { e: "ort",   a: "Report with “said” (change the time and place words):", von: "The guide: “We can see the glacier from here.”", nach: K10_REDE("The guide said that they could see the glacier from there.", "The guide said that we could see the glacier from there.") },
+      { e: "frage", a: "Report the question (change the time and place words):", von: "Mia: “Will you be at home tomorrow?”", nach: K10_FRAGE("Mia asked if I would be at home the next day.", "Mia asked whether I would be at home the next day.", "Mia asked if I would be at home the following day.", "Mia asked whether I would be at home the following day.") },
+      { e: "frage", a: "Report the question (change the time and place words):", von: "Tom: “Where did you go yesterday?”", nach: K10_FRAGE("Tom asked where I had gone the day before.", "Tom asked where I had gone the previous day.", "Tom asked where we had gone the day before.", "Tom asked where we had gone the previous day.") },
+      { e: "frage", a: "Report the question (change the time and place words):", von: "Lena: “Are you happy here?”", nach: K10_FRAGE("Lena asked if I was happy there.", "Lena asked whether I was happy there.", "Lena asked if we were happy there.", "Lena asked whether we were happy there.") },
+      { e: "frage", a: "Report the question (change the time and place words):", von: "Ben: “What will you do next week?”", nach: K10_FRAGE("Ben asked what I would do the following week.", "Ben asked what I would do the next week.", "Ben asked what we would do the following week.", "Ben asked what we would do the next week.") },
+      { e: "frage", a: "Report the question (change the time and place words):", von: "The teacher: “Why are you late today?”", nach: K10_FRAGE("The teacher asked why I was late that day.", "The teacher asked why we were late that day.") },
+      { e: "befehl", a: "Report the command (The firefighter told us …):", von: "The firefighter: “Leave the building!”", nach: ["The firefighter told us to leave the building."] },
+      { e: "befehl", a: "Report the command (Mum told me …):", von: "Mum: “Don't come home late tonight!”", nach: ["Mum told me not to come home late that night."] },
+      { e: "befehl", a: "Report the request (The rescuer asked us …):", von: "The rescuer: “Please stay here.”", nach: ["The rescuer asked us to stay there."] },
+      { e: "befehl", a: "Report the request (Ava asked me …):", von: "Ava: “Please call me tomorrow.”", nach: ["Ava asked me to call her the next day.", "Ava asked me to call her the following day."] },
+      { e: "befehl", a: "Report the command (The coach told us …):", von: "The coach: “Don't forget your boots today!”", nach: ["The coach told us not to forget our boots that day."] },
+      { e: "befehl", a: "Report the advice (The agony aunt advised me …):", von: "The agony aunt: “Talk to your teacher.”", nach: ["The agony aunt advised me to talk to my teacher."] },
+      { e: "mix",   a: "Report with “said”:", von: "Zoe: “I have been to New Zealand.”", nach: K10_REDE("Zoe said that she had been to New Zealand.") },
+      { e: "mix",   a: "Report with “said”:", von: "Ben: “I can't swim.”", nach: K10_REDE("Ben said that he couldn't swim.", "Ben said that he could not swim.") },
+      { e: "mix",   a: "Report with “said” (change the time and place words):", von: "Liam: “I lost my phone yesterday.”", nach: K10_REDE("Liam said that he had lost his phone the day before.", "Liam said that he had lost his phone the previous day.") },
+      { e: "mix",   a: "Report with “said” (change the time and place words):", von: "Lena: “I'm meeting Jake this evening.”", nach: K10_REDE("Lena said that she was meeting Jake that evening.") }
+    ],
+    zuordnen: {
+      kategorien: ["→ the next day / the following …", "→ the day before / the previous …", "→ there / then / that …"],
+      woerter: [
+        { text: "tomorrow", ziel: "→ the next day / the following …" }, { text: "next week", ziel: "→ the next day / the following …" },
+        { text: "next month", ziel: "→ the next day / the following …" }, { text: "next year", ziel: "→ the next day / the following …" },
+        { text: "yesterday", ziel: "→ the day before / the previous …" }, { text: "last week", ziel: "→ the day before / the previous …" },
+        { text: "last month", ziel: "→ the day before / the previous …" }, { text: "last year", ziel: "→ the day before / the previous …" },
+        { text: "here", ziel: "→ there / then / that …" }, { text: "now", ziel: "→ there / then / that …" },
+        { text: "this", ziel: "→ there / then / that …" }, { text: "today", ziel: "→ there / then / that …" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        zeit:   "Reported speech (indirekte Rede): time words change (Zeitangaben): now → then, today → that day, tomorrow → the next day, yesterday → the day before, next week → the following week, last week → the week before, ago → before. Example: {BEISPIEL}",
+        ort:    "Place words change too (Ortsangaben): here → there, this → that, these → those. Example: {BEISPIEL}",
+        would:  "will → would and won't → wouldn't in reported speech. Example: {BEISPIEL}",
+        mix:    "Backshift (Zeitverschiebung): simple present → simple past, present progressive → past progressive, simple past / present perfect → past perfect, can → could. Example: {BEISPIEL}",
+        frage:  "Reported questions: asked if / whether or a question word + normal word order (Wortstellung) – with backshift and new time and place words. Example: {BEISPIEL}",
+        befehl: "Commands, requests and advice (Aufforderungen, Bitten, Ratschläge): told / asked / advised + person + (not) to + verb. Example: {BEISPIEL}",
+        zuordnen: "tomorrow / next … → the next day / the following …; yesterday / last … → the day before / the previous …; here → there, now → then, this → that, today → that day."
+      }
+    }
+  },
+
+  // ---------- Klasse 10, Unit 3: Vergangenheitszeiten (G6) ----------
+  //   simple past, past progressive, past perfect, Gegenüberstellung mit dem present perfect (Vorgaben der Lehrkraft)
+  "10-G6": {
+    saetze: [
+      { e: "sp",       t: "Two years ago, a strong earthquake ___ the city.", h: "hit", r: ["hit"], f: ["has hit", "had hit"], fehler: { ersatz: "hitted", wort: "hitted", loesung: ["hit"] } },
+      { e: "sp",       t: "Last summer we ___ a glacier on the South Island.", h: "visit", r: ["visited"], f: ["have visited", "had visited"], fehler: { ersatz: "visitted", wort: "visitted", loesung: ["visited"] } },
+      { e: "sp",       t: "Yesterday Ava ___ up with her boyfriend.", h: "break", r: ["broke"], f: ["has broken", "breaked"], fehler: "breaked" },
+      { e: "sp",       t: "In 2011 the firefighters ___ many people out of the rubble.", h: "bring", r: ["brought"], f: ["have brought", "bringed"], fehler: "bringed" },
+      { e: "sp",       t: "When I was a child, I ___ in a small town near a fjord.", h: "live", r: ["lived"], f: ["have lived", "had lived"], fehler: { ersatz: "live", wort: "live", loesung: ["lived"] } },
+      { e: "prog",     t: "I ___ when the earthquake started.", h: "sleep", r: ["was sleeping"], f: ["have slept", "had slept"], fehler: { ersatz: "was sleep", wort: "sleep", loesung: ["sleeping"] } },
+      { e: "prog",     t: "We ___ TV when the house began to shake.", h: "watch", r: ["were watching"], f: ["have watched", "had watched"], fehler: { ersatz: "was watching", wort: "was", loesung: ["were"] } },
+      { e: "prog",     t: "Liam ___ on the beach when he saw the whale.", h: "sit", r: ["was sitting"], f: ["has sat", "was siting"], fehler: { ersatz: "was siting", wort: "siting", loesung: ["sitting"] } },
+      { e: "prog",     t: "The children ___ in the garden when it started to rain.", h: "play", r: ["were playing"], f: ["have played", "had played"], fehler: { ersatz: "was playing", wort: "was", loesung: ["were"] } },
+      { e: "prog",     t: "Mia ___ for the bus when she saw her ex-boyfriend.", h: "wait", r: ["was waiting"], f: ["has waited", "were waiting"], fehler: { ersatz: "were waiting", wort: "were", loesung: ["was"] } },
+      { e: "pperf",    t: "By the time the rescuers arrived, the water ___ to the first floor.", h: "rise", r: ["had risen"], f: ["has risen", "had rose"], fehler: { ersatz: "had rose", wort: "rose", loesung: ["risen"] } },
+      { e: "pperf",    t: "By the time we got to the cinema, the film ___.", h: "start", r: ["had started", "had already started"], f: ["has started", "was starting"], fehler: { ersatz: "has started", wort: "has", loesung: ["had"] } },
+      { e: "pperf",    t: "Before that day, I ___ a geyser.", h: "never / see", r: ["had never seen"], f: ["have never seen", "had never saw"], fehler: { ersatz: "had never saw", wort: "saw", loesung: ["seen"] } },
+      { e: "pperf",    t: "When we arrived at the airport, our plane ___.", h: "already / leave", r: ["had already left"], f: ["has already left", "had already leaved"], fehler: { ersatz: "has already left", wort: "has", loesung: ["had"] } },
+      { e: "pperf",    t: "By the next morning, the storm ___ many houses.", h: "destroy", r: ["had destroyed"], f: ["has destroyed", "had destroy"], fehler: { ersatz: "had destroy", wort: "destroy", loesung: ["destroyed"] } },
+      { e: "pperf",    t: "By the end of the trip, we ___ three glaciers.", h: "see", r: ["had seen"], f: ["have seen", "had saw"], fehler: { ersatz: "had saw", wort: "saw", loesung: ["seen"] } },
+      { e: "presperf", t: "I ___ to New Zealand twice.", h: "be", r: ["have been", "'ve been"], f: ["was", "had been"], fehler: { ersatz: "has been", wort: "has", loesung: ["have"] } },
+      { e: "presperf", t: "We ___ each other since we were children.", h: "know", r: ["have known", "'ve known"], f: ["knew", "had known"], fehler: { ersatz: "have knew", wort: "knew", loesung: ["known"] } },
+      { e: "presperf", t: "Have you ever ___ a stingray?", h: "see", r: ["seen"], f: ["saw", "see"], fehler: "saw" },
+      { e: "presperf", t: "Liam ___ his homework yet.", h: "not / finish", r: ["hasn't finished", "has not finished"], f: ["hadn't finished", "hasn't finish"], fehler: { ersatz: "hasn't finish", wort: "finish", loesung: ["finished"] } },
+      { e: "presperf", t: "My parents ___ in Auckland since 2015.", h: "live", r: ["have lived", "have been living", "'ve lived", "'ve been living"], f: ["lived", "had lived"], fehler: { ersatz: "has lived", wort: "has", loesung: ["have"] } },
+      { e: "sp",       t: "Last year my brother ___ an apprenticeship as a mechanic.", h: "begin", r: ["began"], f: ["has begun", "begun"], fehler: "begun" },
+      { e: "sp",       t: "When ___ you move to Christchurch?", h: "do / have", r: ["did"], f: ["have", "had"], fehler: "have" },
+      { e: "mix",      t: "When I got home, my sister ___ all the cake, so there was nothing left.", h: "eat", r: ["had eaten", "had already eaten"], f: ["has eaten", "was eating"], fehler: { ersatz: "had ate", wort: "ate", loesung: ["eaten"] } },
+      { e: "mix",      t: "The ground ___ for about a minute, and then everything was quiet.", h: "shake", r: ["shook"], f: ["had shaken", "has shaken"], fehler: { ersatz: "shaked", wort: "shaked", loesung: ["shook"] } },
+      { e: "mix",      t: "We ___ through the forest when we heard a strange noise.", h: "walk", r: ["were walking"], f: ["have walked", "had walked"], fehler: { ersatz: "were walk", wort: "walk", loesung: ["walking"] } }
+    ],
+    umformen: [
+      { e: "prog",  a: "Join the sentences with “when” (past progressive + simple past):", von: "I was sleeping. The earthquake started.", nach: ["I was sleeping when the earthquake started.", "When the earthquake started, I was sleeping."] },
+      { e: "prog",  a: "Join the sentences with “when” (past progressive + simple past):", von: "We were watching TV. The house began to shake.", nach: ["We were watching TV when the house began to shake.", "When the house began to shake, we were watching TV."] },
+      { e: "prog",  a: "Join the sentences with “when” (past progressive + simple past):", von: "Mia was waiting for the bus. She saw her ex-boyfriend.", nach: ["Mia was waiting for the bus when she saw her ex-boyfriend.", "When she saw her ex-boyfriend, Mia was waiting for the bus."] },
+      { e: "prog",  a: "Join the sentences with “when” (past progressive + simple past):", von: "The children were playing. It started to rain.", nach: ["The children were playing when it started to rain.", "When it started to rain, the children were playing."] },
+      { e: "pperf", a: "Use the past perfect (By the time the rescuers arrived, …):", von: "The water rose. Then the rescuers arrived.", nach: ["By the time the rescuers arrived, the water had risen.", "By the time the rescuers arrived, the water had already risen."] },
+      { e: "pperf", a: "Use the past perfect (By the time we got to the cinema, …):", von: "The film started. Then we got to the cinema.", nach: ["By the time we got to the cinema, the film had started.", "By the time we got to the cinema, the film had already started."] },
+      { e: "pperf", a: "Use the past perfect (When we arrived at the airport, …):", von: "The plane left. Then we arrived at the airport.", nach: ["When we arrived at the airport, the plane had already left.", "When we arrived at the airport, the plane had left."] },
+      { e: "pperf", a: "Use the past perfect (When I got home, …):", von: "My sister ate all the cake. Then I got home.", nach: ["When I got home, my sister had eaten all the cake.", "When I got home, my sister had already eaten all the cake."] },
+      { e: "pperf", a: "Use the past perfect (By the next morning, …):", von: "The storm destroyed many houses during the night.", nach: ["By the next morning, the storm had destroyed many houses."] },
+      { e: "sp",    a: "Rewrite the sentence with “last summer”:", von: "We have visited a glacier.", nach: ["We visited a glacier last summer.", "Last summer, we visited a glacier.", "Last summer we visited a glacier."] },
+      { e: "sp",    a: "Rewrite the sentence with “in 2011”:", von: "A strong earthquake has hit Christchurch.", nach: ["A strong earthquake hit Christchurch in 2011.", "In 2011, a strong earthquake hit Christchurch.", "In 2011 a strong earthquake hit Christchurch."] },
+      { e: "sp",    a: "Rewrite the sentence with “yesterday”:", von: "Ava has broken up with Jake.", nach: ["Ava broke up with Jake yesterday.", "Yesterday, Ava broke up with Jake.", "Yesterday Ava broke up with Jake."] },
+      { e: "sp",    a: "Rewrite the sentence with “two years ago”:", von: "My brother has begun an apprenticeship.", nach: ["My brother began an apprenticeship two years ago.", "Two years ago, my brother began an apprenticeship.", "Two years ago my brother began an apprenticeship."] },
+      { e: "presperf", a: "Write one sentence with “since” (My parents …):", von: "My parents moved to Auckland in 2015. They still live there.", nach: ["My parents have lived in Auckland since 2015.", "My parents have been living in Auckland since 2015."] },
+      { e: "presperf", a: "Write one sentence with “twice” (I …):", von: "I went to New Zealand in 2019 and in 2023.", nach: ["I have been to New Zealand twice.", "I've been to New Zealand twice."] },
+      { e: "presperf", a: "Ask a question with “ever”:", von: "you / see a stingray", nach: ["Have you ever seen a stingray?"] },
+      { e: "presperf", a: "Make the sentence negative with “yet”:", von: "Liam has finished his homework.", nach: ["Liam hasn't finished his homework yet.", "Liam has not finished his homework yet."] },
+      { e: "sp",    a: "Ask a question with “when” (When …):", von: "You have moved to Christchurch.", nach: ["When did you move to Christchurch?"] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "While we (walk) through the forest, we (hear) a strange noise.", nach: ["While we were walking through the forest, we heard a strange noise."] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "When I (get) home, my parents (already / go) to bed.", nach: ["When I got home, my parents had already gone to bed."] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "The ground (shake) for a minute, then everything (be) quiet.", nach: ["The ground shook for a minute, then everything was quiet."] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "I (never / see) a geyser before I (go) to New Zealand.", nach: ["I had never seen a geyser before I went to New Zealand."] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "Liam (sit) on the beach when he (see) the whale.", nach: ["Liam was sitting on the beach when he saw the whale."] },
+      { e: "mix",   a: "Put the verbs into the correct past tense:", von: "By the time we (arrive), the party (end).", nach: ["By the time we arrived, the party had ended.", "By the time we arrived, the party had already ended."] },
+      { e: "mix",   a: "Use the correct tenses:", von: "Two years ago my family (move) to Auckland, and we (live) there since then.", nach: ["Two years ago my family moved to Auckland, and we have lived there since then.", "Two years ago my family moved to Auckland, and we have been living there since then.", "Two years ago my family moved to Auckland, and we've lived there since then.", "Two years ago my family moved to Auckland, and we've been living there since then."] }
+    ],
+    zuordnen: {
+      kategorien: ["simple past", "past progressive", "past perfect", "present perfect"],
+      woerter: [
+        { text: "saw", ziel: "simple past" }, { text: "went", ziel: "simple past" }, { text: "didn't go", ziel: "simple past" },
+        { text: "was sleeping", ziel: "past progressive" }, { text: "were waiting", ziel: "past progressive" }, { text: "wasn't listening", ziel: "past progressive" },
+        { text: "had seen", ziel: "past perfect" }, { text: "had left", ziel: "past perfect" }, { text: "hadn't eaten", ziel: "past perfect" },
+        { text: "have seen", ziel: "present perfect" }, { text: "has gone", ziel: "present perfect" }, { text: "haven't been", ziel: "present perfect" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        sp:       "Simple past: a finished action at a finished time in the past (yesterday, last summer, two years ago, in 2011). Questions with did. Example: {BEISPIEL}",
+        prog:     "Past progressive (Verlaufsform der Vergangenheit): was / were + verb-ing – an action that was going on when something else happened. Example: {BEISPIEL}",
+        pperf:    "Past perfect (Vorvergangenheit): had + 3rd form – it happened before another action in the past, often with by the time, already, never … before. Example: {BEISPIEL}",
+        presperf: "Present perfect: have / has + 3rd form – from the past until now or no finished time (ever, never, yet, since, for, twice). Example: {BEISPIEL}",
+        mix:      "Long action in the background → past progressive. Short action or one after the other → simple past. Earlier action → past perfect. Example: {BEISPIEL}",
+        zuordnen: "simple past: 2nd form · past progressive: was / were + -ing · past perfect: had + 3rd form · present perfect: have / has + 3rd form."
+      }
+    }
+  },
+
+  // ---------- Klasse 10, Unit 3: Bedingungssätze Typ III (G7) ----------
+  //   Aussagen und Verneinung, Kurzformen, beide Satzstellungen, ohne could/might have; gemischt mit Typ I und II
+  "10-G7": {
+    saetze: [
+      { e: "aussage", t: "If we had left earlier, we ___ the train.", h: "catch", r: ["would have caught", "'d have caught", "would've caught"], f: ["would caught", "will have caught"], fehler: { ersatz: "would have catched", wort: "catched", loesung: ["caught"] } },
+      { e: "aussage", t: "If I ___ about the party, I would have come.", h: "know", r: ["had known", "'d known"], f: ["would have known", "knew"], fehler: { ersatz: "had knew", wort: "knew", loesung: ["known"] } },
+      { e: "aussage", t: "If the rescuers hadn't come so quickly, many more people ___ their lives.", h: "lose", r: ["would have lost", "would've lost"], f: ["would lose", "had lost"], fehler: { ersatz: "would have losed", wort: "losed", loesung: ["lost"] } },
+      { e: "aussage", t: "If it hadn't rained, we ___ to the glacier.", h: "walk", r: ["would have walked", "'d have walked", "would've walked"], f: ["would walked", "will have walked"], fehler: { ersatz: "would has walked", wort: "has", loesung: ["have"] } },
+      { e: "aussage", t: "If I had studied harder, I ___ better marks.", h: "get", r: ["would have got", "would have gotten", "'d have got", "'d have gotten", "would've got", "would've gotten"], f: ["would get", "had got"], fehler: { ersatz: "will have got", wort: "will", loesung: ["would"] } },
+      { e: "aussage", t: "If Tom ___ his mask, he wouldn't have swallowed so much water.", h: "wear", r: ["had worn", "'d worn"], f: ["had wore", "would have worn"], fehler: { ersatz: "had wore", wort: "wore", loesung: ["worn"] } },
+      { e: "aussage", t: "If they ___ the warning, they would have left the town.", h: "hear", r: ["had heard", "'d heard"], f: ["would have heard", "have heard"], fehler: { ersatz: "have heard", wort: "have", loesung: ["had"] } },
+      { e: "aussage", t: "Mia would have called you if she ___ your number.", h: "have", r: ["had had", "'d had"], f: ["had have", "would have had"], fehler: { ersatz: "had have", wort: "have", loesung: ["had"] } },
+      { e: "aussage", t: "If you had asked me, I ___ you.", h: "help", r: ["would have helped", "'d have helped", "would've helped"], f: ["would helped", "had helped"], fehler: { ersatz: "would have help", wort: "help", loesung: ["helped"] } },
+      { e: "aussage", t: "If Tom had trained harder, he ___ the race.", h: "win", r: ["would have won", "'d have won", "would've won"], f: ["would won", "will have won"], fehler: { ersatz: "would have winned", wort: "winned", loesung: ["won"] } },
+      { e: "kurz",    t: "If the fire brigade had arrived earlier, they ___ the old house.", h: "save", r: ["would have saved", "'d have saved", "would've saved"], f: ["would save", "had saved"], fehler: { ersatz: "would of saved", wort: "of", loesung: ["have"] } },
+      { e: "kurz",    t: "If we had known about the storm, we ___ at home.", h: "stay", r: ["would have stayed", "'d have stayed", "would've stayed"], f: ["would stay", "will stay"], fehler: { ersatz: "would have stay", wort: "stay", loesung: ["stayed"] } },
+      { e: "kurz",    t: "If I had seen you yesterday, I ___ hello.", h: "say", r: ["would have said", "'d have said", "would've said"], f: ["would say", "will say"], fehler: { ersatz: "would have sayed", wort: "sayed", loesung: ["said"] } },
+      { e: "neg",     t: "If Ava ___ Jake's messages, she wouldn't have been so upset.", h: "not / read", r: ["hadn't read", "had not read"], f: ["didn't read", "wouldn't have read"], fehler: { ersatz: "didn't read", wort: "didn't", loesung: ["hadn't", "had not"] } },
+      { e: "neg",     t: "If you had told me the truth, I ___ angry.", h: "not / be", r: ["wouldn't have been", "would not have been"], f: ["wouldn't be", "hadn't been"], fehler: { ersatz: "wouldn't have be", wort: "be", loesung: ["been"] } },
+      { e: "neg",     t: "Liam would have won the race if he ___.", h: "not / fall", r: ["hadn't fallen", "had not fallen"], f: ["didn't fall", "wouldn't have fallen"], fehler: { ersatz: "hadn't fell", wort: "fell", loesung: ["fallen"] } },
+      { e: "neg",     t: "If the house had been stronger, it ___ in the earthquake.", h: "not / collapse", r: ["wouldn't have collapsed", "would not have collapsed"], f: ["wouldn't collapse", "didn't collapse"], fehler: { ersatz: "wouldn't have collapse", wort: "collapse", loesung: ["collapsed"] } },
+      { e: "neg",     t: "We ___ the stingray if we hadn't gone diving.", h: "not / see", r: ["wouldn't have seen", "would not have seen"], f: ["didn't see", "wouldn't have saw"], fehler: { ersatz: "wouldn't have saw", wort: "saw", loesung: ["seen"] } },
+      { e: "neg",     t: "I wouldn't have missed the bus if I ___ up earlier.", h: "get", r: ["had got", "had gotten", "'d got", "'d gotten"], f: ["would have got", "got"], fehler: { ersatz: "have got", wort: "have", loesung: ["had"] } },
+      { e: "neg",     t: "If she ___ the bus last night, she would have been on time.", h: "not / miss", r: ["hadn't missed", "had not missed"], f: ["didn't miss", "wouldn't miss"], fehler: { ersatz: "didn't miss", wort: "didn't", loesung: ["hadn't", "had not"] } },
+      { e: "neg",     t: "We would have been on time if the road ___ blocked.", h: "not / be", r: ["hadn't been", "had not been"], f: ["wasn't", "wouldn't have been"], fehler: { ersatz: "hadn't be", wort: "be", loesung: ["been"] } },
+      { e: "mix",     t: "If it rains tomorrow, we ___ at home.", h: "stay", r: ["will stay", "'ll stay"], f: ["would have stayed", "would stay"], fehler: { ersatz: "will stayed", wort: "stayed", loesung: ["stay"] } },
+      { e: "mix",     t: "If I had more time, I ___ more often.", h: "travel", r: ["would travel", "'d travel"], f: ["would have travelled", "will travel"], fehler: { ersatz: "will travel", wort: "will", loesung: ["would"] } },
+      { e: "mix",     t: "If you ___ hungry, there's some pizza in the fridge.", h: "be", r: ["are", "'re"], f: ["were", "had been"], fehler: "were" },
+      { e: "mix",     t: "If I ___ you, I would talk to her.", h: "be", r: ["were", "was"], f: ["had been", "am"], fehler: "am" },
+      { e: "mix",     t: "If you finish your work, you ___ go home early.", h: "can", r: ["can", "could"], f: ["could have", "would have"], fehler: "cans" }
+    ],
+    umformen: [
+      { e: "aussage", a: "Write an if-sentence type III:", von: "(we / leave earlier) – (we / catch the train)", nach: K10_WENN3("If we had left earlier", "we would have caught the train") },
+      { e: "aussage", a: "Write an if-sentence type III:", von: "(I / know about the party) – (I / come)", nach: K10_WENN3("If I had known about the party", "I would have come") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(it / not rain) – (we / walk to the glacier)", nach: K10_WENN3("If it had not rained", "we would have walked to the glacier") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(you / tell me the truth) – (I / not be angry)", nach: K10_WENN3("If you had told me the truth", "I would not have been angry") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(Liam / not fall) – (he / win the race)", nach: K10_WENN3("If Liam had not fallen", "he would have won the race") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(the house / be stronger) – (it / not collapse)", nach: K10_WENN3("If the house had been stronger", "it would not have collapsed") },
+      { e: "neg",     a: "Write an if-sentence type III:", von: "(Tom / wear his mask) – (he / not swallow so much water)", nach: K10_WENN3("If Tom had worn his mask", "he would not have swallowed so much water") },
+      { e: "aussage", a: "Write an if-sentence type III:", von: "(they / hear the warning) – (they / leave the town)", nach: K10_WENN3("If they had heard the warning", "they would have left the town") },
+      { e: "aussage", a: "Write a type III sentence about the past:", von: "We didn't leave early, so we missed the train.", nach: K10_WENN3("If we had left early", "we would not have missed the train").concat(K10_WENN3("If we had left early", "we would have caught the train")) },
+      { e: "aussage", a: "Write a type III sentence about the past:", von: "I didn't know your number, so I didn't call you.", nach: K10_WENN3("If I had known your number", "I would have called you") },
+      { e: "aussage", a: "Write a type III sentence about the past:", von: "Mia didn't study, so she failed the test.", nach: K10_WENN3("If Mia had studied", "she would not have failed the test").concat(K10_WENN3("If Mia had studied", "she would have passed the test")) },
+      { e: "aussage", a: "Write a type III sentence about the past:", von: "Ben didn't wear a helmet, so he hurt his head.", nach: K10_WENN3("If Ben had worn a helmet", "he would not have hurt his head") },
+      { e: "aussage", a: "Write a type III sentence about the past:", von: "We didn't have a map, so we got lost.", nach: K10_WENN3("If we had had a map", "we would not have got lost").concat(K10_WENN3("If we had had a map", "we would not have gotten lost")) },
+      { e: "neg",     a: "Write a type III sentence about the past:", von: "Ava read Jake's messages, so she was upset.", nach: K10_WENN3("If Ava had not read Jake's messages", "she would not have been upset") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If I had time, I would help you.", nach: K10_WENN3("If I had had time", "I would have helped you") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If we lived closer, we would visit you.", nach: K10_WENN3("If we had lived closer", "we would have visited you") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If it were warmer, we would go swimming.", nach: K10_WENN3("If it had been warmer", "we would have gone swimming") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If you asked her, she would tell you.", nach: K10_WENN3("If you had asked her", "she would have told you") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If Tom trained harder, he would win.", nach: K10_WENN3("If Tom had trained harder", "he would have won") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If you hurry, you will catch the bus.", nach: K10_WENN3("If you had hurried", "you would have caught the bus") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If it doesn't rain, we will go to the beach.", nach: K10_WENN3("If it had not rained", "we would have gone to the beach") },
+      { e: "mix",     a: "Change the sentence to type III (past):", von: "If I see Mia, I will tell her.", nach: K10_WENN3("If I had seen Mia", "I would have told her") },
+      { e: "kurz",    a: "Start with the main clause (Hauptsatz):", von: "If I had known, I would have told you.", nach: ["I would have told you if I had known.", "I'd have told you if I had known.", "I would've told you if I had known.", "I would have told you if I'd known.", "I'd have told you if I'd known."] },
+      { e: "kurz",    a: "Start with the main clause (Hauptsatz):", von: "If we had taken a taxi, we wouldn't have been late.", nach: ["We wouldn't have been late if we had taken a taxi.", "We would not have been late if we had taken a taxi.", "We wouldn't have been late if we'd taken a taxi."] },
+      { e: "kurz",    a: "Start with the main clause (Hauptsatz):", von: "If the rescuers hadn't come, many people would have died.", nach: ["Many people would have died if the rescuers hadn't come.", "Many people would have died if the rescuers had not come.", "Many people would've died if the rescuers hadn't come."] }
+    ],
+    zuordnen: {
+      kategorien: ["type I", "type II", "type III"],
+      woerter: [
+        { text: "If it rains, we'll stay in.", ziel: "type I" }, { text: "If you hurry, you'll catch it.", ziel: "type I" }, { text: "I'll call if I'm late.", ziel: "type I" },
+        { text: "If I were rich, I'd travel.", ziel: "type II" }, { text: "If I had a car, I'd drive.", ziel: "type II" }, { text: "She'd help if she had time.", ziel: "type II" },
+        { text: "If I'd known, I'd have come.", ziel: "type III" }, { text: "If we had left, we'd have caught it.", ziel: "type III" }, { text: "He'd have won if he hadn't fallen.", ziel: "type III" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        aussage: "Type III (Bedingungssatz Typ III): if + past perfect (had + 3rd form), would have + 3rd form. It is about the past and can't be changed any more. Example: {BEISPIEL}",
+        neg:     "Negative (Verneinung): if + hadn't + 3rd form, wouldn't have + 3rd form. Example: {BEISPIEL}",
+        kurz:    "Short forms (Kurzformen): I'd = I had (if-clause) or I would (main clause); would've = would have. Never write “would of”. Example: {BEISPIEL}",
+        mix:     "Type I: if + simple present, will. Type II: if + simple past, would. Type III: if + had + 3rd form, would have + 3rd form. Example: {BEISPIEL}",
+        zuordnen: "Type I: if + present, will. Type II: if + past, would. Type III: if + had + 3rd form, would have + 3rd form."
+      }
+    }
+  }
+});
+
+Object.assign(K10.generatoren, {
+  "10-G5": { baukasten: "10-G5", art: "satzpool" },
+  "10-G6": { baukasten: "10-G6", art: "satzpool" },
+  "10-G7": { baukasten: "10-G7", art: "satzpool" }
+});
+
+K10.woerterhilfe.push(...[
+  { en: "geyser", de: "Geysir" }, { en: "Wellington", de: "Wellington (Hauptstadt Neuseelands)" }, { en: "Christchurch", de: "Christchurch (Stadt in Neuseeland)" },
+  { en: "Auckland", de: "Auckland (Stadt in Neuseeland)" }, { en: "South Island", de: "Südinsel (Neuseeland)" }, { en: "previous", de: "vorherig" },
+  { en: "following", de: "folgend" }, { en: "promised", de: "versprach" }, { en: "boots", de: "Stiefel, Schuhe" }, { en: "agony aunt", de: "Kummerkastentante" },
+  { en: "rescuer", de: "Retter/in" }, { en: "rescuers", de: "Retter/innen" }, { en: "rubble", de: "Schutt, Trümmer" }, { en: "fjord", de: "Fjord" },
+  { en: "glacier", de: "Gletscher" }, { en: "glaciers", de: "Gletscher" }, { en: "stingray", de: "Stachelrochen" }, { en: "ex-boyfriend", de: "Ex-Freund" },
+  { en: "risen", de: "gestiegen" }, { en: "swallowed", de: "geschluckt" }, { en: "collapsed", de: "eingestürzt" }, { en: "helmet", de: "Helm" },
+  { en: "warning", de: "Warnung" }, { en: "fire brigade", de: "Feuerwehr" }, { en: "blocked", de: "gesperrt, blockiert" }, { en: "fridge", de: "Kühlschrank" },
+  { en: "crush", de: "Schwärmerei (have a crush on = verknallt sein in)" }, { en: "exams", de: "Prüfungen" }, { en: "calm", de: "ruhig" }, { en: "shook", de: "bebte, schüttelte (shake – shook – shaken)" }
+]);
+
+// =====================================================================
 // 6) DIE AUFGABEN (handgeschriebener Pool)
 // =====================================================================
 K10.aufgaben = [
@@ -552,7 +843,19 @@ K10.aufgaben = [
   { thema: "10-G4", niveau: "gruen", form: "quiz", frage: "Rice ___ in many parts of Asia.", optionen: ["is grown", "is growed", "grows by"], loesung: "is grown",
     erklaerung: "Passive (Passiv): is / are + 3rd form. grow → grown. Example: Tea is grown in many parts of India." },
   { thema: "10-G4", niveau: "gelb", form: "luecke", frage: "The bridge ___ (open) in 1998.", loesung: ["was opened"],
-    erklaerung: "Passive in the simple past: was / were + 3rd form. Example: The palace was designed for a king." }
+    erklaerung: "Passive in the simple past: was / were + 3rd form. Example: The palace was designed for a king." },
+  { thema: "10-G5", niveau: "gruen", form: "quiz", frage: "Jake: “I'll see you tomorrow.”  →  Jake said he would see me ___.", optionen: ["the next day", "tomorrow", "the day before"], loesung: "the next day",
+    erklaerung: "Time words change (Zeitangaben): tomorrow → the next day / the following day. Example: Mia said that she would call me the next day." },
+  { thema: "10-G5", niveau: "gelb", form: "luecke", frage: "Mum: “Don't touch this!”  →  Mum told me not to touch ___.", loesung: ["that", "it"],
+    erklaerung: "Place words change (Ortsangaben): this → that, here → there. Example: The firefighter said that it wasn't safe there." },
+  { thema: "10-G6", niveau: "gruen", form: "quiz", frage: "I ___ a shower when the phone rang.", optionen: ["was having", "have had", "had had"], loesung: "was having",
+    erklaerung: "Past progressive (Verlaufsform): an action that was going on when something else happened. Example: We were watching TV when the house began to shake." },
+  { thema: "10-G6", niveau: "gelb", form: "luecke", frage: "By the time the police arrived, the thief ___ (escape).", loesung: ["had escaped", "had already escaped"],
+    erklaerung: "Past perfect (Vorvergangenheit): had + 3rd form for the earlier action. Example: By the time we got to the cinema, the film had started." },
+  { thema: "10-G7", niveau: "gruen", form: "quiz", frage: "If I had known, I ___ you.", optionen: ["would have told", "would told", "will have told"], loesung: "would have told",
+    erklaerung: "Type III: if + had + 3rd form, would have + 3rd form. Example: If we had left earlier, we would have caught the train." },
+  { thema: "10-G7", niveau: "rot", form: "fehler", satz: "If you had asked me, I would of helped you.", fehlerwort: "of", loesung: ["have"],
+    erklaerung: "would have (short: would've) – never “would of”. Example: If Tom had trained harder, he would have won." }
 ];
 
 // =====================================================================
@@ -578,7 +881,19 @@ K10.zusatzfragen = [
   { thema: "10-G4", frage: "The Taj Mahal … in the 17th century.", optionen: ["was built", "is built", "was builded"], loesung: "was built" },
   { thema: "10-G4", frage: "… the boxes packed yesterday?", optionen: ["Were", "Did", "Was"], loesung: "Were" },
   { thema: "10-G4", frage: "The workers … paid enough.", optionen: ["aren't", "don't", "isn't"], loesung: "aren't" },
-  { thema: "10-G4", frage: "Shah Jahan … the Taj Mahal.", optionen: ["built", "was built", "builded"], loesung: "built" }
+  { thema: "10-G4", frage: "Shah Jahan … the Taj Mahal.", optionen: ["built", "was built", "builded"], loesung: "built" },
+  { thema: "10-G5", frage: "“here” in reported speech:", optionen: ["there", "here", "where"], loesung: "there" },
+  { thema: "10-G5", frage: "“yesterday” in reported speech:", optionen: ["the day before", "the next day", "yesterday"], loesung: "the day before" },
+  { thema: "10-G5", frage: "“I will help.” → She said she … help.", optionen: ["would", "will", "wills"], loesung: "would" },
+  { thema: "10-G5", frage: "“Leave!” → He told us … leave.", optionen: ["to", "that", "–"], loesung: "to" },
+  { thema: "10-G6", frage: "I … when the earthquake started.", optionen: ["was sleeping", "have slept", "had slept"], loesung: "was sleeping" },
+  { thema: "10-G6", frage: "By the time we arrived, the film … started.", optionen: ["had", "has", "was"], loesung: "had" },
+  { thema: "10-G6", frage: "Two years ago an earthquake … the city.", optionen: ["hit", "has hit", "hitted"], loesung: "hit" },
+  { thema: "10-G6", frage: "I … to New Zealand twice.", optionen: ["have been", "was", "had been"], loesung: "have been" },
+  { thema: "10-G7", frage: "If we had left earlier, we … caught it.", optionen: ["would have", "would", "will have"], loesung: "would have" },
+  { thema: "10-G7", frage: "If I … known, I'd have come.", optionen: ["had", "would", "have"], loesung: "had" },
+  { thema: "10-G7", frage: "Which is type III?", optionen: ["If I'd known, I'd have come.", "If I knew, I'd come.", "If I know, I'll come."], loesung: "If I'd known, I'd have come." },
+  { thema: "10-G7", frage: "He … have won if he hadn't fallen.", optionen: ["would", "will", "had"], loesung: "would" }
 ];
 
 // =====================================================================

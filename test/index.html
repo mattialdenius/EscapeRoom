@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.0-b (Prototyp)
+  Version 1.2.0-c (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,12 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.2.0-c (22.11.2026)  – nur Testbereich
+    - Klasse 10, Unit 3 spielbar – damit ist Klasse 10 komplett (G1–G7): G5 indirekte Rede (Orts- und Zeitangaben,
+      will → would, Fragen, Aufforderungen/Bitten, alle Zeitverschiebungen), G6 Vergangenheitszeiten (simple past,
+      past progressive, past perfect ↔ present perfect), G7 if-Sätze Typ III (Kurzformen, gemischt mit Typ I/II).
+    - Neu (Technik): „Wiederholung“ kann Themen früherer Klassen einschließen (Einstellung wiederholungMitKlassen in
+      daten/allgemein.js). Klasse 10 „bis Unit 3“ enthält alle Themen aus Klasse 9; das Menü zeigt „+ all topics from Year 9“.
   v1.2.0-b (22.11.2026)  – nur Testbereich
     - Klasse 10, Unit 2 spielbar: G3 if-Sätze Typ I und II (gemischt, beide Satzstellungen, If I were/was, could/should)
       und G4 Passiv (simple present und simple past, mit by, Fragen, Verneinung, Aktiv ↔ Passiv).
@@ -275,7 +281,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.0-b</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.0-c</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -697,7 +703,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.2.0-b</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.2.0-c</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -723,7 +729,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.0-b";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.0-c";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -737,7 +743,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.0-b"></script>
+<script src="daten/allgemein.js?v=1.2.0-c"></script>
 
 <script>
 /* #####################################################################
@@ -2834,7 +2840,7 @@ const UI_TEXTE = {
         klasse: "Klasse {k}", laedt: "⏳ wird geladen …", keineAufgaben: "🚧 Für Klasse {k} gibt es noch keine Aufgaben. Kommt bald!",
         s2: "2. Was möchtest du üben?", artThema: "Ein Thema", artThemaText: "Du bereitest dich auf ein Grammatikthema vor.",
         artUnit: "Eine Unit", artUnitText: "Du übst alle Themen einer Unit, z. B. vor der Klassenarbeit.", artWdh: "Wiederholung", artWdhText: "Bunt gemischt: alle Themen bis zu einer Unit.",
-        s3Thema: "3. Welches Thema?", s3Unit: "3. Welche Unit?", s3Wdh: "3. Wiederholen bis einschließlich …", bald: "🚧 kommt bald", bisUnit: "bis Unit {u}", themenAnzahl: "{n} Themen",
+        s3Thema: "3. Welches Thema?", s3Unit: "3. Welche Unit?", s3Wdh: "3. Wiederholen bis einschließlich …", bald: "🚧 kommt bald", bisUnit: "bis Unit {u}", themenAnzahl: "{n} Themen", plusKlasse: "+ alle Themen aus Klasse {k}",
         s4: "4. Wie schwer soll es sein?", s5: "5. Mit oder ohne Zeitlimit?", mitZeit: "Mit Zeitlimit", mitZeitText: "{m} Minuten. Ist die Zeit um, ist die Mission gescheitert.",
         ohneZeit: "Ohne Zeitlimit", ohneZeitText: "In Ruhe üben.", thema: "Thema: {t}", wdhBis: "Wiederholung bis Unit {u}", minuten: "{m} Minuten", ohneLimit: "ohne Zeitlimit",
         // Intro und Übersicht
@@ -2882,7 +2888,7 @@ const UI_TEXTE = {
         klasse: "Year {k}", laedt: "⏳ loading …", keineAufgaben: "🚧 There are no tasks for year {k} yet. Coming soon!",
         s2: "2. What do you want to practise?", artThema: "One topic", artThemaText: "Get ready for one grammar topic.",
         artUnit: "One unit", artUnitText: "Practise all the topics of a unit, e.g. before a test.", artWdh: "Revision", artWdhText: "All mixed up: every topic up to a unit.",
-        s3Thema: "3. Which topic?", s3Unit: "3. Which unit?", s3Wdh: "3. Revise up to and including …", bald: "🚧 coming soon", bisUnit: "up to Unit {u}", themenAnzahl: "{n} topics",
+        s3Thema: "3. Which topic?", s3Unit: "3. Which unit?", s3Wdh: "3. Revise up to and including …", bald: "🚧 coming soon", bisUnit: "up to Unit {u}", themenAnzahl: "{n} topics", plusKlasse: "+ all topics from Year {k}",
         s4: "4. How difficult?", s5: "5. With or without a time limit?", mitZeit: "With a time limit", mitZeitText: "{m} minutes. When the time is up, the mission has failed.",
         ohneZeit: "No time limit", ohneZeitText: "Practise at your own speed.", thema: "Topic: {t}", wdhBis: "Revision up to Unit {u}", minuten: "{m} minutes", ohneLimit: "no time limit",
         introLos: "Let's go!", niveau: "Level: {n}", hallo: "Hi! I'm {f}. Read the story – and then let's go!",
@@ -3004,6 +3010,8 @@ function setupZeigen(){
     // Die Datei der eingestellten Klasse wird jetzt (einmalig) geladen; danach baut sich der Schritt neu auf
     const k = wahl.klasse, W = welt();
     if(!W && KLASSEN_DATEIEN[k]) ladeKlasse(k).then(ok => { if(ok && schritt === 0 && wahl.klasse === k) setupZeigen(); });
+    // Wiederholung mit früheren Klassen (z. B. Klasse 10 + Klasse 9): deren Datei schon jetzt im Hintergrund laden
+    wdhZusatz(k).klassen.forEach(z => { if(KLASSEN_DATEIEN[z]) ladeKlasse(z); });
     const name = el("div", "welt-name");
     name.innerHTML = (W ? W.emoji + " " + esc(W.name) : KLASSEN_DATEIEN[k] ? ui("laedt") : "🚧") + "<small>" + ui("klasse", { k }) + "</small>";
     s.append(reihe, name); box.appendChild(s);
@@ -3037,7 +3045,9 @@ function setupZeigen(){
     if(wahl.art === "wdh"){
       titel(ui("s3Wdh"));
       units.forEach(u => { const ok = themen.some(t => t.unit <= u && hatInhalt(t.id));
-        knopf(w, "🔁 " + ui("bisUnit", { u }) + "<small>" + ui("themenAnzahl", { n: themen.filter(t => t.unit <= u).length }) + (ok ? "" : " · " + ui("bald")) + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
+        const plus = u >= wdhZusatz(wahl.klasse).abUnit ? wdhZusatz(wahl.klasse).klassen : [];
+        knopf(w, "🔁 " + ui("bisUnit", { u }) + "<small>" + ui("themenAnzahl", { n: themen.filter(t => t.unit <= u).length }) + (ok ? "" : " · " + ui("bald")) +
+          (plus.length ? "<br>" + ui("plusKlasse", { k: plus.join(", ") }) : "") + "</small>", wahl.auswahl === u, () => { wahl.auswahl = u; setupZeigen(); }, !ok); });
     }
     box.appendChild(w); bereit = wahl.auswahl != null;
   }
@@ -3086,6 +3096,8 @@ function verteileThemen(ts, max){
   return rt;
 }
 function themenMitInhalt(filter){ return THEMEN.filter(t => t.klasse === wahl.klasse && filter(t) && hatInhalt(t.id)).map(t => t.id); }
+// Wiederholung mit früheren Klassen (Einstellung wiederholungMitKlassen in daten/allgemein.js), z. B. Klasse 10 ab Unit 3 + alle Themen aus Klasse 9
+function wdhZusatz(k){ const e = (EINSTELLUNGEN.wiederholungMitKlassen || {})[k]; return e && Array.isArray(e.klassen) ? { abUnit: e.abUnit || 1, klassen: e.klassen } : { abUnit: 99, klassen: [] }; }
 function starteMission(){
   stopKonfetti(); zusatzAbbrechen(); countdownStop();
   const formen = EINSTELLUNGEN.formenNachNiveau[wahl.niveau];
@@ -3099,7 +3111,8 @@ function starteMission(){
     else raumThemen = verteileThemen(ts, 99);
   }
   if(wahl.art === "wdh"){
-    const alle = mischen(themenMitInhalt(t => t.unit <= wahl.auswahl));
+    const z = wdhZusatz(wahl.klasse), extra = wahl.auswahl >= z.abUnit ? THEMEN.filter(t => z.klassen.includes(t.klasse) && hatInhalt(t.id)).map(t => t.id) : [];
+    const alle = mischen(themenMitInhalt(t => t.unit <= wahl.auswahl).concat(extra));
     const max = Math.max(1, Math.floor(EINSTELLUNGEN.wiederholungThemenProRaum) || 5);
     raumThemen = alle.length < 4 ? [0,1,2,3].map(i => [alle[i % alle.length]]) : verteileThemen(alle, max);
   }

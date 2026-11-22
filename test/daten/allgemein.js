@@ -17,6 +17,7 @@ const EINSTELLUNGEN = {
   zusatzraumSekunden: { gruen: 30, gelb: 25, rot: 20 },  // Zeit für die Bonusfrage
   zusatzraumFalscheAntwortBeendet: true,                 // true = eine falsche Antwort beendet den Zusatzraum sofort
   torVersuche: 3,                                        // so viele Versuche hat man am Zahlenschloss des Ausgangs
+  wiederholungMitKlassen: { 10: { abUnit: 3, klassen: [9] } },   // „Wiederholung“ ab dieser Unit enthält zusätzlich alle Themen der genannten Klassen (Klasse 10: Prüfungsvorbereitung mit Klasse 9)
   wiederholungThemenProRaum: 5,                          // „Wiederholung“: höchstens so viele Themen pro Raum (4 Räume × 5 = bis zu 20 Themen). 1 = wie früher
   internationalismenAktiv: true,                         // true = auch erschließbare Wörter (banana, hotel …) aus den „…Extra“-Listen
   minispieleAktiv: true,                                 // true = nach einem geschafften Raubtierhaus/Zusatzraum erscheint „🎁 Minispiel?“ (false = nie)
