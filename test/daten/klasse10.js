@@ -2,7 +2,7 @@
    KLASSE 10  ·  alle Inhalte für Klasse 10
    ---------------------------------------------------------------------
    IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a. Themen ohne Aufgaben zeigen „kommt bald“.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.2.0-a, Unit 2 (G3, G4) ab 1.2.0-b. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=10
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -124,8 +124,8 @@ K10.welt.figurSvg =
 K10.themen = [
   { id: "10-G1", klasse: 10, unit: 1, titelEn: "Present tenses", titel: "Gegenwartszeiten", regel: "Simple present: habits and facts (I usually walk to school. Water freezes at 0 degrees.) – do / does in questions and negatives. Present progressive: am / is / are + verb-ing for now or a short time (Look! It is snowing. This week I'm working at home.). State verbs (know, want, need, belong, own, understand) → no -ing form." },
   { id: "10-G2", klasse: 10, unit: 1, titelEn: "Present perfect", titel: "Das Perfekt", regel: "Present perfect: have / has + 3rd form – until now, no finished time (ever, never, already, just, yet). since + point in time, for + period of time. Present perfect progressive: have / has been + verb-ing – how long something has been going on (I have been waiting for an hour). Finished time (yesterday, last week, ago, in 2018) → simple past." },
-  { id: "10-G3", klasse: 10, unit: 2, titelEn: "Conditional sentences type I and II", titel: "Bedingungssätze Typ I und II", regel: "" },
-  { id: "10-G4", klasse: 10, unit: 2, titelEn: "The passive", titel: "Das Passiv", regel: "" },
+  { id: "10-G3", klasse: 10, unit: 2, titelEn: "Conditional sentences type I and II", titel: "Bedingungssätze Typ I und II", regel: "Type I (possible): if + simple present, will / should + verb: If it rains, we will stay at home. Type II (unreal): if + simple past, would / could + verb: If I had more money, I would travel. If I were / was you … No will / would in the if-clause. The if-clause can come first (with comma) or second." },
+  { id: "10-G4", klasse: 10, unit: 2, titelEn: "The passive", titel: "Das Passiv", regel: "Passive (Passiv): simple present: am / is / are + 3rd form (Tea is grown in India). Simple past: was / were + 3rd form (The Taj Mahal was built in the 17th century). Who did it? → by … Negative: isn't / wasn't + 3rd form. Question: Is / Was … + 3rd form?" },
   { id: "10-G5", klasse: 10, unit: 3, titelEn: "Reported speech (places, times, commands and requests)", titel: "Indirekte Rede (Orts- und Zeitangaben, Aufforderungen und Bitten)", regel: "" },
   { id: "10-G6", klasse: 10, unit: 3, titelEn: "Past tenses", titel: "Vergangenheitszeiten", regel: "" },
   { id: "10-G7", klasse: 10, unit: 3, titelEn: "Conditional sentences type III", titel: "Bedingungssätze Typ III", regel: "" }
@@ -329,6 +329,211 @@ K10.generatoren = {
 };
 
 // =====================================================================
+// Klasse 10, Unit 2 (G3, G4)
+// =====================================================================
+// Hilfe für if-Sätze: K10_WENN("If it rains", "we will stay at home") ergibt alle richtigen Varianten:
+// mit/ohne Komma, Hauptsatz vorn oder hinten, Kurzformen (will → 'll, would → 'd, will not → won't …).
+// Mehrere if-Teile (z. B. „If I were you“ / „If I was you“) als Liste übergeben.
+const K10_WENN = (ifTeile, haupt) => {
+  const kurz = x => x.replace(/\b(I|you|he|she|it|we|they) will not\b/g, "$1 won't").replace(/\b(I|you|he|she|it|we|they) would not\b/g, "$1 wouldn't")
+                     .replace(/\b(I|you|he|she|it|we|they) will\b/g, "$1'll").replace(/\b(I|you|he|she|it|we|they) would\b/g, "$1'd")
+                     .replace(/\bwill not\b/g, "won't").replace(/\bwould not\b/g, "wouldn't");
+  const kurzIf = x => x.replace(/\bdo not\b/g, "don't").replace(/\bdoes not\b/g, "doesn't").replace(/\bdid not\b/g, "didn't");
+  const gross = x => x.charAt(0).toUpperCase() + x.slice(1), klein = x => x.charAt(0).toLowerCase() + x.slice(1);
+  const H = [...new Set([haupt, kurz(haupt), kurz(haupt).replace(/'ll not\b/g, " won't")])];
+  const I = [...new Set([].concat(ifTeile).flatMap(i => [i, kurzIf(i)]))];
+  const out = [];
+  I.forEach(i => H.forEach(h => [i + ", " + h + ".", i + " " + h + ".", gross(h) + " " + klein(i) + "."].forEach(z => { if(!out.includes(z)) out.push(z); })));
+  return out;
+};
+
+Object.assign(K10.baukasten, {
+  // ---------- Klasse 10, Unit 2: Bedingungssätze Typ I und II (G3) ----------
+  //   beide Typen gemischt, beide Satzstellungen, If I were / was beide richtig, mit could / should, ohne unless und might
+  "10-G3": {
+    saetze: [
+      { e: "typ1",     t: "If it rains tomorrow, we ___ the Taj Mahal another day.", h: "visit", r: ["will visit", "'ll visit"], f: ["would visit", "visit"], fehler: { ersatz: "would visit", wort: "would", loesung: ["will"] } },
+      { e: "typ1",     t: "If you ___ the train at eight, you will be in Delhi by lunchtime.", h: "take", r: ["take"], f: ["will take", "took"], fehler: "took" },
+      { e: "typ1",     t: "If the volunteers ___ early, they will finish the job today.", h: "start", r: ["start"], f: ["will start", "started"], fehler: "started" },
+      { e: "typ1",     t: "If you don't hurry, you ___ the bus.", h: "miss", r: ["will miss", "'ll miss"], f: ["would miss", "miss"], fehler: { ersatz: "would miss", wort: "would", loesung: ["will"] } },
+      { e: "typ1",     t: "We ___ late if the traffic is bad.", h: "be", r: ["will be", "'ll be"], f: ["would be", "are"], fehler: { ersatz: "would be", wort: "would", loesung: ["will"] } },
+      { e: "typ1",     t: "If Priya ___ the job, she will move to Mumbai.", h: "get", r: ["gets"], f: ["will get", "got"], fehler: { ersatz: "get", wort: "get", loesung: ["gets"] } },
+      { e: "typ1",     t: "If you don't book a room, you ___ a place to sleep.", h: "not / find", r: ["won't find", "will not find"], f: ["wouldn't find", "don't find"], fehler: { ersatz: "wouldn't find", wort: "wouldn't", loesung: ["won't", "will not"] } },
+      { e: "typ1",     t: "You'll feel better if you ___ some sleep.", h: "get", r: ["get"], f: ["will get", "got"], fehler: "got" },
+      { e: "typ1",     t: "If the shop is open, I ___ you some pepper.", h: "get", r: ["will get", "'ll get"], f: ["would get", "got"], fehler: { ersatz: "would get", wort: "would", loesung: ["will"] } },
+      { e: "typ2",     t: "If I ___ more money, I would travel around India.", h: "have", r: ["had"], f: ["have", "would have"], fehler: "have" },
+      { e: "typ2",     t: "If we lived in Delhi, we ___ the Red Fort every week.", h: "visit", r: ["would visit", "'d visit"], f: ["will visit", "visited"], fehler: { ersatz: "will visit", wort: "will", loesung: ["would"] } },
+      { e: "typ2",     t: "If my parents ___ so far away, I would see them more often.", h: "not / live", r: ["didn't live", "did not live"], f: ["don't live", "wouldn't live"], fehler: { ersatz: "don't live", wort: "don't", loesung: ["didn't", "did not"] } },
+      { e: "typ2",     t: "Rahul ___ in a call centre if the wages were better.", h: "work", r: ["would work", "'d work"], f: ["will work", "worked"], fehler: { ersatz: "will work", wort: "will", loesung: ["would"] } },
+      { e: "typ2",     t: "If you ___ harder, you would get a promotion.", h: "work", r: ["worked"], f: ["work", "would work"], fehler: "work" },
+      { e: "typ2",     t: "If the company ___ more workers, the warehouse wouldn't be so busy.", h: "hire", r: ["hired"], f: ["hires", "would hire"], fehler: "hires" },
+      { e: "typ2",     t: "I ___ that job if I were you.", h: "not / take", r: ["wouldn't take", "would not take"], f: ["won't take", "didn't take"], fehler: { ersatz: "won't take", wort: "won't", loesung: ["wouldn't", "would not"] } },
+      { e: "typ2",     t: "We would move to India if we ___ jobs there.", h: "find", r: ["found"], f: ["find", "would find"], fehler: "find" },
+      { e: "typ2",     t: "Unemployment would fall if more companies ___ factories here.", h: "build", r: ["built"], f: ["build", "would build"], fehler: "build" },
+      { e: "were",     t: "If I ___ you, I would apply for the internship.", h: "be", r: ["were", "was"], f: ["am", "would be"], fehler: "am" },
+      { e: "were",     t: "If Sam ___ here, he would help us.", h: "be", r: ["were", "was"], f: ["is", "would be"], fehler: "is" },
+      { e: "were",     t: "If it ___ warmer, we could swim in the lake.", h: "be", r: ["were", "was"], f: ["is", "would be"], fehler: "is" },
+      { e: "were",     t: "The workers would be happier if their working conditions ___ better.", h: "be", r: ["were"], f: ["are", "would be"], fehler: "are" },
+      { e: "modal",    t: "If you feel ill, you ___ see a doctor.", h: "should / would", r: ["should"], f: ["would", "shoulds"], fehler: "would" },
+      { e: "modal",    t: "If you want to work as a volunteer, you ___ get a vaccination first.", h: "should / would", r: ["should"], f: ["would", "should to"], fehler: "would" },
+      { e: "modal",    t: "If you go to India in summer, you ___ take light clothes.", h: "should / would", r: ["should"], f: ["would", "shoulds"], fehler: "would" },
+      { e: "modal",    t: "If I spoke Hindi, I ___ talk to the people in the village.", h: "can", r: ["could"], f: ["can", "will"], fehler: { ersatz: "can", wort: "can", loesung: ["could"] } },
+      { e: "modal",    t: "If we had more time, we ___ visit Gandhi's house too.", h: "can", r: ["could"], f: ["can", "will"], fehler: { ersatz: "can", wort: "can", loesung: ["could"] } },
+      { e: "kontrast", t: "If I win the competition, I ___ a party.", h: "have", r: ["will have", "'ll have"], f: ["would have", "had"], fehler: { ersatz: "would have", wort: "would", loesung: ["will"] } },
+      { e: "kontrast", t: "If I found a lot of money, I ___ it to an orphanage.", h: "give", r: ["would give", "'d give"], f: ["will give", "gave"], fehler: { ersatz: "will give", wort: "will", loesung: ["would"] } }
+    ],
+    umformen: [
+      { e: "typ1",  a: "Write an if-sentence type I:", von: "(it / rain) – (we / stay at home)", nach: K10_WENN("If it rains", "we will stay at home") },
+      { e: "typ1",  a: "Write an if-sentence type I:", von: "(you / not hurry) – (you / miss the train)", nach: K10_WENN("If you do not hurry", "you will miss the train") },
+      { e: "typ1",  a: "Write an if-sentence type I:", von: "(Priya / get the job) – (she / move to Mumbai)", nach: K10_WENN("If Priya gets the job", "she will move to Mumbai") },
+      { e: "typ1",  a: "Write an if-sentence type I:", von: "(we / have time) – (we / visit the Taj Mahal)", nach: K10_WENN("If we have time", "we will visit the Taj Mahal") },
+      { e: "typ1",  a: "Write an if-sentence type I:", von: "(the shop / be open) – (I / buy some tea)", nach: K10_WENN("If the shop is open", "I will buy some tea") },
+      { e: "modal", a: "Write an if-sentence type I with “should”:", von: "(you / feel ill) – (you / should see a doctor)", nach: K10_WENN("If you feel ill", "you should see a doctor") },
+      { e: "typ2",  a: "Write an if-sentence type II:", von: "(I / have more money) – (I / travel around India)", nach: K10_WENN("If I had more money", "I would travel around India") },
+      { e: "typ2",  a: "Write an if-sentence type II:", von: "(we / live in Delhi) – (we / visit the Red Fort more often)", nach: K10_WENN("If we lived in Delhi", "we would visit the Red Fort more often") },
+      { e: "modal", a: "Write an if-sentence type II:", von: "(Rahul / speak Hindi) – (he / can talk to the people)", nach: K10_WENN("If Rahul spoke Hindi", "he could talk to the people") },
+      { e: "were",  a: "Write an if-sentence type II:", von: "(I / be you) – (I / apply for the internship)", nach: K10_WENN(["If I were you", "If I was you"], "I would apply for the internship") },
+      { e: "were",  a: "Write an if-sentence type II:", von: "(the wages / be better) – (more people / work here)", nach: K10_WENN("If the wages were better", "more people would work here") },
+      { e: "typ2",  a: "Write an if-sentence type II:", von: "(my parents / not live so far away) – (I / see them more often)", nach: K10_WENN("If my parents did not live so far away", "I would see them more often") },
+      { e: "were",  a: "Write an if-sentence type II:", von: "(it / be warmer) – (we / can swim in the lake)", nach: K10_WENN(["If it were warmer", "If it was warmer"], "we could swim in the lake") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If I have time, I will help you.", nach: K10_WENN("If I had time", "I would help you") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If we find the hotel, we will stay there.", nach: K10_WENN("If we found the hotel", "we would stay there") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If it is sunny, we will go to the beach.", nach: K10_WENN(["If it were sunny", "If it was sunny"], "we would go to the beach") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If you ask him, he will tell you.", nach: K10_WENN("If you asked him", "he would tell you") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If I don't get the job, I will look for another one.", nach: K10_WENN("If I did not get the job", "I would look for another one") },
+      { e: "kontrast", a: "Make the sentence unreal (type II):", von: "If Sam comes, we can start.", nach: K10_WENN("If Sam came", "we could start") },
+      { e: "kontrast", a: "Make the sentence real (type I):", von: "If I won the race, I would be happy.", nach: K10_WENN("If I win the race", "I will be happy") },
+      { e: "kontrast", a: "Make the sentence real (type I):", von: "If we had a car, we would drive to the palace.", nach: K10_WENN("If we have a car", "we will drive to the palace") },
+      { e: "kontrast", a: "Make the sentence real (type I):", von: "If they didn't help us, we would need more time.", nach: K10_WENN("If they do not help us", "we will need more time") },
+      { e: "kontrast", a: "Make the sentence real (type I):", von: "If she studied, she would pass the test.", nach: K10_WENN("If she studies", "she will pass the test") },
+      { e: "typ2",  a: "Start with the main clause (Hauptsatz):", von: "If the wages were better, I would work here.", nach: ["I would work here if the wages were better.", "I'd work here if the wages were better."] },
+      { e: "typ1",  a: "Start with the main clause (Hauptsatz):", von: "If you take the eight o'clock train, you will be in Delhi by lunchtime.", nach: ["You will be in Delhi by lunchtime if you take the eight o'clock train.", "You'll be in Delhi by lunchtime if you take the eight o'clock train."] },
+      { e: "were",  a: "Start with the main clause (Hauptsatz):", von: "If I were rich, I would build a school.", nach: ["I would build a school if I were rich.", "I'd build a school if I were rich.", "I would build a school if I was rich.", "I'd build a school if I was rich."] }
+    ],
+    zuordnen: {
+      kategorien: ["type I (possible)", "type II (unreal)"],
+      woerter: [
+        { text: "If it rains, we'll stay in.", ziel: "type I (possible)" }, { text: "If you hurry, you'll catch it.", ziel: "type I (possible)" },
+        { text: "If I see him, I'll tell him.", ziel: "type I (possible)" }, { text: "If you feel ill, you should rest.", ziel: "type I (possible)" },
+        { text: "I'll call you if I'm late.", ziel: "type I (possible)" },
+        { text: "If I were you, I'd go.", ziel: "type II (unreal)" }, { text: "If I had wings, I'd fly.", ziel: "type II (unreal)" },
+        { text: "If we lived here, we'd be happy.", ziel: "type II (unreal)" }, { text: "She'd help if she had time.", ziel: "type II (unreal)" },
+        { text: "If I won, I could buy a car.", ziel: "type II (unreal)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        typ1:     "Type I (Bedingungssatz Typ I): if + simple present, will + verb. It is possible or likely (wahrscheinlich). No will in the if-clause! Example: {BEISPIEL}",
+        typ2:     "Type II (Bedingungssatz Typ II): if + simple past, would + verb. It is unreal or unlikely (unwahrscheinlich). No would in the if-clause! Example: {BEISPIEL}",
+        were:     "In type II we can say If I were … or If I was … (were sounds more formal). With we / you / they it is always were. Example: {BEISPIEL}",
+        modal:    "In type I you can use should for advice (Ratschlag). In type II can becomes could. Example: {BEISPIEL}",
+        kontrast: "Look at the other part of the sentence: simple present ↔ will (type I), simple past ↔ would (type II). Example: {BEISPIEL}",
+        zuordnen: "Type I: if + simple present, will / should – possible. Type II: if + simple past, would / could – unreal or unlikely."
+      }
+    }
+  },
+
+  // ---------- Klasse 10, Unit 2: Das Passiv (G4) ----------
+  //   simple present und simple past, mit by, Fragen und Verneinung (Vorgaben der Lehrkraft)
+  "10-G4": {
+    saetze: [
+      { e: "praes",   t: "Tea ___ in many parts of India.", h: "grow", r: ["is grown"], f: ["is growed", "are grown"], fehler: { ersatz: "is growed", wort: "growed", loesung: ["grown"] } },
+      { e: "praes",   t: "In the warehouse, the products ___ into boxes.", h: "pack", r: ["are packed"], f: ["is packed", "are pack"], fehler: { ersatz: "is packed", wort: "is", loesung: ["are"] } },
+      { e: "praes",   t: "Hindi and English ___ in India.", h: "speak", r: ["are spoken"], f: ["is spoken", "are speaked"], fehler: { ersatz: "are speaked", wort: "speaked", loesung: ["spoken"] } },
+      { e: "praes",   t: "The parcels ___ to the customers by truck.", h: "deliver", r: ["are delivered"], f: ["are deliver", "is delivered"], fehler: { ersatz: "are deliver", wort: "deliver", loesung: ["delivered"] } },
+      { e: "praes",   t: "Every year the Taj Mahal ___ by millions of tourists.", h: "visit", r: ["is visited"], f: ["was visited", "is visit"], fehler: { ersatz: "was visited", wort: "was", loesung: ["is"] } },
+      { e: "praes",   t: "The new workers ___ by the manager on their first day.", h: "train", r: ["are trained"], f: ["is trained", "are train"], fehler: { ersatz: "are train", wort: "train", loesung: ["trained"] } },
+      { e: "praes",   t: "In this factory, the cars ___ by robots.", h: "assemble", r: ["are assembled"], f: ["is assembled", "are assemble"], fehler: { ersatz: "is assembled", wort: "is", loesung: ["are"] } },
+      { e: "past",    t: "The Taj Mahal ___ in the 17th century.", h: "build", r: ["was built"], f: ["is built", "was builded"], fehler: { ersatz: "was builded", wort: "builded", loesung: ["built"] } },
+      { e: "past",    t: "Gandhi ___ to prison many times.", h: "send", r: ["was sent"], f: ["was send", "were sent"], fehler: { ersatz: "was send", wort: "send", loesung: ["sent"] } },
+      { e: "past",    t: "For a long time, India ___ by the British.", h: "rule", r: ["was ruled"], f: ["is ruled", "was rule"], fehler: { ersatz: "was rule", wort: "rule", loesung: ["ruled"] } },
+      { e: "past",    t: "Many people ___ during the march.", h: "injure", r: ["were injured"], f: ["was injured", "were injure"], fehler: { ersatz: "were injure", wort: "injure", loesung: ["injured"] } },
+      { e: "past",    t: "Last month two workers ___ without a reason.", h: "dismiss", r: ["were dismissed"], f: ["was dismissed", "were dismiss"], fehler: { ersatz: "was dismissed", wort: "was", loesung: ["were"] } },
+      { e: "past",    t: "The palace ___ for a king.", h: "design", r: ["was designed"], f: ["is designed", "was design"], fehler: { ersatz: "was design", wort: "design", loesung: ["designed"] } },
+      { e: "by",      t: "The speech ___ by thousands of people.", h: "hear", r: ["was heard"], f: ["was heared", "were heard"], fehler: { ersatz: "was heared", wort: "heared", loesung: ["heard"] } },
+      { e: "by",      t: "Yesterday the volunteers ___ by the children in the village.", h: "greet", r: ["were greeted"], f: ["was greeted", "were greet"], fehler: { ersatz: "were greet", wort: "greet", loesung: ["greeted"] } },
+      { e: "neg",     t: "The workers ___ enough money.", h: "not / pay", r: ["aren't paid", "are not paid"], f: ["don't paid", "isn't paid"], fehler: { ersatz: "don't paid", wort: "don't", loesung: ["aren't", "are not"] } },
+      { e: "neg",     t: "Plastic bags ___ in this shop.", h: "not / sell", r: ["aren't sold", "are not sold"], f: ["aren't sell", "don't sold"], fehler: { ersatz: "aren't sell", wort: "sell", loesung: ["sold"] } },
+      { e: "neg",     t: "The letter ___ because the address was wrong.", h: "not / deliver", r: ["wasn't delivered", "was not delivered"], f: ["didn't delivered", "weren't delivered"], fehler: { ersatz: "didn't delivered", wort: "didn't", loesung: ["wasn't", "was not"] } },
+      { e: "neg",     t: "The contracts ___ yesterday.", h: "not / sign", r: ["weren't signed", "were not signed"], f: ["wasn't signed", "weren't sign"], fehler: { ersatz: "weren't sign", wort: "sign", loesung: ["signed"] } },
+      { e: "neg",     t: "This room ___ every day.", h: "not / clean", r: ["isn't cleaned", "is not cleaned"], f: ["doesn't cleaned", "aren't cleaned"], fehler: { ersatz: "doesn't cleaned", wort: "doesn't", loesung: ["isn't", "is not"] } },
+      { e: "frage",   t: "___ the products stored in the warehouse?", h: "be – present", r: ["Are"], f: ["Do", "Is"], fehler: "Do" },
+      { e: "frage",   t: "When ___ the Taj Mahal built?", h: "be – past", r: ["was"], f: ["did", "is"], fehler: "did" },
+      { e: "frage",   t: "___ the new employees trained last week?", h: "be – past", r: ["Were"], f: ["Did", "Was"], fehler: "Did" },
+      { e: "frage",   t: "Where ___ tea grown in India?", h: "be – present", r: ["is"], f: ["does", "are"], fehler: "does" },
+      { e: "frage",   t: "Why ___ the workers dismissed last month?", h: "be – past", r: ["were"], f: ["did", "was"], fehler: "did" },
+      { e: "aktpass", t: "Shah Jahan ___ the Taj Mahal for his wife.", h: "build", r: ["built"], f: ["was built", "builded"], fehler: "builded" },
+      { e: "aktpass", t: "The Taj Mahal ___ by about 20,000 workers.", h: "build", r: ["was built"], f: ["built", "was builded"], fehler: { ersatz: "built", wort: "built", loesung: ["was built"] } },
+      { e: "aktpass", t: "The manager ___ the new workers every Monday.", h: "train", r: ["trains"], f: ["is trained", "train"], fehler: "train" },
+      { e: "aktpass", t: "Gandhi ___ the British laws without violence.", h: "resist", r: ["resisted"], f: ["was resisted", "resist"], fehler: "resist" },
+      { e: "aktpass", t: "Our truck drivers ___ the goods to the shops.", h: "deliver", r: ["deliver"], f: ["are delivered", "delivers"], fehler: "delivers" }
+    ],
+    umformen: [
+      { e: "by",    a: "Use the passive with “by”:", von: "Robots assemble the cars.", nach: ["The cars are assembled by robots."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "The manager trains the new workers.", nach: ["The new workers are trained by the manager."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "Millions of tourists visit the Taj Mahal every year.", nach: ["The Taj Mahal is visited by millions of tourists every year.", "Every year the Taj Mahal is visited by millions of tourists.", "Every year, the Taj Mahal is visited by millions of tourists."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "Our drivers deliver the parcels.", nach: ["The parcels are delivered by our drivers."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "Shah Jahan built the Taj Mahal.", nach: ["The Taj Mahal was built by Shah Jahan."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "The British ruled India.", nach: ["India was ruled by the British."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "Thousands of people heard the speech.", nach: ["The speech was heard by thousands of people."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "The police injured many people.", nach: ["Many people were injured by the police."] },
+      { e: "by",    a: "Use the passive with “by”:", von: "The manager dismissed two workers.", nach: ["Two workers were dismissed by the manager."] },
+      { e: "praes", a: "Use the passive without “by”:", von: "People speak English in India.", nach: ["English is spoken in India."] },
+      { e: "praes", a: "Use the passive without “by”:", von: "They pack the products in the warehouse.", nach: ["The products are packed in the warehouse."] },
+      { e: "past",  a: "Use the passive without “by”:", von: "Someone stole my bag.", nach: ["My bag was stolen."] },
+      { e: "past",  a: "Use the passive without “by”:", von: "They built the palace in 1650.", nach: ["The palace was built in 1650.", "In 1650 the palace was built.", "In 1650, the palace was built."] },
+      { e: "praes", a: "Use the passive without “by”:", von: "People grow tea here.", nach: ["Tea is grown here."] },
+      { e: "neg",   a: "Make the passive sentence negative:", von: "The workers are paid well.", nach: ["The workers aren't paid well.", "The workers are not paid well."] },
+      { e: "neg",   a: "Make the passive sentence negative:", von: "The letter was delivered.", nach: ["The letter wasn't delivered.", "The letter was not delivered."] },
+      { e: "neg",   a: "Make the passive sentence negative:", von: "The contracts were signed.", nach: ["The contracts weren't signed.", "The contracts were not signed."] },
+      { e: "neg",   a: "Make the passive sentence negative:", von: "The room is cleaned every day.", nach: ["The room isn't cleaned every day.", "The room is not cleaned every day."] },
+      { e: "frage", a: "Ask a question:", von: "The products are stored here.", nach: ["Are the products stored here?"] },
+      { e: "frage", a: "Ask a question:", von: "The palace was built for a king.", nach: ["Was the palace built for a king?"] },
+      { e: "frage", a: "Ask a question with “when” (When …):", von: "The Taj Mahal was built in the 17th century.", nach: ["When was the Taj Mahal built?"] },
+      { e: "frage", a: "Ask a question with “where” (Where …):", von: "Tea is grown in Assam.", nach: ["Where is tea grown?"] },
+      { e: "frage", a: "Ask a question with “why” (Why …):", von: "The workers were dismissed for a reason.", nach: ["Why were the workers dismissed?"] },
+      { e: "aktpass", a: "Use the active (Aktiv):", von: "The cars are assembled by robots.", nach: ["Robots assemble the cars."] },
+      { e: "aktpass", a: "Use the active (Aktiv):", von: "The speech was written by Gandhi.", nach: ["Gandhi wrote the speech."] },
+      { e: "aktpass", a: "Use the active (Aktiv):", von: "The volunteers were greeted by the children.", nach: ["The children greeted the volunteers."] }
+    ],
+    zuordnen: {
+      kategorien: ["active (Aktiv)", "passive (Passiv)"],
+      woerter: [
+        { text: "Robots assemble cars.", ziel: "active (Aktiv)" }, { text: "Gandhi wrote it.", ziel: "active (Aktiv)" }, { text: "They pack the boxes.", ziel: "active (Aktiv)" },
+        { text: "The manager trains us.", ziel: "active (Aktiv)" }, { text: "The British ruled India.", ziel: "active (Aktiv)" }, { text: "Shah Jahan built it.", ziel: "active (Aktiv)" },
+        { text: "Cars are assembled here.", ziel: "passive (Passiv)" }, { text: "It was written by Gandhi.", ziel: "passive (Passiv)" }, { text: "The boxes are packed.", ziel: "passive (Passiv)" },
+        { text: "We are trained.", ziel: "passive (Passiv)" }, { text: "India was ruled by the British.", ziel: "passive (Passiv)" }, { text: "It was built in 1653.", ziel: "passive (Passiv)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        praes:   "Passive in the simple present (Passiv): am / is / are + 3rd form. We use it when the action is more important than the person who does it. Example: {BEISPIEL}",
+        past:    "Passive in the simple past: was / were + 3rd form. Example: {BEISPIEL}",
+        by:      "Who did it? → by + person or thing (von): … by the manager. Example: {BEISPIEL}",
+        neg:     "Negative (Verneinung): isn't / aren't / wasn't / weren't + 3rd form – no do / does / did. Example: {BEISPIEL}",
+        frage:   "Questions: Is / Are / Was / Were + subject + 3rd form …? Example: {BEISPIEL}",
+        aktpass: "Active (Aktiv): the subject does the action. Passive (Passiv): something is done – is / are / was / were + 3rd form. Example: {BEISPIEL}",
+        zuordnen: "Passive (Passiv) = form of be + 3rd form (is packed, was written). Active (Aktiv) = the subject does it (they pack, Gandhi wrote)."
+      }
+    }
+  }
+});
+
+Object.assign(K10.generatoren, {
+  "10-G3": { baukasten: "10-G3", art: "satzpool" },
+  "10-G4": { baukasten: "10-G4", art: "satzpool" }
+});
+
+K10.woerterhilfe.push(...[
+  { en: "Taj Mahal", de: "Taj Mahal (Grabmal in Indien)" }, { en: "Delhi", de: "Delhi (Hauptstadtregion Indiens)" }, { en: "Mumbai", de: "Mumbai (Stadt in Indien)" },
+  { en: "Red Fort", de: "Rotes Fort (in Delhi)" }, { en: "Hindi", de: "Hindi (Sprache)" }, { en: "Assam", de: "Assam (Region in Indien)" },
+  { en: "Shah Jahan", de: "Shah Jahan (indischer Herrscher)" }, { en: "Gandhi", de: "Mahatma Gandhi" }, { en: "robots", de: "Roboter" }, { en: "parcels", de: "Pakete" },
+  { en: "wings", de: "Flügel" }, { en: "traffic", de: "Verkehr" }, { en: "lunchtime", de: "Mittagszeit" }, { en: "hire", de: "einstellen" }, { en: "hired", de: "stellte ein" },
+  { en: "unemployment", de: "Arbeitslosigkeit" }, { en: "factories", de: "Fabriken" }, { en: "light clothes", de: "leichte Kleidung" }, { en: "competition", de: "Wettbewerb" },
+  { en: "grown", de: "angebaut" }, { en: "violence", de: "Gewalt" }, { en: "goods", de: "Waren" }, { en: "wife", de: "Ehefrau" }, { en: "stored", de: "gelagert" }, { en: "British", de: "Briten; britisch" }, { en: "laws", de: "Gesetze" }
+]);
+
+// =====================================================================
 // 6) DIE AUFGABEN (handgeschriebener Pool)
 // =====================================================================
 K10.aufgaben = [
@@ -339,7 +544,15 @@ K10.aufgaben = [
   { thema: "10-G2", niveau: "gruen", form: "quiz", frage: "We have lived here ___ 2015.", optionen: ["since", "for", "ago"], loesung: "since",
     erklaerung: "since + point in time (Zeitpunkt): since 2015. Example: Ethan has lived in Canada since 2019." },
   { thema: "10-G2", niveau: "gelb", form: "luecke", frage: "Lucy ___ (swim – present perfect progressive) for an hour.", loesung: ["has been swimming", "'s been swimming"],
-    erklaerung: "Present perfect progressive: has / have been + verb-ing (swim → swimming). Example: It has been snowing all day." }
+    erklaerung: "Present perfect progressive: has / have been + verb-ing (swim → swimming). Example: It has been snowing all day." },
+  { thema: "10-G3", niveau: "gruen", form: "quiz", frage: "If I ___ a bike, I would cycle to work.", optionen: ["had", "have", "would have"], loesung: "had",
+    erklaerung: "Type II: if + simple past, would + verb. Example: If we lived in Delhi, we would visit the Red Fort." },
+  { thema: "10-G3", niveau: "rot", form: "fehler", satz: "If it snows tomorrow, we would stay at home.", fehlerwort: "would", loesung: ["will"],
+    erklaerung: "Type I (Bedingungssatz Typ I): if + simple present, will + verb. Example: If you don't hurry, you will miss the bus." },
+  { thema: "10-G4", niveau: "gruen", form: "quiz", frage: "Rice ___ in many parts of Asia.", optionen: ["is grown", "is growed", "grows by"], loesung: "is grown",
+    erklaerung: "Passive (Passiv): is / are + 3rd form. grow → grown. Example: Tea is grown in many parts of India." },
+  { thema: "10-G4", niveau: "gelb", form: "luecke", frage: "The bridge ___ (open) in 1998.", loesung: ["was opened"],
+    erklaerung: "Passive in the simple past: was / were + 3rd form. Example: The palace was designed for a king." }
 ];
 
 // =====================================================================
@@ -355,7 +568,17 @@ K10.zusatzfragen = [
   { thema: "10-G2", frage: "I … a moose last summer.", optionen: ["saw", "have seen", "seed"], loesung: "saw" },
   { thema: "10-G2", frage: "Have you … been to Canada?", optionen: ["ever", "yet", "since"], loesung: "ever" },
   { thema: "10-G2", frage: "It … snowing all day.", optionen: ["has been", "is been", "has"], loesung: "has been" },
-  { thema: "10-G2", frage: "We haven't finished …", optionen: ["yet.", "already.", "just."], loesung: "yet." }
+  { thema: "10-G2", frage: "We haven't finished …", optionen: ["yet.", "already.", "just."], loesung: "yet." },
+  { thema: "10-G3", frage: "If it rains, we … at home.", optionen: ["will stay", "would stay", "stayed"], loesung: "will stay" },
+  { thema: "10-G3", frage: "If I … more time, I'd help you.", optionen: ["had", "have", "would have"], loesung: "had" },
+  { thema: "10-G3", frage: "If I … you, I'd take the job.", optionen: ["were", "am", "would be"], loesung: "were" },
+  { thema: "10-G3", frage: "If you feel ill, you … see a doctor.", optionen: ["should", "would", "shoulds"], loesung: "should" },
+  { thema: "10-G3", frage: "If I spoke Hindi, I … talk to them.", optionen: ["could", "can", "will"], loesung: "could" },
+  { thema: "10-G4", frage: "Hindi … in India.", optionen: ["is spoken", "is speaked", "speaks"], loesung: "is spoken" },
+  { thema: "10-G4", frage: "The Taj Mahal … in the 17th century.", optionen: ["was built", "is built", "was builded"], loesung: "was built" },
+  { thema: "10-G4", frage: "… the boxes packed yesterday?", optionen: ["Were", "Did", "Was"], loesung: "Were" },
+  { thema: "10-G4", frage: "The workers … paid enough.", optionen: ["aren't", "don't", "isn't"], loesung: "aren't" },
+  { thema: "10-G4", frage: "Shah Jahan … the Taj Mahal.", optionen: ["built", "was built", "builded"], loesung: "built" }
 ];
 
 // =====================================================================
