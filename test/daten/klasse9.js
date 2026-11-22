@@ -2,7 +2,7 @@
    KLASSE 9  ·  alle Inhalte für Klasse 9
    ---------------------------------------------------------------------
    IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b. Themen ohne Aufgaben zeigen „kommt bald“.
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b, Unit 3 (G5–G7) ab 1.1.0-c. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=9
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -128,9 +128,9 @@ K9.themen = [
   { id: "9-G2",  klasse: 9, unit: 1, titelEn: "Comparison of adjectives and adverbs", titel: "Steigerung und Vergleich von Adjektiven und Adverbien", regel: "Short adjectives: cheap – cheaper – the cheapest (big – bigger, easy – easier). Long adjectives: interesting – more interesting – the most interesting. Irregular (unregelmäßig): good – better – the best, bad – worse – the worst. Adverbs (Adverbien): fast – faster, carefully – more carefully, well – better, badly – worse. Comparison (Vergleich): bigger than, as big as, not as big as." },
   { id: "9-G3",  klasse: 9, unit: 2, titelEn: "Relative clauses with and without relative pronouns", titel: "Relativsätze mit und ohne Relativpronomen", regel: "who / that → people (Personen), which / that → things and animals, whose → dessen/deren, after a preposition: whom (the woman to whom I spoke). Extra information between commas: who / which / whose, never that. The pronoun can be left out when a new subject follows: the hotel (that) we booked." },
   { id: "9-G4",  klasse: 9, unit: 2, titelEn: "Past progressive", titel: "Die Verlaufsform der Vergangenheit", regel: "Past progressive: was / were + verb-ing (we were swimming). Negative: wasn't / weren't + verb-ing. Long action in the background → past progressive, short action that interrupts it → simple past: I was swimming when I saw a turtle. Two long actions at the same time: while … was/were -ing." },
-  { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "" },
-  { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "" },
-  { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "" },
+  { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "1) After see, hear, watch, feel: person/thing + -ing: I saw him running. 2) -ing adjective = what something is like (a boring film), -ed adjective = how someone feels (I'm bored). 3) Shorter sentences (Satzverkürzung) with the same subject: When I opened the door, I saw … → Opening the door, I saw …" },
+  { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "Past perfect: had + 3rd form (had seen, had gone). Negative: hadn't / had never + 3rd form. Question: Had you …? The earlier action → past perfect, the later action → simple past: When we arrived, the bus had already left. Signal words: already, just, never, yet, after, before, when, by the time." },
+  { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "Passive simple past: was / were + 3rd form: The school was built in 2010. Who did it? → by: … by the rangers. Negative: wasn't / weren't + 3rd form. Question: Was / Were …? Simple present passive: is / are + 3rd form (today, every day)." },
   { id: "9-G8",  klasse: 9, unit: 4, titelEn: "Reported speech I (change of tense → simple past)", titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
   { id: "9-G9",  klasse: 9, unit: 4, titelEn: "Reported speech II (change of tense → past perfect)", titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
   { id: "9-G10", klasse: 9, unit: 4, titelEn: "Future: will and going to", titel: "Zukunftszeiten (will und going to)", regel: "" },
@@ -497,6 +497,248 @@ K9.baukasten = {
       }
     }
   }
+
+  // ---------- Klasse 9, Unit 3: Partizip Präsens (G5) ----------
+  //   Vorgabe: nach Verben der Wahrnehmung (I saw him running), -ing/-ed-Adjektive, Satzverkürzung (Walking home, I …)
+  ,"9-G5": {
+    saetze: [
+      { e: "wahrn",  t: "On the safari we saw a lion ___ under a tree.", h: "sleep + -ing", r: ["sleeping"], f: ["slept", "to sleep"], fehler: "slept" },
+      { e: "wahrn",  t: "I heard someone ___ for help.", h: "shout + -ing", r: ["shouting"], f: ["shouted", "to shout"], fehler: "shouted" },
+      { e: "wahrn",  t: "We watched the baboons ___ in the trees.", h: "play + -ing", r: ["playing"], f: ["played", "to play"], fehler: "played" },
+      { e: "wahrn",  t: "Mia felt something ___ up her leg.", h: "climb + -ing", r: ["climbing"], f: ["climbed", "to climb"], fehler: "climbed" },
+      { e: "wahrn",  t: "The ranger saw two men ___ near the fence.", h: "hide + -ing", r: ["hiding"], f: ["hided", "to hide"], fehler: "hided" },
+      { e: "wahrn",  t: "Did you hear the children ___?", h: "sing + -ing", r: ["singing"], f: ["sang", "to sing"], fehler: "sang" },
+      { e: "wahrn",  t: "We could see the sun ___ over the mountains.", h: "rise + -ing", r: ["rising"], f: ["rised", "to rise"], fehler: "rised" },
+      { e: "wahrn",  t: "I saw a man ___ at us from the car.", h: "look + -ing", r: ["looking"], f: ["looked", "to look"], fehler: "looked" },
+      { e: "adj",    t: "The safari was really ___.", h: "excite → -ing / -ed", r: ["exciting"], f: ["excited", "exciteing"], fehler: "excited" },
+      { e: "adj",    t: "We were very ___ when we saw the lions.", h: "excite → -ing / -ed", r: ["excited"], f: ["exciting", "excitet"], fehler: "exciting" },
+      { e: "adj",    t: "The film about apartheid was ___.", h: "shock → -ing / -ed", r: ["shocking"], f: ["shocked", "shockking"], fehler: "shocked" },
+      { e: "adj",    t: "I was ___ when I heard the news.", h: "shock → -ing / -ed", r: ["shocked"], f: ["shocking", "shockt"], fehler: "shocking" },
+      { e: "adj",    t: "The lesson was so ___ that I fell asleep.", h: "bore → -ing / -ed", r: ["boring"], f: ["bored", "boreing"], fehler: "bored" },
+      { e: "adj",    t: "Tom is very ___ in history.", h: "interest → -ing / -ed", r: ["interested"], f: ["interesting", "interestet"], fehler: "interesting" },
+      { e: "adj",    t: "After the long walk we were really ___.", h: "tire → -ing / -ed", r: ["tired"], f: ["tiring", "tirred"], fehler: "tiring" },
+      { e: "adj",    t: "The night in the tent was ___. We heard lions all night.", h: "frighten → -ing / -ed", r: ["frightening"], f: ["frightened", "frightning"], fehler: "frightened" },
+      { e: "adj",    t: "The children were ___ of the big dog.", h: "frighten → -ing / -ed", r: ["frightened"], f: ["frightening", "frighted"], fehler: "frightening" },
+      { e: "adj",    t: "It was an ___ trip.", h: "amaze → -ing / -ed", r: ["amazing"], f: ["amazed", "amazeing"], fehler: "amazed" },
+      { e: "adj",    t: "My parents were ___ by my good marks.", h: "surprise → -ing / -ed", r: ["surprised"], f: ["surprising", "surpriseing"], fehler: "surprising" },
+      { e: "kurz",   t: "___ through the national park, we saw a rhino.", h: "walk + -ing", r: ["Walking"], f: ["Walked", "To walk"], fehler: "Walked" },
+      { e: "kurz",   t: "___ the news, she started to cry.", h: "hear + -ing", r: ["Hearing"], f: ["Heard", "To hear"], fehler: "Heard" },
+      { e: "kurz",   t: "___ tired, Tom went to bed early.", h: "feel + -ing", r: ["Feeling"], f: ["Felt", "To feel"], fehler: "Felt" },
+      { e: "kurz",   t: "___ the door, I saw a big spider.", h: "open + -ing", r: ["Opening"], f: ["Opened", "To open"], fehler: "Opened" },
+      { e: "kurz",   t: "___ to the bus stop, Mia lost her phone.", h: "run + -ing", r: ["Running"], f: ["Runing", "Ran"], fehler: "Ran" },
+      { e: "kurz",   t: "___ in a township, Thabo knew a lot about the problems there.", h: "live + -ing", r: ["Living"], f: ["Lived", "Liveing"], fehler: "Lived" },
+      { e: "kurz",   t: "___ his phone, Ben didn't see the lion.", h: "watch + -ing", r: ["Watching"], f: ["Watched", "To watch"], fehler: "Watched" },
+      { e: "kurz",   t: "___ no money, the boy couldn't buy a ticket.", h: "have + -ing", r: ["Having"], f: ["Had", "Haveing"], fehler: "Had" },
+      { e: "kurz",   t: "Grandma sat in the garden, ___ the newspaper.", h: "read + -ing", r: ["reading"], f: ["readed", "to read"], fehler: "readed" }
+    ],
+    umformen: [
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "I saw the children. They were playing football.", nach: ["I saw the children playing football."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "We heard the birds. They were singing.", nach: ["We heard the birds singing."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "Mia watched the baboons. They were eating fruit.", nach: ["Mia watched the baboons eating fruit."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "The ranger saw a man. He was running away.", nach: ["The ranger saw a man running away."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "I felt the ground. It was shaking.", nach: ["I felt the ground shaking."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "We saw the tourists. They were taking photos.", nach: ["We saw the tourists taking photos."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "I heard my sister. She was talking on the phone.", nach: ["I heard my sister talking on the phone."] },
+      { e: "wahrn", a: "Join the sentences with an -ing form:", von: "We watched the sun. It was going down.", nach: ["We watched the sun going down."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "While we were walking through the park, we saw a rhino.", nach: ["Walking through the park, we saw a rhino."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "When she heard the news, she started to cry.", nach: ["Hearing the news, she started to cry."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "Because he felt tired, Tom went to bed.", nach: ["Feeling tired, Tom went to bed."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "When I opened the door, I saw a spider.", nach: ["Opening the door, I saw a spider."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "Because she lived in Cape Town, Thandi knew the city well.", nach: ["Living in Cape Town, Thandi knew the city well."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "While he was waiting for the bus, Ben read a book.", nach: ["Waiting for the bus, Ben read a book."] },
+      { e: "kurz",  a: "Shorten the sentence with an -ing form:", von: "Because they had no money, they couldn't buy food.", nach: ["Having no money, they couldn't buy food."] },
+      { e: "kurz",  a: "Join the sentences with an -ing form:", von: "Grandma sat in the garden. She was reading the newspaper.", nach: ["Grandma sat in the garden, reading the newspaper.", "Grandma sat in the garden reading the newspaper."] },
+      { e: "adj",   a: "Use an -ing adjective (The trip was …):", von: "The trip interested me.", nach: ["The trip was interesting."] },
+      { e: "adj",   a: "Use an -ed adjective (I was … in the trip):", von: "The trip interested me.", nach: ["I was interested in the trip."] },
+      { e: "adj",   a: "Use an -ing adjective (The film was …):", von: "The film bored us.", nach: ["The film was boring."] },
+      { e: "adj",   a: "Use an -ed adjective (We were …):", von: "The film bored us.", nach: ["We were bored."] },
+      { e: "adj",   a: "Use an -ing adjective (The news was …):", von: "The news shocked everybody.", nach: ["The news was shocking."] },
+      { e: "adj",   a: "Use an -ed adjective (Everybody was …):", von: "The news shocked everybody.", nach: ["Everybody was shocked.", "Everybody was shocked by the news."] },
+      { e: "adj",   a: "Use an -ed adjective (The children were …):", von: "The long walk tired the children.", nach: ["The children were tired."] },
+      { e: "adj",   a: "Use an -ing adjective (The lions were …):", von: "The lions frightened me.", nach: ["The lions were frightening."] },
+      { e: "adj",   a: "Use an -ed adjective (We were …):", von: "The safari excited us.", nach: ["We were excited.", "We were excited about the safari."] },
+      { e: "adj",   a: "Use an -ing adjective (The safari was …):", von: "The safari excited us.", nach: ["The safari was exciting."] }
+    ],
+    zuordnen: {
+      kategorien: ["-ing (so ist etwas)", "-ed (so fühlt sich jemand)"],
+      woerter: [
+        { text: "a boring film", ziel: "-ing (so ist etwas)" }, { text: "an exciting safari", ziel: "-ing (so ist etwas)" }, { text: "a tiring day", ziel: "-ing (so ist etwas)" },
+        { text: "an interesting book", ziel: "-ing (so ist etwas)" }, { text: "a frightening night", ziel: "-ing (so ist etwas)" }, { text: "a shocking story", ziel: "-ing (so ist etwas)" },
+        { text: "I'm bored", ziel: "-ed (so fühlt sich jemand)" }, { text: "we were excited", ziel: "-ed (so fühlt sich jemand)" }, { text: "she felt tired", ziel: "-ed (so fühlt sich jemand)" },
+        { text: "he was interested", ziel: "-ed (so fühlt sich jemand)" }, { text: "they were frightened", ziel: "-ed (so fühlt sich jemand)" }, { text: "I was shocked", ziel: "-ed (so fühlt sich jemand)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        wahrn: "After verbs of perception (Verben der Wahrnehmung) like see, hear, watch and feel we can use a person or thing + -ing form: I saw him running. Example: {BEISPIEL}",
+        adj:   "-ing adjectives say what something is like (so ist etwas): a boring film. -ed adjectives say how someone feels (so fühlt sich jemand): I'm bored. Example: {BEISPIEL}",
+        kurz:  "An -ing form can make a sentence shorter (Satzverkürzung) when both parts have the same subject: When I came home, I … → Coming home, I … Example: {BEISPIEL}",
+        zuordnen: "-ing: what something is like (a boring film). -ed: how someone feels (I'm bored)."
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 3: past perfect (G6) ----------
+  //   wie Klasse 8 (Aussagen, Verneinung, Fragen) mit Gegenüberstellung simple past und Signalwörtern
+  "9-G6": {
+    saetze: [
+      { e: "aussage",  t: "When we arrived at the national park, the rangers ___ the gate.", h: "already / close – past perfect", r: ["had already closed"], f: ["have already closed", "had already close"], fehler: { ersatz: "have already closed", wort: "have", loesung: ["had"] } },
+      { e: "aussage",  t: "After the hunters ___ the rhino, the police caught them.", h: "shoot – past perfect", r: ["had shot"], f: ["have shot", "had shooted"], fehler: { ersatz: "had shooted", wort: "shooted", loesung: ["shot"] } },
+      { e: "aussage",  t: "Nelson Mandela ___ in prison for 27 years before he became President.", h: "be – past perfect", r: ["had been"], f: ["has been", "had be"], fehler: { ersatz: "has been", wort: "has", loesung: ["had"] } },
+      { e: "aussage",  t: "By the time we got to the township, the protest ___.", h: "end – past perfect", r: ["had ended"], f: ["has ended", "had end"], fehler: { ersatz: "had end", wort: "end", loesung: ["ended"] } },
+      { e: "aussage",  t: "The headteacher was angry because the students ___ a window.", h: "break – past perfect", r: ["had broken"], f: ["had broke", "has broken"], fehler: { ersatz: "had broke", wort: "broke", loesung: ["broken"] } },
+      { e: "aussage",  t: "I knew the way because I ___ there before.", h: "be – past perfect", r: ["had been"], f: ["had went", "have been"], fehler: { ersatz: "have been", wort: "have", loesung: ["had"] } },
+      { e: "aussage",  t: "Before she became a ranger, Thandi ___ biology at university.", h: "study – past perfect", r: ["had studied"], f: ["has studied", "had study"], fehler: { ersatz: "had study", wort: "study", loesung: ["studied"] } },
+      { e: "aussage",  t: "We ___ the film before, so we knew the end.", h: "see – past perfect", r: ["had seen"], f: ["have seen", "had saw"], fehler: { ersatz: "had saw", wort: "saw", loesung: ["seen"] } },
+      { e: "aussage",  t: "When I got to school, the lesson ___.", h: "start – past perfect", r: ["had started"], f: ["has started", "had start"], fehler: { ersatz: "had start", wort: "start", loesung: ["started"] } },
+      { e: "neg",      t: "We ___ a lion before our safari.", h: "not / see – past perfect", r: ["hadn't seen", "had not seen"], f: ["didn't seen", "hadn't saw"], fehler: { ersatz: "hadn't saw", wort: "saw", loesung: ["seen"] } },
+      { e: "neg",      t: "Mia was nervous because she ___ on a plane before.", h: "never / be – past perfect", r: ["had never been"], f: ["has never been", "had never be"], fehler: { ersatz: "has never been", wort: "has", loesung: ["had"] } },
+      { e: "neg",      t: "The tourists were hungry because they ___ breakfast.", h: "not / have – past perfect", r: ["hadn't had", "had not had"], f: ["didn't had", "hadn't have"], fehler: { ersatz: "hadn't have", wort: "have", loesung: ["had"] } },
+      { e: "neg",      t: "Tom ___ his homework, so the teacher was angry.", h: "not / do – past perfect", r: ["hadn't done", "had not done"], f: ["didn't done", "hadn't did"], fehler: { ersatz: "hadn't did", wort: "did", loesung: ["done"] } },
+      { e: "neg",      t: "When we got to the police station, the police ___ the thief yet.", h: "not / catch – past perfect", r: ["hadn't caught", "had not caught"], f: ["hadn't catched", "haven't caught"], fehler: { ersatz: "hadn't catched", wort: "catched", loesung: ["caught"] } },
+      { e: "frage",    t: "___ you ever been to Africa before last year?", h: "have – past perfect", r: ["Had"], f: ["Have", "Did"], fehler: "Did" },
+      { e: "frage",    t: "___ Mia finished her work when you called her?", h: "have – past perfect", r: ["Had"], f: ["Has", "Did"], fehler: "Has" },
+      { e: "frage",    t: "Where ___ you been before you came to Cape Town?", h: "have – past perfect", r: ["had"], f: ["did", "has"], fehler: "did" },
+      { e: "frage",    t: "___ the protesters left when the police arrived?", h: "have – past perfect", r: ["Had"], f: ["Did", "Have"], fehler: "Did" },
+      { e: "kontrast", t: "After the rangers had found the baby rhino, they ___ it to a safe place.", h: "take", r: ["took"], f: ["had taken", "taked"], fehler: "taked" },
+      { e: "kontrast", t: "When I got home, I ___ that someone had opened the window.", h: "see", r: ["saw"], f: ["had seen", "seed"], fehler: "seed" },
+      { e: "kontrast", t: "The tourists ___ very happy because they had seen a leopard.", h: "be", r: ["were"], f: ["had be", "was"], fehler: { ersatz: "was", wort: "was", loesung: ["were"] } },
+      { e: "signal",   t: "The lions had ___ eaten when we arrived, so they were sleeping.", h: "already / yet", r: ["already"], f: ["yet", "ever"], fehler: "yet" },
+      { e: "signal",   t: "The bus hadn't come ___, so we waited.", h: "already / yet", r: ["yet"], f: ["already", "ever"], fehler: "already" },
+      { e: "signal",   t: "I had ___ seen an elephant before I went to South Africa.", h: "never / ever", r: ["never"], f: ["ever", "yet"], fehler: "ever" },
+      { e: "signal",   t: "___ we had checked in, we went to the pool.", h: "after / before", r: ["After"], f: ["Before", "Until"], fehler: "Before" },
+      { e: "signal",   t: "We had packed our bags ___ the taxi came.", h: "before / after", r: ["before"], f: ["after", "since"], fehler: "after" },
+      { e: "signal",   t: "The rangers had ___ left when the poachers came.", h: "just / yet", r: ["just", "already"], f: ["yet", "ever"], fehler: "yet" }
+    ],
+    umformen: [
+      { e: "kontrast", a: "Join the sentences with “after” (past perfect + simple past):", von: "We visited the township. Then we went to the museum.", nach: ["After we had visited the township, we went to the museum.", "We went to the museum after we had visited the township."] },
+      { e: "kontrast", a: "Join the sentences with “after” (past perfect + simple past):", von: "The hunters shot the rhino. Then the rangers caught them.", nach: ["After the hunters had shot the rhino, the rangers caught them.", "The rangers caught the hunters after they had shot the rhino."] },
+      { e: "kontrast", a: "Join the sentences with “after” (past perfect + simple past):", von: "Mia finished her homework. Then she watched TV.", nach: ["After Mia had finished her homework, she watched TV.", "Mia watched TV after she had finished her homework."] },
+      { e: "kontrast", a: "Join the sentences with “after” (past perfect + simple past):", von: "We booked a room. Then we flew to Cape Town.", nach: ["After we had booked a room, we flew to Cape Town.", "We flew to Cape Town after we had booked a room."] },
+      { e: "kontrast", a: "Join the sentences with “after” (past perfect + simple past):", von: "The children ate. Then they played outside.", nach: ["After the children had eaten, they played outside.", "The children played outside after they had eaten."] },
+      { e: "kontrast", a: "Join the sentences with “before” (past perfect + simple past):", von: "We bought popcorn. Then the film started.", nach: ["We had bought popcorn before the film started.", "Before the film started, we had bought popcorn."] },
+      { e: "kontrast", a: "Join the sentences with “before” (past perfect + simple past):", von: "We cleaned the house. Then the guests arrived.", nach: ["We had cleaned the house before the guests arrived.", "Before the guests arrived, we had cleaned the house."] },
+      { e: "kontrast", a: "Join the sentences with “before” (past perfect + simple past):", von: "The poachers left. Then the rangers arrived.", nach: ["The poachers had left before the rangers arrived.", "Before the rangers arrived, the poachers had left."] },
+      { e: "signal",   a: "Join the sentences with “when” and “already”:", von: "The train left. Then we arrived at the station.", nach: ["When we arrived at the station, the train had already left.", "The train had already left when we arrived at the station."] },
+      { e: "signal",   a: "Join the sentences with “when” and “already”:", von: "The film started. Then I got to the cinema.", nach: ["When I got to the cinema, the film had already started.", "The film had already started when I got to the cinema."] },
+      { e: "signal",   a: "Join the sentences with “when” and “already”:", von: "The sun went down. Then we got to the beach.", nach: ["When we got to the beach, the sun had already gone down.", "The sun had already gone down when we got to the beach."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "She had seen a lion before.", nach: ["She hadn't seen a lion before.", "She had not seen a lion before."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "They had eaten lunch.", nach: ["They hadn't eaten lunch.", "They had not eaten lunch."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "We had heard about apartheid.", nach: ["We hadn't heard about apartheid.", "We had not heard about apartheid."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "Tom had finished his work.", nach: ["Tom hadn't finished his work.", "Tom had not finished his work."] },
+      { e: "neg",      a: "Make the sentence negative:", von: "The rangers had found the poachers.", nach: ["The rangers hadn't found the poachers.", "The rangers had not found the poachers."] },
+      { e: "frage",    a: "Ask a question:", von: "They had been to Cape Town.", nach: ["Had they been to Cape Town?"] },
+      { e: "frage",    a: "Ask a question:", von: "Mia had found the key.", nach: ["Had Mia found the key?"] },
+      { e: "frage",    a: "Ask a question:", von: "The rangers had seen the leopard.", nach: ["Had the rangers seen the leopard?"] },
+      { e: "frage",    a: "Ask a question:", von: "The tourists had paid for the safari.", nach: ["Had the tourists paid for the safari?"] },
+      { e: "frage",    a: "Ask a question with “where” (Where …):", von: "She had lived somewhere else before.", nach: ["Where had she lived before?"] },
+      { e: "aussage",  a: "Use the past perfect (When the rangers found the baby rhino, its mother …):", von: "The baby rhino's mother dies.", nach: ["When the rangers found the baby rhino, its mother had died."] },
+      { e: "aussage",  a: "Use the past perfect (When I came out, someone …):", von: "Someone steals my bike.", nach: ["When I came out, someone had stolen my bike."] },
+      { e: "aussage",  a: "Use the past perfect (When the police arrived, the protesters …):", von: "The protesters go home.", nach: ["When the police arrived, the protesters had gone home.", "When the police arrived, the protesters had already gone home."] },
+      { e: "aussage",  a: "Use the past perfect (When we got up, the wind …):", von: "The wind breaks the fence.", nach: ["When we got up, the wind had broken the fence."] },
+      { e: "aussage",  a: "Use the past perfect (When I got home, my brother …):", von: "My brother eats all the cake.", nach: ["When I got home, my brother had eaten all the cake."] }
+    ],
+    zuordnen: {
+      kategorien: ["past perfect", "simple past", "present perfect"],
+      woerter: [
+        { text: "had seen", ziel: "past perfect" }, { text: "hadn't eaten", ziel: "past perfect" }, { text: "had gone", ziel: "past perfect" }, { text: "had never been", ziel: "past perfect" },
+        { text: "saw", ziel: "simple past" }, { text: "ate", ziel: "simple past" }, { text: "went", ziel: "simple past" }, { text: "didn't go", ziel: "simple past" },
+        { text: "has seen", ziel: "present perfect" }, { text: "have eaten", ziel: "present perfect" }, { text: "has gone", ziel: "present perfect" }, { text: "haven't been", ziel: "present perfect" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        aussage:  "Past perfect (Vorvergangenheit): had + 3rd form. It shows what happened before another action in the past. Example: {BEISPIEL}",
+        neg:      "Negative (Verneinung): hadn't / had not + 3rd form, or had never + 3rd form. Example: {BEISPIEL}",
+        frage:    "Questions: Had + subject + 3rd form …? With question words: Where had you …? Example: {BEISPIEL}",
+        kontrast: "The earlier action → past perfect (had + 3rd form). The later action → simple past. Example: {BEISPIEL}",
+        signal:   "Signal words (Signalwörter): already, just, never, yet (in negative sentences), after, before, when, by the time. Example: {BEISPIEL}",
+        zuordnen: "past perfect = had + 3rd form. simple past = 2nd form (or didn't + verb). present perfect = have / has + 3rd form."
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 3: Passiv im simple past (G7) ----------
+  //   mit und ohne by, Fragen, Verneinung, Vergleich mit dem Passiv im simple present (Vorgaben der Lehrkraft)
+  "9-G7": {
+    saetze: [
+      { e: "aussage", t: "The national park ___ in 1926.", h: "create", r: ["was created"], f: ["is created", "was create"], fehler: { ersatz: "was create", wort: "create", loesung: ["created"] } },
+      { e: "aussage", t: "Many rhinos ___ by poachers last year.", h: "kill", r: ["were killed"], f: ["was killed", "are killed"], fehler: { ersatz: "was killed", wort: "was", loesung: ["were"] } },
+      { e: "aussage", t: "The first diamond in South Africa ___ in 1867.", h: "find", r: ["was found"], f: ["was finded", "were found"], fehler: { ersatz: "was finded", wort: "finded", loesung: ["found"] } },
+      { e: "aussage", t: "Nelson Mandela ___ President in 1994.", h: "elect", r: ["was elected"], f: ["were elected", "is elected"], fehler: { ersatz: "were elected", wort: "were", loesung: ["was"] } },
+      { e: "aussage", t: "The new primary school ___ last year.", h: "build", r: ["was built"], f: ["was builded", "is built"], fehler: { ersatz: "was builded", wort: "builded", loesung: ["built"] } },
+      { e: "by",      t: "The protesters ___ by the police.", h: "warn", r: ["were warned"], f: ["was warned", "were warn"], fehler: { ersatz: "were warn", wort: "warn", loesung: ["warned"] } },
+      { e: "by",      t: "The baby rhino ___ by two rangers.", h: "find", r: ["was found"], f: ["were found", "was find"], fehler: { ersatz: "was find", wort: "find", loesung: ["found"] } },
+      { e: "by",      t: "The book “Long Walk to Freedom” ___ by Nelson Mandela.", h: "write", r: ["was written"], f: ["was wrote", "is writing"], fehler: { ersatz: "was wrote", wort: "wrote", loesung: ["written"] } },
+      { e: "by",      t: "The windows ___ by the storm.", h: "break", r: ["were broken"], f: ["was broken", "were broke"], fehler: { ersatz: "were broke", wort: "broke", loesung: ["broken"] } },
+      { e: "by",      t: "The thieves ___ by a security guard.", h: "catch", r: ["were caught"], f: ["were catched", "was caught"], fehler: { ersatz: "were catched", wort: "catched", loesung: ["caught"] } },
+      { e: "by",      t: "The poachers ___ by the rangers.", h: "stop", r: ["were stopped"], f: ["were stoped", "was stopped"], fehler: { ersatz: "were stoped", wort: "stoped", loesung: ["stopped"] } },
+      { e: "neg",     t: "The tourists ___ in the accident.", h: "not / hurt", r: ["weren't hurt", "were not hurt"], f: ["didn't hurt", "wasn't hurt"], fehler: { ersatz: "didn't hurt", wort: "didn't", loesung: ["weren't", "were not"] } },
+      { e: "neg",     t: "The stolen diamonds ___.", h: "not / find", r: ["weren't found", "were not found"], f: ["didn't found", "weren't find"], fehler: { ersatz: "weren't find", wort: "find", loesung: ["found"] } },
+      { e: "neg",     t: "During apartheid, black people ___ to vote.", h: "not / allow", r: ["weren't allowed", "were not allowed"], f: ["didn't allowed", "wasn't allowed"], fehler: { ersatz: "didn't allowed", wort: "didn't", loesung: ["weren't", "were not"] } },
+      { e: "neg",     t: "The email ___ because the internet was down.", h: "not / send", r: ["wasn't sent", "was not sent"], f: ["wasn't send", "didn't sent"], fehler: { ersatz: "wasn't send", wort: "send", loesung: ["sent"] } },
+      { e: "neg",     t: "The windows ___ yesterday, so they are still dirty.", h: "not / clean", r: ["weren't cleaned", "were not cleaned"], f: ["didn't cleaned", "wasn't cleaned"], fehler: { ersatz: "didn't cleaned", wort: "didn't", loesung: ["weren't", "were not"] } },
+      { e: "frage",   t: "___ the park created in 1926?", h: "be", r: ["Was"], f: ["Did", "Were"], fehler: "Did" },
+      { e: "frage",   t: "___ the rhinos killed by poachers?", h: "be", r: ["Were"], f: ["Was", "Did"], fehler: "Did" },
+      { e: "frage",   t: "When ___ the first diamond found?", h: "be", r: ["was"], f: ["did", "were"], fehler: "did" },
+      { e: "frage",   t: "Where ___ the stolen jewellery found?", h: "be", r: ["was"], f: ["were", "did"], fehler: "did" },
+      { e: "frage",   t: "By whom ___ the book written?", h: "be", r: ["was"], f: ["did", "were"], fehler: "did" },
+      { e: "zeit",    t: "Today, the park ___ by thousands of tourists every year.", h: "visit", r: ["is visited"], f: ["was visited", "is visit"], fehler: { ersatz: "was visited", wort: "was", loesung: ["is"] } },
+      { e: "zeit",    t: "The new constitution ___ in 1996.", h: "sign", r: ["was signed"], f: ["is signed", "was sign"], fehler: { ersatz: "is signed", wort: "is", loesung: ["was"] } },
+      { e: "zeit",    t: "Nowadays, rhinos ___ by rangers day and night.", h: "protect", r: ["are protected"], f: ["were protected", "are protect"], fehler: { ersatz: "were protected", wort: "were", loesung: ["are"] } },
+      { e: "zeit",    t: "Last night two poachers ___ in the park.", h: "catch", r: ["were caught"], f: ["are caught", "were catched"], fehler: { ersatz: "are caught", wort: "are", loesung: ["were"] } },
+      { e: "zeit",    t: "Every day, the animals ___ by the rangers.", h: "count", r: ["are counted"], f: ["were counted", "are count"], fehler: { ersatz: "were counted", wort: "were", loesung: ["are"] } },
+      { e: "zeit",    t: "Yesterday a lion ___ near the road.", h: "see", r: ["was seen"], f: ["is seen", "was saw"], fehler: { ersatz: "is seen", wort: "is", loesung: ["was"] } },
+      { e: "zeit",    t: "English ___ in South Africa today.", h: "speak", r: ["is spoken"], f: ["was spoken", "is speaked"], fehler: { ersatz: "is speaked", wort: "speaked", loesung: ["spoken"] } }
+    ],
+    umformen: [
+      { e: "by",      a: "Use the passive with “by”:", von: "Poachers killed the rhino.", nach: ["The rhino was killed by poachers."] },
+      { e: "by",      a: "Use the passive with “by”:", von: "Nelson Mandela wrote the book.", nach: ["The book was written by Nelson Mandela."] },
+      { e: "by",      a: "Use the passive with “by”:", von: "The rangers found the baby lion.", nach: ["The baby lion was found by the rangers."] },
+      { e: "by",      a: "Use the passive with “by”:", von: "The storm broke the windows.", nach: ["The windows were broken by the storm."] },
+      { e: "by",      a: "Use the passive with “by”:", von: "A security guard caught the thieves.", nach: ["The thieves were caught by a security guard."] },
+      { e: "by",      a: "Use the passive with “by”:", von: "The headteacher warned the students.", nach: ["The students were warned by the headteacher."] },
+      { e: "aussage", a: "Use the passive without “by”:", von: "Someone stole my bike.", nach: ["My bike was stolen."] },
+      { e: "aussage", a: "Use the passive without “by”:", von: "They built the school in 2010.", nach: ["The school was built in 2010."] },
+      { e: "aussage", a: "Use the passive without “by”:", von: "People found diamonds in 1867.", nach: ["Diamonds were found in 1867."] },
+      { e: "aussage", a: "Use the passive without “by”:", von: "Someone opened the window.", nach: ["The window was opened."] },
+      { e: "aussage", a: "Use the passive without “by”:", von: "They created the park in 1926.", nach: ["The park was created in 1926."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The diamonds were found.", nach: ["The diamonds weren't found.", "The diamonds were not found."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The tourists were hurt.", nach: ["The tourists weren't hurt.", "The tourists were not hurt."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The email was sent.", nach: ["The email wasn't sent.", "The email was not sent."] },
+      { e: "neg",     a: "Make the sentence negative:", von: "The poachers were caught.", nach: ["The poachers weren't caught.", "The poachers were not caught."] },
+      { e: "frage",   a: "Ask a question:", von: "The book was written by Mandela.", nach: ["Was the book written by Mandela?"] },
+      { e: "frage",   a: "Ask a question:", von: "The rhinos were protected.", nach: ["Were the rhinos protected?"] },
+      { e: "frage",   a: "Ask a question with “when” (When …):", von: "The school was built in 2010.", nach: ["When was the school built?"] },
+      { e: "frage",   a: "Ask a question with “where” (Where …):", von: "The lion was seen near the river.", nach: ["Where was the lion seen?"] },
+      { e: "zeit",    a: "Put the passive sentence into the simple past:", von: "The animals are counted.", nach: ["The animals were counted."] },
+      { e: "zeit",    a: "Put the passive sentence into the simple past:", von: "The park is visited by many tourists.", nach: ["The park was visited by many tourists."] },
+      { e: "zeit",    a: "Put the passive sentence into the simple past:", von: "English is spoken here.", nach: ["English was spoken here."] },
+      { e: "zeit",    a: "Put the passive sentence into the simple present:", von: "The rhinos were protected.", nach: ["The rhinos are protected."] },
+      { e: "zeit",    a: "Put the passive sentence into the simple present:", von: "The fence was checked every day.", nach: ["The fence is checked every day."] },
+      { e: "zeit",    a: "Use the passive with “by” (simple present):", von: "The rangers count the animals every day.", nach: ["The animals are counted by the rangers every day.", "The animals are counted every day by the rangers."] },
+      { e: "zeit",    a: "Use the passive with “by” (simple present):", von: "The rangers protect the rhinos.", nach: ["The rhinos are protected by the rangers."] }
+    ],
+    zuordnen: {
+      kategorien: ["present (is / are + 3rd form)", "past (was / were + 3rd form)"],
+      woerter: [
+        { text: "is built", ziel: "present (is / are + 3rd form)" }, { text: "are protected", ziel: "present (is / are + 3rd form)" }, { text: "is spoken", ziel: "present (is / are + 3rd form)" },
+        { text: "are counted", ziel: "present (is / are + 3rd form)" }, { text: "isn't allowed", ziel: "present (is / are + 3rd form)" }, { text: "are visited", ziel: "present (is / are + 3rd form)" },
+        { text: "was built", ziel: "past (was / were + 3rd form)" }, { text: "were protected", ziel: "past (was / were + 3rd form)" }, { text: "was found", ziel: "past (was / were + 3rd form)" },
+        { text: "were caught", ziel: "past (was / were + 3rd form)" }, { text: "wasn't sent", ziel: "past (was / were + 3rd form)" }, { text: "were elected", ziel: "past (was / were + 3rd form)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        aussage: "Passive in the simple past (Passiv): was / were + 3rd form. We use it when the action is more important than the person who did it. Example: {BEISPIEL}",
+        by:      "If we want to say who did it, we add by + person or thing (von): … by the rangers. Example: {BEISPIEL}",
+        neg:     "Negative (Verneinung): wasn't / weren't + 3rd form – not didn't. Example: {BEISPIEL}",
+        frage:   "Questions: Was / Were + subject + 3rd form …? With question words: When was …? Where were …? Example: {BEISPIEL}",
+        zeit:    "Simple present passive: is / are + 3rd form (today, every day, nowadays). Simple past passive: was / were + 3rd form (yesterday, last year, in 1994). Example: {BEISPIEL}",
+        zuordnen: "Present passive: is / are + 3rd form. Past passive: was / were + 3rd form."
+      }
+    }
+  }
 };
 
 // =====================================================================
@@ -510,7 +752,13 @@ K9.woerterhilfe = [
   { en: "sharks", de: "Haie" }, { en: "hurry", de: "sich beeilen" }, { en: "Murray", de: "Murray (längster Fluss Australiens)" }, { en: "Nile", de: "Nil" },
   { en: "reggae", de: "Reggae (Musik aus Jamaika)" }, { en: "fort", de: "Festung" }, { en: "wave", de: "Welle" }, { en: "glass", de: "Glas" },
   { en: "windy", de: "windig" }, { en: "Tobago", de: "Tobago (Insel in der Karibik)" },
-  { en: "escaped", de: "entkam, floh" }, { en: "rented", de: "mieteten, liehen" }, { en: "lying", de: "liegend (lie → lying)" }
+  { en: "escaped", de: "entkam, floh" }, { en: "rented", de: "mieteten, liehen" }, { en: "lying", de: "liegend (lie → lying)" },
+  { en: "baboons", de: "Paviane" }, { en: "spider", de: "Spinne" }, { en: "biology", de: "Biologie" }, { en: "popcorn", de: "Popcorn" },
+  { en: "Long Walk to Freedom", de: "„Der lange Weg zur Freiheit“ (Buch von Nelson Mandela)" }, { en: "elected", de: "gewählt" },
+  { en: "signed", de: "unterschrieben" }, { en: "shouting", de: "rufend, schreiend" }, { en: "rising", de: "aufgehend" }, { en: "amazing", de: "erstaunlich" },
+  { en: "Cape Town", de: "Kapstadt" },
+  { en: "nowadays", de: "heutzutage" }, { en: "created", de: "gegründet, geschaffen" }, { en: "guests", de: "Gäste" }, { en: "thieves", de: "Diebe" },
+  { en: "thousands", de: "Tausende" }, { en: "marks", de: "Noten (Schule)" }, { en: "Kruger National Park", de: "Krüger-Nationalpark" }
 ];
 
 // =====================================================================
@@ -520,7 +768,10 @@ K9.generatoren = {
   "9-G1": { baukasten: "9-G1", art: "satzpool" },
   "9-G2": { baukasten: "9-G2", art: "satzpool" },
   "9-G3": { baukasten: "9-G3", art: "satzpool" },
-  "9-G4": { baukasten: "9-G4", art: "satzpool" }
+  "9-G4": { baukasten: "9-G4", art: "satzpool" },
+  "9-G5": { baukasten: "9-G5", art: "satzpool" },
+  "9-G6": { baukasten: "9-G6", art: "satzpool" },
+  "9-G7": { baukasten: "9-G7", art: "satzpool" }
 };
 
 // =====================================================================
@@ -544,7 +795,19 @@ K9.aufgaben = [
   { thema: "9-G4", niveau: "gruen", form: "quiz", frage: "I ___ on the beach when I saw the dolphins.", optionen: ["was lying", "were lying", "was lieing"], loesung: "was lying",
     erklaerung: "Past progressive (Verlaufsform): I/he/she/it was + verb-ing. lie → lying. Example: The children were playing in the sand." },
   { thema: "9-G4", niveau: "gelb", form: "luecke", frage: "We ___ (not / watch) TV when the storm started.", loesung: ["weren't watching", "were not watching"],
-    erklaerung: "Negative (Verneinung): weren't / wasn't + verb-ing. Example: Tom wasn't listening to the guide." }
+    erklaerung: "Negative (Verneinung): weren't / wasn't + verb-ing. Example: Tom wasn't listening to the guide." },
+  { thema: "9-G5", niveau: "gruen", form: "quiz", frage: "The trip to the desert was really ___.", optionen: ["interesting", "interested", "interestet"], loesung: "interesting",
+    erklaerung: "-ing adjective = what something is like (so ist etwas). Example: The safari was exciting." },
+  { thema: "9-G5", niveau: "rot", form: "fehler", satz: "Opened the box, Mia found a letter.", fehlerwort: "Opened", loesung: ["Opening"],
+    erklaerung: "A shorter sentence (Satzverkürzung) starts with the -ing form: When she opened … → Opening … Example: Feeling tired, Tom went to bed." },
+  { thema: "9-G6", niveau: "gruen", form: "quiz", frage: "When we got to the station, the train ___.", optionen: ["had already left", "has already left", "had already leave"], loesung: "had already left",
+    erklaerung: "The earlier action gets had + 3rd form (Vorvergangenheit). Example: When I got home, my brother had eaten all the cake." },
+  { thema: "9-G6", niveau: "gelb", form: "luecke", frage: "I ___ (never / see) a rhino before I went to Kruger National Park.", loesung: ["had never seen"],
+    erklaerung: "Past perfect with never: had never + 3rd form. Example: Mia had never been on a plane before." },
+  { thema: "9-G7", niveau: "gruen", form: "quiz", frage: "The jewellery ___ last night.", optionen: ["was stolen", "was stealed", "is stolen"], loesung: "was stolen",
+    erklaerung: "Passive simple past: was / were + 3rd form. steal → stolen. Example: The thieves were caught by a security guard." },
+  { thema: "9-G7", niveau: "gelb", form: "luecke", frage: "___ the rangers ___ (warn) about the poachers?", loesung: [["Were"], ["warned"]],
+    erklaerung: "Passive questions: Was / Were + subject + 3rd form? Example: Was the park created in 1926?" }
 ];
 
 // =====================================================================
@@ -569,7 +832,19 @@ K9.zusatzfragen = [
   { thema: "9-G4", frage: "At ten o'clock we … on the beach.", optionen: ["were sitting", "was sitting", "were siting"], loesung: "were sitting" },
   { thema: "9-G4", frage: "I was swimming when I … a turtle.", optionen: ["saw", "was seeing", "see"], loesung: "saw" },
   { thema: "9-G4", frage: "Mia … listening. She was on her phone.", optionen: ["wasn't", "didn't", "weren't"], loesung: "wasn't" },
-  { thema: "9-G4", frage: "While Mum … cooking, Dad was reading.", optionen: ["was", "were", "did"], loesung: "was" }
+  { thema: "9-G4", frage: "While Mum … cooking, Dad was reading.", optionen: ["was", "were", "did"], loesung: "was" },
+  { thema: "9-G5", frage: "We saw a lion … under a tree.", optionen: ["sleeping", "slept", "to sleep"], loesung: "sleeping" },
+  { thema: "9-G5", frage: "I was … by the film. I fell asleep.", optionen: ["bored", "boring", "boreing"], loesung: "bored" },
+  { thema: "9-G5", frage: "… the news, she started to cry.", optionen: ["Hearing", "Heard", "To hear"], loesung: "Hearing" },
+  { thema: "9-G5", frage: "The night in the tent was …", optionen: ["frightening.", "frightened.", "frightning."], loesung: "frightening." },
+  { thema: "9-G6", frage: "When we arrived, the bus … left.", optionen: ["had already", "has already", "already has"], loesung: "had already" },
+  { thema: "9-G6", frage: "Which is past perfect?", optionen: ["had seen", "saw", "has seen"], loesung: "had seen" },
+  { thema: "9-G6", frage: "After we … lunch, we went to the beach.", optionen: ["had had", "have had", "had have"], loesung: "had had" },
+  { thema: "9-G6", frage: "The bus hadn't come …", optionen: ["yet.", "already.", "ever."], loesung: "yet." },
+  { thema: "9-G7", frage: "The school … in 2010.", optionen: ["was built", "was builded", "is built"], loesung: "was built" },
+  { thema: "9-G7", frage: "The poachers … by the rangers.", optionen: ["were caught", "was caught", "were catched"], loesung: "were caught" },
+  { thema: "9-G7", frage: "… the park created in 1926?", optionen: ["Was", "Did", "Were"], loesung: "Was" },
+  { thema: "9-G7", frage: "Today the rhinos … by rangers.", optionen: ["are protected", "were protected", "are protect"], loesung: "are protected" }
 ];
 
 // =====================================================================

@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.1.0-b (Prototyp)
+  Version 1.1.0-c (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,10 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.1.0-c (22.11.2026)  – nur Testbereich
+    - Klasse 9, Unit 3 spielbar: G5 Partizip Präsens (nach Verben der Wahrnehmung, -ing/-ed-Adjektive, Satzverkürzung),
+      G6 past perfect (Aussagen, Verneinung, Fragen, Gegenüberstellung simple past, Signalwörter) und
+      G7 Passiv im simple past (mit/ohne by, Verneinung, Fragen, Vergleich mit dem simple present).
   v1.1.0-b (22.11.2026)  – nur Testbereich
     - Klasse 9, Unit 2 spielbar: G3 Relativsätze (who/which/that/whose, whom nach Präposition, Weglassen des
       Relativpronomens, nicht notwendige Relativsätze mit Komma) und G4 past progressive (Aussagen, Verneinung,
@@ -252,7 +256,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.1.0-b</title>
+<title>Grammatik-Escape-Room Englisch – v1.1.0-c</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -674,7 +678,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.1.0-b</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.1.0-c</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -700,7 +704,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.1.0-b";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.1.0-c";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -714,7 +718,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.1.0-b"></script>
+<script src="daten/allgemein.js?v=1.1.0-c"></script>
 
 <script>
 /* #####################################################################
