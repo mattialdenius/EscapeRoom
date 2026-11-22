@@ -1,8 +1,8 @@
 /* =====================================================================
    KLASSE 9  ·  alle Inhalte für Klasse 9
    ---------------------------------------------------------------------
-   IM AUFBAU: Die Welt (Geschichte, Räume, Figur, Karte, Minispiele) ist fertig.
-   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b, Unit 3 (G5–G7) ab 1.1.0-c. Themen ohne Aufgaben zeigen „kommt bald“.
+   FERTIG: Welt (Geschichte, Räume, Figur, Karte, Minispiele) und alle Aufgaben (G1–G11).
+   Aufgaben: Unit 1 (G1, G2) ab Version 1.1.0-a, Unit 2 (G3, G4) ab 1.1.0-b, Unit 3 (G5–G7) ab 1.1.0-c, Unit 4 (G8–G11) ab 1.1.0-d. Themen ohne Aufgaben zeigen „kommt bald“.
    Vorschau der Welt mit den Aufgaben aus Klasse 5: Adresse mit ?welt=9
    Wie eine fertige Klasse aussieht: siehe klasse5.js und klasse-vorlage.js.
    ===================================================================== */
@@ -131,10 +131,10 @@ K9.themen = [
   { id: "9-G5",  klasse: 9, unit: 3, titelEn: "Present participle", titel: "Das Partizip Präsens", regel: "1) After see, hear, watch, feel: person/thing + -ing: I saw him running. 2) -ing adjective = what something is like (a boring film), -ed adjective = how someone feels (I'm bored). 3) Shorter sentences (Satzverkürzung) with the same subject: When I opened the door, I saw … → Opening the door, I saw …" },
   { id: "9-G6",  klasse: 9, unit: 3, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "Past perfect: had + 3rd form (had seen, had gone). Negative: hadn't / had never + 3rd form. Question: Had you …? The earlier action → past perfect, the later action → simple past: When we arrived, the bus had already left. Signal words: already, just, never, yet, after, before, when, by the time." },
   { id: "9-G7",  klasse: 9, unit: 3, titelEn: "The passive (simple past)", titel: "Das Passiv (einfache Vergangenheit)", regel: "Passive simple past: was / were + 3rd form: The school was built in 2010. Who did it? → by: … by the rangers. Negative: wasn't / weren't + 3rd form. Question: Was / Were …? Simple present passive: is / are + 3rd form (today, every day)." },
-  { id: "9-G8",  klasse: 9, unit: 4, titelEn: "Reported speech I (change of tense → simple past)", titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "" },
-  { id: "9-G9",  klasse: 9, unit: 4, titelEn: "Reported speech II (change of tense → past perfect)", titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "" },
-  { id: "9-G10", klasse: 9, unit: 4, titelEn: "Future: will and going to", titel: "Zukunftszeiten (will und going to)", regel: "" },
-  { id: "9-G11", klasse: 9, unit: 4, titelEn: "Future: simple present and present progressive", titel: "Zukunftszeiten (simple present und present progressive)", regel: "" }
+  { id: "9-G8",  klasse: 9, unit: 4, titelEn: "Reported speech I (change of tense → simple past)", titel: "Indirekte Rede I (Zeitverschiebung → simple past)", regel: "After said / told: simple present → simple past (“I like it.” → She said that she liked it). am / is → was, are → were, can → could. Questions: asked if / whether or asked where / what … + normal word order: He asked where I lived. Commands: told / asked me to … / not to …" },
+  { id: "9-G9",  klasse: 9, unit: 4, titelEn: "Reported speech II (change of tense → past perfect)", titel: "Indirekte Rede II (Zeitverschiebung → past perfect)", regel: "simple past → past perfect: “I lost my key.” → He said that he had lost his key. present perfect → past perfect: “I have finished.” → She said that she had finished. Questions: She asked if I had seen the film." },
+  { id: "9-G10", klasse: 9, unit: 4, titelEn: "Future: will and going to", titel: "Zukunftszeiten (will und going to)", regel: "going to: plans you have already made (I've saved money – I'm going to buy a bike) and things you can already see coming (Look at the clouds! It's going to rain). will: spontaneous decisions (The phone is ringing – I'll get it) and opinions or guesses (I think it will be sunny)." },
+  { id: "9-G11", klasse: 9, unit: 4, titelEn: "Future: simple present and present progressive", titel: "Zukunftszeiten (simple present und present progressive)", regel: "Timetables and programmes → simple present: The train leaves at 9. When does the film start? Fixed plans / arrangements (feste Verabredungen) → present progressive: I'm meeting Tom tomorrow at 4." }
 ];
 
 // =====================================================================
@@ -775,6 +775,349 @@ K9.generatoren = {
 };
 
 // =====================================================================
+// Klasse 9, Unit 4 (G8–G11)
+// =====================================================================
+// Hilfe für die indirekte Rede: jede Lösung gilt mit und ohne „that“ sowie mit Kurzform (she is = she's …)
+const K9_REDE = (...saetze) => {
+  const out = [];
+  const kurz = x => x.replace(/\b(he|she|it) is\b/g, "$1's").replace(/\bI am\b/g, "I'm").replace(/\b(we|you|they) are\b/g, "$1're");
+  saetze.forEach(x => [x, x.replace(" that ", " ")].forEach(y => [y, kurz(y)].forEach(z => { if(!out.includes(z)) out.push(z); })));
+  return out;
+};
+
+Object.assign(K9.baukasten, {
+  // ---------- Klasse 9, Unit 4: indirekte Rede I – Zeitverschiebung → simple past (G8) ----------
+  //   Aussagen, Fragen und Aufforderungen; OHNE Änderung von Orts- und Zeitangaben (kommt in Klasse 10)
+  "9-G8": {
+    saetze: [
+      { e: "shift",  q: "Lena: “I work in a second-hand shop.”",              t: "Lena said that she ___ in a second-hand shop.", r: ["worked"], f: ["works", "work"], fehler: "works" },
+      { e: "shift",  q: "Ben: “I don't have any pocket money.”",             t: "Ben said that he ___ have any pocket money.", r: ["didn't", "did not"], f: ["doesn't", "don't"], fehler: { ersatz: "doesn't", wort: "doesn't", loesung: ["didn't", "did not"] } },
+      { e: "shift",  q: "The journalist: “The air pollution is terrible.”",  t: "The journalist said that the air pollution ___ terrible.", r: ["was"], f: ["is", "were"], fehler: "is" },
+      { e: "shift",  q: "My friends: “We are saving money for new sneakers.”", t: "My friends said that they ___ money for new sneakers.", r: ["were saving"], f: ["are saving", "was saving"], fehler: { ersatz: "are saving", wort: "are", loesung: ["were"] } },
+      { e: "shift",  q: "Mia: “I can repair old bikes.”",                    t: "Mia said that she ___ repair old bikes.", r: ["could"], f: ["can", "cans"], fehler: "can" },
+      { e: "shift",  q: "Dad: “Plastic packaging is a big problem.”",        t: "Dad said that plastic packaging ___ a big problem.", r: ["was"], f: ["is", "were"], fehler: "is" },
+      { e: "shift",  q: "The teacher: “Many people recycle their waste.”",   t: "The teacher told us that many people ___ their waste.", r: ["recycled"], f: ["recycle", "recycles"], fehler: "recycle" },
+      { e: "shift",  q: "Tom: “I'm looking for a cheap phone.”",             t: "Tom said that he ___ for a cheap phone.", r: ["was looking"], f: ["is looking", "were looking"], fehler: { ersatz: "is looking", wort: "is", loesung: ["was"] } },
+      { e: "shift",  q: "The fortune teller: “You have a great future.”",    t: "The fortune teller told me that I ___ a great future.", r: ["had"], f: ["have", "has"], fehler: "have" },
+      { e: "shift",  q: "Zoe: “My brother doesn't like shopping.”",          t: "Zoe said that her brother ___ like shopping.", r: ["didn't", "did not"], f: ["doesn't", "don't"], fehler: { ersatz: "doesn't", wort: "doesn't", loesung: ["didn't", "did not"] } },
+      { e: "shift",  q: "The journalists: “We want freedom of speech.”",     t: "The journalists said that they ___ freedom of speech.", r: ["wanted"], f: ["want", "wants"], fehler: "want" },
+      { e: "shift",  q: "Lisa: “The solar panels produce a lot of energy.”", t: "Lisa said that the solar panels ___ a lot of energy.", r: ["produced"], f: ["produce", "produces"], fehler: "produce" },
+      { e: "shift",  q: "Grandpa: “I can't read small letters.”",            t: "Grandpa said that he ___ read small letters.", r: ["couldn't", "could not"], f: ["can't", "didn't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not"] } },
+      { e: "frage",  q: "The shop assistant: “Do you need a bag?”",          t: "The shop assistant asked ___ I needed a bag.", r: ["if", "whether"], f: ["that", "do"], fehler: "that" },
+      { e: "frage",  q: "Mia: “Where do you buy your clothes?”",             t: "Mia asked where I ___ my clothes.", r: ["bought"], f: ["buy", "did buy"], fehler: "buy" },
+      { e: "frage",  q: "Ben: “Are you hungry?”",                            t: "Ben asked if I ___ hungry.", r: ["was"], f: ["am", "were"], fehler: "am" },
+      { e: "frage",  q: "The journalist: “What do people think about the new mall?”", t: "The journalist asked what people ___ about the new mall.", r: ["thought"], f: ["think", "did think"], fehler: "think" },
+      { e: "frage",  q: "My aunt: “Why are you so tired?”",                  t: "My aunt asked why I ___ so tired.", r: ["was"], f: ["am", "were"], fehler: "am" },
+      { e: "frage",  q: "Tom: “Can you help me?”",                           t: "Tom asked if I ___ help him.", r: ["could"], f: ["can", "did"], fehler: "can" },
+      { e: "frage",  q: "The teacher: “Who knows the answer?”",              t: "The teacher asked who ___ the answer.", r: ["knew"], f: ["knows", "did know"], fehler: "knows" },
+      { e: "frage",  q: "Lena: “How much does the jacket cost?”",            t: "Lena asked how much the jacket ___.", r: ["cost"], f: ["costs", "did cost"], fehler: "costs" },
+      { e: "frage",  q: "Zoe: “Does your school have solar panels?”",        t: "Zoe asked ___ our school had solar panels.", r: ["if", "whether"], f: ["does", "that"], fehler: "does" },
+      { e: "befehl", q: "Mum: “Turn off the lights!”",                       t: "Mum told me ___ off the lights.", r: ["to turn"], f: ["turn", "turning"], fehler: { ersatz: "turning", wort: "turning", loesung: ["to turn"] } },
+      { e: "befehl", q: "The teacher: “Don't use your phones!”",             t: "The teacher told us ___ our phones.", r: ["not to use"], f: ["don't use", "not use"], fehler: { ersatz: "don't use", wort: "don't", loesung: ["not to"] } },
+      { e: "befehl", q: "Dad: “Please recycle the bottles.”",                t: "Dad asked me ___ the bottles.", r: ["to recycle"], f: ["recycle", "recycling"], fehler: { ersatz: "recycling", wort: "recycling", loesung: ["to recycle"] } },
+      { e: "befehl", q: "The ranger: “Don't throw your plastic bottles away!”", t: "The ranger told the tourists ___ their plastic bottles away.", r: ["not to throw"], f: ["don't throw", "not throw"], fehler: { ersatz: "don't throw", wort: "don't", loesung: ["not to"] } },
+      { e: "befehl", q: "Mia: “Please wait for me.”",                        t: "Mia asked us ___ for her.", r: ["to wait"], f: ["wait", "waiting"], fehler: { ersatz: "waiting", wort: "waiting", loesung: ["to wait"] } },
+      { e: "befehl", q: "The coach: “Don't be late!”",                       t: "The coach told us ___ late.", r: ["not to be"], f: ["don't be", "not be"], fehler: { ersatz: "don't be", wort: "don't", loesung: ["not to"] } }
+    ],
+    umformen: [
+      { e: "shift",  a: "Report with “said”:", von: "Lena: “I love second-hand clothes.”",      nach: K9_REDE("Lena said that she loved second-hand clothes.") },
+      { e: "shift",  a: "Report with “said”:", von: "Ben: “I am tired.”",                       nach: K9_REDE("Ben said that he was tired.") },
+      { e: "shift",  a: "Report with “said”:", von: "Mia: “My parents don't have a car.”",      nach: K9_REDE("Mia said that her parents didn't have a car.", "Mia said that her parents did not have a car.") },
+      { e: "shift",  a: "Report with “said”:", von: "Tom: “I'm reading a book about smog.”",    nach: K9_REDE("Tom said that he was reading a book about smog.") },
+      { e: "shift",  a: "Report with “said”:", von: "Zoe: “I can't find my sneakers.”",         nach: K9_REDE("Zoe said that she couldn't find her sneakers.", "Zoe said that she could not find her sneakers.") },
+      { e: "shift",  a: "Report with “said”:", von: "The journalist: “The newspaper wants the truth.”", nach: K9_REDE("The journalist said that the newspaper wanted the truth.") },
+      { e: "shift",  a: "Report with “said”:", von: "Grandma: “I don't understand the internet.”", nach: K9_REDE("Grandma said that she didn't understand the internet.", "Grandma said that she did not understand the internet.") },
+      { e: "shift",  a: "Report with “said”:", von: "The kids: “We are saving money.”",         nach: K9_REDE("The kids said that they were saving money.") },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Mia: “Do you like the new mall?”", nach: ["Mia asked if I liked the new mall.", "Mia asked whether I liked the new mall.", "Mia asked if we liked the new mall.", "Mia asked whether we liked the new mall."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Ben: “Where do you live?”",  nach: ["Ben asked where I lived.", "Ben asked where we lived."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "The teacher: “Why are you late?”", nach: ["The teacher asked why I was late.", "The teacher asked why we were late."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Tom: “Can you lend me some money?”", nach: ["Tom asked if I could lend him some money.", "Tom asked whether I could lend him some money."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Lena: “What time is it?”",  nach: ["Lena asked what time it was."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Dad: “Who wants pizza?”",   nach: ["Dad asked who wanted pizza."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "Zoe: “Is the shop open?”",  nach: ["Zoe asked if the shop was open.", "Zoe asked whether the shop was open."] },
+      { e: "frage",  a: "Report the question with “asked”:", von: "The journalist: “How do you recycle your waste?”", nach: ["The journalist asked how I recycled my waste.", "The journalist asked how we recycled our waste."] },
+      { e: "befehl", a: "Report the command (Mum told me …):", von: "Mum: “Clean your room!”",  nach: ["Mum told me to clean my room."] },
+      { e: "befehl", a: "Report the command (The teacher told us …):", von: "The teacher: “Open your books!”", nach: ["The teacher told us to open our books."] },
+      { e: "befehl", a: "Report the command (Dad told me …):", von: "Dad: “Don't buy so much plastic!”", nach: ["Dad told me not to buy so much plastic."] },
+      { e: "befehl", a: "Report the command (The coach told us …):", von: "The coach: “Don't give up!”", nach: ["The coach told us not to give up."] },
+      { e: "befehl", a: "Report the request (Mia asked me …):", von: "Mia: “Please help me.”", nach: ["Mia asked me to help her."] },
+      { e: "befehl", a: "Report the request (Tom asked me …):", von: "Tom: “Please close the window.”", nach: ["Tom asked me to close the window."] },
+      { e: "befehl", a: "Report the request (The ranger asked us …):", von: "The ranger: “Please don't feed the animals.”", nach: ["The ranger asked us not to feed the animals."] },
+      { e: "befehl", a: "Report the request (Lena asked me …):", von: "Lena: “Please call me later.”", nach: ["Lena asked me to call her later."] },
+      { e: "befehl", a: "Report the command (Grandma told me …):", von: "Grandma: “Don't forget my birthday!”", nach: ["Grandma told me not to forget her birthday."] }
+    ],
+    zuordnen: {
+      kategorien: ["… said (that) …", "… asked if / where …", "… told me to …"],
+      woerter: [
+        { text: "“I'm hungry.”", ziel: "… said (that) …" }, { text: "“The shop is closed.”", ziel: "… said (that) …" }, { text: "“We like the mall.”", ziel: "… said (that) …" }, { text: "“I can swim.”", ziel: "… said (that) …" },
+        { text: "“Are you OK?”", ziel: "… asked if / where …" }, { text: "“Do you recycle?”", ziel: "… asked if / where …" }, { text: "“Where is the bus?”", ziel: "… asked if / where …" }, { text: "“Is it expensive?”", ziel: "… asked if / where …" },
+        { text: "“Close the door!”", ziel: "… told me to …" }, { text: "“Don't be late!”", ziel: "… told me to …" }, { text: "“Sit down!”", ziel: "… told me to …" }, { text: "“Don't touch it!”", ziel: "… told me to …" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        shift:  "Reported speech (indirekte Rede): after said / told the simple present becomes the simple past (Zeitverschiebung): am / is → was, are → were, can → could, is working → was working. Example: {BEISPIEL}",
+        frage:  "Reported questions with asked: if / whether or the question word + normal word order (Wortstellung), no do / does: She asked what I wanted. Example: {BEISPIEL}",
+        befehl: "Reported commands and requests (Aufforderungen, Bitten): told / asked + person + to + verb. Negative: not to + verb. Example: {BEISPIEL}",
+        zuordnen: "Statements → said (that) …, questions → asked if / asked where …, commands → told … to / not to …"
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 4: indirekte Rede II – Zeitverschiebung → past perfect (G9) ----------
+  //   simple past und present perfect → past perfect, auch Fragen; ohne will → would (Vorgabe der Lehrkraft)
+  "9-G9": {
+    saetze: [
+      { e: "past",    q: "Lena: “I bought a second-hand bike.”",         t: "Lena said that she ___ a second-hand bike.", r: ["had bought"], f: ["has bought", "had buyed"], fehler: { ersatz: "has bought", wort: "has", loesung: ["had"] } },
+      { e: "past",    q: "Ben: “I lost my wallet.”",                     t: "Ben said that he ___ his wallet.", r: ["had lost"], f: ["has lost", "had losed"], fehler: { ersatz: "had losed", wort: "losed", loesung: ["lost"] } },
+      { e: "past",    q: "The journalist: “The police arrested three protesters.”", t: "The journalist said that the police ___ three protesters.", r: ["had arrested"], f: ["has arrested", "had arrest"], fehler: { ersatz: "had arrest", wort: "arrest", loesung: ["arrested"] } },
+      { e: "past",    q: "Mia: “We went to the new mall.”",              t: "Mia said that they ___ to the new mall.", r: ["had gone"], f: ["had went", "have gone"], fehler: { ersatz: "had went", wort: "went", loesung: ["gone"] } },
+      { e: "past",    q: "Tom: “I didn't see the fortune teller.”",      t: "Tom said that he ___ the fortune teller.", r: ["hadn't seen", "had not seen"], f: ["didn't saw", "hadn't saw"], fehler: { ersatz: "hadn't saw", wort: "saw", loesung: ["seen"] } },
+      { e: "past",    q: "Zoe: “My parents sold our old car.”",          t: "Zoe said that her parents ___ their old car.", r: ["had sold"], f: ["have sold", "had selled"], fehler: { ersatz: "had selled", wort: "selled", loesung: ["sold"] } },
+      { e: "past",    q: "Grandpa: “I worked in a power plant.”",        t: "Grandpa told us that he ___ in a power plant.", r: ["had worked"], f: ["has worked", "had work"], fehler: { ersatz: "had work", wort: "work", loesung: ["worked"] } },
+      { e: "past",    q: "The kids: “We didn't understand the chart.”",  t: "The kids said that they ___ the chart.", r: ["hadn't understood", "had not understood"], f: ["hadn't understand", "didn't understood"], fehler: { ersatz: "hadn't understand", wort: "understand", loesung: ["understood"] } },
+      { e: "past",    q: "Lisa: “I wrote an article about pollution.”",  t: "Lisa said that she ___ an article about pollution.", r: ["had written"], f: ["had wrote", "has written"], fehler: { ersatz: "had wrote", wort: "wrote", loesung: ["written"] } },
+      { e: "perfect", q: "Ben: “I have found a cheap phone online.”",    t: "Ben said that he ___ a cheap phone online.", r: ["had found"], f: ["has found", "have found"], fehler: { ersatz: "has found", wort: "has", loesung: ["had"] } },
+      { e: "perfect", q: "Mia: “I have never been to New York.”",        t: "Mia said that she ___ to New York.", r: ["had never been"], f: ["has never been", "had never be"], fehler: { ersatz: "has never been", wort: "has", loesung: ["had"] } },
+      { e: "perfect", q: "The scientists: “We have reduced the smog.”",  t: "The scientists said that they ___ the smog.", r: ["had reduced"], f: ["have reduced", "had reduce"], fehler: { ersatz: "have reduced", wort: "have", loesung: ["had"] } },
+      { e: "perfect", q: "Tom: “I haven't finished my homework.”",       t: "Tom said that he ___ his homework.", r: ["hadn't finished", "had not finished"], f: ["hasn't finished", "haven't finished"], fehler: { ersatz: "hasn't finished", wort: "hasn't", loesung: ["hadn't", "had not"] } },
+      { e: "perfect", q: "Lena: “My sister has donated her old clothes.”", t: "Lena said that her sister ___ her old clothes.", r: ["had donated"], f: ["has donated", "had donate"], fehler: { ersatz: "had donate", wort: "donate", loesung: ["donated"] } },
+      { e: "perfect", q: "Zoe: “We have installed solar panels.”",       t: "Zoe said that they ___ solar panels.", r: ["had installed"], f: ["have installed", "had install"], fehler: { ersatz: "have installed", wort: "have", loesung: ["had"] } },
+      { e: "perfect", q: "Dad: “I've lost my keys.”",                    t: "Dad said that he ___ his keys.", r: ["had lost"], f: ["has lost", "had losed"], fehler: { ersatz: "has lost", wort: "has", loesung: ["had"] } },
+      { e: "perfect", q: "The kids: “We haven't eaten yet.”",            t: "The kids said that they ___ yet.", r: ["hadn't eaten", "had not eaten"], f: ["haven't eaten", "hadn't ate"], fehler: { ersatz: "hadn't ate", wort: "ate", loesung: ["eaten"] } },
+      { e: "perfect", q: "Grandma: “I've already bought the presents.”", t: "Grandma said that she ___ the presents.", r: ["had already bought"], f: ["has already bought", "had already buyed"], fehler: { ersatz: "has already bought", wort: "has", loesung: ["had"] } },
+      { e: "frage",   q: "Mia: “Did you see the film?”",                 t: "Mia asked if I ___ the film.", r: ["had seen"], f: ["have seen", "had saw"], fehler: { ersatz: "had saw", wort: "saw", loesung: ["seen"] } },
+      { e: "frage",   q: "Ben: “Where have you been?”",                  t: "Ben asked where I ___.", r: ["had been"], f: ["have been", "had be"], fehler: { ersatz: "have been", wort: "have", loesung: ["had"] } },
+      { e: "frage",   q: "The teacher: “Who broke the window?”",         t: "The teacher asked who ___ the window.", r: ["had broken"], f: ["had broke", "has broken"], fehler: { ersatz: "had broke", wort: "broke", loesung: ["broken"] } },
+      { e: "frage",   q: "Lena: “Have you ever met a journalist?”",      t: "Lena asked if I ___ a journalist.", r: ["had ever met"], f: ["have ever met", "had ever meet"], fehler: { ersatz: "had ever meet", wort: "meet", loesung: ["met"] } },
+      { e: "frage",   q: "Dad: “What did you buy?”",                     t: "Dad asked what I ___.", r: ["had bought"], f: ["have bought", "had buyed"], fehler: { ersatz: "had buyed", wort: "buyed", loesung: ["bought"] } },
+      { e: "frage",   q: "Zoe: “Did your brother pass the test?”",       t: "Zoe asked ___ my brother had passed the test.", r: ["if", "whether"], f: ["that", "did"], fehler: "that" },
+      { e: "frage",   q: "Tom: “Why did you leave so early?”",           t: "Tom asked why I ___ so early.", r: ["had left"], f: ["have left", "had leaved"], fehler: { ersatz: "had leaved", wort: "leaved", loesung: ["left"] } },
+      { e: "frage",   q: "The police officer: “Have you seen the thief?”", t: "The police officer asked ___ we had seen the thief.", r: ["if", "whether"], f: ["that", "have"], fehler: "that" }
+    ],
+    umformen: [
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Lena: “I bought new sneakers.”",       nach: K9_REDE("Lena said that she had bought new sneakers.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Ben: “I missed the bus.”",             nach: K9_REDE("Ben said that he had missed the bus.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Mia: “We visited the new mall.”",      nach: K9_REDE("Mia said that they had visited the new mall.", "Mia said that we had visited the new mall.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Tom: “I didn't hear the news.”",       nach: K9_REDE("Tom said that he hadn't heard the news.", "Tom said that he had not heard the news.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Grandpa: “I found an old photo.”",     nach: K9_REDE("Grandpa said that he had found an old photo.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "Zoe: “My brother broke his leg.”",     nach: K9_REDE("Zoe said that her brother had broken his leg.") },
+      { e: "past",    a: "Report with “said” (past perfect):", von: "The journalist: “I wrote about human rights.”", nach: K9_REDE("The journalist said that she had written about human rights.", "The journalist said that he had written about human rights.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Lisa: “I have finished my project.”",  nach: K9_REDE("Lisa said that she had finished her project.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Ben: “I have never seen smog.”",       nach: K9_REDE("Ben said that he had never seen smog.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "The kids: “We have recycled all the bottles.”", nach: K9_REDE("The kids said that they had recycled all the bottles.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Mia: “I haven't found a job.”",        nach: K9_REDE("Mia said that she hadn't found a job.", "Mia said that she had not found a job.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Dad: “I have sold my old car.”",       nach: K9_REDE("Dad said that he had sold his old car.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Tom: “I've already done my homework.”", nach: K9_REDE("Tom said that he had already done his homework.") },
+      { e: "perfect", a: "Report with “said” (past perfect):", von: "Lena: “My parents have bought an electric car.”", nach: K9_REDE("Lena said that her parents had bought an electric car.") },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Mia: “Did you like the film?”", nach: ["Mia asked if I had liked the film.", "Mia asked whether I had liked the film.", "Mia asked if we had liked the film.", "Mia asked whether we had liked the film."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Ben: “Where did you go?”", nach: ["Ben asked where I had gone.", "Ben asked where we had gone."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Zoe: “Have you finished?”", nach: ["Zoe asked if I had finished.", "Zoe asked whether I had finished.", "Zoe asked if we had finished.", "Zoe asked whether we had finished."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Tom: “What did you see?”", nach: ["Tom asked what I had seen.", "Tom asked what we had seen."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "The teacher: “Who took my pen?”", nach: ["The teacher asked who had taken her pen.", "The teacher asked who had taken his pen."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Lisa: “Why did you leave?”", nach: ["Lisa asked why I had left.", "Lisa asked why we had left."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Dad: “Have you ever been to London?”", nach: ["Dad asked if I had ever been to London.", "Dad asked whether I had ever been to London.", "Dad asked if we had ever been to London.", "Dad asked whether we had ever been to London."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Grandma: “Did you buy the presents?”", nach: ["Grandma asked if I had bought the presents.", "Grandma asked whether I had bought the presents.", "Grandma asked if we had bought the presents.", "Grandma asked whether we had bought the presents."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "The journalist: “How did you start the charity?”", nach: ["The journalist asked how I had started the charity.", "The journalist asked how we had started the charity."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Lena: “Has your brother found his phone?”", nach: ["Lena asked if my brother had found his phone.", "Lena asked whether my brother had found his phone."] },
+      { e: "frage",   a: "Report the question with “asked” (past perfect):", von: "Ben: “Did Tom call you?”", nach: ["Ben asked if Tom had called me.", "Ben asked whether Tom had called me.", "Ben asked if Tom had called us.", "Ben asked whether Tom had called us."] }
+    ],
+    zuordnen: {
+      kategorien: ["→ past perfect (had + 3rd form)", "→ simple past"],
+      woerter: [
+        { text: "“I lost my key.”", ziel: "→ past perfect (had + 3rd form)" }, { text: "“We have seen it.”", ziel: "→ past perfect (had + 3rd form)" },
+        { text: "“She bought a car.”", ziel: "→ past perfect (had + 3rd form)" }, { text: "“I've finished.”", ziel: "→ past perfect (had + 3rd form)" },
+        { text: "“He didn't come.”", ziel: "→ past perfect (had + 3rd form)" }, { text: "“They have left.”", ziel: "→ past perfect (had + 3rd form)" },
+        { text: "“I like it.”", ziel: "→ simple past" }, { text: "“We are tired.”", ziel: "→ simple past" }, { text: "“She works at the mall.”", ziel: "→ simple past" },
+        { text: "“I don't know.”", ziel: "→ simple past" }, { text: "“It is cheap.”", ziel: "→ simple past" }, { text: "“They live in York.”", ziel: "→ simple past" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        past:    "Reported speech (indirekte Rede): the simple past becomes the past perfect (had + 3rd form): “I lost it.” → She said that she had lost it. Example: {BEISPIEL}",
+        perfect: "Reported speech: the present perfect becomes the past perfect: have / has + 3rd form → had + 3rd form. Example: {BEISPIEL}",
+        frage:   "Reported questions about the past: asked if / question word + had + 3rd form, normal word order (Wortstellung): He asked what I had done. Example: {BEISPIEL}",
+        zuordnen: "simple past and present perfect → past perfect (had + 3rd form). simple present → simple past."
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 4: Zukunft mit will und going to (G10) ----------
+  //   mit Gegenüberstellung (Vorgabe der Lehrkraft)
+  "9-G10": {
+    saetze: [
+      { e: "plan",      t: "I've saved enough money. I ___ new sneakers next week.", h: "buy", r: ["am going to buy", "'m going to buy"], f: ["will buy", "am going buy"], fehler: { ersatz: "am going buy", wort: "buy", loesung: ["to buy"] } },
+      { e: "plan",      t: "We've already got the tickets. We ___ to the concert on Saturday.", h: "go", r: ["are going to go", "'re going to go"], f: ["will go", "are going go"], fehler: { ersatz: "are going to went", wort: "went", loesung: ["go"] } },
+      { e: "plan",      t: "Lena wants to help the environment. She ___ her old clothes to a charity.", h: "give", r: ["is going to give", "'s going to give"], f: ["will give", "is going give"], fehler: { ersatz: "is going to gives", wort: "gives", loesung: ["give"] } },
+      { e: "plan",      t: "My parents have decided: they ___ an electric car.", h: "buy", r: ["are going to buy", "'re going to buy"], f: ["will buy", "is going to buy"], fehler: { ersatz: "is going to buy", wort: "is", loesung: ["are"] } },
+      { e: "plan",      t: "Tom has already applied. He ___ a journalist.", h: "become", r: ["is going to become", "'s going to become"], f: ["will become", "is going to became"], fehler: { ersatz: "is going to became", wort: "became", loesung: ["become"] } },
+      { e: "plan",      t: "I've decided. I ___ in the new mall. It's too expensive.", h: "not / shop", r: ["am not going to shop", "'m not going to shop"], f: ["won't shopping", "am not going shop"], fehler: { ersatz: "am not going shop", wort: "shop", loesung: ["to shop"] } },
+      { e: "plan",      t: "Lisa has bought some paint. She ___ her room.", h: "paint", r: ["is going to paint", "'s going to paint"], f: ["will paint", "is going paint"], fehler: { ersatz: "is going to painted", wort: "painted", loesung: ["paint"] } },
+      { e: "plan",      t: "Tom has got a new camera. He ___ photos of the city.", h: "take", r: ["is going to take", "'s going to take"], f: ["will take", "is going take"], fehler: { ersatz: "is going to took", wort: "took", loesung: ["take"] } },
+      { e: "anzeichen", t: "Look at those black clouds! It ___.", h: "rain", r: ["is going to rain", "'s going to rain"], f: ["will rain", "is going rain"], fehler: { ersatz: "is going to rains", wort: "rains", loesung: ["rain"] } },
+      { e: "anzeichen", t: "Be careful! You're riding too fast. You ___.", h: "fall", r: ["are going to fall", "'re going to fall"], f: ["will fall", "are going fall"], fehler: { ersatz: "are going to fell", wort: "fell", loesung: ["fall"] } },
+      { e: "anzeichen", t: "The smog is getting worse. Many people ___ ill.", h: "get", r: ["are going to get", "'re going to get"], f: ["will get", "are going get"], fehler: { ersatz: "is going to get", wort: "is", loesung: ["are"] } },
+      { e: "anzeichen", t: "Our team is 3:0 ahead. We ___ the match!", h: "win", r: ["are going to win", "'re going to win"], f: ["will win", "are going win"], fehler: { ersatz: "are going to won", wort: "won", loesung: ["win"] } },
+      { e: "anzeichen", t: "Careful! That glass ___.", h: "fall", r: ["is going to fall", "'s going to fall"], f: ["will fall", "is going fall"], fehler: { ersatz: "is going to falls", wort: "falls", loesung: ["fall"] } },
+      { e: "spontan",   t: "The phone is ringing. OK, I ___ it.", h: "answer", r: ["will answer", "'ll answer"], f: ["am going to answer", "will answers"], fehler: { ersatz: "will answers", wort: "answers", loesung: ["answer"] } },
+      { e: "spontan",   t: "This bag is very heavy. Don't worry, I ___ you.", h: "help", r: ["will help", "'ll help"], f: ["am going to help", "will helps"], fehler: { ersatz: "will helps", wort: "helps", loesung: ["help"] } },
+      { e: "spontan",   t: "I'm thirsty. Wait, I ___ you a glass of water.", h: "get", r: ["will get", "'ll get"], f: ["am going to get", "will gets"], fehler: { ersatz: "will gets", wort: "gets", loesung: ["get"] } },
+      { e: "spontan",   t: "It's cold in here. I ___ the window.", h: "close", r: ["will close", "'ll close"], f: ["am going to close", "will closing"], fehler: { ersatz: "will closing", wort: "closing", loesung: ["close"] } },
+      { e: "spontan",   t: "Oh no, I've forgotten my wallet! No problem. I ___ for the drinks.", h: "pay", r: ["will pay", "'ll pay"], f: ["am going to pay", "will paid"], fehler: { ersatz: "will paid", wort: "paid", loesung: ["pay"] } },
+      { e: "spontan",   t: "Wait for me! I ___ with you.", h: "come", r: ["will come", "'ll come"], f: ["am going to come", "will comes"], fehler: { ersatz: "will comes", wort: "comes", loesung: ["come"] } },
+      { e: "spontan",   t: "Don't tell Mum. OK, I ___ anything.", h: "not / say", r: ["won't say", "will not say"], f: ["am not going say", "won't says"], fehler: { ersatz: "won't says", wort: "says", loesung: ["say"] } },
+      { e: "vermutung", t: "The fortune teller says: “You ___ a lot of money one day.”", h: "make", r: ["will make", "'ll make"], f: ["are making", "will makes"], fehler: { ersatz: "will makes", wort: "makes", loesung: ["make"] } },
+      { e: "vermutung", t: "I think people ___ more electric cars in the future.", h: "drive", r: ["will drive", "'ll drive"], f: ["are driving", "will drives"], fehler: { ersatz: "will drives", wort: "drives", loesung: ["drive"] } },
+      { e: "vermutung", t: "Don't worry. I'm sure you ___ the test.", h: "pass", r: ["will pass", "'ll pass"], f: ["are passing", "will passes"], fehler: { ersatz: "will passes", wort: "passes", loesung: ["pass"] } },
+      { e: "vermutung", t: "In 2050 there ___ more renewable energy, I think.", h: "be", r: ["will be", "'ll be"], f: ["is being", "will is"], fehler: { ersatz: "will is", wort: "is", loesung: ["be"] } },
+      { e: "vermutung", t: "I don't think it ___ next week.", h: "snow", r: ["will snow", "'ll snow"], f: ["is snowing", "will snows"], fehler: { ersatz: "will snows", wort: "snows", loesung: ["snow"] } },
+      { e: "vermutung", t: "I'm sure the shops ___ open on Sunday.", h: "not / be", r: ["won't be", "will not be"], f: ["won't are", "aren't going be"], fehler: { ersatz: "won't are", wort: "are", loesung: ["be"] } }
+    ],
+    umformen: [
+      { e: "plan",      a: "Write about the plan with “going to” (I …):", von: "Plan: buy a second-hand bike", nach: ["I am going to buy a second-hand bike.", "I'm going to buy a second-hand bike."] },
+      { e: "plan",      a: "Write about the plan with “going to” (We …):", von: "Plan: visit New York next summer", nach: ["We are going to visit New York next summer.", "We're going to visit New York next summer."] },
+      { e: "plan",      a: "Write about the plan with “going to” (Lena …):", von: "Plan: work in a café", nach: ["Lena is going to work in a café.", "Lena's going to work in a café."] },
+      { e: "plan",      a: "Write about the plan with “going to” (My sister …):", von: "Plan: not buy new clothes", nach: ["My sister isn't going to buy new clothes.", "My sister is not going to buy new clothes.", "My sister's not going to buy new clothes."] },
+      { e: "plan",      a: "Write about the plan with “going to” (Our school …):", von: "Plan: recycle more plastic", nach: ["Our school is going to recycle more plastic."] },
+      { e: "anzeichen", a: "Say what is going to happen (It …):", von: "Look at the sky! It's very dark. (rain)", nach: ["It is going to rain.", "It's going to rain."] },
+      { e: "anzeichen", a: "Say what is going to happen (We …):", von: "The bus is full. (not get a seat)", nach: ["We aren't going to get a seat.", "We are not going to get a seat.", "We're not going to get a seat."] },
+      { e: "anzeichen", a: "Say what is going to happen (He …):", von: "Tom is running too fast on the ice. (fall)", nach: ["He is going to fall.", "He's going to fall."] },
+      { e: "anzeichen", a: "Say what is going to happen (We …):", von: "The match is nearly over and we are 4:0 ahead. (win)", nach: ["We are going to win.", "We're going to win."] },
+      { e: "anzeichen", a: "Say what is going to happen (She …):", von: "Mia is driving much too fast. (have an accident)", nach: ["She is going to have an accident.", "She's going to have an accident."] },
+      { e: "spontan",   a: "React with “will” (I …):", von: "The phone is ringing. (answer it)", nach: ["I will answer it.", "I'll answer it."] },
+      { e: "spontan",   a: "React with “will” (I …):", von: "Your friend is hungry. (make you a sandwich)", nach: ["I will make you a sandwich.", "I'll make you a sandwich."] },
+      { e: "spontan",   a: "React with “will” (I …):", von: "It's dark in here. (turn on the light)", nach: ["I will turn on the light.", "I'll turn on the light.", "I will turn the light on.", "I'll turn the light on."] },
+      { e: "spontan",   a: "React with “will” (I …):", von: "Your mum's bags are heavy. (carry them)", nach: ["I will carry them.", "I'll carry them."] },
+      { e: "spontan",   a: "React with “will” (I …):", von: "Your friend has forgotten his pen. (lend you one)", nach: ["I will lend you one.", "I'll lend you one."] },
+      { e: "vermutung", a: "Make a prediction with “will”:", von: "I think / people / use more solar energy", nach: ["I think people will use more solar energy."] },
+      { e: "vermutung", a: "Make a prediction with “will”:", von: "I'm sure / you / like the film", nach: ["I'm sure you will like the film.", "I'm sure you'll like the film.", "I am sure you will like the film.", "I am sure you'll like the film."] },
+      { e: "vermutung", a: "Make a prediction with “will”:", von: "in 2040 / there / probably / be more electric cars", nach: ["In 2040 there will probably be more electric cars.", "There will probably be more electric cars in 2040."] },
+      { e: "vermutung", a: "Make a prediction with “will”:", von: "I don't think / it / snow next week", nach: ["I don't think it will snow next week.", "I don't think it'll snow next week.", "I do not think it will snow next week."] },
+      { e: "vermutung", a: "Make a prediction with “will”:", von: "maybe / Tom / become a journalist", nach: ["Maybe Tom will become a journalist."] },
+      { e: "neg",       a: "Make the sentence negative:", von: "I'm going to buy a phone.", nach: ["I'm not going to buy a phone.", "I am not going to buy a phone."] },
+      { e: "neg",       a: "Make the sentence negative:", von: "We will help you.", nach: ["We won't help you.", "We will not help you."] },
+      { e: "neg",       a: "Make the sentence negative:", von: "She is going to work at the mall.", nach: ["She isn't going to work at the mall.", "She is not going to work at the mall.", "She's not going to work at the mall."] },
+      { e: "neg",       a: "Make the sentence negative:", von: "It will rain next week.", nach: ["It won't rain next week.", "It will not rain next week."] },
+      { e: "neg",       a: "Make the sentence negative:", von: "They are going to visit the fortune teller.", nach: ["They aren't going to visit the fortune teller.", "They are not going to visit the fortune teller.", "They're not going to visit the fortune teller."] }
+    ],
+    zuordnen: {
+      kategorien: ["will (spontaneous / opinion)", "going to (plan / sign)"],
+      woerter: [
+        { text: "The phone's ringing – I'll get it.", ziel: "will (spontaneous / opinion)" }, { text: "I think it will be sunny.", ziel: "will (spontaneous / opinion)" },
+        { text: "I'm sure you'll win.", ziel: "will (spontaneous / opinion)" }, { text: "OK, I'll help you.", ziel: "will (spontaneous / opinion)" }, { text: "Maybe she'll call.", ziel: "will (spontaneous / opinion)" },
+        { text: "We've got tickets – we're going to fly.", ziel: "going to (plan / sign)" }, { text: "Look at the clouds – it's going to rain!", ziel: "going to (plan / sign)" },
+        { text: "I've decided: I'm going to study.", ziel: "going to (plan / sign)" }, { text: "Careful – you're going to fall!", ziel: "going to (plan / sign)" },
+        { text: "She has saved money – she's going to buy a car.", ziel: "going to (plan / sign)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        plan:      "going to = a plan or decision you made before (Absicht, Plan): am / is / are going to + verb. Example: {BEISPIEL}",
+        anzeichen: "going to = you can already see a sign (Anzeichen) that something will happen. Example: {BEISPIEL}",
+        spontan:   "will = a decision you make at the moment of speaking (spontane Entscheidung), also offers and promises. Example: {BEISPIEL}",
+        vermutung: "will = an opinion or a guess about the future (Vermutung, Vorhersage), often with I think, I'm sure, probably, maybe. Example: {BEISPIEL}",
+        neg:       "Negative (Verneinung): won't (will not) + verb, am not / isn't / aren't going to + verb. Example: {BEISPIEL}",
+        zuordnen:  "will: spontaneous decisions and opinions (I think …, I'm sure …). going to: plans and things you can already see coming."
+      }
+    }
+  },
+
+  // ---------- Klasse 9, Unit 4: Zukunft mit simple present und present progressive (G11) ----------
+  //   Fahrpläne/Programme (simple present) und feste Verabredungen (present progressive), auch gemischt
+  "9-G11": {
+    saetze: [
+      { e: "plan",  t: "The train to London ___ at 7.15 tomorrow morning.", h: "leave – timetable", r: ["leaves"], f: ["leave", "is leave"], fehler: "leave" },
+      { e: "plan",  t: "The film ___ at 8 p.m. tonight.", h: "start – timetable", r: ["starts"], f: ["start", "is start"], fehler: "start" },
+      { e: "plan",  t: "Our flight ___ in New York at six o'clock.", h: "arrive – timetable", r: ["arrives"], f: ["arrive", "arriving"], fehler: "arrive" },
+      { e: "plan",  t: "The new mall ___ next Monday at 9 a.m.", h: "open – timetable", r: ["opens"], f: ["open", "opening"], fehler: "open" },
+      { e: "plan",  t: "On Saturdays the museum ___ at 5 p.m.", h: "close – timetable", r: ["closes"], f: ["close", "closing"], fehler: "close" },
+      { e: "plan",  t: "When ___ the bus to the city centre leave?", h: "do – timetable", r: ["does"], f: ["is", "do"], fehler: "is" },
+      { e: "plan",  t: "The concert ___ until 11 p.m.", h: "not / finish – timetable", r: ["doesn't finish", "does not finish"], f: ["don't finish", "isn't finish"], fehler: { ersatz: "don't finish", wort: "don't", loesung: ["doesn't", "does not"] } },
+      { e: "plan",  t: "School ___ at eight o'clock tomorrow.", h: "begin – timetable", r: ["begins"], f: ["begin", "beginning"], fehler: "begin" },
+      { e: "plan",  t: "The last bus ___ at midnight.", h: "go – timetable", r: ["goes"], f: ["go", "gos"], fehler: "gos" },
+      { e: "plan",  t: "What time ___ the shop open on Sunday?", h: "do – timetable", r: ["does"], f: ["is", "do"], fehler: "do" },
+      { e: "verab", t: "I ___ Tom at the mall at four o'clock tomorrow.", h: "meet – fixed plan", r: ["am meeting", "'m meeting"], f: ["meeting", "am meet"], fehler: { ersatz: "am meet", wort: "meet", loesung: ["meeting"] } },
+      { e: "verab", t: "We ___ to Berlin next weekend. We've already booked the hotel.", h: "fly – fixed plan", r: ["are flying", "'re flying"], f: ["are fly", "is flying"], fehler: { ersatz: "is flying", wort: "is", loesung: ["are"] } },
+      { e: "verab", t: "My sister ___ a party on Saturday.", h: "have – fixed plan", r: ["is having", "'s having"], f: ["is haveing", "are having"], fehler: { ersatz: "is haveing", wort: "haveing", loesung: ["having"] } },
+      { e: "verab", t: "Lena ___ at the charity shop next Friday.", h: "work – fixed plan", r: ["is working", "'s working"], f: ["is work", "are working"], fehler: { ersatz: "is work", wort: "work", loesung: ["working"] } },
+      { e: "verab", t: "I ___ to the dentist tomorrow at 9 a.m.", h: "go – fixed plan", r: ["am going", "'m going"], f: ["going", "am go"], fehler: { ersatz: "am go", wort: "go", loesung: ["going"] } },
+      { e: "verab", t: "The workers ___ the solar panels on Monday.", h: "install – fixed plan", r: ["are installing", "'re installing"], f: ["is installing", "are install"], fehler: { ersatz: "are install", wort: "install", loesung: ["installing"] } },
+      { e: "verab", t: "We ___ dinner with Grandma tonight.", h: "have – fixed plan", r: ["are having", "'re having"], f: ["are haveing", "is having"], fehler: { ersatz: "is having", wort: "is", loesung: ["are"] } },
+      { e: "verab", t: "Mia ___ to the party. She has to work.", h: "not / come – fixed plan", r: ["isn't coming", "is not coming"], f: ["doesn't coming", "aren't coming"], fehler: { ersatz: "doesn't coming", wort: "doesn't", loesung: ["isn't", "is not"] } },
+      { e: "verab", t: "___ you doing anything on Saturday evening?", h: "be – fixed plan", r: ["Are"], f: ["Do", "Is"], fehler: "Do" },
+      { e: "verab", t: "What ___ Tom doing tomorrow afternoon?", h: "be – fixed plan", r: ["is"], f: ["does", "are"], fehler: "does" },
+      { e: "verab", t: "My aunt and uncle ___ us next weekend.", h: "visit – fixed plan", r: ["are visiting", "'re visiting"], f: ["are visit", "is visiting"], fehler: { ersatz: "are visit", wort: "visit", loesung: ["visiting"] } },
+      { e: "verab", t: "I ___ my old bike on Saturday. A girl from my class is buying it.", h: "sell – fixed plan", r: ["am selling", "'m selling"], f: ["am sell", "selling"], fehler: { ersatz: "am sell", wort: "sell", loesung: ["selling"] } },
+      { e: "mix",   t: "We're meeting at the station because our train ___ at 6.30.", h: "leave – timetable", r: ["leaves"], f: ["leave", "is leave"], fehler: "leave" },
+      { e: "mix",   t: "The film starts at eight, so I ___ Ben at half past seven.", h: "meet – fixed plan", r: ["am meeting", "'m meeting"], f: ["am meet", "meeting"], fehler: { ersatz: "am meet", wort: "meet", loesung: ["meeting"] } },
+      { e: "mix",   t: "Our plane ___ off at 11 a.m., so we're getting up early.", h: "take – timetable", r: ["takes"], f: ["take", "is take"], fehler: "take" },
+      { e: "mix",   t: "The shop opens at nine, and we ___ there at ten.", h: "go – fixed plan", r: ["are going", "'re going"], f: ["are go", "is going"], fehler: { ersatz: "is going", wort: "is", loesung: ["are"] } }
+    ],
+    umformen: [
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "the train to Leeds / leave / at nine o'clock", nach: ["The train to Leeds leaves at nine o'clock."] },
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "the film / start / at eight o'clock", nach: ["The film starts at eight o'clock."] },
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "our flight / arrive / at six o'clock", nach: ["Our flight arrives at six o'clock."] },
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "the museum / not open / on Mondays", nach: ["The museum doesn't open on Mondays.", "The museum does not open on Mondays."] },
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "the bus / leave / at half past seven", nach: ["The bus leaves at half past seven."] },
+      { e: "plan",  a: "Write about the timetable (simple present):", von: "the concert / finish / at eleven o'clock", nach: ["The concert finishes at eleven o'clock."] },
+      { e: "plan",  a: "Ask about the timetable:", von: "when / the train / leave?", nach: ["When does the train leave?"] },
+      { e: "plan",  a: "Ask about the timetable:", von: "what time / the shop / open?", nach: ["What time does the shop open?"] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "I / meet / Tom / tomorrow", nach: ["I am meeting Tom tomorrow.", "I'm meeting Tom tomorrow."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "we / fly / to Rome / on Friday", nach: ["We are flying to Rome on Friday.", "We're flying to Rome on Friday."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "my sister / have / a party / on Saturday", nach: ["My sister is having a party on Saturday.", "My sister's having a party on Saturday."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "Lena / work / at the charity shop / next week", nach: ["Lena is working at the charity shop next week.", "Lena's working at the charity shop next week."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "my grandparents / visit / us / at the weekend", nach: ["My grandparents are visiting us at the weekend."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "Mia / not come / to the party", nach: ["Mia isn't coming to the party.", "Mia is not coming to the party.", "Mia's not coming to the party."] },
+      { e: "verab", a: "Write about the fixed plan (present progressive):", von: "we / not go / to school / on Monday", nach: ["We aren't going to school on Monday.", "We are not going to school on Monday.", "We're not going to school on Monday."] },
+      { e: "verab", a: "Ask about the plan (present progressive):", von: "what / you / do / on Saturday?", nach: ["What are you doing on Saturday?"] },
+      { e: "verab", a: "Ask about the plan (present progressive):", von: "you / come / to the concert?", nach: ["Are you coming to the concert?"] },
+      { e: "verab", a: "Ask about the plan (present progressive):", von: "where / Tom / go / tomorrow?", nach: ["Where is Tom going tomorrow?", "Where's Tom going tomorrow?"] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "Our plane (take) off at ten, so we (get) up early tomorrow.", nach: ["Our plane takes off at ten, so we are getting up early tomorrow.", "Our plane takes off at ten, so we're getting up early tomorrow."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "The film (start) at eight, so I (meet) Ben at seven.", nach: ["The film starts at eight, so I am meeting Ben at seven.", "The film starts at eight, so I'm meeting Ben at seven."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "I (play) tennis with Zoe on Saturday. The sports centre (open) at nine.", nach: ["I am playing tennis with Zoe on Saturday. The sports centre opens at nine.", "I'm playing tennis with Zoe on Saturday. The sports centre opens at nine."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "The shop (close) at six, so we (go) there at five.", nach: ["The shop closes at six, so we are going there at five.", "The shop closes at six, so we're going there at five."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "My cousins (arrive) on Sunday. Their bus (get) in at noon.", nach: ["My cousins are arriving on Sunday. Their bus gets in at noon."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "Lena (have) a party tonight. It (start) at seven.", nach: ["Lena is having a party tonight. It starts at seven.", "Lena's having a party tonight. It starts at seven."] },
+      { e: "mix",   a: "Use the simple present and the present progressive:", von: "We (meet) at the station. The train (leave) at six.", nach: ["We are meeting at the station. The train leaves at six.", "We're meeting at the station. The train leaves at six."] }
+    ],
+    zuordnen: {
+      kategorien: ["timetable (simple present)", "fixed plan (present progressive)"],
+      woerter: [
+        { text: "The train leaves at 9.", ziel: "timetable (simple present)" }, { text: "The film starts at 8.", ziel: "timetable (simple present)" },
+        { text: "School begins at 7.45.", ziel: "timetable (simple present)" }, { text: "The shop opens at 10.", ziel: "timetable (simple present)" },
+        { text: "The bus arrives at 6.", ziel: "timetable (simple present)" }, { text: "The museum closes at 5.", ziel: "timetable (simple present)" },
+        { text: "I'm meeting Tom at 4.", ziel: "fixed plan (present progressive)" }, { text: "We're flying to Rome on Friday.", ziel: "fixed plan (present progressive)" },
+        { text: "She's having a party.", ziel: "fixed plan (present progressive)" }, { text: "They're visiting us tomorrow.", ziel: "fixed plan (present progressive)" },
+        { text: "I'm seeing the dentist on Monday.", ziel: "fixed plan (present progressive)" }, { text: "He's working on Saturday.", ziel: "fixed plan (present progressive)" }
+      ]
+    },
+    erklaerungen: {
+      satzpool: {
+        plan:  "Timetables and programmes (Fahrpläne, Programme) → simple present, also for the future. Questions with do / does. Example: {BEISPIEL}",
+        verab: "Fixed plans with a time, often with other people (feste Verabredungen) → present progressive: am / is / are + verb-ing. Example: {BEISPIEL}",
+        mix:   "Timetable → simple present (the bus leaves …). Your own fixed plan → present progressive (we're meeting …). Example: {BEISPIEL}",
+        zuordnen: "Timetables → simple present. Fixed plans and arrangements (Verabredungen) → present progressive."
+      }
+    }
+  }
+});
+
+Object.assign(K9.generatoren, {
+  "9-G8":  { baukasten: "9-G8",  art: "satzpool" },
+  "9-G9":  { baukasten: "9-G9",  art: "satzpool" },
+  "9-G10": { baukasten: "9-G10", art: "satzpool" },
+  "9-G11": { baukasten: "9-G11", art: "satzpool" }
+});
+
+K9.woerterhilfe.push(...[
+  { en: "wallet", de: "Geldbörse" }, { en: "thirsty", de: "durstig" }, { en: "lend", de: "leihen" }, { en: "dentist", de: "Zahnarzt/Zahnärztin" },
+  { en: "paint", de: "Farbe; streichen" }, { en: "ahead", de: "vorn, in Führung" }, { en: "noon", de: "Mittag (12 Uhr)" }, { en: "seat", de: "Sitzplatz" },
+  { en: "installed", de: "eingebaut, installiert" }, { en: "installing", de: "einbauen, installieren" }, { en: "arrested", de: "verhaftet" },
+  { en: "protesters", de: "Demonstrant/innen" }, { en: "whether", de: "ob" }, { en: "sports centre", de: "Sportzentrum" }, { en: "charity shop", de: "Second-Hand-Laden für einen guten Zweck" },
+  { en: "applied", de: "sich beworben" }, { en: "jumper", de: "Pullover" }, { en: "coach", de: "Trainer/in" }, { en: "decided", de: "entschieden" }, { en: "timetable", de: "Fahrplan, Stundenplan" }, { en: "Leeds", de: "Leeds (Stadt in England)" }
+]);
+
+// =====================================================================
 // 6) DIE AUFGABEN (handgeschriebener Pool)
 // =====================================================================
 K9.aufgaben = [
@@ -807,7 +1150,23 @@ K9.aufgaben = [
   { thema: "9-G7", niveau: "gruen", form: "quiz", frage: "The jewellery ___ last night.", optionen: ["was stolen", "was stealed", "is stolen"], loesung: "was stolen",
     erklaerung: "Passive simple past: was / were + 3rd form. steal → stolen. Example: The thieves were caught by a security guard." },
   { thema: "9-G7", niveau: "gelb", form: "luecke", frage: "___ the rangers ___ (warn) about the poachers?", loesung: [["Were"], ["warned"]],
-    erklaerung: "Passive questions: Was / Were + subject + 3rd form? Example: Was the park created in 1926?" }
+    erklaerung: "Passive questions: Was / Were + subject + 3rd form? Example: Was the park created in 1926?" },
+  { thema: "9-G8", niveau: "gruen", form: "quiz", frage: "Zoe: “I am bored.”  →  Zoe said that she ___ bored.", optionen: ["was", "is", "were"], loesung: "was",
+    erklaerung: "After said: am / is → was (Zeitverschiebung). Example: Ben said that he was tired." },
+  { thema: "9-G8", niveau: "gelb", form: "luecke", frage: "Mum: “Don't eat the cake!”  →  Mum told me ___ the cake.", loesung: ["not to eat"],
+    erklaerung: "Negative commands (verneinte Aufforderungen): told + person + not to + verb. Example: The coach told us not to give up." },
+  { thema: "9-G9", niveau: "gruen", form: "quiz", frage: "Ben: “I saw a fox.”  →  Ben said that he ___ a fox.", optionen: ["had seen", "has seen", "had saw"], loesung: "had seen",
+    erklaerung: "simple past → past perfect (had + 3rd form). Example: Lena said that she had bought new sneakers." },
+  { thema: "9-G9", niveau: "rot", form: "fehler", satz: "Mia said that she has finished her work.", fehlerwort: "has", loesung: ["had"],
+    erklaerung: "present perfect → past perfect: has finished → had finished. Example: Dad said that he had sold his old car." },
+  { thema: "9-G10", niveau: "gruen", form: "quiz", frage: "Look at the sky! It ___ snow.", optionen: ["is going to", "will to", "is going"], loesung: "is going to",
+    erklaerung: "going to = you can see a sign (Anzeichen). Example: Careful! You're going to fall." },
+  { thema: "9-G10", niveau: "gelb", form: "luecke", frage: "I'm cold. – I ___ (get) you a jumper.", loesung: ["will get", "'ll get"],
+    erklaerung: "will = a spontaneous decision (spontane Entscheidung) or an offer. Example: The phone is ringing. – I'll answer it." },
+  { thema: "9-G11", niveau: "gruen", form: "quiz", frage: "The bus to the airport ___ at 6 a.m.", optionen: ["leaves", "leave", "is leave"], loesung: "leaves",
+    erklaerung: "Timetables (Fahrpläne) → simple present. Example: The film starts at eight." },
+  { thema: "9-G11", niveau: "gelb", form: "luecke", frage: "We ___ (see) the doctor on Monday at ten. – fixed plan", loesung: ["are seeing", "'re seeing"],
+    erklaerung: "Fixed plans (feste Verabredungen) → present progressive. Example: I'm meeting Tom tomorrow." }
 ];
 
 // =====================================================================
@@ -844,7 +1203,22 @@ K9.zusatzfragen = [
   { thema: "9-G7", frage: "The school … in 2010.", optionen: ["was built", "was builded", "is built"], loesung: "was built" },
   { thema: "9-G7", frage: "The poachers … by the rangers.", optionen: ["were caught", "was caught", "were catched"], loesung: "were caught" },
   { thema: "9-G7", frage: "… the park created in 1926?", optionen: ["Was", "Did", "Were"], loesung: "Was" },
-  { thema: "9-G7", frage: "Today the rhinos … by rangers.", optionen: ["are protected", "were protected", "are protect"], loesung: "are protected" }
+  { thema: "9-G7", frage: "Today the rhinos … by rangers.", optionen: ["are protected", "were protected", "are protect"], loesung: "are protected" },
+  { thema: "9-G8", frage: "“I like it.” → She said that she … it.", optionen: ["liked", "likes", "like"], loesung: "liked" },
+  { thema: "9-G8", frage: "“Are you OK?” → He asked … I was OK.", optionen: ["if", "that", "do"], loesung: "if" },
+  { thema: "9-G8", frage: "“Sit down!” → She told me … down.", optionen: ["to sit", "sit", "sitting"], loesung: "to sit" },
+  { thema: "9-G8", frage: "“Where do you live?” → He asked where I …", optionen: ["lived.", "live.", "did live."], loesung: "lived." },
+  { thema: "9-G9", frage: "“I lost my key.” → He said he … his key.", optionen: ["had lost", "has lost", "had losed"], loesung: "had lost" },
+  { thema: "9-G9", frage: "“I have finished.” → She said she … finished.", optionen: ["had", "has", "have"], loesung: "had" },
+  { thema: "9-G9", frage: "“Did you see it?” → He asked if I … it.", optionen: ["had seen", "have seen", "had saw"], loesung: "had seen" },
+  { thema: "9-G10", frage: "The phone is ringing. – I … it.", optionen: ["'ll answer", "'m going answer", "will answers"], loesung: "'ll answer" },
+  { thema: "9-G10", frage: "Look at the clouds! It … rain.", optionen: ["is going to", "will to", "going to"], loesung: "is going to" },
+  { thema: "9-G10", frage: "I think people … more electric cars.", optionen: ["will drive", "will drives", "are drive"], loesung: "will drive" },
+  { thema: "9-G10", frage: "We've got tickets. We … fly to Rome.", optionen: ["are going to", "will to", "are going"], loesung: "are going to" },
+  { thema: "9-G11", frage: "The train … at 9 tomorrow.", optionen: ["leaves", "leave", "is leave"], loesung: "leaves" },
+  { thema: "9-G11", frage: "I … Tom at the mall tomorrow.", optionen: ["'m meeting", "meeting", "am meet"], loesung: "'m meeting" },
+  { thema: "9-G11", frage: "When … the film start?", optionen: ["does", "is", "do"], loesung: "does" },
+  { thema: "9-G11", frage: "… you doing anything on Saturday?", optionen: ["Are", "Do", "Is"], loesung: "Are" }
 ];
 
 // =====================================================================
