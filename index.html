@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.1
+  Version 1.2.2
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,8 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.2.2 (22.11.2026)  – live geschaltet am 22.11.2026
+    - Fußzeile mit Autor: „von M. Aldenius“ (ab Klasse 8: „by M. Aldenius“).
   v1.2.1 (22.11.2026)  – live geschaltet am 22.11.2026
     - Fußzeile ohne „(Prototyp)“ – erste Vollversion für die Weitergabe an Kolleginnen und Kollegen.
     - Eingetippte Antworten (Umformen, Lückentext, Fehler finden): Ziffern und Zahlwörter gelten gleich
@@ -293,7 +295,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.1</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.2</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -715,7 +717,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.2.1</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.2</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -741,7 +743,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.1";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -755,7 +757,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.1"></script>
+<script src="daten/allgemein.js?v=1.2.2"></script>
 
 <script>
 /* #####################################################################
@@ -2901,7 +2903,7 @@ const UI_TEXTE = {
         // Dialog und Fußzeile
         beenden: "Mission beenden", dialogTitel: "Mission wirklich beenden?", dialogText: "Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.",
         dialogNein: "Nein, weiterspielen", dialogJa: "Ja, beenden", datenschutz: "Es werden keine Daten gespeichert oder übertragen.", restzeit: "Restzeit",
-        fach: "Englisch", prototyp: "(Prototyp)", aufDeutsch: ", auf Deutsch: ", tonEin: "Ton einschalten", tonAus: "Ton ausschalten", tonIstAn: "Ton ist an.", tonIstAus: "Ton ist aus.", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
+        fach: "Englisch", von: "von", prototyp: "(Prototyp)", aufDeutsch: ", auf Deutsch: ", tonEin: "Ton einschalten", tonAus: "Ton ausschalten", tonIstAn: "Ton ist an.", tonIstAus: "Ton ist aus.", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
   en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
         zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked.",
@@ -2944,7 +2946,7 @@ const UI_TEXTE = {
         komma: ".",
         beenden: "Quit the mission", dialogTitel: "Do you really want to quit?", dialogText: "Your progress in this round will be lost. Your choices in the start menu stay.",
         dialogNein: "No, keep playing", dialogJa: "Yes, quit", datenschutz: "No data is stored or sent.", restzeit: "Time left",
-        fach: "English", prototyp: "(prototype)", aufDeutsch: ", in German: ", tonEin: "Sound on", tonAus: "Sound off", tonIstAn: "Sound is on.", tonIstAus: "Sound is off.", testmodus: "🧪 Test mode: {c} opens at once", testmodusNur: "🧪 Test mode: before the end only {c} opens." }
+        fach: "English", von: "by", prototyp: "(prototype)", aufDeutsch: ", in German: ", tonEin: "Sound on", tonAus: "Sound off", tonIstAn: "Sound is on.", tonIstAus: "Sound is off.", testmodus: "🧪 Test mode: {c} opens at once", testmodusNur: "🧪 Test mode: before the end only {c} opens." }
 };
 const sprache = () => { const w = welt(); return w && w.sprache === "en" ? "en" : "de"; };
 const ui = (k, werte) => String((UI_TEXTE[sprache()] || UI_TEXTE.de)[k] || UI_TEXTE.de[k]).replace(/\{(\w+)\}/g, (m, x) => werte && werte[x] != null ? werte[x] : m);
