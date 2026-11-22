@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.0.0-rc (Prototyp)
+  Version 1.0.0-rc2 (Prototyp)
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.0.0-rc2 (22.11.2026)  – nur Testbereich
+    - Nachliste Generalcheck: 6-G13 Zuordnen nimmt jeden Satz nur einmal (nicht mehr Lang- und Kurzform nebeneinander).
+    - Ziehen: Wechselt der Raum während des Ziehens, verschwindet die gelbe Feldmarkierung sofort.
   v1.0.0-rc (21.11.2026) – nur Testbereich (Generalcheck, Paket 11: Abschluss-Generalcheck)
     - Keine Änderung am Spiel: Alle Tests des Generalchecks wiederholt (Bericht im Projekt:
       „Bericht_Abschluss-Generalcheck.md“). Kandidat für Version 1.0.0.
@@ -239,7 +242,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.0.0-rc</title>
+<title>Grammatik-Escape-Room Englisch – v1.0.0-rc2</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -661,7 +664,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.0.0-rc</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <b>Version 1.0.0-rc2</b> <span data-ui="prototyp">(Prototyp)</span> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -687,7 +690,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.0.0-rc";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.0.0-rc2";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -701,7 +704,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.0.0-rc"></script>
+<script src="daten/allgemein.js?v=1.0.0-rc2"></script>
 
 <script>
 /* #####################################################################
@@ -2015,7 +2018,10 @@ function willEntscheidung(bk, form, E){
   if(form === "fehler") return { satz: zit(S + (neg ? " won't " : "'ll ") + R.s + rest + "."), fehlerwort: R.s, loesung: [R.e], erklaerung: erkl };
   if(form === "umformen") return { frage: "React with „" + (neg ? "won't" : "will") + "“ (" + R.e + rest + "):  „" + R.sit + "“", loesung: richtig, erklaerung: erkl };
   if(form === "zuordnen"){
-    const mach = ok => () => { const r = wuerfle(bk.entscheidungen), s = gross(r.sub), re = r.rest ? " " + r.rest : "";
+    // Jeder Satz höchstens einmal pro Aufgabe (sonst stünde z. B. „We won't …“ und „We will not …“ nebeneinander)
+    const schon = new Set();
+    const neuR = () => { const frei = bk.entscheidungen.filter(x => !schon.has(x)); const r = wuerfle(frei.length ? frei : bk.entscheidungen); schon.add(r); return r; };
+    const mach = ok => () => { const r = neuR(), s = gross(r.sub), re = r.rest ? " " + r.rest : "";
       if(ok) return antw(r, Math.random() < 0.6);
       return wuerfle([s + (r.neg ? " won't " : "'ll ") + r.s + re + ".", s + (r.neg ? " won't to " : " will to ") + r.e + re + ".",
                       s + " " + (r.sub === "I" ? "am" : "are") + (r.neg ? " not " : " ") + r.e + re + "."]); };
@@ -3321,7 +3327,8 @@ const RAETSEL = {
 
 /* ----- Drag & Drop mit Finger und Maus (Pointer Events) + Antippen als Alternative ----- */
 // Entfernt alle übrig gebliebenen Schatten-Wörter (Sicherheitsnetz, z. B. bei Bildschirmwechsel mitten im Ziehen)
-function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht")); }
+function kloneWeg(){ document.querySelectorAll("body > .klon").forEach(k => k.remove()); document.querySelectorAll(".chip.zieht").forEach(c => c.classList.remove("zieht"));
+  document.querySelectorAll(".zone.ueber").forEach(z => z.classList.remove("ueber")); }   // auch die gelbe Markierung entfernen (ab 1.0.0-rc2)
 let ziehtGerade = null;   // nur EIN Wort gleichzeitig ziehen – ein zweiter Finger auf einem anderen Wort wird ignoriert (ab v0.9.11)
 function ziehbar(chip, ablegen, waehle){
   let start = null, klon = null, bewegt = false, ueber = null;
@@ -3336,6 +3343,7 @@ function ziehbar(chip, ablegen, waehle){
     start = { x: e.clientX, y: e.clientY }; bewegt = false; finger = e.pointerId; try { chip.setPointerCapture(e.pointerId); } catch(_){} });
   chip.addEventListener("pointermove", e => {
     if(!start || e.pointerId !== finger) return;
+    if(!document.body.contains(chip)){ aufraeumen(); return; }   // Raum gewechselt, während noch gezogen wurde
     if(!bewegt && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 8){
       bewegt = true; const r = chip.getBoundingClientRect();
       klon = chip.cloneNode(true); klon.classList.add("klon"); klon.style.width = r.width + "px";

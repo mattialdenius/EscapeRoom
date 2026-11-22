@@ -6,7 +6,7 @@
              und am Raum öffnet sich der gewohnte Aufgabenraum.
              Die Karte zeichnet und steuert nur. Aufgaben, Zeit, Ziffern
              und Zahlenschloss bleiben in index.html (über EscapeAPI).
-   Version:  karte 0.5  (passt zu App-Version 0.9.13 bis 1.0.0-rc)
+   Version:  karte 0.5  (passt zu App-Version 0.9.13 bis 1.0.0-rc2)
    Aufbau:   Diese Datei ist der gemeinsame MOTOR für alle Welten:
              Kamera, Wegsuche, Eingabe, Figuren-Ablauf, Räume mit
              Zuständen, Ausgang mit Code-Tafel, Einbettung.
