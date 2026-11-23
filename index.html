@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.4
+  Version 1.2.5
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,13 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.2.5 (23.11.2026)  – live geschaltet am 23.11.2026
+    - Inhalt wie 1.2.5-a: Zeitlimit fairer (Tippfehler-Nachsicht, „Fast!“-Hinweis, Uhr-Pause bei Erklärung, rot 35 min).
+  v1.2.5-a (23.11.2026)  – live geschaltet am 23.11.2026 (als 1.2.5)
+    - Umformen: Ein Tippfehler in einem abgeschriebenen Wort (z. B. Name) zählt als richtig, mit Hinweis zur Schreibweise.
+    - Lückentext, Umformen, Fehler finden: Bei einem reinen Tippfehler einmal „Fast! Prüfe die Schreibweise“ ohne Strafe.
+    - Die Uhr hält an, solange nach einer falschen Antwort die Erklärung zu sehen ist.
+    - Zeitlimit rot: 35 statt 25 Minuten (daten/allgemein.js).
   v1.2.4 (23.11.2026)  – live geschaltet am 23.11.2026
     - Inhalt wie 1.2.4-a: Minispiel-Knopf groß und auffällig über „Zur Übersicht“.
   v1.2.4-a (23.11.2026)  – live geschaltet am 23.11.2026 (als 1.2.4)
@@ -313,7 +320,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.4</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.5</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -741,7 +748,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.4</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.5</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -767,7 +774,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.5";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -781,7 +788,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.4"></script>
+<script src="daten/allgemein.js?v=1.2.5"></script>
 
 <script>
 /* #####################################################################
@@ -836,6 +843,47 @@ function normLang(s){
     return wer + " " + (art === "s" ? (p && nach !== "better" ? "has" : "is") : (p ? "had" : "would"));
   });
   return n.replace(/\s+/g, " ").trim();
+}
+/* ---------- Tippfehler (ab v1.2.5) ----------
+   Ein „Tippfehler“ = genau ein Buchstabe falsch, zu viel, zu wenig oder zwei vertauscht – UND das getippte Wort ist
+   kein echtes Wort aus den Spielinhalten (sonst könnte es ein Grammatikfehler sein: has/had, lives/lived, were/where).
+   1) Umformen: Tippfehler in Wörtern, die aus dem Ausgangssatz abgeschrieben werden (Namen, Nomen …), zählen als richtig.
+   2) Sonst: Bei einem reinen Tippfehler gibt es EINMAL pro Aufgabe „Fast! Prüfe die Schreibweise“ ohne Strafe. */
+function tippAbstandEins(a, b){
+  if(a === b || Math.abs(a.length - b.length) > 1) return false;
+  if(a.length === b.length){
+    const d = [...a].map((c, i) => c !== b[i] ? i : -1).filter(i => i >= 0);
+    return d.length === 1 || (d.length === 2 && d[1] === d[0] + 1 && a[d[0]] === b[d[1]] && a[d[1]] === b[d[0]]);
+  }
+  const [k, l] = a.length < b.length ? [a, b] : [b, a];
+  for(let i = 0; i < l.length; i++) if(l.slice(0, i) + l.slice(i + 1) === k) return true;
+  return false;
+}
+let tippWortschatz = null, tippWortschatzGroesse = -1;
+function bekannteWoerter(){   // alle Wörter aus den geladenen Inhalten (wird neu gebaut, wenn eine Klasse dazukommt)
+  const quelle = [BAUKASTEN, AUFGABEN, ZUSATZFRAGEN, WOERTERHILFE];
+  const groesse = Object.keys(BAUKASTEN).length + AUFGABEN.length + WOERTERHILFE.length;
+  if(tippWortschatz && groesse === tippWortschatzGroesse) return tippWortschatz;
+  tippWortschatz = new Set((JSON.stringify(quelle).toLowerCase().replace(/[’‘`´]/g, "'").match(/[a-z]+/g) || []));
+  tippWortschatzGroesse = groesse; return tippWortschatz;
+}
+const tippWoerter = x => normLang(x).split(" ").map(w => w.replace(/^[^a-z0-9']+|[^a-z0-9']+$/g, "")).filter(Boolean);
+const grammatikEndung = (l, e) => l.includes("'") || e.includes("'") ||
+  [["s"], ["d"], ["e"]].some(([x]) => e === l + x || l === e + x);
+// Vergleicht Lösung und Eingabe Wort für Wort. Ergebnis: null (passt nicht) oder Liste der Tippfehler [{soll, ist}] (höchstens 2).
+function tippVergleich(loesung, eingabe, nurAus){
+  const L = tippWoerter(loesung), E = tippWoerter(eingabe);
+  if(L.length !== E.length) return null;
+  const echt = bekannteWoerter(), fehler = [];
+  for(let i = 0; i < L.length; i++){
+    if(L[i] === E[i]) continue;
+    if(L[i].length < 3 || !tippAbstandEins(L[i], E[i]) || echt.has(E[i]) || /\d/.test(L[i] + E[i])) return null;
+    if(grammatikEndung(L[i], E[i])) return null;   // Plural-/3.-Person-s, -d/-ed, Apostroph: das ist Grammatik, kein Tippfehler
+    if(nurAus && !nurAus.has(L[i])) return null;
+    const original = (loesung.match(/[A-Za-z']+/g) || []).find(w => w.toLowerCase() === L[i]) || L[i];   // Schreibweise wie in der Lösung (London statt london)
+    fehler.push({ soll: original, ist: (eingabe.match(/[A-Za-z']+/g) || []).find(w => w.toLowerCase() === E[i]) || E[i] });
+  }
+  return fehler.length && fehler.length <= 2 ? fehler : null;
 }
 // Vergleich für eingetippte Antworten; genau = true schaltet die Kurzform-Gleichsetzung aus
 // (z. B. bei „Write the short form“, wo gerade die Kurzform verlangt ist).
@@ -2907,7 +2955,8 @@ const UI_TEXTE = {
         mix: "🔀 Mix aus {n} Themen", jetzt: " · jetzt: ", schluesselteile: "{r} von {n} Schlüsselteilen", hilfekarte: "💡 Hilfekarte", pruefen: "Prüfen",
         zwilling: "🔁 Zwillingsaufgabe: gleiche Regel, neuer Satz", nochNicht: "✋ Noch nicht fertig",
         richtig: "✅ Richtig! Du bekommst ein Schlüsselteil.", richtigAnsage: "Richtig. {r} von {n} Schlüsselteilen.",
-        falsch1: "❌ Leider falsch. Lies dir die Regel durch:", falsch1Ansage: "Leider falsch. ", zumZwilling: "Verstanden – zur Zwillingsaufgabe",
+        falsch1: "❌ Leider falsch. Lies dir die Regel durch:", fastTipp: "✏️ Fast! ", fastTippText: "Prüfe die Schreibweise: {w}. Korrigiere und prüfe noch einmal.",
+        schreibweise: " Achte auf die Schreibweise: {w}", falsch1Ansage: "Leider falsch. ", zumZwilling: "Verstanden – zur Zwillingsaufgabe",
         falsch2: "❌ Wieder falsch. So ist es richtig:", falsch2Ansage: "Wieder falsch. Richtig ist: {l}. Gleich kommt eine neue Aufgabe.", neueAufgabe: "Weiter → (neue Aufgabe)",
         raumGeschafft: "{n} geschafft!", zusatzInfo: "Alle Schlüsselteile gesammelt! Die Ziffer liegt im {z}. {t} Ihr habt {s} Sekunden.", betreten: "{e} {z} betreten",
         raumZiffer: "Die Ziffer dieses Raums lautet: {z}",
@@ -2953,7 +3002,8 @@ const UI_TEXTE = {
         mix: "🔀 Mix of {n} topics", jetzt: " · now: ", schluesselteile: "{r} of {n} key parts", hilfekarte: "💡 Help card", pruefen: "Check",
         zwilling: "🔁 Twin task: same rule, new sentence", nochNicht: "✋ Not finished yet",
         richtig: "✅ Correct! You get a key part.", richtigAnsage: "Correct. {r} of {n} key parts.",
-        falsch1: "❌ Sorry, that's wrong. Read the rule:", falsch1Ansage: "Sorry, that's wrong. ", zumZwilling: "Got it – on to the twin task",
+        falsch1: "❌ Sorry, that's wrong. Read the rule:", fastTipp: "✏️ Almost! ", fastTippText: "Check the spelling: {w}. Correct it and check again.",
+        schreibweise: " Watch the spelling: {w}", falsch1Ansage: "Sorry, that's wrong. ", zumZwilling: "Got it – on to the twin task",
         falsch2: "❌ Wrong again. This is correct:", falsch2Ansage: "Wrong again. The correct answer is: {l}. A new task is coming.", neueAufgabe: "Next → (new task)",
         raumGeschafft: "{n} done!", zusatzInfo: "All key parts collected! The digit is in the {z}. {t} You have {s} seconds.", betreten: "{e} Enter the {z}",
         raumZiffer: "The digit of this room is: {z}",
@@ -3013,6 +3063,7 @@ const sage = schluessel => figurSagt(zufallSatz(welt().saetze[schluessel]));
 
 function zeige(id, optionen){
   kloneWeg();
+  if(id !== "raum") erklaerungWeiter();   // Erklärung verlassen (Übersicht, Karte …) → Uhr läuft weiter
   const vorher = aktiverBildschirm; aktiverBildschirm = id;
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("aktiv"));
   $(id).classList.add("aktiv");
@@ -3258,6 +3309,7 @@ function zeichneSchluessel(){
   box.setAttribute("aria-label", ui("schluesselteile", { r: r.richtig, n }));
 }
 function zeigeAufgabe(){
+  erklaerungWeiter();
   kloneWeg();
   const r = S.raeume[S.aktuell], a = r.liste[r.index];
   zeichneSchluessel();
@@ -3284,15 +3336,22 @@ function statistik(a, ersterVersuch){
 function pruefen(){
   const r = S.raeume[S.aktuell], a = r.liste[r.index], fb = $("feedback");
   const ok = S.kontrolle.pruefe();
+  // Nur ein Tippfehler? Einmal pro Aufgabe ohne Strafe korrigieren lassen (keine Erklärung, keine Zwillingsaufgabe).
+  if(ok === false && !r.tippChance && S.kontrolle.tippfehler){ const tf = S.kontrolle.tippfehler();
+    if(tf){ r.tippChance = true; fb.className = "feedback info"; fb.hidden = false; fb.innerHTML = "";
+      fb.append(el("b", "", ui("fastTipp")), document.createTextNode(ui("fastTippText", { w: tf.map(x => "„" + x.ist + "“").join(", ") })));
+      ansage(ui("fastTipp")); return; } }
   if(ok === null){ fb.className = "feedback info"; fb.hidden = false; fb.innerHTML = ""; fb.append(el("b", "", ui("nochNicht")), document.createTextNode(S.kontrolle.unvollstaendig)); return; }
   S.kontrolle.sperre(ok);
   $("btnPruefen").hidden = true; fb.hidden = false; fb.innerHTML = "";
   if(ok){
     statistik(a, r.versuch === 1); r.richtig++; r.aufgabeErledigt = true; zeichneSchluessel();
     fb.className = "feedback ok"; fb.appendChild(el("b", "", ui("richtig")));
+    if(S.kontrolle.hinweis) fb.appendChild(el("span", "", ui("schreibweise", { w: S.kontrolle.hinweis.map(x => x.soll).join(", ") })));
     ton("richtig"); sage("richtig"); ansage(ui("richtigAnsage", { r: r.richtig, n: EINSTELLUNGEN.aufgabenProRaum }));
     $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("setupWeiter"); $("btnWeiter").onclick = weiter;
   } else if(r.versuch === 1){
+    erklaerungPause();
     fb.className = "feedback fehler"; fb.append(el("b", "", ui("falsch1")), el("span", "", a.erklaerung));
     ton("falsch"); sage("falsch"); ansage(ui("falsch1Ansage") + a.erklaerung);
     $("btnWeiter").hidden = false; $("btnWeiter").textContent = ui("zumZwilling");
@@ -3300,10 +3359,11 @@ function pruefen(){
     const zwilling = zieheAufgabe([a.thema], wahl.niveau, a.form, S.benutzt, false, schluessel(a));
     if(zwilling) r.liste[r.index] = zwilling;
     r.versuch = 2;
-    $("btnWeiter").onclick = () => { zeigeAufgabe(); sage("zwilling"); };
+    $("btnWeiter").onclick = () => { r.tippChance = false; zeigeAufgabe(); sage("zwilling"); };
   } else {
     statistik(a, false); r.aufgabeErledigt = true;
     const ersatz = zieheFuerRaum(r); if(ersatz) r.liste.push(ersatz);
+    erklaerungPause();
     fb.className = "feedback fehler";
     fb.append(el("b", "", ui("falsch2")), el("span", "loesung", S.kontrolle.loesung), el("span", "", a.erklaerung));
     ton("falsch"); sage("loesung"); ansage(ui("falsch2Ansage", { l: S.kontrolle.loesung }));
@@ -3314,7 +3374,7 @@ function pruefen(){
 }
 $("btnPruefen").onclick = pruefen;
 function weiter(){
-  const r = S.raeume[S.aktuell]; r.index++; r.versuch = 1; r.aufgabeErledigt = false;
+  const r = S.raeume[S.aktuell]; r.index++; r.versuch = 1; r.aufgabeErledigt = false; r.tippChance = false;
   if(r.richtig >= EINSTELLUNGEN.aufgabenProRaum) return raumGeschafft();
   if(r.index >= r.liste.length){ const a = zieheFuerRaum(r); if(a) r.liste.push(a); }
   zeigeAufgabe();
@@ -3366,6 +3426,10 @@ const RAETSEL = {
     return { pruefe(){ if(felder.some(f => !f.value.trim())) return null;
         return felder.every((f, i) => loes[i].some(l => gleich(l, f.value, a.genau))); },
       sperre(){ felder.forEach((f, i) => { f.disabled = true; f.classList.add(loes[i].some(l => gleich(l, f.value, a.genau)) ? "richtig" : "falsch"); }); },
+      tippfehler(){ if(a.genau) return null; let alle = [];
+        for(let i = 0; i < felder.length; i++){ if(loes[i].some(l => gleich(l, felder[i].value, a.genau))) continue;
+          const f = loes[i].map(l => tippVergleich(l, felder[i].value)).find(Boolean); if(!f) return null; alle = alle.concat(f); }
+        return alle.length ? alle : null; },
       loesung: loesungsText, unvollstaendig: ui("lueckenFuellen") };
   },
 
@@ -3406,6 +3470,7 @@ const RAETSEL = {
     return { pruefe(){ if(gewaehlt === null || !inp.value.trim()) return null;
         return gewaehlt === fehlerIndex && a.loesung.some(l => gleich(l, inp.value, a.genau)); },
       sperre(){ knoepfe.forEach(k => k.disabled = true); inp.disabled = true; },
+      tippfehler: () => gewaehlt !== fehlerIndex || a.genau ? null : a.loesung.map(l => tippVergleich(l, inp.value)).find(Boolean) || null,
       loesung: ui("fehlerLoesung", { f: a.fehlerwort, r: amAnfang ? gross(a.loesung[0]) : a.loesung[0] }),
       unvollstaendig: ui("fehlerUnvollst") };
   },
@@ -3416,8 +3481,15 @@ const RAETSEL = {
     const inp = el("input"); inp.type = "text"; ["autocomplete","autocorrect"].forEach(k => inp.setAttribute(k, "off")); inp.spellcheck = false;
     inp.addEventListener("keydown", e => { if(e.key === "Enter" && !$("btnPruefen").hidden){ e.preventDefault(); pruefen(); } });
     z.appendChild(inp); box.appendChild(z);
-    return { pruefe: () => !inp.value.trim() ? null : mitZeitTausch(mitNamenTausch(a.loesung)).some(l => gleich(l, inp.value, a.genau)),
+    const varianten = mitZeitTausch(mitNamenTausch(a.loesung));
+    const abgeschrieben = new Set(tippWoerter(a.frage));   // Wörter aus Anweisung und Ausgangssatz
+    const k = { pruefe(){ k.hinweis = null; if(!inp.value.trim()) return null;
+        if(varianten.some(l => gleich(l, inp.value, a.genau))) return true;
+        if(!a.genau) for(const l of varianten){ const f = tippVergleich(l, inp.value, abgeschrieben); if(f){ k.hinweis = f; return true; } }
+        return false; },
+      tippfehler: () => a.genau ? null : varianten.map(l => tippVergleich(l, inp.value)).find(Boolean) || null,
       sperre(){ inp.disabled = true; }, loesung: a.loesung.join(ui("oder")), unvollstaendig: ui("satzSchreiben") };
+    return k;
   },
 
   zuordnen(a, box){
@@ -3591,7 +3663,11 @@ window.addEventListener("popstate", () => {
 /* ===================== COUNTDOWN ===================== */
 let rest = 0, zaehler = null, pausiert = false;
 function zeitZeigen(){ const m = Math.floor(rest / 60), s = rest % 60; $("countdownZeit").textContent = String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0"); $("countdown").classList.toggle("knapp", rest <= 60); }
-function countdownStop(){ clearInterval(zaehler); zaehler = null; pausiert = false; $("countdown").hidden = true; $("countdown").classList.remove("pause"); $("kopf").classList.remove("mit-zeit"); }
+// Während eine Erklärung offen ist, hält die Uhr an (ab v1.2.5); weiter geht es mit der nächsten Aufgabe oder der Übersicht.
+let erklaerPause = false;
+function erklaerungPause(){ if(zaehler){ countdownPause(); erklaerPause = true; } }
+function erklaerungWeiter(){ if(erklaerPause){ erklaerPause = false; countdownWeiter(); } }
+function countdownStop(){ erklaerPause = false; clearInterval(zaehler); zaehler = null; pausiert = false; $("countdown").hidden = true; $("countdown").classList.remove("pause"); $("kopf").classList.remove("mit-zeit"); }
 function countdownPause(){ if(zaehler){ clearInterval(zaehler); zaehler = null; pausiert = true; $("countdown").classList.add("pause"); } }
 function countdownWeiter(){ if(pausiert){ pausiert = false; $("countdown").classList.remove("pause"); countdownLaufen(rest); } }
 function countdownLaufen(sek){
