@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.3
+  Version 1.2.4
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,6 +11,12 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
+  v1.2.4 (23.11.2026)  – live geschaltet am 23.11.2026
+    - Inhalt wie 1.2.4-a: Minispiel-Knopf groß und auffällig über „Zur Übersicht“.
+  v1.2.4-a (23.11.2026)  – live geschaltet am 23.11.2026 (als 1.2.4)
+    - Minispiel-Knopf nach der Bonusfrage deutlich auffälliger (wurde im Unterricht oft übersehen): eigene Zeile über
+      „Zur Übersicht“, groß, gelb, leicht pulsierend; Text „🎁 Minispiel spielen!“ / „🎁 Play a mini-game!“.
+      „Zur Übersicht“ ist jetzt der weiße Zweitknopf.
   v1.2.3 (22.11.2026)  – live geschaltet am 22.11.2026
     - Inhalt wie 1.2.3-a: Funde aus dem Generalcheck vor der Veröffentlichung behoben.
   v1.2.3-a (22.11.2026)  – Testbereich, live mit 1.2.3 (Funde aus dem Generalcheck vor der Veröffentlichung)
@@ -307,7 +313,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.3</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.4</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -571,6 +577,11 @@
   .rueck li{margin:.3rem 0}
   .knopfreihe{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin-top:1rem}
   .knopfreihe[hidden]{display:none}
+  /* Minispiel-Knopf (ab v1.2.4): groß, oben, leicht pulsierend – wurde vorher oft übersehen */
+  .minispiel-reihe{margin-top:1.2rem}
+  button.minispiel-gross{font-size:1.4rem;padding:1rem 2.2rem;min-width:min(100%,20rem);background:var(--gelb);
+    box-shadow:0 5px 0 #000,0 0 0 4px #fff,0 0 22px 6px rgba(255,210,63,.75);animation:minispielPuls 1.6s ease-in-out infinite}
+  @keyframes minispielPuls{50%{transform:scale(1.06);box-shadow:0 5px 0 #000,0 0 0 4px #fff,0 0 34px 12px rgba(255,210,63,.95)}}
   #konfetti{position:fixed;inset:0;pointer-events:none;z-index:60}
 
   footer{text-align:center;color:#c9d4f0;font-size:.9rem;padding:.5rem 1rem 1.5rem}
@@ -694,7 +705,8 @@
     <p id="zrFrage" class="zr-frage"></p>
     <div id="zrOptionen" class="zr-optionen" role="group" aria-labelledby="zrFrage"></div>
     <p id="zrMeldung"></p>
-    <div class="knopfreihe"><button id="btnMinispiel" class="zweit" hidden>🎁 Minispiel?</button><button id="btnZusatzZurueck" class="gruen" hidden>Zur Übersicht</button></div>
+    <div class="knopfreihe minispiel-reihe"><button id="btnMinispiel" class="minispiel-gross" hidden>🎁 Minispiel spielen!</button></div>
+    <div class="knopfreihe"><button id="btnZusatzZurueck" class="zweit" hidden>Zur Übersicht</button></div>
   </section>
 
   <!-- ===== MINISPIEL (Belohnung nach dem Zusatzraum, höchstens 30 Sekunden) ===== -->
@@ -729,7 +741,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.3</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.4</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -755,7 +767,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.3";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.4";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -769,7 +781,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.3"></script>
+<script src="daten/allgemein.js?v=1.2.4"></script>
 
 <script>
 /* #####################################################################
@@ -2874,7 +2886,7 @@ const klasseBereit = k => !!(WELTEN[k] && WELTEN[k].raeume) && THEMEN.some(t => 
 
 /* ----- Texte der Bedienung je nach Sprache der Welt (welt.sprache: "de" oder "en") ----- */
 const UI_TEXTE = {
-  de: { minispiel: "🎁 Minispiel?", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
+  de: { minispiel: "🎁 Minispiel spielen!", zurUebersicht: "Zur Übersicht", raumZurueck: "← Zur Übersicht", zurKarte: "🗺️ Zurück zur Karte",
         los: "▶ Los!", nein: "Lieber nicht", weiter: "Weiter", ziel: "Ziel: {z} in {s} Sekunden.", geschafft: "⭐ Geschafft! ",
         zeitUm: "⏱ Zeit um! {p} von {z}", knapp: " – ganz knapp!", naechstesMal: " Beim nächsten Mal klappt's bestimmt!", gameOver: "Game over! Drei Fehler – das Spiel ist vorbei.", gesperrt: "Keine Versuche mehr – das Schloss ist gesperrt.",
         // Startmenü
@@ -2923,7 +2935,7 @@ const UI_TEXTE = {
         beenden: "Mission beenden", dialogTitel: "Mission wirklich beenden?", dialogText: "Euer Fortschritt in dieser Runde geht verloren. Eure Auswahl im Startmenü bleibt erhalten.",
         dialogNein: "Nein, weiterspielen", dialogJa: "Ja, beenden", datenschutz: "Es werden keine Daten gespeichert oder übertragen.", restzeit: "Restzeit",
         fach: "Englisch", von: "von", prototyp: "(Prototyp)", aufDeutsch: ", auf Deutsch: ", tonEin: "Ton einschalten", tonAus: "Ton ausschalten", tonIstAn: "Ton ist an.", tonIstAus: "Ton ist aus.", testmodus: "🧪 Testmodus: {c} öffnet sofort", testmodusNur: "🧪 Testmodus: Vor dem Ende öffnet nur {c}." },
-  en: { minispiel: "🎁 Mini-game?", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
+  en: { minispiel: "🎁 Play a mini-game!", zurUebersicht: "Back to overview", raumZurueck: "← Back to overview", zurKarte: "🗺️ Back to the map",
         los: "▶ Go!", nein: "No, thanks", weiter: "Next", ziel: "Goal: {z} in {s} seconds.", geschafft: "⭐ Done! ",
         zeitUm: "⏱ Time's up! {p} of {z}", knapp: " – so close!", naechstesMal: " You'll get it next time!", gameOver: "Game over! Three mistakes.", gesperrt: "No tries left – the lock is blocked.",
         zurueck: "← Back", setupWeiter: "Next →", setupStart: "🚀 Start the mission",
@@ -3640,7 +3652,7 @@ function zusatzEnde(erfolg, grund){
   if(erfolg){
     r.ziffer = S.code[r.nr];
     $("zrMeldung").textContent = ui("zusatzGeschafft", { z: r.ziffer });
-    $("btnZusatzZurueck").hidden = false; $("btnMinispiel").hidden = !minispielVerfuegbar(); $("btnZusatzZurueck").focus();
+    $("btnZusatzZurueck").hidden = false; $("btnMinispiel").hidden = !minispielVerfuegbar(); ($("btnMinispiel").hidden ? $("btnZusatzZurueck") : $("btnMinispiel")).focus();
     sage("zusatzGeschafft"); ton("jingle"); ansage(ui("zusatzGeschafftAnsage", { z: r.ziffer }));
   } else {
     const richtig = S.code[r.nr], pool = mischen([0,1,2,3,4,5,6,7,8,9].filter(z => z !== richtig));
