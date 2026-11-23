@@ -125,7 +125,7 @@ K8.welt.figurSvg =
 K8.themen = [
   { id: "8-G1",  klasse: 8, unit: 1, titelEn: "Simple past", titel: "Die einfache Vergangenheit", regel: "Simple past (einfache Vergangenheit) for finished actions in the past (yesterday, last week, … ago). Regular verbs: -ed (visit → visited, try → tried, stop → stopped). Irregular verbs (unregelmäßig): learn them (take → took, buy → bought). Negative: didn't + infinitive (I didn't go). Questions: Did + person + infinitive? (Did you go?)" },
   { id: "8-G2",  klasse: 8, unit: 1, titelEn: "Past perfect", titel: "Die Vorvergangenheit", regel: "Past perfect (Vorvergangenheit) = had + past participle (3. Form). It shows what happened BEFORE another action in the past: When we got to the harbor, the ferry had already left. The later action is in the simple past. Negative: hadn't + 3rd form. Questions: Had you … ?" },
-  { id: "8-G3",  klasse: 8, unit: 2, titelEn: "Modal verbs and their substitutes", titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "Substitute forms (Ersatzformen): can → be able to, must → have to, may → be allowed to. Past: could / was able to, had to, was allowed to. Future: will be able to, will have to, will be allowed to (“will can” and “will must” don't exist). Questions with have to: Do you have to …?" },
+  { id: "8-G3",  klasse: 8, unit: 2, titelEn: "Modal verbs and their substitutes", titel: "Modale Hilfsverben und ihre Ersatzformen", regel: "Substitute forms (Ersatzformen): can → be able to, must → have to, may → be allowed to. Past: could / was able to, had to, was allowed to. Negative of have to: don't/doesn't have to (= nicht müssen). Questions with have to: Do you have to …?" },
   { id: "8-G4",  klasse: 8, unit: 2, titelEn: "Conditional sentences type I", titel: "Bedingungssätze Typ I", regel: "Conditional sentences type I (Bedingungssätze Typ I): If + simple present, … will + infinitive. If it snows, the bus won't come. Never use will in the if-clause. if-clause first → comma; if-clause second → no comma." },
   { id: "8-G5",  klasse: 8, unit: 2, titelEn: "one / ones", titel: "Stützwort one/ones", regel: "one / ones (Stützwort) replace a noun so you don't repeat it. Singular (Einzahl): the red T-shirt → the blue one. Plural (Mehrzahl): my old shoes → new ones. Questions: Which one …? / Which ones …?" },
   { id: "8-G6",  klasse: 8, unit: 3, titelEn: "Question tags", titel: "Bestätigungsfragen", regel: "Question tags (Frageanhängsel) ask for agreement. Positive sentence → negative tag: It's cold, isn't it? Negative sentence → positive tag: You aren't tired, are you? Use the helping verb (Hilfsverb) again (is, was, have, can, will). No helping verb → do/does/did: She likes jazz, doesn't she?" },
@@ -334,11 +334,6 @@ K8.baukasten = {
   // ---------- Klasse 8, Unit 2: Ersatzformen der Modalverben (G3) ----------
   "8-G3": {
     saetze: [
-      { k: "drive", e: "futur",  t: "My sister is fifteen. Next year she ___ drive a car.", h: "can – future", r: ["will be able to", "'ll be able to"], f: ["will can", "cans"], fehler: { ersatz: "will can", wort: "can", loesung: ["be able to"] } },
-      { e: "futur",  t: "There's a field trip tomorrow. We ___ be at school at seven o'clock.", h: "must – future", r: ["will have to", "'ll have to"], f: ["will must", "must will"], fehler: { ersatz: "will must", wort: "must", loesung: ["have to"] } },
-      { k: "drive", e: "futur",  t: "When you are sixteen, you ___ drive a car in many US states.", h: "may – future", r: ["will be allowed to", "'ll be allowed to"], f: ["will may", "will can"], fehler: { ersatz: "will may", wort: "may", loesung: ["be allowed to"] } },
-      { e: "futur",  t: "We're on vacation next week, so I ___ do any homework.", h: "not / have to – future", r: ["won't have to", "will not have to"], f: ["mustn't", "won't must"], fehler: { ersatz: "won't must", wort: "must", loesung: ["have to"] } },
-      { e: "futur",  t: "If you study hard, you ___ get a good job.", h: "can – future", r: ["will be able to", "'ll be able to"], f: ["will can", "can will"], fehler: { ersatz: "will can", wort: "can", loesung: ["be able to"] } },
       { k: "locker3", e: "past",   t: "Yesterday I lost my key, so I ___ open my locker.", h: "not / can – past", r: ["couldn't", "could not", "wasn't able to", "was not able to"], f: ["didn't can", "can't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not", "wasn't able to", "was not able to"] } },
       { k: "detention", e: "past",   t: "Last week Jake ___ go to detention because he was late three times.", h: "must – past", r: ["had to"], f: ["musted", "must"], fehler: { ersatz: "must", wort: "must", loesung: ["had to"] } },
       { e: "past",   t: "At my old school we ___ use our phones in class.", h: "not / may – past", r: ["weren't allowed to", "were not allowed to"], f: ["didn't may", "aren't allowed to"], fehler: { ersatz: "aren't allowed to", wort: "aren't", loesung: ["weren't", "were not"] } },
@@ -350,10 +345,6 @@ K8.baukasten = {
       { e: "frage",  t: "___ you have to wear a uniform at your school?", h: "do", r: ["Do"], f: ["Must", "Have"], fehler: "Have" },
       { k: "detention", e: "frage",  t: "Yesterday was a long day. ___ you have to stay in detention?", h: "do", r: ["Did"], f: ["Had", "Must"], fehler: "Had" }
       // ab v0.9.10 (Paket 6b)
-      ,{ e: "futur",  t: "Next week the pool is closed, so we ___ swim there.", h: "not / can – future", r: ["won't be able to", "will not be able to"], f: ["won't can", "can't will"], fehler: { ersatz: "won't can", wort: "can", loesung: ["be able to"] } }
-      ,{ e: "futur",  t: "When I'm sixteen, I ___ stay out late.", h: "may – future", r: ["will be allowed to", "'ll be allowed to"], f: ["will may", "may will"], fehler: { ersatz: "will may", wort: "may", loesung: ["be allowed to"] } }
-      ,{ e: "futur",  t: "Tomorrow is a school day, so we ___ get up early.", h: "must – future", r: ["will have to", "'ll have to"], f: ["will must", "must will"], fehler: { ersatz: "will must", wort: "must", loesung: ["have to"] } }
-      ,{ e: "futur",  t: "After a year in the USA, you ___ speak English very well.", h: "can – future", r: ["will be able to", "'ll be able to"], f: ["will can", "can will"], fehler: { ersatz: "will can", wort: "can", loesung: ["be able to"] } }
       ,{ e: "past",   t: "Last summer we ___ visit my grandma because our car was broken.", h: "not / can – past", r: ["couldn't", "could not", "weren't able to", "were not able to"], f: ["didn't can", "can't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not", "weren't able to", "were not able to"] } }
       ,{ e: "past",   t: "Yesterday Zoe ___ walk home because she missed the bus.", h: "must – past", r: ["had to"], f: ["musted", "must"], fehler: { ersatz: "must", wort: "must", loesung: ["had to"] } }
       ,{ e: "past",   t: "When I was little, I ___ stay up late.", h: "not / may – past", r: ["wasn't allowed to", "was not allowed to"], f: ["didn't may", "isn't allowed to"], fehler: { ersatz: "isn't allowed to", wort: "isn't", loesung: ["wasn't", "was not"] } }
@@ -361,6 +352,16 @@ K8.baukasten = {
       ,{ e: "ersatz", t: "We ___ wear a uniform at our school.", h: "have to", r: ["have to"], f: ["has to", "must to"], fehler: { ersatz: "has to", wort: "has", loesung: ["have"] } }
       ,{ e: "ersatz", t: "Students ___ use their phones in the test.", h: "not / be allowed to", r: ["aren't allowed to", "are not allowed to"], f: ["don't allowed to", "isn't allowed to"], fehler: { ersatz: "isn't allowed to", wort: "isn't", loesung: ["aren't", "are not"] } }
       ,{ e: "frage",  t: "___ your brother have to work on Saturdays?", h: "do", r: ["Does"], f: ["Do", "Has"], fehler: "Do" }
+      // ab v1.2.6: will-Formen entfernt (gehören zu Klasse 9), dafür diese Sätze
+      ,{ e: "past",   t: "Last night I ___ sleep because the music next door was so loud.", h: "not / can – past", r: ["couldn't", "could not", "wasn't able to", "was not able to"], f: ["didn't can", "can't"], fehler: { ersatz: "can't", wort: "can't", loesung: ["couldn't", "could not", "wasn't able to", "was not able to"] } }
+      ,{ e: "past",   t: "On my first day at the new school, I ___ find my classroom.", h: "not / be able to – past", r: ["wasn't able to", "was not able to"], f: ["didn't able to", "weren't able to"], fehler: { ersatz: "weren't able to", wort: "weren't", loesung: ["wasn't", "was not"] } }
+      ,{ e: "past",   t: "Last Saturday my parents ___ work, so I stayed with my grandma.", h: "must – past", r: ["had to"], f: ["musted", "must"], fehler: { ersatz: "must", wort: "must", loesung: ["had to"] } }
+      ,{ e: "past",   t: "When my sister was sixteen, she ___ go to concerts alone.", h: "may – past", r: ["was allowed to"], f: ["mayed", "is allowed to"], fehler: { ersatz: "is allowed to", wort: "is", loesung: ["was"] } }
+      ,{ e: "ersatz", t: "My parents ___ work on Sundays, so we always have breakfast together.", h: "not / have to", r: ["don't have to", "do not have to"], f: ["doesn't have to", "don't have"], fehler: { ersatz: "doesn't have to", wort: "doesn't", loesung: ["don't", "do not"] } }
+      ,{ e: "ersatz", t: "My grandpa is eighty, but he ___ ride a bike.", h: "be able to", r: ["is able to"], f: ["are able to", "is able"], fehler: { ersatz: "are able to", wort: "are", loesung: ["is"] } }
+      ,{ e: "ersatz", t: "In the library, people ___ talk loudly.", h: "not / be allowed to", r: ["aren't allowed to", "are not allowed to"], f: ["don't allowed to", "isn't allowed to"], fehler: { ersatz: "isn't allowed to", wort: "isn't", loesung: ["aren't", "are not"] } }
+      ,{ e: "frage",  t: "___ Tom have to help his dad in the garden yesterday?", h: "do", r: ["Did"], f: ["Had", "Does"], fehler: "Had" }
+      ,{ e: "frage",  t: "___ your host mother have to drive you to school every day?", h: "do", r: ["Does"], f: ["Do", "Has"], fehler: "Has" }
     ],
     umformen: [
       { e: "ersatz", a: "Use “be able to”:", von: "I can speak three languages.", nach: ["I am able to speak three languages.", "I'm able to speak three languages."] },
@@ -371,10 +372,6 @@ K8.baukasten = {
       { e: "past",   a: "Put the sentence into the past:", von: "Mia isn't allowed to go to the party.", nach: ["Mia wasn't allowed to go to the party.", "Mia was not allowed to go to the party."] },
       { e: "past",   a: "Put the sentence into the past:", von: "My host family must sell their car.", nach: ["My host family had to sell their car."] },
       { e: "past",   a: "Put the sentence into the past:", von: "The freshmen can choose an elective.", nach: ["The freshmen could choose an elective.", "The freshmen were able to choose an elective."] },
-      { k: "drive", e: "futur",  a: "Put the sentence into the future (will):", von: "I can drive a car.", nach: ["I will be able to drive a car.", "I'll be able to drive a car."] },
-      { e: "futur",  a: "Put the sentence into the future (will):", von: "We must get up early.", nach: ["We will have to get up early.", "We'll have to get up early."] },
-      { e: "futur",  a: "Put the sentence into the future (will):", von: "Jake may stay up late.", nach: ["Jake will be allowed to stay up late."] },
-      { e: "futur",  a: "Put the sentence into the future (will):", von: "She can't come to the game.", nach: ["She won't be able to come to the game.", "She will not be able to come to the game."] },
       { e: "frage",  a: "Ask a question:", von: "Carlos has to work on Saturdays.", nach: ["Does Carlos have to work on Saturdays?"] }
       // ab v0.9.10 (Paket 6b)
       ,{ e: "ersatz", a: "Use “be able to”:", von: "Tom can play the guitar.", nach: ["Tom is able to play the guitar."] }
@@ -385,25 +382,29 @@ K8.baukasten = {
       ,{ e: "past",   a: "Put the sentence into the past:", von: "Jake can't come to the party.", nach: ["Jake couldn't come to the party.", "Jake could not come to the party.", "Jake wasn't able to come to the party.", "Jake was not able to come to the party."] }
       ,{ e: "past",   a: "Put the sentence into the past:", von: "We aren't allowed to watch TV.", nach: ["We weren't allowed to watch TV.", "We were not allowed to watch TV."] }
       ,{ e: "past",   a: "Put the sentence into the past:", von: "Mia can swim very fast.", nach: ["Mia could swim very fast.", "Mia was able to swim very fast."] }
-      ,{ e: "futur",  a: "Put the sentence into the future (will):", von: "We must wear a uniform.", nach: ["We will have to wear a uniform.", "We'll have to wear a uniform."] }
-      ,{ e: "futur",  a: "Put the sentence into the future (will):", von: "Zoe can't come to the party.", nach: ["Zoe won't be able to come to the party.", "Zoe will not be able to come to the party."] }
-      ,{ e: "futur",  a: "Put the sentence into the future (will):", von: "You may use your phone.", nach: ["You will be allowed to use your phone.", "You'll be allowed to use your phone."] }
       ,{ e: "frage",  a: "Ask a question:", von: "Mia has to stay at home.", nach: ["Does Mia have to stay at home?"] }
       ,{ e: "frage",  a: "Ask a question:", von: "They had to wait for an hour.", nach: ["Did they have to wait for an hour?"] }
+      // ab v1.2.6: will-Formen entfernt (gehören zu Klasse 9), dafür diese Aufgaben
+      ,{ e: "ersatz", a: "Use “be able to”:", von: "My dog can open the door.", nach: ["My dog is able to open the door."] }
+      ,{ e: "ersatz", a: "Use “have to”:", von: "Jake must clean his room.", nach: ["Jake has to clean his room."] }
+      ,{ e: "ersatz", a: "Use “be allowed to”:", von: "You may not swim in the lake.", nach: ["You aren't allowed to swim in the lake.", "You are not allowed to swim in the lake.", "You're not allowed to swim in the lake."] }
+      ,{ e: "past",   a: "Put the sentence into the past:", von: "I can't open the window.", nach: ["I couldn't open the window.", "I could not open the window.", "I wasn't able to open the window.", "I was not able to open the window."] }
+      ,{ e: "past",   a: "Put the sentence into the past:", von: "Zoe has to wait for the bus.", nach: ["Zoe had to wait for the bus."] }
+      ,{ e: "past",   a: "Put the sentence into the past:", von: "The students are allowed to leave early.", nach: ["The students were allowed to leave early."] }
+      ,{ e: "frage",  a: "Ask a question:", von: "Ben has to go to detention.", nach: ["Does Ben have to go to detention?"] }
     ],
     zuordnen: {
       kategorien: ["can", "must", "may"],
       woerter: [
-        { text: "be able to", ziel: "can" }, { text: "was able to", ziel: "can" }, { text: "will be able to", ziel: "can" }, { text: "could", ziel: "can" },
-        { text: "have to", ziel: "must" }, { text: "had to", ziel: "must" }, { text: "will have to", ziel: "must" }, { text: "has to", ziel: "must" },
-        { text: "be allowed to", ziel: "may" }, { text: "was allowed to", ziel: "may" }, { text: "will be allowed to", ziel: "may" }, { text: "were allowed to", ziel: "may" }
+        { text: "be able to", ziel: "can" }, { text: "was able to", ziel: "can" }, { text: "were able to", ziel: "can" }, { text: "could", ziel: "can" },
+        { text: "have to", ziel: "must" }, { text: "had to", ziel: "must" }, { text: "don't have to", ziel: "must" }, { text: "has to", ziel: "must" },
+        { text: "be allowed to", ziel: "may" }, { text: "was allowed to", ziel: "may" }, { text: "is allowed to", ziel: "may" }, { text: "were allowed to", ziel: "may" }
       ]
     },
     erklaerungen: {
       satzpool: {
         ersatz: "Substitute forms (Ersatzformen): can → am/is/are able to, must → have/has to, may → am/is/are allowed to. Example: {BEISPIEL}",
         past:   "Past (Vergangenheit): could / was able to, had to, was/were allowed to. Example: {BEISPIEL}",
-        futur:  "Future (Zukunft): “will can” and “will must” don't exist! Use will be able to, will have to, will be allowed to. Example: {BEISPIEL}",
         frage:  "Questions with have to need do, does or did: Do you have to …? Example: {BEISPIEL}",
         zuordnen: "can → be able to (could), must → have to (had to), may → be allowed to."
       }
@@ -556,8 +557,8 @@ K8.aufgaben = [
     erklaerung: "The earlier action gets had + 3rd form (Vorvergangenheit). Example: When we got to the harbor, the ferry had left." },
   { thema: "8-G2", niveau: "rot", form: "fehler", satz: "After we had walked across the bridge, we taked a cab.", fehlerwort: "taked", loesung: ["took"],
     erklaerung: "The later action is in the simple past: we took a cab. Example: After Jake had bought a hot dog, he walked to the ice rink." },
-  { thema: "8-G3", niveau: "gruen", form: "quiz", frage: "Next week I ___ go to school because we're on vacation.", optionen: ["won't have to", "won't must", "mustn't"], loesung: "won't have to",
-    erklaerung: "“will must” doesn't exist. Future of must: will have to (won't have to = nicht müssen). Example: We'll have to get up early." },
+  { thema: "8-G3", niveau: "gruen", form: "quiz", frage: "Last year we ___ wear a uniform at our old school.", optionen: ["had to", "musted", "must to"], loesung: "had to",
+    erklaerung: "must has no past form (“musted” doesn't exist). Past: had to + infinitive (Grundform). Example: Yesterday Zoe had to walk home." },
   { thema: "8-G3", niveau: "gelb", form: "luecke", frage: "When I was ten, I ___ (not / may) stay up late.", loesung: ["wasn't allowed to", "was not allowed to"],
     erklaerung: "Past of may: was/were allowed to. Example: At my old school we weren't allowed to use our phones." },
   { thema: "8-G4", niveau: "gruen", form: "quiz", frage: "If you ___ the bus, you'll be late.", optionen: ["miss", "will miss", "missed"], loesung: "miss",
@@ -582,7 +583,7 @@ K8.zusatzfragen = [
   { thema: "8-G2", frage: "Which is past perfect?", optionen: ["had seen", "saw", "has seen"], loesung: "had seen" },
   { thema: "8-G2", frage: "After she … her homework, she went out.", optionen: ["had finished", "has finished", "finishes"], loesung: "had finished" },
   { thema: "8-G2", frage: "… you ever been to a big city before the trip?", optionen: ["Had", "Did", "Was"], loesung: "Had" },
-  { thema: "8-G3", frage: "Next year I … drive a car.", optionen: ["will be able to", "will can", "can will"], loesung: "will be able to" },
+  { thema: "8-G3", frage: "When I was six, I … already ride a bike.", optionen: ["could", "can", "could to"], loesung: "could" },
   { thema: "8-G3", frage: "Yesterday we … stay in detention.", optionen: ["had to", "must", "musted"], loesung: "had to" },
   { thema: "8-G3", frage: "Students … use their phones in class.", optionen: ["aren't allowed to", "don't allowed to", "aren't allow to"], loesung: "aren't allowed to" },
   { thema: "8-G3", frage: "… your brother have to work on Saturdays?", optionen: ["Does", "Has", "Must"], loesung: "Does" },
