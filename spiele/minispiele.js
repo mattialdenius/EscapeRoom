@@ -1,7 +1,7 @@
 /* =====================================================================
    MINISPIELE für den Grammar Escape Room (Belohnung nach dem Zusatzraum)
    ---------------------------------------------------------------------
-   Version:  minispiele 0.10 (passt zu App-Version 0.9.14 bis 1.2.6)
+   Version:  minispiele 0.11 (passt zu App-Version 0.9.14 bis 1.2.7)
    Inhalt:   fuettern (Fütterungszeit), taschenlampe (Taschenlampen-Suche),
              seeloewe (Robben-Jonglage), obstkorb (Obstkorb), schaukel (Affen-Schaukel),
              nachtflug (Pollys Nachtflug), rutsche (Pinguin-Rutsche) – beide mit dem
@@ -16,6 +16,8 @@
    Bedienung: ein Finger (Ziehen oder Tippen), Maus, Tastatur (Pfeile, Enter).
 
    Änderungsliste:
+     0.11 (24.11.2026) Neues Spiel laser (Laser umlenken): Spiegel drehen, bis der Strahl das Ziel trifft;
+                       Rätsel zufällig und immer lösbar; Alarmsensoren (ab Klasse 8) kosten ein Herz.
      0.10 (21.11.2026) Fairer: Code knacken hat nur noch 4 Versuche (vorher 6), die Zahl steht schon
                        beim Start da. Füttern: Ein falsches Tier kostet ein Herz und das Futter
                        wechselt (das richtige Tier wird kurz gezeigt) – Durchprobieren geht nicht mehr.
@@ -998,6 +1000,149 @@ function signal(buehne, ctx){
   return () => { cancelAnimationFrame(raf); clearTimeout(mtimer); lock.removeEventListener("click", pruefe); };
 }
 
+// =====================================================================
+// 14) LASER UMLENKEN – Spiegel antippen und drehen, bis der Strahl das Ziel trifft (für Klasse 7–10)
+//     Jedes Rätsel wird zufällig erzeugt und ist immer lösbar (alle Spiegelstellungen werden durchprobiert).
+//     Gelöst = 1 Punkt, dann kommt das nächste Rätsel. Alarmsensoren (ab Klasse 8): Bleibt der Strahl
+//     1 Sekunde auf einem Sensor, kostet das ein Herz (schnelles Durchdrehen wird nicht bestraft).
+//     Spiegel sind Striche (/ oder \), nicht nur Farben. Tastatur: Tab/Pfeile = Spiegel wählen, Enter = drehen.
+//     Daten: KN.minispiele.laser = { quelle: "🔦", ziel: "🔐", sensor: "🚨", mauer: "🧱", groesse: 5,
+//            spiegel: 4, umwege: 2, sensoren: 1, mauern: 1, hinweis: "…", gut: ["…"], autsch: ["…"] }
+// =====================================================================
+function laser(buehne, ctx){
+  const D = (ctx.daten && ctx.daten.laser) || {};
+  const N = clamp(Math.round(D.groesse) || 5, 4, 6), M = clamp(Math.round(D.spiegel) || 4, 2, 7);
+  const UMWEGE = clamp(Math.round(D.umwege) || 2, 1, 4), SENSOREN = clamp(Math.round(D.sensoren) || 0, 0, 3), MAUERN = clamp(Math.round(D.mauern) || 0, 0, 3);
+  const wrap = el("div", "ms-lz"), brett = el("div", "ms-lz-brett"), svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const status = el("p", "ms-lz-status"), hinweis = el("p", "ms-lz-hinweis", D.hinweis || sp(ctx, "Tippe die Spiegel an, um sie zu drehen.", "Tap the mirrors to turn them.")), meldung = el("div", "ms-ro-meldung");
+  svg.setAttribute("class", "ms-lz-strahl"); svg.setAttribute("aria-hidden", "true"); status.setAttribute("role", "status"); status.className = "ms-lz-status nurvorlesen";
+  brett.style.gridTemplateColumns = "repeat(" + (N + 1) + ",minmax(0,1fr))";
+  wrap.append(brett, hinweis, status, meldung); buehne.appendChild(wrap);
+  const RICHTUNG = { r: [0, 1], l: [0, -1], o: [-1, 0], u: [1, 0] };
+  const SPIEGEL = { "/": { r: "o", o: "r", l: "u", u: "l" }, "\\": { r: "u", u: "r", l: "o", o: "l" } };
+  let feld = [], zeile = 0, zellen = [], knoepfe = [], sensorTimer = null, mtimer = null, sperre = false, ro = null, ausgeloest = false;
+  // Strahl verfolgen: ab der Quelle links neben Zeile „zeile“ nach rechts
+  function verfolge(f){
+    let y = zeile, x = -1, d = "r", weg = [[y, x]], knicke = 0;
+    for(let schritt = 0; schritt < 80; schritt++){
+      y += RICHTUNG[d][0]; x += RICHTUNG[d][1];
+      if(y < 0 || y >= N || x < 0 || x >= N) return { ende: "rand", weg, knicke, aus: [y, x] };
+      weg.push([y, x]); const z = f[y][x];
+      if(z.typ === "ziel") return { ende: "ziel", weg, knicke };
+      if(z.typ === "sensor") return { ende: "sensor", weg, knicke, wo: [y, x] };
+      if(z.typ === "mauer") return { ende: "mauer", weg, knicke };
+      if(z.typ === "spiegel"){ d = SPIEGEL[z.s][d]; knicke++; }
+    }
+    return { ende: "schleife", weg, knicke };
+  }
+  // Neues Rätsel: zufällig bauen, alle 2^M Spiegelstellungen prüfen, nur gute Rätsel nehmen
+  function neuesRaetsel(){
+    for(let versuch = 0; versuch < 800; versuch++){
+      zeile = Math.floor(Math.random() * N);
+      const f = Array.from({ length: N }, () => Array.from({ length: N }, () => ({ typ: "leer" })));
+      const frei = mischen(Array.from({ length: N * N }, (_, i) => [Math.floor(i / N), i % N]));
+      const nimm = typ => { const [y, x] = frei.pop(); f[y][x] = { typ }; return [y, x]; };
+      const ziel = nimm("ziel"); if(ziel[0] === zeile) { continue; }   // Ziel nie in der Startzeile (sonst zu leicht)
+      const sp_ = []; for(let i = 0; i < M; i++){ const [y, x] = nimm("spiegel"); f[y][x].s = "/"; sp_.push(f[y][x]); }
+      for(let i = 0; i < MAUERN; i++) nimm("mauer");
+      for(let i = 0; i < SENSOREN; i++) nimm("sensor");
+      const loesungen = []; let zuLeicht = false;
+      for(let m = 0; m < (1 << M); m++){
+        sp_.forEach((z, i) => z.s = (m >> i) & 1 ? "\\" : "/");
+        const r = verfolge(f); if(r.ende === "ziel"){ if(r.knicke < UMWEGE){ zuLeicht = true; break; } loesungen.push(m); }
+      }
+      if(zuLeicht || !loesungen.length) continue;
+      if(SENSOREN){   // Sensoren müssen erreichbar sein (sonst sind sie nur Deko)
+        let erreicht = false;
+        for(let m = 0; m < (1 << M) && !erreicht; m++){ sp_.forEach((z, i) => z.s = (m >> i) & 1 ? "\\" : "/"); erreicht = verfolge(f).ende === "sensor"; }
+        if(!erreicht) continue;
+      }
+      // Startstellung: trifft weder Ziel noch Sensor und ist mindestens 2 Drehungen von jeder Lösung entfernt
+      const bits = m => { let n = 0; while(m){ n += m & 1; m >>= 1; } return n; };
+      const starts = [];
+      for(let m = 0; m < (1 << M); m++){
+        if(loesungen.some(l => bits(l ^ m) < 2)) continue;
+        sp_.forEach((z, i) => z.s = (m >> i) & 1 ? "\\" : "/");
+        const r = verfolge(f); if(r.ende !== "ziel" && r.ende !== "sensor") starts.push(m);
+      }
+      if(!starts.length) continue;
+      const m = wuerfle(starts); sp_.forEach((z, i) => z.s = (m >> i) & 1 ? "\\" : "/");
+      feld = f; wrap.dataset.loesbar = "1"; return true;
+    }
+    return false;
+  }
+  function baue(){
+    brett.replaceChildren(); zellen = []; knoepfe = [];
+    for(let y = 0; y < N; y++){
+      const quelle = el("div", "ms-lz-zelle ms-lz-quelle", y === zeile ? (D.quelle || "🔦") : ""); if(y !== zeile) quelle.classList.add("leer"); brett.appendChild(quelle);
+      zellen[y] = [];
+      for(let x = 0; x < N; x++){
+        const z = feld[y][x]; let e;
+        if(z.typ === "spiegel"){
+          e = el("button", "ms-lz-zelle ms-lz-spiegel"); e.type = "button"; e.dataset.y = y; e.dataset.x = x;
+          e.appendChild(el("span", "ms-lz-glas")); knoepfe.push(e);
+        } else {
+          e = el("div", "ms-lz-zelle ms-lz-" + z.typ, z.typ === "ziel" ? (D.ziel || "🎯") : z.typ === "sensor" ? (D.sensor || "🚨") : z.typ === "mauer" ? (D.mauer || "🧱") : "");
+        }
+        brett.appendChild(e); zellen[y][x] = e;
+      }
+    }
+    brett.appendChild(svg); aktualisiere(false);
+  }
+  const mitte = e => { const a = e.getBoundingClientRect(), b = brett.getBoundingClientRect(); return [a.left - b.left + a.width / 2, a.top - b.top + a.height / 2, a.width]; };
+  function zeichne(r){
+    const b = brett.getBoundingClientRect(); svg.setAttribute("viewBox", "0 0 " + b.width + " " + b.height);
+    const quelle = brett.children[zeile * (N + 1)], pts = [mitte(quelle)];
+    r.weg.slice(1).forEach(([y, x]) => pts.push(mitte(zellen[y][x])));
+    if(r.ende === "rand"){ const [y, x] = r.aus, [lx, ly, w] = pts[pts.length - 1], dy = Math.sign(y - r.weg[r.weg.length - 1][0]), dx = Math.sign(x - r.weg[r.weg.length - 1][1]); pts.push([lx + dx * w / 2, ly + dy * w / 2]); }
+    if(r.ende === "mauer"){ const [ax, ay] = pts[pts.length - 2], [bx, by, w] = pts[pts.length - 1], dx = Math.sign(bx - ax), dy = Math.sign(by - ay); pts[pts.length - 1] = [bx - dx * w * 0.4, by - dy * w * 0.4]; }
+    const linie = pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+    svg.innerHTML = '<polyline points="' + linie + '" class="ms-lz-glow"/><polyline points="' + linie + '" class="ms-lz-kern"/>';
+  }
+  const endeText = r => r.ende === "ziel" ? sp(ctx, "Der Strahl trifft das Ziel!", "The beam hits the target!") : r.ende === "sensor" ? sp(ctx, "Achtung: Der Strahl trifft einen Alarmsensor!", "Careful: the beam hits an alarm sensor!") :
+    r.ende === "mauer" ? sp(ctx, "Der Strahl trifft eine Mauer.", "The beam hits a wall.") : sp(ctx, "Der Strahl verlässt das Feld.", "The beam leaves the board.");
+  function zeige(t){ meldung.textContent = t; meldung.classList.add("an"); clearTimeout(mtimer); mtimer = setTimeout(() => meldung.classList.remove("an"), 900); }
+  function aktualisiere(gedreht){
+    const r = verfolge(feld); zeichne(r);
+    feld.forEach((reihe, y) => reihe.forEach((z, x) => { const e = zellen[y][x];
+      if(z.typ === "spiegel"){ e.classList.toggle("rueck", z.s === "\\"); e.setAttribute("aria-label", sp(ctx, "Spiegel ", "Mirror ") + (z.s === "/" ? "/" : "\\") + sp(ctx, ", Reihe ", ", row ") + (y + 1) + sp(ctx, ", Spalte ", ", column ") + (x + 1)); }
+      if(z.typ === "ziel") e.classList.toggle("getroffen", r.ende === "ziel");
+      if(z.typ === "sensor") e.classList.toggle("alarm", r.ende === "sensor" && r.wo[0] === y && r.wo[1] === x); }));
+    wrap.dataset.ende = r.ende;   // nur für automatische Tests
+    if(gedreht) status.textContent = endeText(r);
+    clearTimeout(sensorTimer);
+    if(r.ende === "ziel"){
+      sperre = true; ctx.ton("richtig"); zeige("✅ " + wuerfle(D.gut || ["Target hit!"])); ctx.punkt();
+      setTimeout(() => { if(!ctx.laeuft()) return; sperre = false; ausgeloest = false; if(neuesRaetsel()){ baue(); fokus(0); } }, 900);
+    } else if(r.ende === "sensor" && !ausgeloest){
+      sensorTimer = setTimeout(() => { if(!ctx.laeuft() || sperre) return; ausgeloest = true; ctx.ton("falsch"); zeige("🚨 " + wuerfle(D.autsch || ["Alarm! Turn a mirror."])); if(ctx.fehler) ctx.fehler(); }, 1000);
+    }
+  }
+  function drehe(e){
+    if(sperre || !ctx.laeuft()) return;
+    const z = feld[+e.dataset.y][+e.dataset.x]; z.s = z.s === "/" ? "\\" : "/"; ausgeloest = false; ctx.ton("klick"); aktualisiere(true);
+  }
+  const fokus = i => { const k = knoepfe[(i + knoepfe.length) % knoepfe.length]; if(k) try { k.focus({ preventScroll: true }); } catch(e){} };
+  const klick = e => { const k = e.target.closest(".ms-lz-spiegel"); if(k) { e.preventDefault(); drehe(k); } };
+  const taste = e => {
+    const i = knoepfe.indexOf(document.activeElement);
+    if(["ArrowRight", "ArrowDown"].includes(e.key)){ e.preventDefault(); fokus(i + 1); }
+    else if(["ArrowLeft", "ArrowUp"].includes(e.key)){ e.preventDefault(); fokus(i - 1); }
+  };
+  function passe(){   // Brett so groß wie möglich, aber ganz sichtbar (Hoch- und Querformat)
+    const cs = getComputedStyle(wrap), pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    const w = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), h = wrap.clientHeight - pad - hinweis.offsetHeight - 10;
+    const groesse = Math.max(180, Math.min(w, h * (N + 1) / N));
+    brett.style.width = groesse + "px"; if(feld.length) zeichne(verfolge(feld));   // nur neu zeichnen, nicht neu werten
+  }
+  brett.addEventListener("click", klick); buehne.addEventListener("keydown", taste);
+  if(!neuesRaetsel()){ ctx.sage("…"); return () => {}; }
+  baue(); passe();
+  if(window.ResizeObserver){ ro = new ResizeObserver(passe); ro.observe(wrap); }
+  setTimeout(() => fokus(0), 60);
+  return () => { clearTimeout(sensorTimer); clearTimeout(mtimer); if(ro) ro.disconnect(); brett.removeEventListener("click", klick); buehne.removeEventListener("keydown", taste); };
+}
+
 // Aussehen der vier Spiele für die älteren Klassen (einmal einfügen)
 if(!document.getElementById("minispielStilAlt")){
   const st = el("style"); st.id = "minispielStilAlt";
@@ -1036,9 +1181,30 @@ if(!document.getElementById("minispielStilAlt")){
   .ms-sg-zeile span{min-width:6.2rem}
   .ms-sg-zeile input{flex:1;height:2.6rem;accent-color:#7df9ff;touch-action:manipulation}
   .ms-sg-lock{align-self:center;min-height:3rem;padding:0 1.4rem;font-weight:700;font-size:1.1rem;background:#ffd23f;color:#000;border:4px solid #000;border-radius:14px;box-shadow:0 4px 0 #000;cursor:pointer}
+  .ms-lz{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;padding:3.2rem .4rem .5rem;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#1b2540,#070b16 75%)}
+  .ms-lz-brett{position:relative;display:grid;gap:3px;max-width:100%}
+  .ms-lz-zelle{aspect-ratio:1;min-width:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:clamp(1.2rem,6vw,2.1rem);line-height:1;border-radius:8px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);box-sizing:border-box}
+  .ms-lz-quelle{background:none;border:none}
+  .ms-lz-quelle.leer{visibility:hidden}
+  .ms-lz-mauer{background:#3a3f4d;border-color:#000}
+  .ms-lz-ziel{background:rgba(255,210,63,.18);border:3px dashed #ffd23f}
+  .ms-lz-ziel.getroffen{background:#ffd23f;border-style:solid;transform:scale(1.08)}
+  .ms-lz-sensor{border:3px dotted #fff}
+  .ms-lz-sensor.alarm{background:#000;border:3px solid #fff;animation:msLzBlink .3s steps(2) infinite}
+  .ms-lz-spiegel{position:relative;width:100%;height:auto;aspect-ratio:1;min-width:0;padding:0;margin:0;cursor:pointer;background:#24304f;border:3px solid #000;box-shadow:0 3px 0 #000;touch-action:manipulation;color:inherit;font:inherit}
+  .ms-lz-spiegel:focus-visible{outline:4px solid #ffd23f;outline-offset:2px}
+  .ms-lz-glas{position:absolute;left:8%;right:8%;top:calc(50% - 4px);height:8px;border-radius:4px;background:#e8f4ff;border:2px solid #000;transform:rotate(-45deg);transition:transform .15s}
+  .ms-lz-spiegel.rueck .ms-lz-glas{transform:rotate(45deg)}
+  .ms-lz-strahl{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+  .ms-lz-glow{fill:none;stroke:rgba(255,60,60,.45);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+  .ms-lz-kern{fill:none;stroke:#fff;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 5}
+  .ms-lz-hinweis{margin:0;text-align:center;font-size:.85rem;color:#cfd8ff}
+  .nurvorlesen{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @keyframes msLzBlink{50%{background:#c00}}
+  @media (prefers-reduced-motion: reduce){ .ms-lz-glas{transition:none} .ms-lz-sensor.alarm{animation:none;background:#c00} .ms-lz-ziel.getroffen{transform:none} }
   @media (prefers-reduced-motion: reduce){ .ms-sq-feld.an{transform:none} }`;
   document.head.appendChild(st);
 }
 
-window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel, nachtflug, rutsche, codeknacker, lasergitter, kabel, andocken, sequenz, signal });
+window.MINISPIELE = Object.freeze({ fuettern, taschenlampe, seeloewe, obstkorb, schaukel, nachtflug, rutsche, codeknacker, lasergitter, kabel, andocken, sequenz, signal, laser });
 })();

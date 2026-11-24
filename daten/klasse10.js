@@ -1065,3 +1065,17 @@ Object.assign(K10.minispiele, {
             funk: ["Station, this is Houston. We hear you loud and clear.", "A rescue ship is on its way.", "Your oxygen levels look good.",
                    "Please send us the data from the greenhouse.", "Well done, crew. Stay calm and follow the plan.", "We will open the landing zone in two hours."] }
 });
+
+// Minispiel „Laser umlenken“ (ab v1.2.7)
+Object.assign(K10.minispiele.spiele, {
+  laser: {
+    titel: "☀️ Solar mirrors",
+    anleitung: "The station needs power. Turn the mirrors until the sunlight hits the battery 🔋. Keep the light away from the warning sensors 🚨 – each alarm costs a life.",
+    ziel: 3,
+    erfolg: "Batteries full. The lights on the station are back on."
+  }
+});
+Object.assign(K10.minispiele, {
+  laser: { quelle: "☀️", ziel: "🔋", sensor: "🚨", mauer: "🪨", groesse: 5, spiegel: 6, umwege: 3, sensoren: 2, mauern: 2,
+           hinweis: "Tap a mirror to turn it. Avoid the sensors 🚨!", gut: ["Power up!", "Battery charging!", "Perfect angle!"], autsch: ["Alarm! Turn a mirror – quick!", "Overload warning!"] }
+});

@@ -2,7 +2,7 @@
 <!--
   =====================================================================
   GRAMMATIK-ESCAPE-ROOM ENGLISCH  ·  Realschule BW, Klassen 5–10
-  Version 1.2.7-a
+  Version 1.2.7
   ---------------------------------------------------------------------
   AUFBAU (ab v0.5)
     index.html            → Technik und Aussehen (hier nichts ändern)
@@ -11,7 +11,9 @@
     daten/klasse-vorlage.js → leere Vorlage mit Erklärungen für neue Klassen
   ---------------------------------------------------------------------
   ÄNDERUNGSLISTE
-  v1.2.7-a (24.11.2026)  – Test: neues Minispiel „Laser umlenken“ (Klasse 7–10)
+  v1.2.7 (24.11.2026)  – live geschaltet am 24.11.2026
+    - Inhalt wie 1.2.7-a: neues Minispiel „Laser umlenken“ (Klasse 7–10).
+  v1.2.7-a (24.11.2026)  – live geschaltet am 24.11.2026 (als 1.2.7): neues Minispiel „Laser umlenken“ (Klasse 7–10)
     - Spiegel antippen und drehen, bis der Strahl das Ziel trifft; Rätsel zufällig und immer lösbar.
     - Alarmsensoren ab Klasse 8 (1 Sekunde auf dem Sensor = 1 Herz weg). Schwierigkeit steigt mit der Klasse.
     - Dateien: spiele/minispiele.js (0.11), daten/klasse7–10.js (Titel, Texte, Schwierigkeit).
@@ -329,7 +331,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grammatik-Escape-Room Englisch – v1.2.7-a</title>
+<title>Grammatik-Escape-Room Englisch – v1.2.7</title>
 <link rel="icon" type="image/png" sizes="32x32" href="bild/logo-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="bild/logo-64.png">
 <link rel="apple-touch-icon" href="bild/logo-180.png">
@@ -757,7 +759,7 @@
     <div class="knopfreihe"><button class="gruen" data-aktion="nochmal" data-ui="neuerVersuch">Neuer Versuch</button><button class="zweit" data-aktion="start" data-ui="zumStart">Zum Startmenü</button></div>
   </section>
 </main>
-<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.7-a</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
+<footer><img class="logo-fuss" src="bild/logo-32.png" alt="" width="18" height="18"> Grammar Escape Room <span data-ui="fach">Englisch</span> · <span data-ui="von">von</span> M. Aldenius · <b>Version 1.2.7</b> · <span data-ui="datenschutz">Es werden keine Daten gespeichert oder übertragen.</span></footer>
 <canvas id="konfetti" aria-hidden="true"></canvas>
 <!-- Sicherheitsabfrage „Mission beenden“ -->
 <div id="dialog" class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitel" hidden>
@@ -783,7 +785,7 @@ window.zeigeFehler = function(titel, zeilen){
   zeilen.forEach(z => { const li = document.createElement("li"); li.textContent = z; li.style.marginBottom = ".5rem"; ul.appendChild(li); });
   k.append(h, ul); d.appendChild(k); document.body.appendChild(d);
 };
-const APP_VERSION = "1.2.7-a";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
+const APP_VERSION = "1.2.7";   // bei jeder neuen Version mit ändern (auch unten bei daten/allgemein.js?v=…, im <title> und in der Fußzeile)
 window.addEventListener("error", function(e){
   if(e.message === "Script error." && !e.filename) return;   // ohne Details (am PC ohne Internet): das Laden meldet den Fehler selbst genauer
   const datei = String(e.filename || "").match(/daten\/[^?#]+/);
@@ -797,7 +799,7 @@ window.addEventListener("error", function(e){
 </script>
 
 <!-- Einstellungen und Klassenliste (das „?v=…“ bei jeder neuen Version anpassen) -->
-<script src="daten/allgemein.js?v=1.2.7-a"></script>
+<script src="daten/allgemein.js?v=1.2.7"></script>
 
 <script>
 /* #####################################################################

@@ -1173,3 +1173,17 @@ Object.assign(K7.minispiele, {
     { emoji: "🕷️", text: "Iiih, eine Spinne!" }
   ]
 });
+
+// Minispiel „Laser umlenken“ (ab v1.2.7)
+Object.assign(K7.minispiele.spiele, {
+  laser: {
+    titel: "☀️ Licht der Pharaonen",
+    anleitung: "Lenke den Sonnenstrahl zum goldenen Schloss der Grabkammer. Tippe einen Spiegel an, um ihn zu drehen. Jedes Mal gibt es ein neues Rätsel.",
+    ziel: 3,
+    erfolg: "Drei Schlösser geöffnet – die Pharaonen wären stolz auf dich!"
+  }
+});
+Object.assign(K7.minispiele, {
+  laser: { quelle: "☀️", ziel: "🔒", mauer: "🗿", groesse: 5, spiegel: 4, umwege: 2, sensoren: 0, mauern: 1,
+           hinweis: "Spiegel antippen = drehen. Bring das Licht zum Schloss 🔒!", gut: ["Licht im Schloss!", "Klick – offen!", "Super gelenkt!"], autsch: ["Pass auf!"] }
+});
