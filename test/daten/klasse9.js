@@ -1407,3 +1407,17 @@ Object.assign(K9.minispiele, {
             funk: ["Agent Fox to base: The package is in the red car.", "The meeting is at midnight. Don't be late.", "Nobody must know about the plan.",
                    "The code word is “blue moon”.", "Leave the building through the back door.", "The target has just left the hotel."] }
 });
+
+// Minispiel „Laser umlenken“ (ab v1.2.7)
+Object.assign(K9.minispiele.spiele, {
+  laser: {
+    titel: "🔴 Laser lock",
+    anleitung: "The data vault opens when the laser hits it. Tap the mirrors to turn them. Keep the beam away from the alarm sensors 🚨 – each alarm costs a life.",
+    ziel: 3,
+    erfolg: "Three vaults open. Nova: “I didn't see that coming.”"
+  }
+});
+Object.assign(K9.minispiele, {
+  laser: { quelle: "📡", ziel: "💾", sensor: "🚨", mauer: "🧱", groesse: 5, spiegel: 5, umwege: 3, sensoren: 2, mauern: 1,
+           hinweis: "Tap a mirror to turn it. Avoid the alarms 🚨!", gut: ["Vault open!", "Clean shot!", "Access granted!"], autsch: ["Alarm! Turn a mirror – quick!", "Sensor triggered!"] }
+});

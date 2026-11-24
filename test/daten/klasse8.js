@@ -1540,3 +1540,17 @@ Object.assign(K8.minispiele, {
   kabel: { kasten: "Alarm box", hinweis: "Same colour, same symbol.", fertig: ["Alarm box fixed!", "Wires connected!"], autsch: ["Sparks! Wrong socket.", "Bzzzt! Try another socket."] },
   sequenz: { zeichen: ["1", "2", "3", "4", "5", "6", "7", "8", "9"], schau: "Watch", du: "Your turn", gut: ["Correct!", "Nice work!", "Exactly!"], autsch: ["Wrong order. Watch again.", "Not quite. Watch again."] }
 });
+
+// Minispiel „Laser umlenken“ (ab v1.2.7)
+Object.assign(K8.minispiele.spiele, {
+  laser: {
+    titel: "🔦 Reflect the beam",
+    anleitung: "Get the light to the safe lock. Tap a mirror to turn it. Don't let the beam stay on the alarm sensor 🚨 – that costs a life.",
+    ziel: 3,
+    erfolg: "Three safes open. Morgan is almost impressed."
+  }
+});
+Object.assign(K8.minispiele, {
+  laser: { quelle: "🔦", ziel: "🔐", sensor: "🚨", mauer: "🗄️", groesse: 5, spiegel: 5, umwege: 2, sensoren: 1, mauern: 1,
+           hinweis: "Tap a mirror to turn it. Avoid the alarm 🚨!", gut: ["Lock open!", "Nice angle!", "Got it!"], autsch: ["Alarm! Turn a mirror – quick!", "The sensor saw the beam!"] }
+});
